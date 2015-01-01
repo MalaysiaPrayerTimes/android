@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 buildscript {
     repositories {
         maven { url 'http://download.crashlytics.com/maven' }
@@ -15,23 +17,82 @@ repositories {
     maven { url 'http://download.crashlytics.com/maven' }
 }
 
+def STRING = "String"
+def GIT_SHA = "GIT_SHA"
+def BUILD_TIME = "BUILD_TIME"
+
+def gitSha() {
+    def gitpath = "git"
+    def Properties localProps = new Properties()
+    def localPropsFile = rootProject.file('local.properties')
+    localProps.load(new FileInputStream(localPropsFile))
+    def localgitpath = localProps['GIT_PATH']
+    if (localgitpath != null && !localgitpath.toString().isEmpty()) gitpath = localgitpath
+    String ex = gitpath + ' rev-parse --short HEAD'
+    return ex.execute().text.trim()
+}
+
+def buildTime() {
+    def df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return df.format(new Date())
+}
+
+def buildCount() {
+    def Properties versionProps = new Properties()
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.exists()) versionProps.load(new FileInputStream(versionPropsFile))
+    def code = (versionProps['VERSION_CODE'] ?: "0").toInteger() + 1
+    versionProps['VERSION_CODE'] = code.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+    return code
+}
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+
+    def build_count = buildCount()
 
     defaultConfig {
         applicationId "com.i906.mpt"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 2600
-        versionName "1.2.0"
+        versionCode build_count
+        versionName "2.0.0"
+
+        buildConfigField STRING, GIT_SHA, "\"${ gitSha() }\""
+        buildConfigField STRING, BUILD_TIME, "\"${ buildTime() }\""
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            ext.enableCrashlytics = false
+        }
+
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
