@@ -1,21 +1,6 @@
 import java.text.SimpleDateFormat
 
-buildscript {
-    repositories {
-        maven { url 'http://download.crashlytics.com/maven' }
-    }
-
-    dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
-    }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
-
-repositories {
-    maven { url 'http://download.crashlytics.com/maven' }
-}
 
 def STRING = "String"
 def GIT_SHA = "GIT_SHA"
@@ -49,8 +34,8 @@ def buildCount() {
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.0"
 
     def build_count = buildCount()
 
@@ -97,8 +82,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.jakewharton:butterknife:6.0.0'
-    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.jakewharton:butterknife:6.1.0'
 }
