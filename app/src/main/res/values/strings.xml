@@ -6,4 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="label_extension_permission">add extensions to Malaysia Prayer Times</string>
+    <string name="label_extension_description">Allows to add extensions to Malaysia Prayer Times</string>
+
 </resources>

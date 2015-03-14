@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 def STRING = "String"
 def GIT_SHA = "GIT_SHA"
@@ -42,7 +43,7 @@ android {
     defaultConfig {
         applicationId "com.i906.mpt"
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode build_count
         versionName "2.0.0"
 
@@ -82,6 +83,10 @@ android {
 }
 
 dependencies {
+    compile (name:'extension-debug', ext:'aar')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.google.dagger:dagger:2.0-SNAPSHOT'
+    apt "com.google.dagger:dagger-compiler:2.0-SNAPSHOT"
+    provided 'javax.annotation:jsr250-api:1.0'
 }
