@@ -83,7 +83,7 @@ android {
 }
 
 dependencies {
-    compile (name:'extension-debug', ext:'aar')
+    compile project(':mpt-extension:extension')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.google.dagger:dagger:2.0-SNAPSHOT'

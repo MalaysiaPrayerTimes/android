@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
         ButterKnife.inject(this);
         MptApplication.component(this).inject(this);
 
-        mInterface = new ExamplePrayerInterface();
 
         loadStuff();
     }
@@ -47,14 +46,20 @@ public class MainActivity extends ActionBarActivity {
         Log.w("mpt-ma", "eil: " + eil);
 
         PrayerView pv = mExtensionManager.getPrayerView(eil.get(0).screens.get(0));
+        mInterface = new ExamplePrayerInterface(pv);
         if (pv != null) {
             pv.setInterface(mInterface);
-            pv.onPrayerTimesChanged();
             mFrameView.addView(pv);
         }
     }
 
     public static class ExamplePrayerInterface implements PrayerInterface {
+
+        protected PrayerView mPrayerView;
+
+        public ExamplePrayerInterface(PrayerView prayerView) {
+            mPrayerView = prayerView;
+        }
 
         @Override
         public Date getCurrentPrayerTime() {
@@ -79,11 +84,6 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public int[] getHijriDate() {
             return new int[] { 22, 4, 1436 } ;
-        }
-
-        @Override
-        public Date getMasihiDate() {
-            return new Date();
         }
 
         @Override
