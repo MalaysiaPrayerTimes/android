@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="MptBaseTheme" parent="Theme.AppCompat.NoActionBar">
+        <!--<item name="colorPrimary">@color/slurp_color_primary</item>
+        <item name="colorPrimaryDark">@color/slurp_color_primary_dark</item>
+        <item name="colorAccent">@color/slurp_color_accent</item>-->
+    </style>
+
+    <style name="MptTheme" parent="MptBaseTheme">
+
+    </style>
+
+</resources>
