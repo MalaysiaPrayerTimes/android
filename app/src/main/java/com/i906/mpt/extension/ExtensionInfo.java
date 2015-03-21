@@ -5,9 +5,21 @@ import java.util.List;
 
 public class ExtensionInfo {
 
-    public String name;
-    public String author;
-    public List<Screen> screens = new ArrayList<>();
+    protected String name;
+    protected String author;
+    protected List<Screen> screens = new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public List<Screen> getScreens() {
+        return screens;
+    }
 
     @Override
     public String toString() {
@@ -17,9 +29,31 @@ public class ExtensionInfo {
 
     public static class Screen {
 
-        public String apk;
-        public String name;
-        public String view;
+        protected boolean isNative = false;
+        protected String apk;
+        protected String name;
+        protected String view;
+        protected Class<? extends PrayerView> nativeView;
+
+        public String getApk() {
+            return apk;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getView() {
+            return view;
+        }
+
+        public boolean isNative() {
+            return isNative;
+        }
+
+        public Class getNativeView() {
+            return nativeView;
+        }
 
         @Override
         public String toString() {

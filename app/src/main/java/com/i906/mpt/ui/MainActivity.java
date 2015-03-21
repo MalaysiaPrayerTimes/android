@@ -1,99 +1,134 @@
 package com.i906.mpt.ui;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.widget.FrameLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
-import com.i906.mpt.extension.ExtensionInfo;
-import com.i906.mpt.extension.ExtensionManager;
-import com.i906.mpt.extension.PrayerInterface;
-import com.i906.mpt.extension.PrayerView;
-
-import java.util.Date;
-import java.util.List;
-
-import javax.inject.Inject;
+import com.i906.mpt.adapter.MainAdapter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
-    protected ExamplePrayerInterface mInterface;
-
-    @Inject
-    protected ExtensionManager mExtensionManager;
+    protected MainAdapter mAdapter;
 
     @InjectView(R.id.frame)
-    protected FrameLayout mFrameView;
+    protected ViewGroup mFrameView;
+
+    @InjectView(R.id.toolbar)
+    protected Toolbar mToolbar;
+
+    @InjectView(R.id.viewpager)
+    protected ViewPager mViewPager;
+
+    @InjectView(R.id.btn_qibla)
+    protected ImageButton mQiblaButton;
+
+    @InjectView(R.id.btn_prayer)
+    protected ImageButton mPrayerButton;
+
+    @InjectView(R.id.btn_mosque)
+    protected ImageButton mMosqueButton;
+
+    @InjectView(R.id.btn_settings)
+    protected ImageButton mSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        MptApplication.component(this).inject(this);
 
-
-        loadStuff();
+        mAdapter = new MainAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setOnPageChangeListener(mPageChangeListener);
+        mViewPager.setCurrentItem(1);
+        mViewPager.setOffscreenPageLimit(3);
+        if (mToolbar != null) setSupportActionBar(mToolbar);
     }
 
-    protected void loadStuff() {
-        List<ExtensionInfo> eil = mExtensionManager.getExtensions();
-        Log.w("mpt-ma", "eil: " + eil);
-
-        PrayerView pv = mExtensionManager.getPrayerView(eil.get(0).screens.get(0));
-        mInterface = new ExamplePrayerInterface(pv);
-        if (pv != null) {
-            pv.setInterface(mInterface);
-            mFrameView.addView(pv);
-        }
+    @OnClick(R.id.btn_qibla)
+    protected void onQiblaButtonClicked() {
+        mViewPager.setCurrentItem(0);
     }
 
-    public static class ExamplePrayerInterface implements PrayerInterface {
-
-        protected PrayerView mPrayerView;
-
-        public ExamplePrayerInterface(PrayerView prayerView) {
-            mPrayerView = prayerView;
-        }
-
-        @Override
-        public Date getCurrentPrayerTime() {
-            return new Date();
-        }
-
-        @Override
-        public Date getNextPrayerTime() {
-            return new Date();
-        }
-
-        @Override
-        public int getCurrentPrayerIndex() {
-            return PRAYER_ZOHOR;
-        }
-
-        @Override
-        public int getNextPrayerIndex() {
-            return PRAYER_ASAR;
-        }
-
-        @Override
-        public int[] getHijriDate() {
-            return new int[] { 22, 4, 1436 } ;
-        }
-
-        @Override
-        public String getLocation() {
-            return "Kuala Lumpur";
-        }
-
-        @Override
-        public int getAppVersion() {
-            return 2631;
-        }
+    @OnClick(R.id.btn_prayer)
+    protected void onPrayerButtonClicked() {
+        mViewPager.setCurrentItem(1);
     }
+
+    @OnClick(R.id.btn_mosque)
+    protected void onMosqueButtonClicked() {
+        mViewPager.setCurrentItem(2);
+    }
+
+    @OnClick(R.id.btn_settings)
+    protected void onSettingsButtonClicked() {
+        PopupMenu menu = new PopupMenu(this, mSettingsButton, Gravity.BOTTOM | Gravity.RIGHT);
+        mSettingsButton.setOnTouchListener(menu.getDragToOpenListener());
+        menu.inflate(R.menu.menu_main);
+        menu.show();
+    }
+
+    private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        int activeColor = -1;
+        int moresize = 0;
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            if (activeColor == -1) activeColor = getResources().getColor(R.color.mpt_color_accent);
+            if (moresize == 0) moresize = mSettingsButton.getHeight() * 2;
+
+            int active = swapColor(activeColor, Color.WHITE, positionOffset);
+            int normal = swapColor(activeColor, Color.WHITE, 1 - positionOffset);
+
+            if (position == 0) {
+                mQiblaButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
+                mPrayerButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
+            }
+
+            if (position == 1) {
+                mPrayerButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
+                mMosqueButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
+            }
+
+            if (position == 2) {
+                mMosqueButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
+                mPrayerButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
+            }
+
+            if (position == 0) {
+                mSettingsButton.setTranslationY(moresize * (1 - positionOffset));
+            }
+
+            if (position == 1) {
+                mSettingsButton.setTranslationY(moresize * positionOffset);
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) { }
+
+        @Override
+        public void onPageScrollStateChanged(int state) { }
+
+        private int swapColor(int c1, int c2, float p) {
+            float i = 1 - p;
+            int r = (int) (Color.red(c1) * i + Color.red(c2) * p);
+            int g = (int) (Color.green(c1) * i + Color.green(c2) * p);
+            int b = (int) (Color.blue(c1) * i + Color.blue(c2) * p);
+            return Color.argb(0xFF, r, g, b);
+        }
+    };
 }

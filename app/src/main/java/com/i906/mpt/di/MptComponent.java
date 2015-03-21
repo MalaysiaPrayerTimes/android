@@ -1,6 +1,8 @@
 package com.i906.mpt.di;
 
 import com.i906.mpt.MptApplication;
+import com.i906.mpt.fragment.BaseFragment;
+import com.i906.mpt.ui.BaseActivity;
 import com.i906.mpt.ui.MainActivity;
 
 import javax.inject.Singleton;
@@ -14,7 +16,8 @@ import dagger.Component;
 })
 public interface MptComponent {
 
-    void inject(MainActivity activity);
+    void inject(BaseFragment fragment);
+    void inject(BaseActivity activity);
 
     final class Initializer {
         public static MptComponent init(MptApplication app) {

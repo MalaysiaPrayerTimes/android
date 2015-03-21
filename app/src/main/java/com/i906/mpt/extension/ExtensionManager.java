@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.content.res.XmlResourceParser;
 import android.support.annotation.Nullable;
 
+import com.i906.mpt.view.DefaultPrayerView;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import java.lang.reflect.Constructor;
@@ -35,9 +37,28 @@ public class ExtensionManager {
     @Inject
     public ExtensionManager() { }
 
+    public List<ExtensionInfo> getDefaultExtensions() {
+        List<ExtensionInfo> de = new ArrayList<>();
+
+        ExtensionInfo dei = new ExtensionInfo();
+        dei.name = "Default Extension";
+        dei.author = "Noorzaini Ilhami";
+        dei.screens = new ArrayList<>();
+
+        ExtensionInfo.Screen ds = new ExtensionInfo.Screen();
+        ds.isNative = true;
+        ds.name = "Original Screen";
+        ds.nativeView = DefaultPrayerView.class;
+
+        dei.screens.add(ds);
+        de.add(dei);
+
+        return de;
+    }
+
     public List<ExtensionInfo> getExtensions() {
 
-        mExtensionList = new ArrayList<>();
+        mExtensionList = getDefaultExtensions();
 
         List<PackageInfo> packages = mPackageManager.getInstalledPackages(
                 PackageManager.GET_PERMISSIONS | PackageManager.GET_META_DATA);
@@ -59,6 +80,27 @@ public class ExtensionManager {
 
     @Nullable
     public PrayerView getPrayerView(ExtensionInfo.Screen screen) {
+        if (screen.isNative()) {
+            return createNativePrayerView(screen);
+        } else {
+            return createExtensionPrayerView(screen);
+        }
+    }
+
+    @Nullable
+    private PrayerView createNativePrayerView(ExtensionInfo.Screen screen) {
+        try {
+            Constructor c = screen.getNativeView().getConstructor(Context.class);
+            return (PrayerView) c.newInstance(mContext);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Nullable
+    private PrayerView createExtensionPrayerView(ExtensionInfo.Screen screen) {
         try {
             String apkName = mPackageManager.getApplicationInfo(screen.apk, 0).sourceDir;
             PathClassLoader myClassLoader = new PathClassLoader(apkName,
