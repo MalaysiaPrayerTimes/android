@@ -1,3 +1,41 @@
 <resources>
 
+    <style name="PrayerList" />
+
+    <style name="PrayerList.List" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:textSize">@dimen/size_prayer_list</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="PrayerList.MainDate">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/size_second_line</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="PrayerList.MainLocation" parent="PrayerList.MainPrayerName">
+        <item name="android:textColor">@color/main_location</item>
+    </style>
+
+    <style name="PrayerList.MainPrayerName">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/size_first_line</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="PrayerList.MainTime">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/size_main_time</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingLeft">@dimen/padding_main_time</item>
+        <item name="android:paddingRight">@dimen/padding_main_time</item>
+        <item name="android:layout_marginTop">@dimen/margin_main_time_top</item>
+        <item name="android:layout_marginBottom">@dimen/margin_main_time_top</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
 </resources>

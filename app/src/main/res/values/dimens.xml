@@ -2,4 +2,17 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Main Time -->
+
+    <dimen name="margin_main_time_bottom">-24dp</dimen>
+    <dimen name="margin_main_time_top">-24dp</dimen>
+    <dimen name="padding_main_time">24dp</dimen>
+    <dimen name="size_first_line">18sp</dimen>
+    <dimen name="size_main_time">140sp</dimen>
+    <dimen name="size_second_line">14sp</dimen>
+
+    <!-- Prayer List -->
+
+    <dimen name="size_prayer_list">24sp</dimen>
 </resources>
