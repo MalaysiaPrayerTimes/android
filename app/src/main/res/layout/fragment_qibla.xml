@@ -2,4 +2,13 @@
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" />
+    android:padding="48dp"
+    android:orientation="vertical">
+
+    <com.i906.mpt.view.CompassView
+        android:id="@+id/compass"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/app_compass" />
+
+</FrameLayout>
