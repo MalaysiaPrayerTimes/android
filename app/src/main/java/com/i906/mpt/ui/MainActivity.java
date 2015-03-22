@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
@@ -20,7 +21,13 @@ import butterknife.Optional;
 
 public class MainActivity extends BaseActivity {
 
+    protected boolean mHasSensors = false;
     protected boolean mLandscapeMode = false;
+
+    protected int mQPos = 0;
+    protected int mPPos = 1;
+    protected int mMPos = 2;
+
     protected MainAdapter mAdapter;
 
     @InjectView(R.id.frame)
@@ -51,12 +58,21 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        mHasSensors = mUtils.hasSufficientSensors();
+
         mLandscapeMode = getResources().getBoolean(R.bool.landscape_mode);
-        mAdapter = new MainAdapter(getSupportFragmentManager());
+        mAdapter = new MainAdapter(getSupportFragmentManager(), mHasSensors);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOnPageChangeListener(mPageChangeListener);
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(mHasSensors ? 1 : 0);
         mViewPager.setOffscreenPageLimit(3);
+
+        if (!mHasSensors) {
+            mQiblaButton.setVisibility(View.GONE);
+            mQPos = -1;
+            mPPos = 0;
+            mMPos = 1;
+        }
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -66,17 +82,17 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_qibla)
     protected void onQiblaButtonClicked() {
-        mViewPager.setCurrentItem(0);
+        mViewPager.setCurrentItem(mQPos);
     }
 
     @OnClick(R.id.btn_prayer)
     protected void onPrayerButtonClicked() {
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(mPPos);
     }
 
     @OnClick(R.id.btn_mosque)
     protected void onMosqueButtonClicked() {
-        mViewPager.setCurrentItem(2);
+        mViewPager.setCurrentItem(mMPos);
     }
 
     @Optional
@@ -101,17 +117,17 @@ public class MainActivity extends BaseActivity {
             int active = swapColor(activeColor, Color.WHITE, positionOffset);
             int normal = swapColor(activeColor, Color.WHITE, 1 - positionOffset);
 
-            if (position == 0) {
+            if (position == mQPos) {
                 mQiblaButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
                 mPrayerButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
             }
 
-            if (position == 1) {
+            if (position == mPPos) {
                 mPrayerButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
                 mMosqueButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
             }
 
-            if (position == 2) {
+            if (position == mMPos) {
                 mMosqueButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
                 mPrayerButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
             }
@@ -119,11 +135,11 @@ public class MainActivity extends BaseActivity {
             if (!mLandscapeMode) {
                 if (moresize == 0) moresize = mSettingsButton.getHeight() * 2;
 
-                if (position == 0) {
+                if (position == mPPos - 1) {
                     mSettingsButton.setTranslationY(moresize * (1 - positionOffset));
                 }
 
-                if (position == 1) {
+                if (position == mPPos) {
                     mSettingsButton.setTranslationY(moresize * positionOffset);
                 }
             }
