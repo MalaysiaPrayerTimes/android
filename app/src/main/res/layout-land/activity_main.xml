@@ -10,30 +10,30 @@
         style="@style/Toolbar">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:clipChildren="true"
             android:clipToPadding="true">
 
             <ImageButton
                 android:id="@+id/btn_qibla"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:padding="16dp"
                 style="@style/MainScreen.ToolbarButtons.Qibla" />
 
             <ImageButton
                 android:id="@+id/btn_prayer"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:padding="16dp"
                 style="@style/MainScreen.ToolbarButtons.Prayer" />
 
             <ImageButton
                 android:id="@+id/btn_mosque"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:padding="16dp"
                 style="@style/MainScreen.ToolbarButtons.Mosque" />
 
         </LinearLayout>
@@ -45,15 +45,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar" />
-
-    <ImageButton
-        android:id="@+id/btn_settings"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        style="@style/MainScreen.Settings" />
 
 </RelativeLayout>

@@ -1,5 +1,33 @@
 <resources>
 
+    <!-- Main Screen -->
+
+    <style name="MainScreen" />
+
+    <style name="MainScreen.Settings">
+        <item name="android:src">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="MainScreen.ToolbarButtons">
+        <item name="android:tint">#fff</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="MainScreen.ToolbarButtons.Mosque">
+        <item name="android:src">@drawable/ic_tab_mosque</item>
+    </style>
+
+    <style name="MainScreen.ToolbarButtons.Prayer">
+        <item name="android:src">@drawable/ic_tab_prayer</item>
+    </style>
+
+    <style name="MainScreen.ToolbarButtons.Qibla">
+        <item name="android:src">@drawable/ic_tab_qibla</item>
+    </style>
+
+    <!-- Prayer List -->
+
     <style name="PrayerList" />
 
     <style name="PrayerList.List" parent="Base.TextAppearance.AppCompat.Large">

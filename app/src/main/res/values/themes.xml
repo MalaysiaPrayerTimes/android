@@ -7,7 +7,15 @@
     </style>
 
     <style name="MptTheme" parent="MptBaseTheme">
+        <item name="popupMenuStyle">@style/Widget.AppCompat.PopupMenu.Overflow</item>
+    </style>
 
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat</item>
     </style>
 
 </resources>

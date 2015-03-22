@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
@@ -16,9 +16,11 @@ import com.i906.mpt.adapter.MainAdapter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 public class MainActivity extends BaseActivity {
 
+    protected boolean mLandscapeMode = false;
     protected MainAdapter mAdapter;
 
     @InjectView(R.id.frame)
@@ -39,6 +41,7 @@ public class MainActivity extends BaseActivity {
     @InjectView(R.id.btn_mosque)
     protected ImageButton mMosqueButton;
 
+    @Optional
     @InjectView(R.id.btn_settings)
     protected ImageButton mSettingsButton;
 
@@ -48,12 +51,17 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        mLandscapeMode = getResources().getBoolean(R.bool.landscape_mode);
         mAdapter = new MainAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOnPageChangeListener(mPageChangeListener);
         mViewPager.setCurrentItem(1);
         mViewPager.setOffscreenPageLimit(3);
-        if (mToolbar != null) setSupportActionBar(mToolbar);
+
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
     }
 
     @OnClick(R.id.btn_qibla)
@@ -71,9 +79,10 @@ public class MainActivity extends BaseActivity {
         mViewPager.setCurrentItem(2);
     }
 
+    @Optional
     @OnClick(R.id.btn_settings)
     protected void onSettingsButtonClicked() {
-        PopupMenu menu = new PopupMenu(this, mSettingsButton, Gravity.BOTTOM | Gravity.RIGHT);
+        PopupMenu menu = new PopupMenu(this, mSettingsButton);
         mSettingsButton.setOnTouchListener(menu.getDragToOpenListener());
         menu.inflate(R.menu.menu_main);
         menu.show();
@@ -88,7 +97,6 @@ public class MainActivity extends BaseActivity {
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             if (activeColor == -1) activeColor = getResources().getColor(R.color.mpt_color_accent);
-            if (moresize == 0) moresize = mSettingsButton.getHeight() * 2;
 
             int active = swapColor(activeColor, Color.WHITE, positionOffset);
             int normal = swapColor(activeColor, Color.WHITE, 1 - positionOffset);
@@ -108,12 +116,16 @@ public class MainActivity extends BaseActivity {
                 mPrayerButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
             }
 
-            if (position == 0) {
-                mSettingsButton.setTranslationY(moresize * (1 - positionOffset));
-            }
+            if (!mLandscapeMode) {
+                if (moresize == 0) moresize = mSettingsButton.getHeight() * 2;
 
-            if (position == 1) {
-                mSettingsButton.setTranslationY(moresize * positionOffset);
+                if (position == 0) {
+                    mSettingsButton.setTranslationY(moresize * (1 - positionOffset));
+                }
+
+                if (position == 1) {
+                    mSettingsButton.setTranslationY(moresize * positionOffset);
+                }
             }
         }
 
@@ -131,4 +143,10 @@ public class MainActivity extends BaseActivity {
             return Color.argb(0xFF, r, g, b);
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mLandscapeMode) getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 }

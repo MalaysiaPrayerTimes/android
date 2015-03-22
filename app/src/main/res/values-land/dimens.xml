@@ -1,5 +1,7 @@
 <resources>
 
+    <bool name="landscape_mode">true</bool>
+
     <!-- Main Time -->
 
     <dimen name="margin_main_time_bottom">-16dp</dimen>
