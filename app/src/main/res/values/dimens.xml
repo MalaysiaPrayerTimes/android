@@ -15,4 +15,5 @@
     <!-- Prayer List -->
 
     <dimen name="size_prayer_list">24sp</dimen>
+
 </resources>

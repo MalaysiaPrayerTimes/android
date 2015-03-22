@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Main Time -->
+
+    <dimen name="margin_main_time_bottom">-16dp</dimen>
+    <dimen name="margin_main_time_top">-16dp</dimen>
+    <dimen name="padding_main_time">8dp</dimen>
+    <dimen name="size_main_time">160sp</dimen>
+
+    <!-- Prayer List -->
+
+    <dimen name="size_prayer_list">20sp</dimen>
+
+</resources>
