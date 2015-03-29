@@ -25,6 +25,8 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
     protected boolean mUseAccelerometer = false;
     protected boolean mUseMagnetic = false;
 
+    protected int mDeviceOrientation;
+
     protected Location mKaabaLocation;
     protected Location mCurrentLocation;
 
@@ -62,6 +64,7 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
         mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagneticSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         mRotationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        mDeviceOrientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
     }
 
     private void loadSensorData(SensorEvent event) {
@@ -72,7 +75,7 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
     }
 
     private void configureDeviceAngle() {
-        switch (getActivity().getWindowManager().getDefaultDisplay().getRotation()) {
+        switch (mDeviceOrientation) {
             case Surface.ROTATION_0: // Portrait
                 SensorManager.remapCoordinateSystem(mRotation, SensorManager.AXIS_X,
                         SensorManager.AXIS_Y, mRotationMapped);
