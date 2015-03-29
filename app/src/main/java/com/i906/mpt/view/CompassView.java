@@ -2,11 +2,16 @@ package com.i906.mpt.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 public class CompassView extends ImageView {
 
+    private static String KEY_VIEW_STATE = "view_state";
+    private static String KEY_COMPASS_X_ROTATION = "compass_x_rotation";
+    private static String KEY_COMPASS_Z_ROTATION = "compass_z_rotation";
     private static long FRAME_RATE = 1000 / 60;
     private static int DIVIDER = 8;
 
@@ -67,5 +72,24 @@ public class CompassView extends ImageView {
 
     public void setAngleZ(float rotation) {
         mRotationZ = rotation;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        Bundle b = (Bundle) state;
+        Parcelable viewState = b.getParcelable(KEY_VIEW_STATE);
+        mLastRotationX = b.getFloat(KEY_COMPASS_X_ROTATION, 0);
+        mLastRotationZ = b.getFloat(KEY_COMPASS_Z_ROTATION, 0);
+        super.onRestoreInstanceState(viewState);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable state = super.onSaveInstanceState();
+        Bundle b = new Bundle();
+        b.putParcelable(KEY_VIEW_STATE, state);
+        b.putFloat(KEY_COMPASS_X_ROTATION, mLastRotationX);
+        b.putFloat(KEY_COMPASS_Z_ROTATION, mLastRotationZ);
+        return b;
     }
 }

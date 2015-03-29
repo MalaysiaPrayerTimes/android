@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
     protected boolean mUseMagnetic = false;
 
     protected int mDeviceOrientation;
+    protected OrientationEventListener mOrientationListener;
 
     protected Location mKaabaLocation;
     protected Location mCurrentLocation;
@@ -64,7 +66,13 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
         mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagneticSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         mRotationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        mDeviceOrientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+
+        mOrientationListener = new OrientationEventListener(getActivity()) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                refreshOrientation();
+            }
+        };
     }
 
     private void loadSensorData(SensorEvent event) {
@@ -146,12 +154,18 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
         return mKaabaLocation;
     }
 
+    private void refreshOrientation() {
+        mDeviceOrientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) { }
 
     @Override
     public void onResume() {
         super.onResume();
+        refreshOrientation();
+        mOrientationListener.enable();
 
         boolean v1 = false;
         boolean v2 = false;
@@ -179,5 +193,6 @@ public class QiblaFragment extends Fragment implements SensorEventListener {
     public void onPause() {
         super.onPause();
         mSensorManager.unregisterListener(this);
+        mOrientationListener.disable();
     }
 }
