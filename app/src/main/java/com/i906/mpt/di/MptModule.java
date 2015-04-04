@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.i906.mpt.BuildConfig;
+import com.i906.mpt.api.FoursquareApi;
 import com.i906.mpt.api.PrayerApi;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -27,6 +28,11 @@ public class MptModule {
 
     private static final String MPT_ID = "mpt-android";
     private static final String MPT_URL = "http://mpt.i906.my";
+
+    private static final String FOURSQUARE_CLIENT_ID = "SIRVWW1NZJ1DFUZI5GSFAZX1FEVD5ELYNVTAO4BJ4BAT2R2W";
+    private static final String FOURSQUARE_CLIENT_SECRET = "RNGOIIJAN4GMIEGR40KQXB3NWS5XCGUPA2HOF52HPDS4RSV3";
+    private static final String FOURSQUARE_API_VERSION = "20150404";
+    private static final String FOURSQUARE_URL = "https://api.foursquare.com/v2";
 
     protected Application mContext;
 
@@ -57,6 +63,26 @@ public class MptModule {
                 .setLog(new AndroidLog("mpt-pa"));
 
         return restAdapter.build().create(PrayerApi.class);
+    }
+
+    @Provides
+    @Singleton
+    public FoursquareApi provideFoursquareApi(OkHttpClient http) {
+
+        RestAdapter.Builder restAdapter = new RestAdapter.Builder()
+                .setRequestInterceptor(request -> {
+                    request.addQueryParam("client_id", FOURSQUARE_CLIENT_ID);
+                    request.addQueryParam("client_secret", FOURSQUARE_CLIENT_SECRET);
+                    request.addQueryParam("v", FOURSQUARE_API_VERSION);
+                })
+                .setEndpoint(FOURSQUARE_URL)
+                .setClient(new OkClient(http));
+
+
+        if (BuildConfig.DEBUG) restAdapter.setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new AndroidLog("mpt-fa"));
+
+        return restAdapter.build().create(FoursquareApi.class);
     }
 
     @Provides
