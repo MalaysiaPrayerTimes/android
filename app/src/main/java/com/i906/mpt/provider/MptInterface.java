@@ -1,5 +1,6 @@
 package com.i906.mpt.provider;
 
+import com.i906.mpt.BuildConfig;
 import com.i906.mpt.extension.PrayerInterface;
 
 import java.util.ArrayList;
@@ -102,6 +103,6 @@ public class MptInterface implements PrayerInterface {
 
     @Override
     public int getAppVersion() {
-        return 2631;
+        return BuildConfig.VERSION_CODE;
     }
 }
