@@ -1,7 +1,6 @@
 package com.i906.mpt.util;
 
 import com.i906.mpt.api.FoursquareApi;
-import com.i906.mpt.model.FoursquareResponse;
 import com.i906.mpt.model.Mosque;
 
 import java.util.List;
@@ -30,14 +29,9 @@ public class MosqueHelper {
 
     public Observable<List<Mosque>> getNearbyMosques() {
         return mLocationHelper.getLocation()
-                .flatMap(location -> {
-                    String latLng = String.format("%s,%s",
-                            location.getLatitude(), location.getLongitude());
-
-                    float acc = location.getAccuracy();
-
-                    return mApi.searchVenue(mIntent, mRadius, mMaxResults, mCategoryId, latLng, acc);
-                })
+                .flatMap(location -> mApi.searchVenue(mIntent, mRadius, mMaxResults, mCategoryId,
+                        String.format("%s,%s", location.getLatitude(), location.getLongitude()),
+                        location.getAccuracy()))
                 .flatMap(foursquareResponse -> Observable.just(foursquareResponse.getMosques()));
     }
 

@@ -10,6 +10,10 @@
         <item name="popupMenuStyle">@style/Widget.AppCompat.PopupMenu.Overflow</item>
     </style>
 
+    <style name="ProgressCircle" parent="android:Widget.Holo.ProgressBar">
+        <item name="cpb_color">@color/mpt_color_accent</item>
+    </style>
+
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
