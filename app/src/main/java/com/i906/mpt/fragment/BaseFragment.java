@@ -9,6 +9,7 @@ import com.i906.mpt.extension.ExtensionManager;
 import com.i906.mpt.provider.MptInterface;
 import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.MosqueHelper;
+import com.i906.mpt.util.QiblaHelper;
 
 import javax.inject.Inject;
 
@@ -21,6 +22,9 @@ public class BaseFragment extends Fragment {
 
     @Inject
     protected MosqueHelper mMosqueHelper;
+
+    @Inject
+    protected QiblaHelper mQiblaHelper;
 
     @Inject
     protected ExtensionManager mExtensionManager;
