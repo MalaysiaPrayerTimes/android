@@ -21,7 +21,7 @@ public interface MptComponent {
 
     final class Initializer {
         public static MptComponent init(MptApplication app) {
-            return Dagger_MptComponent.builder()
+            return DaggerMptComponent.builder()
                     .mptModule(new MptModule(app))
                     .systemModule(new SystemModule(app))
                     .build();

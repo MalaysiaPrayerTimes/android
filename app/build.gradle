@@ -85,10 +85,11 @@ android {
 
 dependencies {
     compile project(':mpt-extension:extension')
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:recyclerview-v7:22.1.1'
     compile 'com.jakewharton:butterknife:6.1.0'
-    compile 'com.google.dagger:dagger:2.0-SNAPSHOT'
-    apt "com.google.dagger:dagger-compiler:2.0-SNAPSHOT"
+    compile 'com.google.dagger:dagger:2.0'
+    apt 'com.google.dagger:dagger-compiler:2.0'
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'io.reactivex:rxandroid:0.24.0'
     compile 'com.google.code.gson:gson:2.3.1'
