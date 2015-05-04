@@ -11,7 +11,7 @@ public interface PrayerApi {
     @GET("/mpt.json")
     Observable<PrayerResponse> getPrayerData(
             @Query("code") String code,
-            @Query("month") int month,
-            @Query("year") int year
+            @Query("year") int year,
+            @Query("month") int month
     );
 }

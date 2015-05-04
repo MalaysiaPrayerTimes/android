@@ -1,18 +1,21 @@
 package com.i906.mpt.di;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.api.FoursquareApi;
 import com.i906.mpt.api.PrayerApi;
+import com.i906.mpt.model.PrayerData;
+import com.i906.mpt.model.PrayerDataTypeAdapter;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
-import java.util.Date;
+import java.io.File;
 
 import javax.inject.Singleton;
 
@@ -45,8 +48,7 @@ public class MptModule {
     public PrayerApi providePrayerApi(OkHttpClient http) {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context)
-                        -> new Date(json.getAsJsonPrimitive().getAsLong() * 1000))
+                .registerTypeAdapter(PrayerData.class, new PrayerDataTypeAdapter())
                 .create();
 
         RestAdapter.Builder restAdapter = new RestAdapter.Builder()
@@ -87,7 +89,7 @@ public class MptModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient() {
+    public OkHttpClient provideOkHttpClient(Context context) {
         OkHttpClient httpClient = new OkHttpClient();
 
         httpClient.interceptors().add(chain -> {
@@ -99,7 +101,18 @@ public class MptModule {
             return chain.proceed(requestWithUserAgent);
         });
 
+        httpClient.setCache(new Cache(createDefaultCacheDir(context), 10 * 1024 * 1024));
+
         return httpClient;
+    }
+
+    private File createDefaultCacheDir(Context context) {
+        File cache = new File(context.getApplicationContext().getCacheDir(), "okhttp-cache");
+        if (!cache.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            cache.mkdirs();
+        }
+        return cache;
     }
 
     private String getDefaultUserAgent(String cversion) {
