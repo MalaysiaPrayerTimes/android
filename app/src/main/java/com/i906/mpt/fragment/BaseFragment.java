@@ -10,6 +10,7 @@ import com.i906.mpt.provider.MptInterface;
 import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.MosqueHelper;
 import com.i906.mpt.util.QiblaHelper;
+import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
 
@@ -42,5 +43,12 @@ public class BaseFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = MptApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 }
