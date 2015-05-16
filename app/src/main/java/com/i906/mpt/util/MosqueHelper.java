@@ -3,6 +3,7 @@ package com.i906.mpt.util;
 import com.i906.mpt.api.FoursquareApi;
 import com.i906.mpt.model.Mosque;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ public class MosqueHelper {
     protected int mRadius = 5000;
     protected int mMaxResults = 15;
 
+    protected List<Mosque> mList;
     protected FoursquareApi mApi;
     protected LocationHelper mLocationHelper;
 
@@ -25,6 +27,7 @@ public class MosqueHelper {
     public MosqueHelper(FoursquareApi api, LocationHelper h1) {
         mApi = api;
         mLocationHelper = h1;
+        mList = new ArrayList<>();
     }
 
     public Observable<List<Mosque>> getNearbyMosques() {
@@ -32,7 +35,12 @@ public class MosqueHelper {
                 .flatMap(location -> mApi.searchVenue(mIntent, mRadius, mMaxResults, mCategoryId,
                         String.format("%s,%s", location.getLatitude(), location.getLongitude()),
                         location.getAccuracy()))
-                .flatMap(foursquareResponse -> Observable.just(foursquareResponse.getMosques()));
+                .flatMap(foursquareResponse -> Observable.just(foursquareResponse.getMosques()))
+                .doOnNext(mosques -> mList = mosques);
+    }
+
+    public List<Mosque> getCachedMosques() {
+        return mList;
     }
 
     public void setRadius(int radius) {

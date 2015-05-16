@@ -21,7 +21,7 @@ import butterknife.OnClick;
 public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder> {
 
     protected List<Mosque> mList;
-    protected MosqueListener mListener;
+    protected List<MosqueListener> mListeners;
 
     public MosqueAdapter() {
         mList = new ArrayList<>();
@@ -32,7 +32,7 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_mosque, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, this);
     }
 
     @Override
@@ -52,7 +52,10 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
         holder.address.setText(address);
         holder.distance.setText(distance);
         holder.mosque = m;
-        holder.listener = mListener;
+    }
+
+    public List<Mosque> getMosqueList() {
+        return mList;
     }
 
     public void setMosqueList(List<Mosque> list) {
@@ -61,8 +64,17 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    public void setOnMosqueSelectedListener(MosqueListener listener) {
-        mListener = listener;
+    public void addMosqueListener(MosqueListener listener) {
+        if (mListeners == null) {
+            mListeners = new ArrayList<>();
+        }
+        mListeners.add(listener);
+    }
+
+    public void removeMosqueListener(MosqueListener listener) {
+        if (mListeners != null) {
+            mListeners.remove(listener);
+        }
     }
 
     public Mosque getItem(int position) {
@@ -79,6 +91,18 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
         return mList.size();
     }
 
+    public boolean isEmpty() {
+        return mList.isEmpty();
+    }
+
+    protected void onMosqueSelected(Mosque mosque) {
+        if (mListeners != null) {
+            for (int i = mListeners.size() - 1; i >= 0; i--) {
+                mListeners.get(i).onMosqueSelected(mosque);
+            }
+        }
+    }
+
     public interface MosqueListener {
         void onMosqueSelected(Mosque mosque);
     }
@@ -86,7 +110,7 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected Mosque mosque;
-        protected MosqueListener listener;
+        protected MosqueAdapter adapter;
 
         @InjectView(R.id.tv_name)
         protected TextView name;
@@ -97,15 +121,16 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
         @InjectView(R.id.tv_distance)
         protected TextView distance;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, MosqueAdapter adapter) {
             super(itemView);
             ButterKnife.inject(this, itemView);
+            this.adapter = adapter;
         }
 
         @OnClick(R.id.list_item)
         protected void onMosqueSelected() {
-            if (listener != null) {
-                listener.onMosqueSelected(mosque);
+            if (adapter != null) {
+                adapter.onMosqueSelected(mosque);
             }
         }
     }

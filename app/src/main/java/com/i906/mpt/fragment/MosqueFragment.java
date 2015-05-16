@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.i906.mpt.adapter.MosqueAdapter;
 import com.i906.mpt.model.Mosque;
@@ -17,38 +17,44 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapter.MosqueListener {
 
-    private Subscription mSubscription;
+    private CompositeSubscription mSubscription = new CompositeSubscription();
     private LinearLayoutManager mLayoutManager;
     private MosqueAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        onRefresh();
+        mAdapter = new MosqueAdapter();
+        mAdapter.addMosqueListener(this);
+        mAdapter.setMosqueList(mMosqueHelper.getCachedMosques());
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (mAdapter.isEmpty()) {
+            onRefresh();
+        } else {
+            setListShown(true, false);
+        }
     }
 
     @Override
     public void setupRecyclerView() {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnScrollListener(mScrollListener);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
-
-        if (mAdapter == null) {
-            mAdapter = new MosqueAdapter();
-            mAdapter.setOnMosqueSelectedListener(this);
-        }
-
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onRefresh() {
-        mSubscription = mMosqueHelper.getNearbyMosques()
+        Subscription s = mMosqueHelper.getNearbyMosques()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Mosque>>() {
@@ -68,6 +74,8 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
                         mAdapter.setMosqueList(mosques);
                     }
                 });
+
+        mSubscription.add(s);
     }
 
     @Override
@@ -83,18 +91,10 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
         startActivity(intent);
     }
 
-    private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            boolean e = mLayoutManager.findFirstCompletelyVisibleItemPosition() == 0;
-            mListContainer.setEnabled(e);
-        }
-    };
-
     @Override
     public void onStop() {
         super.onStop();
         mSubscription.unsubscribe();
-        mRecyclerView.removeOnScrollListener(mScrollListener);
+        mAdapter.removeMosqueListener(this);
     }
 }

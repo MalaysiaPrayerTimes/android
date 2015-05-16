@@ -3,7 +3,6 @@ package com.i906.mpt.di;
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.fragment.BaseFragment;
 import com.i906.mpt.ui.BaseActivity;
-import com.i906.mpt.ui.MainActivity;
 
 import javax.inject.Singleton;
 
