@@ -28,7 +28,6 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new MosqueAdapter();
-        mAdapter.addMosqueListener(this);
         mAdapter.setMosqueList(mMosqueHelper.getCachedMosques());
     }
 
@@ -86,6 +85,12 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
         String uri = "geo:0,0?q=" + Uri.encode(String.format("%s@%f,%f", name, lat, lng), "UTF-8");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.addMosqueListener(this);
     }
 
     @Override
