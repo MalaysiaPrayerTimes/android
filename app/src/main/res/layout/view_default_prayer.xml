@@ -1,79 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        style="@style/PrayerList.Contents"
+        tools:visibility="visible">
 
-        <com.i906.mpt.view.AutoResizeTextView
-            android:id="@+id/tv_prayer_time"
+        <include layout="@layout/view_prayer_header" />
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/PrayerList.MainTime"
-            tools:text="19:26" />
+            android:padding="16dp"
+            android:src="@drawable/ic_divider" />
 
-        <LinearLayout
+        <com.linearlistview.LinearListView
+            android:id="@+id/list_prayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_first_line"
-            android:paddingRight="@dimen/padding_first_line"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_prayer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/PrayerList.MainPrayerName"
-                tools:text="Maghrib" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/ic_place"
-                android:tint="@color/main_location" />
-
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/PrayerList.MainLocation"
-                tools:text="Kuala Lumpur" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            style="@style/PrayerList.MainDate"
-            tools:text="29 jamadilawal 1436" />
+            style="@style/PrayerList.ListContainer" />
 
     </LinearLayout>
 
-    <ImageView
+    <FrameLayout
+        android:id="@+id/progress_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:src="@drawable/ic_divider" />
+        android:layout_height="match_parent"
+        tools:visibility="gone">
 
-    <com.linearlistview.LinearListView
-        android:id="@+id/list_prayer"
+        <include layout="@layout/view_prayer_progress" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/error_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="56dp"
-        android:paddingRight="56dp"
-        android:orientation="vertical" />
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="gone">
 
-</LinearLayout>
+        <include layout="@layout/view_prayer_error" />
+
+    </FrameLayout>
+
+</merge>

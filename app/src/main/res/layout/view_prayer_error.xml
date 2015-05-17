@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/PrayerList.ErrorContainer">
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        style="@style/PrayerList.LargeIcon.Error" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/error_no_location"
+        style="@style/PrayerList.ErrorText" />
+
+    <Button
+        android:id="@+id/btn_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:textAllCaps="true"
+        android:text="@string/label_retry"
+        style="?android:attr/borderlessButtonStyle" />
+
+</LinearLayout>

@@ -6,6 +6,14 @@
 
     <bool name="landscape_mode">false</bool>
 
+    <!-- Error Container -->
+
+    <dimen name="padding_error_container">64dp</dimen>
+
+    <!-- List Container -->
+
+    <dimen name="padding_list_container">56dp</dimen>
+
     <!-- Main Time -->
 
     <dimen name="margin_main_time_bottom">-24dp</dimen>
@@ -13,7 +21,7 @@
     <dimen name="padding_first_line">32dp</dimen>
     <dimen name="padding_main_time">24dp</dimen>
     <dimen name="size_first_line">18sp</dimen>
-    <dimen name="size_main_time">140sp</dimen>
+    <dimen name="size_main_time">125sp</dimen>
     <dimen name="size_second_line">14sp</dimen>
 
     <!-- Prayer List -->

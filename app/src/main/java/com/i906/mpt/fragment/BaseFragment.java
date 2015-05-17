@@ -9,6 +9,7 @@ import com.i906.mpt.extension.ExtensionManager;
 import com.i906.mpt.provider.MptInterface;
 import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.MosqueHelper;
+import com.i906.mpt.util.PrayerHelper;
 import com.i906.mpt.util.QiblaHelper;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -26,6 +27,9 @@ public class BaseFragment extends Fragment {
 
     @Inject
     protected QiblaHelper mQiblaHelper;
+
+    @Inject
+    protected PrayerHelper mPrayerHelper;
 
     @Inject
     protected ExtensionManager mExtensionManager;
