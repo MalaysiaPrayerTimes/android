@@ -63,7 +63,7 @@ public class GeocoderHelper {
                     subscriber.onError(new EmptyAddressError());
                 }
             } catch (IOException e) {
-                subscriber.onError(e);
+                subscriber.onError(new GeocoderError(e));
             }
         });
     }
@@ -72,9 +72,19 @@ public class GeocoderHelper {
         mMaxResults = maxResults;
     }
 
-    public static class EmptyPlaceError extends RuntimeException {
+    public static class GeocoderError extends RuntimeException {
+
+        public GeocoderError() {
+        }
+
+        public GeocoderError(Throwable throwable) {
+            super(throwable);
+        }
     }
 
-    public static class EmptyAddressError extends RuntimeException {
+    public static class EmptyPlaceError extends GeocoderError {
+    }
+
+    public static class EmptyAddressError extends GeocoderError {
     }
 }

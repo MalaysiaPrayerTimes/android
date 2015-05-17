@@ -11,7 +11,6 @@ import com.i906.mpt.model.Mosque;
 import com.i906.mpt.view.DividerItemDecoration;
 
 import java.util.List;
-import java.util.Locale;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -84,9 +83,7 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
         double lat = mosque.getLatitude();
         double lng = mosque.getLongitude();
 
-        String coordinates = String.format(Locale.ENGLISH, "%f,%f", lat, lng);
-        String uri = String.format(Locale.ENGLISH, "geo:%s(%s)?q=%s (%s)", coordinates, name,
-                coordinates, name);
+        String uri = "geo:0,0?q=" + Uri.encode(String.format("%s@%f,%f", name, lat, lng), "UTF-8");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
     }

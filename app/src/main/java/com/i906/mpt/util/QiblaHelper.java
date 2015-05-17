@@ -1,12 +1,12 @@
 package com.i906.mpt.util;
 
 import android.content.Context;
-import android.location.Location;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 @Singleton
 public class QiblaHelper {
@@ -22,7 +22,8 @@ public class QiblaHelper {
 
     public Observable<SensorObservable.AngleInfo> requestQiblaAngles(int orientation) {
         return mLocationHelper.getLocation()
-                .flatMap((Location location) ->
-                        Observable.create(new SensorObservable(mContext, location, orientation)));
+                .flatMap(location ->
+                        Observable.create(new SensorObservable(mContext, location, orientation))
+                                .subscribeOn(Schedulers.computation()));
     }
 }

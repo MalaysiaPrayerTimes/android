@@ -33,7 +33,7 @@ public class QiblaFragment extends BaseFragment {
 
         int orientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
         mSubscription = mQiblaHelper.requestQiblaAngles(orientation)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<SensorObservable.AngleInfo>() {
                     @Override
