@@ -11,6 +11,7 @@ import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.MosqueHelper;
 import com.i906.mpt.util.PrayerHelper;
 import com.i906.mpt.util.QiblaHelper;
+import com.i906.mpt.util.preference.GeneralPrefs;
 import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
@@ -18,6 +19,9 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 
 public class BaseFragment extends Fragment {
+
+    @Inject
+    protected GeneralPrefs mPrefs;
 
     @Inject
     protected LocationHelper mLocationHelper;

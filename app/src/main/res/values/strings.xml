@@ -10,6 +10,25 @@
 
     <string name="label_extension_permission">add extensions to Malaysia Prayer Times</string>
     <string name="label_extension_description">Allows to add extensions to Malaysia Prayer Times</string>
+    <string name="label_refresh">Refresh</string>
     <string name="label_retry">Retry</string>
+    <string name="label_settings">Settings</string>
+
+    <!-- ExtensionsActivity -->
+
+    <string name="label_extensions">Extensions</string>
+
+    <!-- SettingsActivity -->
+
+    <string name="label_about">About</string>
+    <string name="label_build">Build number</string>
+    <string name="label_feedback">Feedback</string>
+    <string name="label_interface">Interface</string>
+    <string name="label_prayer_screen">Prayer screen</string>
+    <string name="label_review">Rate and review MPT</string>
+    <string name="label_review_summary">Rate and review MPT on Google Play</string>
+    <string name="label_theme">Theme</string>
+    <string name="label_theme_dark">Dark</string>
+    <string name="label_version">Version</string>
 
 </resources>

@@ -2,9 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="200"
+        app:showAsAction="never"
+        android:title="@string/label_settings" />
+
+    <item
         android:id="@+id/action_refresh"
         android:orderInCategory="200"
         app:showAsAction="never"
-        android:title="Refresh" />
+        android:title="@string/label_refresh" />
 
 </menu>

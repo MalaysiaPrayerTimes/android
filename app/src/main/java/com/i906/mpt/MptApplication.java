@@ -7,6 +7,8 @@ import com.i906.mpt.di.MptComponent;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import timber.log.Timber;
+
 public class MptApplication extends Application {
 
     private MptComponent mComponent;
@@ -17,6 +19,10 @@ public class MptApplication extends Application {
         super.onCreate();
         mRefWatcher = LeakCanary.install(this);
         mComponent = MptComponent.Initializer.init(this);
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     public static RefWatcher getRefWatcher(Context context) {

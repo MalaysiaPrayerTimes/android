@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/label_about">
+
+        <Preference
+            android:key="general_pref_review"
+            android:title="@string/label_review"
+            android:summary="@string/label_review_summary" />
+
+        <Preference
+            android:key="general_pref_feedback"
+            android:title="@string/label_feedback" />
+
+        <Preference
+            android:key="general_pref_version"
+            android:title="@string/label_version"
+            android:summary="2.0.0" />
+
+        <Preference
+            android:key="general_pref_build"
+            android:title="@string/label_build"
+            android:summary="3349 5594fd5 2015-05-31T10:29Z" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/label_interface">
+
+        <Preference
+            android:key="general_pref_theme"
+            android:title="@string/label_theme"
+            android:summary="@string/label_theme_dark"
+            android:enabled="false" />
+
+        <Preference
+            android:key="general_pref_screen"
+            android:title="@string/label_prayer_screen" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

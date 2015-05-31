@@ -19,14 +19,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dalvik.system.PathClassLoader;
+import timber.log.Timber;
 
 @Singleton
 public class ExtensionManager {
 
     public static final String EXTENSION_PERMISSION = "com.i906.mpt.permission.MPT_EXTENSION";
     public static final String EXTENSION_METADATA = "com.i906.mpt.extension.ExtensionInfo";
-
-    protected List<ExtensionInfo> mExtensionList;
 
     @Inject
     protected Context mContext;
@@ -35,7 +34,9 @@ public class ExtensionManager {
     protected PackageManager mPackageManager;
 
     @Inject
-    public ExtensionManager() { }
+    public ExtensionManager() {
+        Timber.tag("mpt-ExtensionManager");
+    }
 
     public List<ExtensionInfo> getDefaultExtensions() {
         List<ExtensionInfo> de = new ArrayList<>();
@@ -48,6 +49,7 @@ public class ExtensionManager {
         ExtensionInfo.Screen ds = new ExtensionInfo.Screen();
         ds.isNative = true;
         ds.name = "Original Screen";
+        ds.view = DefaultPrayerView.class.getCanonicalName();
         ds.nativeView = DefaultPrayerView.class;
 
         dei.screens.add(ds);
@@ -57,8 +59,7 @@ public class ExtensionManager {
     }
 
     public List<ExtensionInfo> getExtensions() {
-
-        mExtensionList = getDefaultExtensions();
+        List<ExtensionInfo> el = getDefaultExtensions();
 
         List<PackageInfo> packages = mPackageManager.getInstalledPackages(
                 PackageManager.GET_PERMISSIONS | PackageManager.GET_META_DATA);
@@ -71,11 +72,37 @@ public class ExtensionManager {
                         EXTENSION_METADATA);
 
                 ExtensionInfo ei = parseExtensionInfo(pi.packageName, xrp);
-                if (ei != null) mExtensionList.add(ei);
+                if (ei != null) el.add(ei);
             }
         }
 
-        return mExtensionList;
+        return el;
+    }
+
+    public List<ExtensionInfo.Screen> getScreens() {
+        List<ExtensionInfo> el = getExtensions();
+        List<ExtensionInfo.Screen> screens = new ArrayList<>();
+
+        for (ExtensionInfo ei : el) {
+            for (ExtensionInfo.Screen s : ei.getScreens()) {
+                if (s == null) continue;
+                if (s.getView() == null) continue;
+                screens.add(s);
+            }
+        }
+
+        return screens;
+    }
+
+    @Nullable
+    public PrayerView getPrayerView(String screenView) {
+        List<ExtensionInfo.Screen> screens = getScreens();
+
+        for (ExtensionInfo.Screen s : screens) {
+            if (s.getView().equals(screenView)) return getPrayerView(s);
+        }
+
+        return null;
     }
 
     @Nullable
@@ -106,14 +133,17 @@ public class ExtensionManager {
             PathClassLoader myClassLoader = new PathClassLoader(apkName,
                     PrayerView.class.getClassLoader());
 
-            Class<?> handler = Class.forName(screen.view, true, myClassLoader);
-            Constructor c = handler.getConstructor(Context.class);
-            Context extensionContext = mContext.createPackageContext(screen.apk,
-                    Context.CONTEXT_RESTRICTED);
-
-            return (PrayerView) c.newInstance(extensionContext);
+            try {
+                Class<?> handler = Class.forName(screen.view, true, myClassLoader);
+                Constructor c = handler.getConstructor(Context.class);
+                Context extensionContext = mContext.createPackageContext(screen.apk,
+                        Context.CONTEXT_RESTRICTED);
+                return (PrayerView) c.newInstance(extensionContext);
+            } catch (IncompatibleClassChangeError icce) {
+                Timber.e("Extension %s is incompatible with this version of MPT.", screen.getName());
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.e(e, "Unable to create extension %s.", screen.getName());
         }
 
         return null;
