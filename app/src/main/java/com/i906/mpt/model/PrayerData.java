@@ -14,9 +14,17 @@ public class PrayerData {
     protected String place;
     protected List<List<Date>> times;
 
+    public String getLocation() {
+        return place;
+    }
+
+    public List<List<Date>> getPrayerTimes() {
+        return times;
+    }
+
     @Override
     public String toString() {
-        return String.format("[PrayerData code=\"%s\" jakim=\"%s\" place=\"%s\"]",
-                code, jakim, place);
+        return String.format("[PrayerData code=\"%s\" jakim=\"%s\" place=\"%s\" date=\"%s\"]",
+                code, jakim, place, readableDate);
     }
 }

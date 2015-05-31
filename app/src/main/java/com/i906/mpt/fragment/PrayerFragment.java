@@ -7,28 +7,64 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.i906.mpt.R;
-import com.i906.mpt.extension.ExtensionInfo;
 import com.i906.mpt.extension.PrayerView;
+import com.i906.mpt.provider.MptInterface;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import timber.log.Timber;
 
-public class PrayerFragment extends BaseFragment {
+public class PrayerFragment extends BaseFragment implements MptInterface.MptListener {
 
-    @InjectView(R.id.frame)
-    protected FrameLayout mFrameView;
+    protected String mSelectedView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSelectedView = mPrefs.getSelectedPrayerView();
+        Timber.tag("mpt-PrayerFragment");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_prayer, container, false);
-        ButterKnife.inject(this, v);
-
-        ExtensionInfo ei = mExtensionManager.getDefaultExtensions().get(0);
-        PrayerView pv = mExtensionManager.getPrayerView(ei.getScreens().get(0));
-        pv.setInterface(mPrayerInterface);
-
-        mFrameView.addView(pv);
-
+        FrameLayout v = (FrameLayout) inflater.inflate(R.layout.fragment_prayer, container, false);
+        setPrayerView(v);
         return v;
+    }
+
+    private void setPrayerView(FrameLayout v) {
+        Timber.v("Selected prayer view: %s", mSelectedView);
+        PrayerView pv = mExtensionManager.getPrayerView(mSelectedView);
+
+        if (pv == null) {
+            mPrefs.resetSelectedPrayerView();
+            mSelectedView = mPrefs.getSelectedPrayerView();
+            pv = mExtensionManager.getPrayerView(mSelectedView);
+        }
+
+        if (pv != null) {
+            pv.setInterface(mPrayerInterface);
+            pv.setId(R.id.prayerview);
+
+            if (v != null) {
+                v.removeAllViews();
+                v.addView(pv);
+            }
+        }
+    }
+
+    @Override
+    public void onPrayerExtensionCrashed(Throwable t) {
+        setPrayerView((FrameLayout) this.getView());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String sv = mPrefs.getSelectedPrayerView();
+
+        if (!sv.equals(mSelectedView)) {
+            mSelectedView = sv;
+            Timber.v("Selected prayer view changed");
+            setPrayerView((FrameLayout) this.getView());
+        }
     }
 }

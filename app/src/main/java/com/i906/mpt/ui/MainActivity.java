@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -101,12 +102,14 @@ public class MainActivity extends BaseActivity {
         PopupMenu menu = new PopupMenu(this, mSettingsButton);
         mSettingsButton.setOnTouchListener(menu.getDragToOpenListener());
         menu.inflate(R.menu.menu_main);
+        menu.setOnMenuItemClickListener(this::onOptionsItemSelected);
         menu.show();
     }
 
     private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         int activeColor = -1;
+        int normalColor = Color.WHITE;
         int moresize = 0;
 
         @Override
@@ -114,8 +117,8 @@ public class MainActivity extends BaseActivity {
 
             if (activeColor == -1) activeColor = getResources().getColor(R.color.mpt_color_accent);
 
-            int active = swapColor(activeColor, Color.WHITE, positionOffset);
-            int normal = swapColor(activeColor, Color.WHITE, 1 - positionOffset);
+            int active = swapColor(activeColor, normalColor, positionOffset);
+            int normal = swapColor(activeColor, normalColor, 1 - positionOffset);
 
             if (position == mQPos) {
                 mQiblaButton.setColorFilter(active, PorterDuff.Mode.SRC_IN);
@@ -146,7 +149,30 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
-        public void onPageSelected(int position) { }
+        public void onPageSelected(int position) {
+            /*
+            if (position == mQPos) {
+                mQiblaButton.setColorFilter(activeColor, PorterDuff.Mode.SRC_IN);
+                mPrayerButton.setColorFilter(normalColor, PorterDuff.Mode.SRC_IN);
+                mMosqueButton.setColorFilter(normalColor, PorterDuff.Mode.SRC_IN);
+                if (mSettingsButton != null) mSettingsButton.setTranslationY(moresize);
+            }
+
+            if (position == mPPos) {
+                mQiblaButton.setColorFilter(normalColor, PorterDuff.Mode.SRC_IN);
+                mPrayerButton.setColorFilter(activeColor, PorterDuff.Mode.SRC_IN);
+                mMosqueButton.setColorFilter(normalColor, PorterDuff.Mode.SRC_IN);
+                if (mSettingsButton != null) mSettingsButton.setTranslationY(0);
+            }
+
+            if (position == mMPos) {
+                mQiblaButton.setColorFilter(normalColor, PorterDuff.Mode.SRC_IN);
+                mPrayerButton.setColorFilter(normalColor, PorterDuff.Mode.SRC_IN);
+                mMosqueButton.setColorFilter(activeColor, PorterDuff.Mode.SRC_IN);
+                if (mSettingsButton != null) mSettingsButton.setTranslationY(moresize);
+            }
+            */
+        }
 
         @Override
         public void onPageScrollStateChanged(int state) { }
@@ -164,5 +190,22 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mLandscapeMode) getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_refresh) {
+            mPrayerInterface.refresh();
+            return true;
+        }
+
+        if (id == R.id.action_settings) {
+            SettingsActivity.start(this);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
