@@ -41,5 +41,6 @@ public class ExtensionsFragment extends BaseRecyclerFragment {
     public void onRefresh() {
         mAdapter.setExtensionList(mExtensionManager.getExtensions());
         setListShown(true, true);
+        mListContainer.setRefreshing(false);
     }
 }

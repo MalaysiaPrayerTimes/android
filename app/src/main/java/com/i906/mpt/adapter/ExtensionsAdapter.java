@@ -57,6 +57,7 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
 
     public void setExtensionList(List<ExtensionInfo> list) {
         mList = list;
+        mScreenList = new ArrayList<>();
 
         for (ExtensionInfo ei : mList) {
             for (Screen s : ei.getScreens()) {

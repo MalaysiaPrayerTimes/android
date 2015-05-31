@@ -48,7 +48,7 @@ public class ExtensionManager {
 
         ExtensionInfo.Screen ds = new ExtensionInfo.Screen();
         ds.isNative = true;
-        ds.name = "Original Screen";
+        ds.name = "MPT Original";
         ds.view = DefaultPrayerView.class.getCanonicalName();
         ds.nativeView = DefaultPrayerView.class;
 
