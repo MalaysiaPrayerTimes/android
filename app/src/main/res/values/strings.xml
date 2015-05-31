@@ -3,11 +3,6 @@
     <string name="app_name">Malaysia Prayer Times</string>
     <string name="app_name_short">Prayer Times</string>
 
-    <string name="error_no_location">Oops! Have you enabled your location settings?</string>
-    <string name="error_no_network">Oops! Have you checked your internet connection?</string>
-    <string name="error_undetectable_location">Uhoh! We are unable to recognize your location!</string>
-    <string name="error_unexpected">Uhoh! We are not expecting this error!</string>
-
     <string name="label_extension_permission">add extensions to Malaysia Prayer Times</string>
     <string name="label_extension_description">Allows to add extensions to Malaysia Prayer Times</string>
     <string name="label_refresh">Refresh</string>

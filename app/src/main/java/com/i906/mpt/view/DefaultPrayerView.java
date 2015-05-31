@@ -169,17 +169,17 @@ public class DefaultPrayerView extends PrayerView {
 
         switch (type) {
             case PrayerInterface.ERROR_NETWORK:
-                mErrorMessageView.setText(R.string.error_no_network);
+                mErrorMessageView.setText(R.string.mpt_error_no_network);
                 break;
             case PrayerInterface.ERROR_LOCATION:
                 if ("ERROR_ADDRESS".equals(code) || "ERROR_PLACE".equals(code)) {
-                    mErrorMessageView.setText(R.string.error_undetectable_location);
+                    mErrorMessageView.setText(R.string.mpt_error_undetectable_location);
                 } else {
-                    mErrorMessageView.setText(R.string.error_no_location);
+                    mErrorMessageView.setText(R.string.mpt_error_no_location);
                 }
                 break;
             default:
-                mErrorMessageView.setText(R.string.error_unexpected);
+                mErrorMessageView.setText(R.string.mpt_error_unexpected);
         }
     }
 }
