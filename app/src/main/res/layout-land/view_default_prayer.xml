@@ -32,6 +32,7 @@
         android:id="@id/progress_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_container_top"
         tools:visibility="gone">
 
         <include layout="@layout/view_prayer_progress" />
@@ -42,6 +43,7 @@
         android:id="@+id/error_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_container_top"
         android:visibility="gone"
         tools:visibility="gone">
 

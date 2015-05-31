@@ -27,5 +27,6 @@
     <!-- Prayer List -->
 
     <dimen name="size_prayer_list">24sp</dimen>
+    <dimen name="margin_container_top">-56dp</dimen>
 
 </resources>
