@@ -26,6 +26,7 @@ public class ExtensionManager {
 
     public static final String EXTENSION_PERMISSION = "com.i906.mpt.permission.MPT_EXTENSION";
     public static final String EXTENSION_METADATA = "com.i906.mpt.extension.ExtensionInfo";
+    public static final String EXTENSION_VERSION = "com.i906.mpt.extension.version";
 
     @Inject
     protected Context mContext;
@@ -71,8 +72,13 @@ public class ExtensionManager {
                 XmlResourceParser xrp = pi.applicationInfo.loadXmlMetaData(mPackageManager,
                         EXTENSION_METADATA);
 
+                int version = pi.applicationInfo.metaData.getInt(EXTENSION_VERSION, -1);
+
                 ExtensionInfo ei = parseExtensionInfo(pi.packageName, xrp);
-                if (ei != null) el.add(ei);
+                if (ei != null) {
+                    ei.version = version;
+                    el.add(ei);
+                }
             }
         }
 

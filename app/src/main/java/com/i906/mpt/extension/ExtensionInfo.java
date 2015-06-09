@@ -7,6 +7,7 @@ public class ExtensionInfo {
 
     protected String name;
     protected String author;
+    protected int version;
     protected List<Screen> screens = new ArrayList<>();
 
     public String getName() {
@@ -17,14 +18,18 @@ public class ExtensionInfo {
         return author;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
     public List<Screen> getScreens() {
         return screens;
     }
 
     @Override
     public String toString() {
-        return String.format("[ExtensionInfo name=\"%s\" author=\"%s\" screens=%s]",
-                name, author, screens);
+        return String.format("[ExtensionInfo name=\"%s\" author=\"%s\" version=%s screens=%s]",
+                name, author, version, screens);
     }
 
     public static class Screen {
