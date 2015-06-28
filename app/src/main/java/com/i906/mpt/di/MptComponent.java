@@ -2,6 +2,7 @@ package com.i906.mpt.di;
 
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.adapter.ExtensionsAdapter;
+import com.i906.mpt.database.MptDatabase;
 import com.i906.mpt.fragment.BaseFragment;
 import com.i906.mpt.ui.BaseActivity;
 
@@ -19,6 +20,7 @@ public interface MptComponent {
     void inject(BaseFragment fragment);
     void inject(BaseActivity activity);
     void inject(ExtensionsAdapter adapter);
+    void inject(MptDatabase database);
 
     final class Initializer {
         public static MptComponent init(MptApplication app) {
