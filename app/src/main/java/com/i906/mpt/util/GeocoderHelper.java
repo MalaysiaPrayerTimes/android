@@ -13,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import timber.log.Timber;
 
 public class GeocoderHelper {
 
@@ -30,6 +31,8 @@ public class GeocoderHelper {
     public Observable<List<String>> getAddresses(Location location) {
         return Observable.create(subscriber -> {
             try {
+                Timber.v("Started geocoding for location: %s", location);
+
                 List<String> components = new ArrayList<>();
                 List<String> exclude = Arrays.asList(mExclusion);
                 List<Address> addresses = mGeocoder.getFromLocation(
@@ -56,14 +59,18 @@ public class GeocoderHelper {
                     if (!components.isEmpty()) {
                         subscriber.onNext(components);
                         subscriber.onCompleted();
+                        Timber.v("Geocoding results: %s", components);
                     } else {
                         subscriber.onError(new EmptyPlaceError());
+                        Timber.v("No geocoding results for: %s", location);
                     }
                 } else {
                     subscriber.onError(new EmptyAddressError());
+                    Timber.v("No geocoding results for: %s", location);
                 }
             } catch (IOException e) {
                 subscriber.onError(new GeocoderError(e));
+                Timber.v("Error occurred while geocoding");
             }
         });
     }

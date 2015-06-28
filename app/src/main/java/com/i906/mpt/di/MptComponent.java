@@ -13,7 +13,8 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         MptModule.class,
-        SystemModule.class
+        SystemModule.class,
+        DbModule.class
 })
 public interface MptComponent {
 

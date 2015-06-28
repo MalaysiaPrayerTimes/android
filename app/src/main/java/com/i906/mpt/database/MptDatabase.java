@@ -59,6 +59,7 @@ public class MptDatabase extends SQLiteOpenHelper {
     private void upgrade8To9(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS MptStatus");
         db.execSQL("DROP TABLE IF EXISTS Codex");
+        db.execSQL("DROP TABLE IF EXISTS PrayerData");
         initPrayerCodes(db);
     }
 

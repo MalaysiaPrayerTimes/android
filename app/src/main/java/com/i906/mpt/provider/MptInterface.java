@@ -135,10 +135,11 @@ public class MptInterface implements PrayerInterface {
 
     @Override
     public void refresh() {
-        Observable.zip(mPrayerHelper.getPrayerData(), mPrayerHelper.getNextPrayerData(), PrayerResult::new)
+        Observable.concat(mPrayerHelper.getPrayerData(), mPrayerHelper.getNextPrayerData())
+                .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PrayerResult>() {
+                .subscribe(new Subscriber<List<PrayerData>>() {
                     @Override
                     public void onCompleted() {
                         this.unsubscribe();
@@ -150,9 +151,9 @@ public class MptInterface implements PrayerInterface {
                     }
 
                     @Override
-                    public void onNext(PrayerResult result) {
-                        mPrayerData = result.current;
-                        mNextPrayerData = result.next;
+                    public void onNext(List<PrayerData> prayerDatas) {
+                        mPrayerData = prayerDatas.get(0);
+                        mNextPrayerData = prayerDatas.get(1);
                         onPrayerTimesChanged();
                     }
                 });
