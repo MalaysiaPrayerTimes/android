@@ -17,8 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class DefaultPrayerView extends PrayerView {
@@ -28,31 +28,31 @@ public class DefaultPrayerView extends PrayerView {
     protected String[] mHijriNames;
     protected PrayerListAdapter mAdapter;
 
-    @InjectView(R.id.content_container)
+    @Bind(R.id.content_container)
     protected View mContentView;
 
-    @InjectView(R.id.progress_container)
+    @Bind(R.id.progress_container)
     protected View mProgressView;
 
-    @InjectView(R.id.error_container)
+    @Bind(R.id.error_container)
     protected View mErrorView;
 
-    @InjectView(R.id.tv_prayer_time)
+    @Bind(R.id.tv_prayer_time)
     protected TextView mMainTimeView;
 
-    @InjectView(R.id.tv_prayer_name)
+    @Bind(R.id.tv_prayer_name)
     protected TextView mMainPrayerView;
 
-    @InjectView(R.id.tv_location)
+    @Bind(R.id.tv_location)
     protected TextView mLocationView;
 
-    @InjectView(R.id.tv_date)
+    @Bind(R.id.tv_date)
     protected TextView mDateView;
 
-    @InjectView(R.id.tv_error)
+    @Bind(R.id.tv_error)
     protected TextView mErrorMessageView;
 
-    @InjectView(R.id.list_prayer)
+    @Bind(R.id.list_prayer)
     protected LinearListView mPrayerListView;
 
     public DefaultPrayerView(Context context) {
@@ -66,7 +66,7 @@ public class DefaultPrayerView extends PrayerView {
     public DefaultPrayerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.view_default_prayer, this, true);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mDateFormatter = new SimpleDateFormat("hh:mm");
         mPrayerNames = getResources().getStringArray(R.array.mpt_prayer_names);

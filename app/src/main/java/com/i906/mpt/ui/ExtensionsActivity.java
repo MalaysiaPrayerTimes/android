@@ -7,15 +7,12 @@ import android.os.Bundle;
 import com.i906.mpt.R;
 import com.i906.mpt.fragment.ExtensionsFragment;
 
-import butterknife.ButterKnife;
-
 public class ExtensionsActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        ButterKnife.inject(this);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);

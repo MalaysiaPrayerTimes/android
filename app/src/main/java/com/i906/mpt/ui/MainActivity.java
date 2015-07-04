@@ -3,6 +3,7 @@ package com.i906.mpt.ui;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -15,10 +16,8 @@ import android.widget.ImageButton;
 import com.i906.mpt.R;
 import com.i906.mpt.adapter.MainAdapter;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 public class MainActivity extends BaseActivity {
 
@@ -31,33 +30,32 @@ public class MainActivity extends BaseActivity {
 
     protected MainAdapter mAdapter;
 
-    @InjectView(R.id.frame)
+    @Bind(R.id.frame)
     protected ViewGroup mFrameView;
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
 
-    @InjectView(R.id.viewpager)
+    @Bind(R.id.viewpager)
     protected ViewPager mViewPager;
 
-    @InjectView(R.id.btn_qibla)
+    @Bind(R.id.btn_qibla)
     protected ImageButton mQiblaButton;
 
-    @InjectView(R.id.btn_prayer)
+    @Bind(R.id.btn_prayer)
     protected ImageButton mPrayerButton;
 
-    @InjectView(R.id.btn_mosque)
+    @Bind(R.id.btn_mosque)
     protected ImageButton mMosqueButton;
 
-    @Optional
-    @InjectView(R.id.btn_settings)
+    @Nullable
+    @Bind(R.id.btn_settings)
     protected ImageButton mSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
 
         mHasSensors = mUtils.hasSufficientSensors();
 
@@ -96,7 +94,7 @@ public class MainActivity extends BaseActivity {
         mViewPager.setCurrentItem(mMPos);
     }
 
-    @Optional
+    @Nullable
     @OnClick(R.id.btn_settings)
     protected void onSettingsButtonClicked() {
         PopupMenu menu = new PopupMenu(this, mSettingsButton);

@@ -16,8 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class PrayerListAdapter extends BaseAdapter {
 
@@ -112,14 +112,14 @@ public class PrayerListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
 
-        @InjectView(R.id.tv_prayer_name)
+        @Bind(R.id.tv_prayer_name)
         protected TextView name;
 
-        @InjectView(R.id.tv_prayer_time)
+        @Bind(R.id.tv_prayer_time)
         protected TextView time;
 
         public ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 }

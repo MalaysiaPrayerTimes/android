@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.ViewHolder> {
@@ -99,18 +99,18 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
         protected ExtensionInfo extension;
         protected Screen screen;
 
-        @InjectView(R.id.rb_selected)
+        @Bind(R.id.rb_selected)
         protected RadioButton selected;
 
-        @InjectView(R.id.tv_name)
+        @Bind(R.id.tv_name)
         protected TextView name;
 
-        @InjectView(R.id.tv_author)
+        @Bind(R.id.tv_author)
         protected TextView author;
 
         public ViewHolder(View itemView, ExtensionsAdapter adapter) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             this.adapter = adapter;
         }
 

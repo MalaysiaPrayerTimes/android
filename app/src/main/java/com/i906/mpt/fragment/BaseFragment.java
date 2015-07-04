@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     @Inject
     protected GeneralPrefs mPrefs;
@@ -50,12 +50,13 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        ButterKnife.unbind(this);
         RefWatcher refWatcher = MptApplication.getRefWatcher(getActivity());
         refWatcher.watch(this);
     }

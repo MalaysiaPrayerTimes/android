@@ -9,7 +9,7 @@ import com.i906.mpt.R;
 import com.i906.mpt.util.SensorObservable;
 import com.i906.mpt.view.CompassView;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,7 +19,7 @@ public class QiblaFragment extends BaseFragment {
 
     private Subscription mSubscription;
 
-    @InjectView(R.id.compass)
+    @Bind(R.id.compass)
     protected CompassView mCompassView;
 
     @Override

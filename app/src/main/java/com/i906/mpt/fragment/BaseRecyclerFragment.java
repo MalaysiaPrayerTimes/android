@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils;
 
 import com.i906.mpt.R;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import fr.castorflex.android.circularprogressbar.CircularProgressDrawable;
 
@@ -19,16 +19,16 @@ public abstract class BaseRecyclerFragment extends BaseFragment
 
     protected boolean mListShown = false;
 
-    @InjectView(R.id.list)
+    @Bind(R.id.list)
     protected RecyclerView mRecyclerView;
 
-    @InjectView(R.id.progress_container)
+    @Bind(R.id.progress_container)
     protected View mProgressContainer;
 
-    @InjectView(R.id.recycler_container)
+    @Bind(R.id.recycler_container)
     protected SwipeRefreshLayout mListContainer;
 
-    @InjectView(R.id.progress_bar)
+    @Bind(R.id.progress_bar)
     protected CircularProgressBar mProgressBar;
 
     @Override

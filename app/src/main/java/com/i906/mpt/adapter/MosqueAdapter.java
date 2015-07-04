@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder> {
@@ -112,18 +112,18 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
         protected Mosque mosque;
         protected MosqueAdapter adapter;
 
-        @InjectView(R.id.tv_name)
+        @Bind(R.id.tv_name)
         protected TextView name;
 
-        @InjectView(R.id.tv_address)
+        @Bind(R.id.tv_address)
         protected TextView address;
 
-        @InjectView(R.id.tv_distance)
+        @Bind(R.id.tv_distance)
         protected TextView distance;
 
         public ViewHolder(View itemView, MosqueAdapter adapter) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             this.adapter = adapter;
         }
 
