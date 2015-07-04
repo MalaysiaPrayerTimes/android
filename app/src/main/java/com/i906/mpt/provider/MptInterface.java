@@ -46,7 +46,6 @@ public class MptInterface implements PrayerInterface {
         mGeocoderHelper = h3;
         mPrefs = p;
         refresh();
-        Timber.tag("mpt-PrayerInterface");
     }
 
     @Nullable
@@ -136,6 +135,7 @@ public class MptInterface implements PrayerInterface {
     @Override
     public void refresh() {
         Observable.concat(mPrayerHelper.getPrayerData(), mPrayerHelper.getNextPrayerData())
+        Timber.v("Refreshing prayer data.");
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -179,6 +179,7 @@ public class MptInterface implements PrayerInterface {
     }
 
     protected void onPrayerTimesChanged() {
+        Timber.v("Prayer time has changed.");
         if (mPrayerListeners != null) {
             for (int i = mPrayerListeners.size() - 1; i >= 0; i--) {
                 mPrayerListeners.get(i).onPrayerTimesChanged();
@@ -195,7 +196,6 @@ public class MptInterface implements PrayerInterface {
     }
 
     protected void handleError(Throwable e) {
-        e.printStackTrace();
         if (e instanceof RetrofitError) {
             RetrofitError error = (RetrofitError) e;
             switch (error.getKind()) {
@@ -204,12 +204,15 @@ public class MptInterface implements PrayerInterface {
                     break;
                 case CONVERSION:
                     onError(ERROR_CONVERSION, null);
+                    Timber.e(e, "A conversion error has occurred.");
                     break;
                 case HTTP:
                     onError(ERROR_HTTP, null);
+                    Timber.e(e, "A HTTP error has occurred.");
                     break;
                 default:
                    onError(ERROR_OTHER, null);
+                    Timber.e(e, "A unexpected error has occurred.");
             }
         } else if (e instanceof GeocoderHelper.GeocoderError) {
             if (e instanceof GeocoderHelper.EmptyPlaceError) {
@@ -221,7 +224,7 @@ public class MptInterface implements PrayerInterface {
             }
         } else {
             onError(ERROR_OTHER, null);
-            e.printStackTrace();
+            Timber.e(e, "An unexpected error has occurred.");
         }
     }
 

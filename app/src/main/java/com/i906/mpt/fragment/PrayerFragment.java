@@ -20,7 +20,6 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSelectedView = mPrefs.getSelectedPrayerView();
-        Timber.tag("mpt-PrayerFragment");
     }
 
     @Override
@@ -63,7 +62,7 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
 
         if (!sv.equals(mSelectedView)) {
             mSelectedView = sv;
-            Timber.v("Selected prayer view changed");
+            Timber.v("Selected prayer view changed.");
             setPrayerView((FrameLayout) this.getView());
         }
     }

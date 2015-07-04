@@ -22,9 +22,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
+import timber.log.Timber;
 
 @Module
 public class MptModule {
@@ -58,11 +58,9 @@ public class MptModule {
                     request.addQueryParam("appurl", MPT_URL);
                 })
                 .setEndpoint(MPT_URL)
-                .setClient(new OkClient(http));
-
-
-        if (BuildConfig.DEBUG) restAdapter.setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("mpt-pa"));
+                .setClient(new OkClient(http))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new RetrofitLogger());
 
         return restAdapter.build().create(PrayerApi.class);
     }
@@ -78,11 +76,9 @@ public class MptModule {
                     request.addQueryParam("v", FOURSQUARE_API_VERSION);
                 })
                 .setEndpoint(FOURSQUARE_URL)
-                .setClient(new OkClient(http));
-
-
-        if (BuildConfig.DEBUG) restAdapter.setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("mpt-fa"));
+                .setClient(new OkClient(http))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new RetrofitLogger());
 
         return restAdapter.build().create(FoursquareApi.class);
     }
@@ -146,5 +142,17 @@ public class MptModule {
         }
         result.append(")");
         return result.toString();
+    }
+
+    private static class RetrofitLogger implements RestAdapter.Log {
+
+        public RetrofitLogger() {
+            Timber.tag("Retrofit");
+        }
+
+        @Override
+        public void log(String message) {
+            Timber.v(message);
+        }
     }
 }

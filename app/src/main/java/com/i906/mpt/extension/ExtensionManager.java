@@ -36,7 +36,6 @@ public class ExtensionManager {
 
     @Inject
     public ExtensionManager() {
-        Timber.tag("mpt-ExtensionManager");
     }
 
     public List<ExtensionInfo> getDefaultExtensions() {
