@@ -65,5 +65,7 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
             Timber.v("Selected prayer view changed.");
             setPrayerView((FrameLayout) this.getView());
         }
+
+        mPrayerInterface.refresh();
     }
 }

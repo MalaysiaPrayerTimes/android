@@ -7,6 +7,7 @@ import com.i906.mpt.extension.PrayerInterface;
 import com.i906.mpt.model.PrayerData;
 import com.i906.mpt.util.DateTimeHelper;
 import com.i906.mpt.util.GeocoderHelper;
+import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.PrayerHelper;
 import com.i906.mpt.util.preference.GeneralPrefs;
 
@@ -36,16 +37,18 @@ public class MptInterface implements PrayerInterface {
     protected PrayerData mPrayerData;
     protected PrayerData mNextPrayerData;
     protected GeocoderHelper mGeocoderHelper;
+    protected LocationHelper mLocationHelper;
 
     protected GeneralPrefs mPrefs;
 
     @Inject
-    public MptInterface(DateTimeHelper h1, PrayerHelper h2, GeocoderHelper h3, GeneralPrefs p) {
+    public MptInterface(DateTimeHelper h1, PrayerHelper h2, GeocoderHelper h3, LocationHelper h4,
+                        GeneralPrefs p) {
         mDateTimeHelper = h1;
         mPrayerHelper = h2;
         mGeocoderHelper = h3;
+        mLocationHelper = h4;
         mPrefs = p;
-        refresh();
     }
 
     @Nullable
@@ -134,8 +137,12 @@ public class MptInterface implements PrayerInterface {
 
     @Override
     public void refresh() {
-        Observable.concat(mPrayerHelper.getPrayerData(), mPrayerHelper.getNextPrayerData())
         Timber.v("Refreshing prayer data.");
+        mLocationHelper.getLocation()
+                .flatMap(location -> Observable.concat(
+                        mPrayerHelper.getPrayerData(location),
+                        mPrayerHelper.getNextPrayerData(location)
+                ))
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -250,15 +257,5 @@ public class MptInterface implements PrayerInterface {
 
     public interface MptListener {
         void onPrayerExtensionCrashed(Throwable t);
-    }
-
-    protected static class PrayerResult {
-        PrayerData current;
-        PrayerData next;
-
-        public PrayerResult(PrayerData current, PrayerData next) {
-            this.current = current;
-            this.next = next;
-        }
     }
 }

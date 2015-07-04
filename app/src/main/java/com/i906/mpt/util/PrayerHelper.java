@@ -38,11 +38,11 @@ public class PrayerHelper {
         mDatabase = db;
     }
 
-    public Observable<PrayerData> getPrayerData() {
-        return getPrayerData(mDateTimeHelper.getCurrentYear(), mDateTimeHelper.getCurrentMonth());
+    public Observable<PrayerData> getPrayerData(Location l) {
+        return getPrayerData(mDateTimeHelper.getCurrentYear(), mDateTimeHelper.getCurrentMonth(), l);
     }
 
-    public Observable<PrayerData> getNextPrayerData() {
+    public Observable<PrayerData> getNextPrayerData(Location l) {
         int m = mDateTimeHelper.getNextMonth();
         int y = mDateTimeHelper.getCurrentYear();
 
@@ -50,12 +50,12 @@ public class PrayerHelper {
             y = mDateTimeHelper.getNextYear();
         }
 
-        return getPrayerData(y, m);
+        return getPrayerData(y, m, l);
     }
 
-    public Observable<PrayerData> getPrayerData(int year, int month) {
-        return mLocationHelper.getLocation()
-                .flatMap(location -> this.getPrayerCode(location).subscribeOn(Schedulers.io()))
+    public Observable<PrayerData> getPrayerData(int year, int month, Location location) {
+        return getPrayerCode(location)
+                .subscribeOn(Schedulers.io())
                 .flatMap(prayerCode -> mApi.getPrayerData(prayerCode.getCode(), year, month + 1))
                 .flatMap(prayerResponse -> Observable.just(prayerResponse.getPrayerData()));
     }
@@ -66,8 +66,8 @@ public class PrayerHelper {
                     Timber.v("Getting prayer code using cache.");
                     return getPrayerCodeFromDatabase(Query.builder()
                             .table(PrayerCodesTableMeta.TABLE)
-                            .where(PrayerCodesTableMeta.Columns.JAKIM + " = ?")
-                            .whereArgs(locationCache.getJakimCode())
+                            .where(PrayerCodesTableMeta.Columns.CODE + " = ?")
+                            .whereArgs(locationCache.getCode())
                             .build());
                 });
 
@@ -97,7 +97,7 @@ public class PrayerHelper {
                         return Observable.just(prayerCodes.get(0));
                     } else {
                         Timber.v("No prayer codes found.");
-                        return Observable.error(new PrayerCodeNotFound("Locations : " +
+                        return Observable.error(new PrayerCodeNotFound("Locations: " +
                                 query.whereArgs().toString()));
                     }
                 });
