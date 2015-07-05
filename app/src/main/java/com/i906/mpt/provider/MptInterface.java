@@ -142,7 +142,7 @@ public class MptInterface implements PrayerInterface {
 
     @Override
     public void refresh() {
-        Timber.v("Refreshing prayer data.");
+        Timber.d("Refreshing prayer data.");
         mLocationHelper.getLocation()
                 .doOnNext(this::updateLastLocation)
                 .flatMap(location -> Observable.concat(
@@ -175,7 +175,7 @@ public class MptInterface implements PrayerInterface {
     }
 
     public void refreshBlocking() throws RuntimeException {
-        Timber.v("Refreshing prayer data (blocking).");
+        Timber.d("Refreshing prayer data (blocking).");
         mLocationHelper.getLocation()
                 .doOnNext(this::updateLastLocation)
                 .flatMap(location -> Observable.concat(
@@ -203,7 +203,7 @@ public class MptInterface implements PrayerInterface {
 
     private void updateLastLocation(Location location) {
         mLastLocation = location;
-        Timber.v("Received location: %s", location);
+        Timber.d("Received location: %s", location);
     }
 
     private void updateLastRefreshed() {
@@ -230,7 +230,7 @@ public class MptInterface implements PrayerInterface {
     }
 
     protected void onPrayerTimesChanged() {
-        Timber.v("Prayer time has changed.");
+        Timber.d("Prayer time has changed.");
         if (mPrayerListeners != null) {
             for (int i = mPrayerListeners.size() - 1; i >= 0; i--) {
                 mPrayerListeners.get(i).onPrayerTimesChanged();

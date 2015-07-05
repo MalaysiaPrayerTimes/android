@@ -30,7 +30,7 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
     }
 
     private void setPrayerView(FrameLayout v) {
-        Timber.v("Selected prayer view: %s", mSelectedView);
+        Timber.d("Selected prayer view: %s", mSelectedView);
         PrayerView pv = mExtensionManager.getPrayerView(mSelectedView);
 
         if (pv == null) {
@@ -62,7 +62,7 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
 
         if (!sv.equals(mSelectedView)) {
             mSelectedView = sv;
-            Timber.v("Selected prayer view changed.");
+            Timber.d("Selected prayer view changed.");
             setPrayerView((FrameLayout) this.getView());
         }
 

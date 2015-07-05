@@ -10,6 +10,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Timber.v("Received alarm action: %s", intent);
+        Timber.d("Received alarm action: %s", intent);
     }
 }

@@ -147,7 +147,6 @@ public class MptModule {
     private static class RetrofitLogger implements RestAdapter.Log {
 
         public RetrofitLogger() {
-            Timber.tag("Retrofit");
         }
 
         @Override

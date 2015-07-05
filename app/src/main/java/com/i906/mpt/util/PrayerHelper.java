@@ -63,7 +63,7 @@ public class PrayerHelper {
     private Observable<PrayerCode> getPrayerCode(Location location) {
         Observable<PrayerCode> cache = mLocationHelper.getNearestCachedLocationObservable(location)
                 .flatMap(locationCache -> {
-                    Timber.v("Getting prayer code using cache.");
+                    Timber.d("Getting prayer code using cache.");
                     return getPrayerCodeFromDatabase(Query.builder()
                             .table(PrayerCodesTableMeta.TABLE)
                             .where(PrayerCodesTableMeta.Columns.CODE + " = ?")

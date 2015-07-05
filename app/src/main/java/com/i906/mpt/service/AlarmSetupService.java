@@ -88,14 +88,14 @@ public class AlarmSetupService extends IntentService {
     }
 
     private void handleRefreshAlarms() {
-        Timber.v("Refreshing alarms.");
+        Timber.d("Refreshing alarms.");
         if (mInterface.isPrayerTimesLoaded()) {
             processPrayerTimes();
         }
     }
 
     private void handleSetAllAlarms() {
-        Timber.v("Setting all alarms.");
+        Timber.d("Setting all alarms.");
         try {
             mInterface.refreshBlocking();
             processPrayerTimes();
@@ -152,7 +152,7 @@ public class AlarmSetupService extends IntentService {
         } else {
             mAlarmManager.set(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
         }
-        
+
         Timber.v("Created alarm %s: %s %s %s", index, action, new Date(time + triggerOffset), location);
     }
 

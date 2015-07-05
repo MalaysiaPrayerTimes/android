@@ -57,7 +57,7 @@ public class LocationHelper {
                     .createObservable()
                     .take(1)
                     .flatMap(locationCaches -> {
-                        Timber.v("Finding nearest location cache for: %s", location);
+                        Timber.d("Finding nearest location cache for: %s", location);
                         LocationCache cache = findNearestLocationCache(locationCaches, location);
 
                         if (cache != null) {
@@ -124,15 +124,13 @@ public class LocationHelper {
                         .setLongitude(location.getLongitude())
                         .build();
 
-                Timber.v("Saving location into cache: %s", lc);
+                Timber.d("Saving location into cache: %s", lc);
 
-                boolean inserted = mDatabase.put()
+                mDatabase.put()
                         .object(lc)
                         .prepare()
                         .executeAsBlocking()
                         .wasInserted();
-
-                Timber.v("Location saved into cache: %s", inserted);
             }
         }
     }

@@ -31,7 +31,7 @@ public class GeocoderHelper {
     public Observable<List<String>> getAddresses(Location location) {
         return Observable.create(subscriber -> {
             try {
-                Timber.v("Started geocoding for location: %s", location);
+                Timber.d("Started geocoding for location: %s", location);
 
                 List<String> components = new ArrayList<>();
                 List<String> exclude = Arrays.asList(mExclusion);
@@ -62,15 +62,15 @@ public class GeocoderHelper {
                         Timber.v("Geocoding results: %s", components);
                     } else {
                         subscriber.onError(new EmptyPlaceError());
-                        Timber.v("No geocoding results for: %s", location);
+                        Timber.e("No geocoding results for: %s", location);
                     }
                 } else {
                     subscriber.onError(new EmptyAddressError());
-                    Timber.v("No geocoding results for: %s", location);
+                    Timber.e("No geocoding results for: %s", location);
                 }
             } catch (IOException e) {
                 subscriber.onError(new GeocoderError(e));
-                Timber.v("Error occurred while geocoding");
+                Timber.e("Error occurred while geocoding");
             }
         });
     }

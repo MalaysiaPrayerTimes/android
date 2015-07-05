@@ -12,7 +12,7 @@ public class StartupReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Timber.v("Received startup action.");
+        Timber.d("Received startup action.");
         AlarmSetupService.setAllAlarms(context);
     }
 }
