@@ -3,11 +3,12 @@ package com.i906.mpt.util.preference;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 public abstract class Prefs {
 
-    private Context mContext;
+    protected Context mContext;
 
     protected Prefs(Context context) {
         this.mContext = context;
@@ -37,6 +38,7 @@ public abstract class Prefs {
         editor.apply();
     }
 
+    @Nullable
     protected String getString(String keySuffix) {
         return getString(keySuffix, null);
     }

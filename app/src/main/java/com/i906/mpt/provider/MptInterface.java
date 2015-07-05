@@ -1,10 +1,13 @@
 package com.i906.mpt.provider;
 
+import android.content.Context;
+import android.location.Location;
 import android.support.annotation.Nullable;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.extension.PrayerInterface;
 import com.i906.mpt.model.PrayerData;
+import com.i906.mpt.service.AlarmSetupService;
 import com.i906.mpt.util.DateTimeHelper;
 import com.i906.mpt.util.GeocoderHelper;
 import com.i906.mpt.util.LocationHelper;
@@ -36,17 +39,19 @@ public class MptInterface implements PrayerInterface {
 
     protected PrayerData mPrayerData;
     protected PrayerData mNextPrayerData;
-    protected GeocoderHelper mGeocoderHelper;
     protected LocationHelper mLocationHelper;
 
+    protected Context mContext;
     protected GeneralPrefs mPrefs;
+    protected Date mLastRefreshed;
+    protected Location mLastLocation;
 
     @Inject
-    public MptInterface(DateTimeHelper h1, PrayerHelper h2, GeocoderHelper h3, LocationHelper h4,
+    public MptInterface(Context context, DateTimeHelper h1, PrayerHelper h2, LocationHelper h4,
                         GeneralPrefs p) {
+        mContext = context;
         mDateTimeHelper = h1;
         mPrayerHelper = h2;
-        mGeocoderHelper = h3;
         mLocationHelper = h4;
         mPrefs = p;
     }
@@ -139,6 +144,7 @@ public class MptInterface implements PrayerInterface {
     public void refresh() {
         Timber.v("Refreshing prayer data.");
         mLocationHelper.getLocation()
+                .doOnNext(this::updateLastLocation)
                 .flatMap(location -> Observable.concat(
                         mPrayerHelper.getPrayerData(location),
                         mPrayerHelper.getNextPrayerData(location)
@@ -161,9 +167,47 @@ public class MptInterface implements PrayerInterface {
                     public void onNext(List<PrayerData> prayerDatas) {
                         mPrayerData = prayerDatas.get(0);
                         mNextPrayerData = prayerDatas.get(1);
+                        updateLastRefreshed();
                         onPrayerTimesChanged();
+                        AlarmSetupService.refreshAlarms(mContext);
                     }
                 });
+    }
+
+    public void refreshBlocking() throws RuntimeException {
+        Timber.v("Refreshing prayer data (blocking).");
+        mLocationHelper.getLocation()
+                .doOnNext(this::updateLastLocation)
+                .flatMap(location -> Observable.concat(
+                        mPrayerHelper.getPrayerData(location),
+                        mPrayerHelper.getNextPrayerData(location)
+                ))
+                .toList()
+                .toBlocking()
+                .forEach(prayerDatas -> {
+                    mPrayerData = prayerDatas.get(0);
+                    mNextPrayerData = prayerDatas.get(1);
+                    updateLastRefreshed();
+                });
+    }
+
+    @Nullable
+    public Location getLastLocation() {
+        return mLastLocation;
+    }
+
+    @Nullable
+    public Date getLastRefreshed() {
+        return mLastRefreshed;
+    }
+
+    private void updateLastLocation(Location location) {
+        mLastLocation = location;
+        Timber.v("Received location: %s", location);
+    }
+
+    private void updateLastRefreshed() {
+        mLastRefreshed = new Date();
     }
 
     @Override
@@ -248,11 +292,20 @@ public class MptInterface implements PrayerInterface {
     }
 
     private boolean subuhPassed() {
+        return prayerHasPassed(PRAYER_SUBUH);
+    }
+
+    public boolean prayerHasPassed(int prayer) {
         Calendar n = mDateTimeHelper.getNewCalendarInstance();
         Calendar s = mDateTimeHelper.getNewCalendarInstance();
+        List<Date> cdpt = getCurrentDayPrayerTimes();
 
-        s.setTime(getCurrentDayPrayerTimes().get(PRAYER_SUBUH));
-        return n.after(s);
+        if (cdpt != null) {
+            s.setTime(cdpt.get(prayer));
+            return n.after(s);
+        } else {
+            return false;
+        }
     }
 
     public interface MptListener {

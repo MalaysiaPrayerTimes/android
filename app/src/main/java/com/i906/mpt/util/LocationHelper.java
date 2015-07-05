@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.location.LocationRequest;
 import com.i906.mpt.model.LocationCache;
 import com.i906.mpt.model.PrayerCode;
 import com.i906.mpt.model.database.LocationCacheTableMeta;
@@ -12,6 +13,7 @@ import com.pushtorefresh.storio.sqlite.operations.get.PreparedGetListOfObjects;
 import com.pushtorefresh.storio.sqlite.queries.Query;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,6 +27,7 @@ public class LocationHelper {
 
     private static final int LOCATION_CACHE_DISTANCE_LIMIT = 5000;
     private static final int LOCATION_CACHE_AGE_LIMIT = 60 * 60 * 1000;
+    private static final int LOCATION_REQUEST_TIMEOUT = 5 * 60 * 1000;
     private static final Object DATABASE_ACCESS = new Object();
 
     protected ReactiveLocationProvider mProvider;
@@ -37,7 +40,15 @@ public class LocationHelper {
     }
 
     public Observable<Location> getLocation() {
-        return mProvider.getLastKnownLocation();
+        LocationRequest req = LocationRequest.create();
+        return mProvider.getUpdatedLocation(req)
+                .filter(location -> {
+                    long now = System.currentTimeMillis();
+                    return now - location.getTime() < LOCATION_CACHE_AGE_LIMIT;
+                })
+                .timeout(LOCATION_REQUEST_TIMEOUT, TimeUnit.MILLISECONDS,
+                        mProvider.getLastKnownLocation())
+                .first();
     }
 
     public Observable<LocationCache> getNearestCachedLocationObservable(Location location) {

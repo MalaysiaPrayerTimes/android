@@ -1,5 +1,6 @@
 package com.i906.mpt.di;
 
+import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -35,5 +36,11 @@ public class SystemModule {
     @Singleton
     public LocationManager provideLocationManager() {
         return (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    public AlarmManager provideAlarmManager() {
+        return (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
     }
 }
