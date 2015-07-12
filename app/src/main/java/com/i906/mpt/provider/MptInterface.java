@@ -13,6 +13,7 @@ import com.i906.mpt.util.GeocoderHelper;
 import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.PrayerHelper;
 import com.i906.mpt.util.preference.GeneralPrefs;
+import com.i906.mpt.util.preference.NotificationPrefs;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,17 +44,19 @@ public class MptInterface implements PrayerInterface {
 
     protected Context mContext;
     protected GeneralPrefs mPrefs;
+    protected NotificationPrefs mNotificationPrefs;
     protected Date mLastRefreshed;
     protected Location mLastLocation;
 
     @Inject
     public MptInterface(Context context, DateTimeHelper h1, PrayerHelper h2, LocationHelper h4,
-                        GeneralPrefs p) {
+                        GeneralPrefs p, NotificationPrefs np) {
         mContext = context;
         mDateTimeHelper = h1;
         mPrayerHelper = h2;
         mLocationHelper = h4;
         mPrefs = p;
+        mNotificationPrefs = np;
     }
 
     @Nullable
@@ -77,15 +80,9 @@ public class MptInterface implements PrayerInterface {
     @Override
     public int getCurrentPrayerIndex() {
         int pos = 0;
-        Calendar c = mDateTimeHelper.getNewCalendarInstance();
-        Calendar n = mDateTimeHelper.getNewCalendarInstance();
 
-        List<Date> pt = getCurrentDayPrayerTimes();
-        if (pt == null) return -1;
-
-        for (int i = 0; i < pt.size(); i++) {
-            n.setTime(pt.get(i));
-            if (n.after(c)) break;
+        for (int i = 0; i < 8; i++) {
+            if (!prayerHasPassed(i)) break;
             pos++;
         }
 
@@ -296,12 +293,13 @@ public class MptInterface implements PrayerInterface {
     }
 
     public boolean prayerHasPassed(int prayer) {
-        Calendar n = mDateTimeHelper.getNewCalendarInstance();
+        Calendar n = mDateTimeHelper.getNow();
         Calendar s = mDateTimeHelper.getNewCalendarInstance();
         List<Date> cdpt = getCurrentDayPrayerTimes();
 
         if (cdpt != null) {
             s.setTime(cdpt.get(prayer));
+            s.add(Calendar.MILLISECOND, (int) mNotificationPrefs.getAlarmOffset());
             return n.after(s);
         } else {
             return false;

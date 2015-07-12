@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Vibrator;
+import android.support.v4.app.NotificationManagerCompat;
 
 import javax.inject.Singleton;
 
@@ -42,5 +44,17 @@ public class SystemModule {
     @Singleton
     public AlarmManager provideAlarmManager() {
         return (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    public NotificationManagerCompat providesNotificationManager() {
+        return NotificationManagerCompat.from(mContext);
+    }
+
+    @Provides
+    @Singleton
+    public Vibrator providesVibrator() {
+        return (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 }

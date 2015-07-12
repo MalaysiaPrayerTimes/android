@@ -1,8 +1,6 @@
 <resources>
 
     <style name="MptBaseTheme" parent="Theme.AppCompat.NoActionBar">
-        <!--<item name="colorPrimary">@color/slurp_color_primary</item>
-        <item name="colorPrimaryDark">@color/slurp_color_primary_dark</item>-->
         <item name="colorAccent">@color/mpt_color_accent</item>
     </style>
 
@@ -19,7 +17,7 @@
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="contentInsetStart">0dp</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat</item>
     </style>
 
 </resources>

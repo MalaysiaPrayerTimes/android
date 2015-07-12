@@ -2,6 +2,7 @@ package com.i906.mpt.util.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
@@ -33,6 +34,26 @@ public class NotificationPrefs extends Prefs {
         return Long.valueOf(getString("alarm_offset", "0"));
     }
 
+    public boolean isNotificationEnabled(int prayer) {
+        return getBoolean("prayer_" + prayer, true);
+    }
+
+    public boolean isVibrationEnabled(int prayer) {
+        return getBoolean("vibrate_" + prayer, true);
+    }
+
+    public boolean isSoundEnabled(int prayer) {
+        String s = getString("sound_" + prayer);
+        return s == null || s.length() == 0;
+    }
+
+    @Nullable
+    public Uri getSound(int prayer) {
+        String s = getString("sound_" + prayer);
+        if (s == null) return null;
+        return Uri.parse(s);
+    }
+
     protected void convertLegacyPrefs() {
         String nb = getLegacyString("notf_before");
         String na = getLegacyString("notf_after");
@@ -55,6 +76,22 @@ public class NotificationPrefs extends Prefs {
             long aol = Long.parseLong(ao);
             setString("alarm_offset", Long.toString(aol * 60000));
         }
+
+        for (int i = 0; i < 8; i++) {
+            String ak = "azan_" + i;
+            String vb = "vibr_" + i;
+            String sd = "ring_" + i;
+            boolean b = getLegacyBoolean(ak, true);
+            boolean v = getLegacyBoolean(vb, false);
+            String s = getLegacyString(sd);
+
+            clearLegacy(ak);
+            clearLegacy(vb);
+            clearLegacy(sd);
+            setBoolean("prayer_" + i, b);
+            setBoolean("vibrate_" + i, v);
+            setString("sound_" + i, s);
+        }
     }
 
     @Nullable
@@ -65,6 +102,11 @@ public class NotificationPrefs extends Prefs {
     protected String getLegacyString(String key, String defaultValue) {
         final SharedPreferences sharedPreferences = getSharedPreferences(mContext);
         return sharedPreferences.getString(key, defaultValue);
+    }
+
+    protected boolean getLegacyBoolean(String key, boolean defaultValue) {
+        final SharedPreferences sharedPreferences = getSharedPreferences(mContext);
+        return sharedPreferences.getBoolean(key, defaultValue);
     }
 
     protected void clearLegacy(String... keys) {

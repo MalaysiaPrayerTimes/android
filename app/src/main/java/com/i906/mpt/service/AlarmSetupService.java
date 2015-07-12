@@ -11,6 +11,7 @@ import android.os.Build;
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.provider.MptInterface;
 import com.i906.mpt.receiver.AlarmReceiver;
+import com.i906.mpt.util.DateTimeHelper;
 import com.i906.mpt.util.GeocoderHelper;
 import com.i906.mpt.util.preference.NotificationPrefs;
 
@@ -24,16 +25,18 @@ import timber.log.Timber;
 
 public class AlarmSetupService extends IntentService {
 
+    public static final String ACTION_SET_ALARM = "com.i906.mpt.action.ACTION_SET_ALARM";
     public static final String ACTION_SET_ALL_ALARMS = "com.i906.mpt.action.ACTION_SET_ALL_ALARMS";
     public static final String ACTION_REFRESH_ALARMS = "com.i906.mpt.action.ACTION_REFRESH_ALARMS";
 
     public static final String ACTION_NOTIFICATION_PRAYER = "com.i906.mpt.action.NOTIFICATION_PRAYER";
     public static final String ACTION_NOTIFICATION_REMINDER = "com.i906.mpt.action.NOTIFICATION_REMINDER";
+    public static final String ACTION_NOTIFICATION_REMINDER_TICK = "com.i906.mpt.action.NOTIFICATION_REMINDER_TICK";
     public static final String ACTION_NOTIFICATION_CANCEL = "com.i906.mpt.action.NOTIFICATION_CANCEL";
 
-    private static final String EXTRA_PRAYER_INDEX = "prayer_index";
-    private static final String EXTRA_PRAYER_TIME = "prayer_time";
-    private static final String EXTRA_PRAYER_LOCATION = "prayer_location";
+    public static final String EXTRA_PRAYER_INDEX = "prayer_index";
+    public static final String EXTRA_PRAYER_TIME = "prayer_time";
+    public static final String EXTRA_PRAYER_LOCATION = "prayer_location";
 
     private static final int[] PRAYERS = {
             MptInterface.PRAYER_IMSAK,
@@ -58,6 +61,9 @@ public class AlarmSetupService extends IntentService {
 
     @Inject
     protected AlarmManager mAlarmManager;
+
+    @Inject
+    protected DateTimeHelper mDateTimeHelper;
 
     public AlarmSetupService() {
         super("AlarmSetupService");
@@ -84,13 +90,18 @@ public class AlarmSetupService extends IntentService {
             if (ACTION_REFRESH_ALARMS.equals(action)) {
                 handleRefreshAlarms();
             }
+
+            if (ACTION_SET_ALARM.equals(action)) {
+                int prayerIndex = intent.getIntExtra(EXTRA_PRAYER_INDEX, -1);
+                handleSetAlarm(prayerIndex);
+            }
         }
     }
 
     private void handleRefreshAlarms() {
         Timber.d("Refreshing alarms.");
         if (mInterface.isPrayerTimesLoaded()) {
-            processPrayerTimes();
+            processPrayerTimes(-1);
         }
     }
 
@@ -98,7 +109,7 @@ public class AlarmSetupService extends IntentService {
         Timber.d("Setting all alarms.");
         try {
             mInterface.refreshBlocking();
-            processPrayerTimes();
+            processPrayerTimes(-1);
         } catch (GeocoderHelper.GeocoderError e) {
             Timber.e(e, "Geocoding error occurred while setting alarms.");
         } catch (RetrofitError e) {
@@ -106,40 +117,70 @@ public class AlarmSetupService extends IntentService {
         }
     }
 
-    private void processPrayerTimes() {
-        List<Date> prayerTimes = mInterface.getCurrentDayPrayerTimes();
-        List<Date> nextPrayerTimes = mInterface.getNextDayPrayerTimes();
+    private void handleSetAlarm(int index) {
+        if (index != -1) {
+            Timber.d("Setting alarm %s.", index);
+            processPrayerTimes(index);
+        }
+    }
+
+    private void processPrayerTimes(int index) {
         String location = mInterface.getLocation();
 
-        if (prayerTimes == null) {
+        if (index == -1) {
+            for (int PRAYER : PRAYERS) {
+                createAlarm(PRAYER, location);
+            }
+        } else {
+            createAlarm(PRAYERS[index], location);
+        }
+    }
+
+    private void createAlarm(int prayer, String location) {
+        List<Date> prayerTimes = mInterface.getCurrentDayPrayerTimes();
+        List<Date> nextPrayerTimes = mInterface.getNextDayPrayerTimes();
+
+        if (prayerTimes == null || nextPrayerTimes == null) {
             Timber.e("No prayer times were available.");
             return;
         }
 
-        for (int i = 0, prayersLength = PRAYERS.length; i < prayersLength; i++) {
-            int p = PRAYERS[i];
-            if (mInterface.prayerHasPassed(p)) {
-                createAlarm(p, nextPrayerTimes.get(i), location);
-            } else {
-                createAlarm(p, prayerTimes.get(i), location);
-            }
-        }
-    }
-
-    private void createAlarm(int prayer, Date prayerTime, String location) {
-        long time = prayerTime.getTime();
-        long rt = -mNotificationAppearBefore + mNotificationOffset;
+        long currentTime = prayerTimes.get(prayer).getTime();
+        long nextTime = nextPrayerTimes.get(prayer).getTime();
+        long now = mDateTimeHelper.getCurrentTime();
+        boolean passed = mInterface.prayerHasPassed(prayer);
         long pt = mNotificationOffset + 250;
         long ct = mNotificationClearAfter + mNotificationOffset;
 
         if (mNotificationAppearBefore > 0) {
-            setAlarm(ACTION_NOTIFICATION_REMINDER, prayer, time, rt, location);
+            setReminderUpdater(prayer, passed ? nextTime : currentTime, location);
         }
 
-        setAlarm(ACTION_NOTIFICATION_PRAYER, prayer, time, pt, location);
+        setAlarm(ACTION_NOTIFICATION_PRAYER, prayer, passed ? nextTime : currentTime, pt, location);
 
         if (mNotificationClearAfter > 0) {
-            setAlarm(ACTION_NOTIFICATION_CANCEL, prayer, time, ct, location);
+            boolean cancelPassed = passed && (currentTime + ct) < now;
+            setAlarm(ACTION_NOTIFICATION_CANCEL, prayer,
+                    cancelPassed ? nextTime : currentTime, ct, location);
+        }
+    }
+
+    private void setReminderUpdater(int index, long prayerTime, String location) {
+        long now = mDateTimeHelper.getCurrentTime();
+        long trigger;
+        boolean first = false;
+
+        int updates = (int) (mNotificationAppearBefore / 60000);
+        String action;
+
+        for (int i = updates - 1; i > 0; i--) {
+            trigger = (i * mNotificationAppearBefore / updates);
+
+            if (now < prayerTime - trigger + mNotificationOffset) {
+                action = !first ? ACTION_NOTIFICATION_REMINDER : ACTION_NOTIFICATION_REMINDER_TICK;
+                first = true;
+                setAlarm(action, index, prayerTime, -trigger + mNotificationOffset, location);
+            }
         }
     }
 
@@ -166,17 +207,22 @@ public class AlarmSetupService extends IntentService {
         return h;
     }
 
-    private static void startService(Context context, String action) {
+    private static void startService(Context context, String action, int prayerIndex) {
         Intent intent = new Intent(context, AlarmSetupService.class);
         intent.setAction(action);
+        intent.putExtra(EXTRA_PRAYER_INDEX, prayerIndex);
         context.startService(intent);
     }
 
     public static void setAllAlarms(Context context) {
-        startService(context, ACTION_SET_ALL_ALARMS);
+        startService(context, ACTION_SET_ALL_ALARMS, -1);
     }
 
     public static void refreshAlarms(Context context) {
-        startService(context, ACTION_REFRESH_ALARMS);
+        startService(context, ACTION_REFRESH_ALARMS, -1);
+    }
+
+    public static void setAlarm(Context context, int prayerIndex) {
+        startService(context, ACTION_SET_ALARM, prayerIndex);
     }
 }

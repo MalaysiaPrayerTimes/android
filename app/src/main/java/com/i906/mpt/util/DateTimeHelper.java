@@ -22,7 +22,7 @@ public class DateTimeHelper {
     }
 
     public int getNextDate() {
-        Calendar c = getNewCalendarInstance();
+        Calendar c = getNow();
         c.add(Calendar.DATE, 1);
         return c.get(Calendar.DATE);
     }
@@ -33,7 +33,7 @@ public class DateTimeHelper {
     }
 
     public int getNextMonth() {
-        Calendar c = getNewCalendarInstance();
+        Calendar c = getNow();
         c.add(Calendar.MONTH, 1);
         return c.get(Calendar.MONTH);
     }
@@ -44,13 +44,13 @@ public class DateTimeHelper {
     }
 
     public int getNextYear() {
-        Calendar c = getNewCalendarInstance();
+        Calendar c = getNow();
         c.add(Calendar.YEAR, 1);
         return c.get(Calendar.YEAR);
     }
 
     public boolean isTommorowNewMonth() {
-        Calendar tom = getNewCalendarInstance();
+        Calendar tom = getNow();
         tom.add(Calendar.DATE, 1);
 
         int tommonth = tom.get(Calendar.MONTH);
@@ -58,7 +58,7 @@ public class DateTimeHelper {
     }
 
     public boolean isNextMonthNewYear() {
-        Calendar tom = getNewCalendarInstance();
+        Calendar tom = getNow();
         tom.add(Calendar.MONTH, 1);
 
         int tomyear = tom.get(Calendar.YEAR);
@@ -66,7 +66,17 @@ public class DateTimeHelper {
     }
 
     private void refresh() {
-        mCalendar = getNewCalendarInstance();
+        if (mCalendar == null) mCalendar = getNewCalendarInstance();
+        mCalendar.setTimeInMillis(getCurrentTime());
+    }
+
+    public long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
+
+    public Calendar getNow() {
+        refresh();
+        return mCalendar;
     }
 
     public Calendar getNewCalendarInstance() {

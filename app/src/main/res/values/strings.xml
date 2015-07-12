@@ -13,6 +13,17 @@
 
     <string name="label_extensions">Extensions</string>
 
+    <!-- NotificationHelper -->
+
+    <string name="notification_prayer_normal">Prayer time is now %s.</string>
+    <string name="notification_prayer_others">It is now %s.</string>
+    <string name="notification_reminder_soon">It will be %1$s in a moment.</string>
+
+    <plurals name="notification_reminder">
+        <item quantity="one">It will be %1$s in %2$s minute.</item>
+        <item quantity="other">It will be %1$s in %2$s minutes.</item>
+    </plurals>
+
     <!-- SettingsActivity -->
 
     <string name="label_about">About</string>
