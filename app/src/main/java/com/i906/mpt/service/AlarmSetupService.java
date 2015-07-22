@@ -120,7 +120,14 @@ public class AlarmSetupService extends IntentService {
     private void handleSetAlarm(int index) {
         if (index != -1) {
             Timber.d("Setting alarm %s.", index);
-            processPrayerTimes(index);
+            try {
+                mInterface.refreshBlocking();
+                processPrayerTimes(index);
+            } catch (GeocoderHelper.GeocoderError e) {
+                Timber.e(e, "Geocoding error occurred while setting alarm %s.", index);
+            } catch (RetrofitError e) {
+                Timber.e(e, "Download error occured while setting alarm %s.", index);
+            }
         }
     }
 

@@ -127,8 +127,10 @@ public class MptInterface implements PrayerInterface {
         return new int[] { 22, 4, 1436 } ;
     }
 
+    @Nullable
     @Override
     public String getLocation() {
+        if (mPrayerData == null) return null;
         return mPrayerData.getLocation();
     }
 
