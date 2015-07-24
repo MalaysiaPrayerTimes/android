@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.res.XmlResourceParser;
 import android.support.annotation.Nullable;
 
+import com.i906.mpt.Manifest;
 import com.i906.mpt.view.DefaultPrayerView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -24,7 +25,7 @@ import timber.log.Timber;
 @Singleton
 public class ExtensionManager {
 
-    public static final String EXTENSION_PERMISSION = "com.i906.mpt.permission.MPT_EXTENSION";
+    public static final String EXTENSION_PERMISSION = Manifest.permission.MPT_EXTENSION;
     public static final String EXTENSION_METADATA = "com.i906.mpt.extension.ExtensionInfo";
     public static final String EXTENSION_VERSION = "com.i906.mpt.extension.version";
 

@@ -53,6 +53,10 @@
             android:name=".ui.ExtensionsActivity"
             android:label="@string/label_extensions"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.EXTENSION_PICKER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <activity

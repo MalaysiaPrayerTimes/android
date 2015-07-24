@@ -5,6 +5,7 @@ import android.location.Location;
 import android.support.annotation.Nullable;
 
 import com.i906.mpt.BuildConfig;
+import com.i906.mpt.Manifest;
 import com.i906.mpt.extension.PrayerInterface;
 import com.i906.mpt.model.PrayerData;
 import com.i906.mpt.service.AlarmSetupService;
@@ -294,6 +295,7 @@ public class MptInterface implements PrayerInterface {
         return prayerHasPassed(PRAYER_SUBUH);
     }
 
+    @Override
     public boolean prayerHasPassed(int prayer) {
         Calendar n = mDateTimeHelper.getNow();
         Calendar s = mDateTimeHelper.getNewCalendarInstance();
