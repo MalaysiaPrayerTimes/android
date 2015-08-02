@@ -1,5 +1,7 @@
 package com.i906.mpt.extension;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ public class ExtensionInfo {
     protected String author;
     protected int version;
     protected List<Screen> screens = new ArrayList<>();
+    protected String apk;
 
     public String getName() {
         return name;
@@ -26,6 +29,10 @@ public class ExtensionInfo {
         return screens;
     }
 
+    public String getApk() {
+        return apk;
+    }
+
     @Override
     public String toString() {
         return String.format("[ExtensionInfo name=\"%s\" author=\"%s\" version=%s screens=%s]",
@@ -38,6 +45,7 @@ public class ExtensionInfo {
         protected String apk;
         protected String name;
         protected String view;
+        protected String settings;
         protected Class<? extends PrayerView> nativeView;
 
         public String getApk() {
@@ -58,6 +66,15 @@ public class ExtensionInfo {
 
         public Class getNativeView() {
             return nativeView;
+        }
+
+        public boolean hasSettings() {
+            return getSettings() != null;
+        }
+
+        @Nullable
+        public String getSettings() {
+            return settings;
         }
 
         @Override

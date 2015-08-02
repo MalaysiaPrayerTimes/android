@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/label_settings" />
+
+    <item
+        android:id="@+id/action_uninstall"
+        android:title="@string/label_uninstall" />
+
+</menu>

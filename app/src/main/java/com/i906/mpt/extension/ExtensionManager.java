@@ -1,9 +1,11 @@
 package com.i906.mpt.extension;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.XmlResourceParser;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.i906.mpt.Manifest;
@@ -159,12 +161,14 @@ public class ExtensionManager {
     private ExtensionInfo parseExtensionInfo(String packageName, XmlResourceParser xrp) {
         if (xrp == null) return null;
         ExtensionInfo ei = new ExtensionInfo();
+        ei.apk = packageName;
 
         try {
             int et = xrp.getEventType();
             String currentTag;
             String screenName = null;
             String screenView = null;
+            String screenSettings = null;
 
             while (et != XmlPullParser.END_DOCUMENT) {
                 if (et == XmlPullParser.START_TAG) {
@@ -176,6 +180,7 @@ public class ExtensionManager {
                     if ("screen".equals(currentTag)) {
                         screenName = xrp.getAttributeValue(null, "name");
                         screenView = xrp.getAttributeValue(null, "view");
+                        screenSettings = xrp.getAttributeValue(null, "settings");
                     }
                 } else if (et == XmlPullParser.END_TAG) {
                     if ("screen".equals(xrp.getName())) {
@@ -183,6 +188,7 @@ public class ExtensionManager {
                         s.apk = packageName;
                         s.name = screenName;
                         s.view = screenView;
+                        s.settings = screenSettings;
                         ei.screens.add(s);
                     }
                 }
@@ -194,5 +200,11 @@ public class ExtensionManager {
         }
 
         return ei;
+    }
+
+    public void uninstallExtension(Context context, ExtensionInfo extension) {
+        Uri packageUri = Uri.parse("package:" + extension.getApk());
+        Intent uninstallIntent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
+        context.startActivity(uninstallIntent);
     }
 }

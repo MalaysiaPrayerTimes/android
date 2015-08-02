@@ -5,9 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.i906.mpt.adapter.ExtensionsAdapter;
+import com.i906.mpt.extension.ExtensionInfo;
 import com.i906.mpt.view.DividerItemDecoration;
 
-public class ExtensionsFragment extends BaseRecyclerFragment {
+public class ExtensionsFragment extends BaseRecyclerFragment implements ExtensionsAdapter.ExtensionListener {
 
     protected ExtensionsAdapter mAdapter;
 
@@ -42,5 +43,27 @@ public class ExtensionsFragment extends BaseRecyclerFragment {
         mAdapter.setExtensionList(mExtensionManager.getExtensions());
         setListShown(true, true);
         mListContainer.setRefreshing(false);
+    }
+
+    @Override
+    public void onScreenSelected(ExtensionInfo.Screen screen) {
+        mPrefs.setSelectedPrayerView(screen.getView());
+    }
+
+    @Override
+    public void onExtensionUninstall(ExtensionInfo extension) {
+        mExtensionManager.uninstallExtension(getActivity(), extension);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.setListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAdapter.removeListener();
     }
 }

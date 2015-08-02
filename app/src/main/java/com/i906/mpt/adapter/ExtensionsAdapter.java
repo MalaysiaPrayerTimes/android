@@ -1,10 +1,13 @@
 package com.i906.mpt.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -32,6 +35,7 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
     protected List<ScreenHolder> mScreenList;
 
     protected String mSelectedScreen;
+    private ExtensionListener mListener;
 
     public ExtensionsAdapter(Context context) {
         MptApplication.component(context).inject(this);
@@ -93,6 +97,14 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
         return mScreenList.isEmpty();
     }
 
+    public void setListener(ExtensionListener listener) {
+        mListener = listener;
+    }
+
+    public void removeListener() {
+        mListener = null;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected ExtensionsAdapter adapter;
@@ -108,6 +120,9 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
         @Bind(R.id.tv_author)
         protected TextView author;
 
+        @Bind(R.id.btn_more)
+        protected ImageButton more;
+
         public ViewHolder(View itemView, ExtensionsAdapter adapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -122,14 +137,51 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
         public void setScreen(Screen item) {
             screen = item;
             name.setText(item.getName());
+
+            if (screen.isNative() && !screen.hasSettings()) {
+                more.setVisibility(View.GONE);
+            } else {
+                more.setVisibility(View.VISIBLE);
+            }
         }
 
         @OnClick(R.id.list_item)
         protected void onScreenSelected() {
             adapter.mSelectedScreen = screen.getView();
-            adapter.mPrefs.setSelectedPrayerView(screen.getView());
             adapter.notifyDataSetChanged();
+
+            if (adapter.mListener != null) {
+                adapter.mListener.onScreenSelected(screen);
+            }
         }
+
+        @OnClick(R.id.btn_more)
+        protected void onMenuClicked() {
+            PopupMenu menu = new PopupMenu(itemView.getContext(), more);
+            more.setOnTouchListener(menu.getDragToOpenListener());
+
+            menu.inflate(R.menu.view_extension_more);
+            menu.setOnMenuItemClickListener(menuClickListener);
+
+            MenuItem uninstall = menu.getMenu().findItem(R.id.action_uninstall);
+            if (screen.isNative()) uninstall.setVisible(false);
+
+            menu.show();
+        }
+
+        private PopupMenu.OnMenuItemClickListener menuClickListener = item -> {
+            switch (item.getItemId()) {
+                case R.id.action_uninstall:
+                    if (adapter.mListener != null) adapter.mListener.onExtensionUninstall(extension);
+                    return true;
+            }
+            return false;
+        };
+    }
+
+    public interface ExtensionListener {
+        void onScreenSelected(Screen screen);
+        void onExtensionUninstall(ExtensionInfo extension);
     }
 
     static class ScreenHolder {

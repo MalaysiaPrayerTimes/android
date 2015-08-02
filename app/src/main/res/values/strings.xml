@@ -12,6 +12,7 @@
     <!-- ExtensionsActivity -->
 
     <string name="label_extensions">Extensions</string>
+    <string name="label_uninstall">Uninstall</string>
 
     <!-- NotificationHelper -->
 
