@@ -13,6 +13,7 @@ import com.i906.mpt.util.DateTimeHelper;
 import com.i906.mpt.util.GeocoderHelper;
 import com.i906.mpt.util.LocationHelper;
 import com.i906.mpt.util.PrayerHelper;
+import com.i906.mpt.util.Utils;
 import com.i906.mpt.util.preference.GeneralPrefs;
 import com.i906.mpt.util.preference.NotificationPrefs;
 
@@ -28,8 +29,6 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 @Singleton
@@ -151,8 +150,7 @@ public class MptInterface implements PrayerInterface {
                         mPrayerHelper.getNextPrayerData(location)
                 ))
                 .toList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(Utils.applySchedulers())
                 .subscribe(new Subscriber<List<PrayerData>>() {
                     @Override
                     public void onCompleted() {

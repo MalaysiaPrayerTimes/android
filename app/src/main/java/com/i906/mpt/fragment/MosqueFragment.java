@@ -9,14 +9,13 @@ import android.view.View;
 import com.i906.mpt.R;
 import com.i906.mpt.adapter.MosqueAdapter;
 import com.i906.mpt.model.Mosque;
+import com.i906.mpt.util.Utils;
 import com.i906.mpt.view.DividerItemDecoration;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
@@ -55,8 +54,7 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
     @Override
     public void onRefresh(boolean pull) {
         Subscription s = mMosqueHelper.getNearbyMosques()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(Utils.applySchedulers())
                 .subscribe(mosques -> {
                     mAdapter.setMosqueList(mosques);
                     showContent();

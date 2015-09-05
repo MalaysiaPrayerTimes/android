@@ -7,13 +7,12 @@ import android.view.ViewGroup;
 
 import com.i906.mpt.R;
 import com.i906.mpt.util.SensorObservable;
+import com.i906.mpt.util.Utils;
 import com.i906.mpt.view.CompassView;
 
 import butterknife.Bind;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class QiblaFragment extends BaseFragment {
 
@@ -33,8 +32,7 @@ public class QiblaFragment extends BaseFragment {
 
         int orientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
         mSubscription = mQiblaHelper.requestQiblaAngles(orientation)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(Utils.applySchedulers())
                 .subscribe(new Subscriber<SensorObservable.AngleInfo>() {
                     @Override
                     public void onCompleted() {
