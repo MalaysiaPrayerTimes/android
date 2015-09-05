@@ -24,9 +24,9 @@ public class ExtensionsFragment extends BaseRecyclerFragment implements Extensio
         super.onViewCreated(view, savedInstanceState);
 
         if (mAdapter.isEmpty()) {
-            onRefresh();
+            onRefresh(false);
         } else {
-            setListShown(true, false);
+            showContent();
         }
     }
 
@@ -39,10 +39,9 @@ public class ExtensionsFragment extends BaseRecyclerFragment implements Extensio
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(boolean pull) {
         mAdapter.setExtensionList(mExtensionManager.getExtensions());
-        setListShown(true, true);
-        mListContainer.setRefreshing(false);
+        mSwipeContainer.setRefreshing(false);
     }
 
     @Override

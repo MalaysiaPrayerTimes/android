@@ -159,6 +159,7 @@ public class DefaultPrayerView extends PrayerView {
         updatePrayerHeader();
         setContentVisibility(true, true);
         setProgressVisibility(false, true);
+        setErrorVisibility(false, true);
     }
 
     @Override
