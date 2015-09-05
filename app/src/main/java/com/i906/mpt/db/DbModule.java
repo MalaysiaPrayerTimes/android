@@ -1,13 +1,12 @@
-package com.i906.mpt.di;
+package com.i906.mpt.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.i906.mpt.database.MptDatabase;
 import com.i906.mpt.model.PrayerCode;
 import com.i906.mpt.model.LocationCache;
-import com.i906.mpt.model.database.PrayerCodesTableMeta;
-import com.i906.mpt.model.database.LocationCacheTableMeta;
+import com.i906.mpt.db.table.PrayerCodesTableMeta;
+import com.i906.mpt.db.table.LocationCacheTableMeta;
 import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite;
 

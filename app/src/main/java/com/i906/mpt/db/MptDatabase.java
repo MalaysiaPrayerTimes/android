@@ -1,26 +1,21 @@
-package com.i906.mpt.database;
+package com.i906.mpt.db;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.i906.mpt.MptApplication;
+import com.i906.mpt.db.table.LocationCacheTableMeta;
+import com.i906.mpt.db.table.PrayerCodesTableMeta;
 import com.i906.mpt.model.PrayerCode;
-import com.i906.mpt.model.database.PrayerCodesTableMeta;
-import com.i906.mpt.model.database.LocationCacheTableMeta;
-import com.i906.mpt.util.PrayerCodePopulator;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-public class MptDatabase extends SQLiteOpenHelper {
+class MptDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "mpt.db";
     public static final int DATABASE_VERSION = 9;
 
-    @Inject
     protected PrayerCodePopulator mCodePopulator;
 
     public MptDatabase(Context context) {
@@ -29,7 +24,7 @@ public class MptDatabase extends SQLiteOpenHelper {
 
     public MptDatabase(Context context, DatabaseErrorHandler errorHandler) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, errorHandler);
-        MptApplication.component(context).inject(this);
+        mCodePopulator = new PrayerCodePopulator(context);
     }
 
     @Override

@@ -1,15 +1,16 @@
-package com.i906.mpt.model;
+package com.i906.mpt.api;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.i906.mpt.model.PrayerData;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
+class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
 
     @Override
     public PrayerData read(JsonReader in) throws IOException {
@@ -20,25 +21,25 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
         while (in.hasNext()) {
             switch (in.nextName()) {
                 case "code":
-                    pd.code = in.nextString();
+                    pd.setCode(in.nextString());
                     break;
                 case "origin":
-                    pd.origin = in.nextString();
+                    pd.setOrigin(in.nextString());
                     break;
                 case "jakim":
-                    pd.jakim = in.nextString();
+                    pd.setJakimCode(in.nextString());
                     break;
                 case "source":
-                    pd.source = in.nextString();
+                    pd.setSource(in.nextString());
                     break;
                 case "readableDate":
-                    pd.readableDate = in.nextString();
+                    pd.setReadableDate(in.nextString());
                     break;
                 case "lastModified":
-                    pd.lastModified = in.nextString();
+                    pd.setLastModified(in.nextString());
                     break;
                 case "place":
-                    pd.place = in.nextString();
+                    pd.setLocation(in.nextString());
                     break;
                 case "times":
                     final List<List<Date>> lld = new ArrayList<>();
@@ -71,7 +72,7 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                     }
 
                     in.endArray();
-                    pd.times = lld;
+                    pd.setPrayerTimes(lld);
                     break;
             }
         }

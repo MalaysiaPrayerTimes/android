@@ -6,7 +6,7 @@ import android.location.Location;
 import com.i906.mpt.api.PrayerApi;
 import com.i906.mpt.model.PrayerCode;
 import com.i906.mpt.model.PrayerData;
-import com.i906.mpt.model.database.PrayerCodesTableMeta;
+import com.i906.mpt.db.table.PrayerCodesTableMeta;
 import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.queries.Query;
 

@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.google.android.gms.location.LocationRequest;
 import com.i906.mpt.model.LocationCache;
 import com.i906.mpt.model.PrayerCode;
-import com.i906.mpt.model.database.LocationCacheTableMeta;
+import com.i906.mpt.db.table.LocationCacheTableMeta;
 import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.operations.get.PreparedGetListOfObjects;
 import com.pushtorefresh.storio.sqlite.queries.Query;

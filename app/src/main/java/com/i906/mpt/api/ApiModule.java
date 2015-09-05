@@ -1,4 +1,4 @@
-package com.i906.mpt.di;
+package com.i906.mpt.api;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,10 +8,7 @@ import android.os.Build;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.i906.mpt.BuildConfig;
-import com.i906.mpt.api.FoursquareApi;
-import com.i906.mpt.api.PrayerApi;
 import com.i906.mpt.model.PrayerData;
-import com.i906.mpt.model.PrayerDataTypeAdapter;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
@@ -31,7 +28,7 @@ import retrofit.RxJavaCallAdapterFactory;
 import timber.log.Timber;
 
 @Module
-public class MptModule {
+public class ApiModule {
 
     private static final String MPT_ID = "mpt-android";
     private static final String MPT_URL = "http://mpt.i906.my";
@@ -43,7 +40,7 @@ public class MptModule {
 
     protected Application mContext;
 
-    public MptModule(Application application) {
+    public ApiModule(Application application) {
         mContext = application;
     }
 
