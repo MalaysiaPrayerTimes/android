@@ -28,14 +28,46 @@
     <!-- SettingsActivity -->
 
     <string name="label_about">About</string>
+    <string name="label_alarm_offset">Alarm offset</string>
     <string name="label_build">Build number</string>
+    <string name="label_configure_notifications">Configure notifications</string>
     <string name="label_feedback">Feedback</string>
+    <string name="label_hide_notification">Hide prayer notification</string>
     <string name="label_interface">Interface</string>
+    <string name="label_notifications">Notifications</string>
     <string name="label_prayer_screen">Prayer screen</string>
+    <string name="label_show_reminder">Show prayer reminder</string>
     <string name="label_review">Rate and review MPT</string>
     <string name="label_review_summary">Rate and review MPT on Google Play</string>
     <string name="label_theme">Theme</string>
     <string name="label_theme_dark">Dark</string>
     <string name="label_version">Version</string>
+
+    <string-array name="pref_notification_clear">
+        <item>Notification never hidden</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>20 minutes</item>
+        <item>30 minutes</item>
+    </string-array>
+
+    <string-array name="pref_reminder_appear">
+        <item>No reminder shown</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>20 minutes</item>
+        <item>30 minutes</item>
+    </string-array>
+
+    <string-array name="pref_duration_values" translatable="false">
+        <item>0</item>
+        <item>300000</item>
+        <item>600000</item>
+        <item>900000</item>
+        <item>1200000</item>
+        <item>1800000</item>
+    </string-array>
 
 </resources>
