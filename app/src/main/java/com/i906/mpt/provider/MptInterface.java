@@ -4,8 +4,8 @@ import android.content.Context;
 import android.location.Location;
 import android.support.annotation.Nullable;
 
+import com.google.gson.stream.MalformedJsonException;
 import com.i906.mpt.BuildConfig;
-import com.i906.mpt.Manifest;
 import com.i906.mpt.extension.PrayerInterface;
 import com.i906.mpt.model.PrayerData;
 import com.i906.mpt.service.AlarmSetupService;
@@ -16,6 +16,8 @@ import com.i906.mpt.util.PrayerHelper;
 import com.i906.mpt.util.preference.GeneralPrefs;
 import com.i906.mpt.util.preference.NotificationPrefs;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +26,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit.RetrofitError;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -247,24 +248,15 @@ public class MptInterface implements PrayerInterface {
     }
 
     protected void handleError(Throwable e) {
-        if (e instanceof RetrofitError) {
-            RetrofitError error = (RetrofitError) e;
-            switch (error.getKind()) {
-                case NETWORK:
-                    onError(ERROR_NETWORK, null);
-                    break;
-                case CONVERSION:
-                    onError(ERROR_CONVERSION, null);
-                    Timber.e(e, "A conversion error has occurred.");
-                    break;
-                case HTTP:
-                    onError(ERROR_HTTP, null);
-                    Timber.e(e, "A HTTP error has occurred.");
-                    break;
-                default:
-                   onError(ERROR_OTHER, null);
-                    Timber.e(e, "A unexpected error has occurred.");
-            }
+        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
+            onError(ERROR_NETWORK, null);
+            Timber.e(e, "A network error has occurred.");
+        } else if (e instanceof MalformedJsonException) {
+            onError(ERROR_CONVERSION, null);
+            Timber.e(e, "A conversion error has occurred.");
+        } else if (e instanceof retrofit.HttpException) {
+            onError(ERROR_HTTP, null);
+            Timber.e(e, "A HTTP error has occurred.");
         } else if (e instanceof GeocoderHelper.GeocoderError) {
             if (e instanceof GeocoderHelper.EmptyPlaceError) {
                 onError(ERROR_LOCATION, "EMPTY_PLACE");

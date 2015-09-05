@@ -8,7 +8,7 @@ import rx.Observable;
 
 public interface FoursquareApi {
 
-    @GET("/venues/search")
+    @GET("venues/search")
     Observable<FoursquareResponse> searchVenue(
             @Query("intent") String intent,
             @Query("radius") int radius,
