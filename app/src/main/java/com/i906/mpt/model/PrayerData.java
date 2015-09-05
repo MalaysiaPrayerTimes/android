@@ -14,12 +14,44 @@ public class PrayerData {
     protected String place;
     protected List<List<Date>> times;
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public void setJakimCode(String jakim) {
+        this.jakim = jakim;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setReadableDate(String readableDate) {
+        this.readableDate = readableDate;
+    }
+
+    public void setLastModified(String lastModified) {
+        this.lastModified = lastModified;
+    }
+
     public String getLocation() {
         return place;
     }
 
+    public void setLocation(String place) {
+        this.place = place;
+    }
+
     public List<List<Date>> getPrayerTimes() {
         return times;
+    }
+
+    public void setPrayerTimes(List<List<Date>> times) {
+        this.times = times;
     }
 
     @Override

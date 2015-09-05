@@ -1,4 +1,4 @@
-package com.i906.mpt.util;
+package com.i906.mpt.db;
 
 import android.content.Context;
 
@@ -14,14 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.inject.Inject;
-
-public class PrayerCodePopulator {
+class PrayerCodePopulator {
 
     private Context mContext;
     private HashMap<String, PrayerCode> mKeyCache;
 
-    @Inject
     public PrayerCodePopulator(Context context) {
         mContext = context;
         mKeyCache = new HashMap<>();

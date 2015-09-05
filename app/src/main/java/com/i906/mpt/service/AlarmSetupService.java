@@ -15,12 +15,12 @@ import com.i906.mpt.util.DateTimeHelper;
 import com.i906.mpt.util.GeocoderHelper;
 import com.i906.mpt.util.preference.NotificationPrefs;
 
+import java.net.SocketTimeoutException;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import retrofit.RetrofitError;
 import timber.log.Timber;
 
 public class AlarmSetupService extends IntentService {
@@ -112,8 +112,6 @@ public class AlarmSetupService extends IntentService {
             processPrayerTimes(-1);
         } catch (GeocoderHelper.GeocoderError e) {
             Timber.e(e, "Geocoding error occurred while setting alarms.");
-        } catch (RetrofitError e) {
-            Timber.e(e, "Download error occured while setting alarms.");
         }
     }
 
@@ -125,8 +123,6 @@ public class AlarmSetupService extends IntentService {
                 processPrayerTimes(index);
             } catch (GeocoderHelper.GeocoderError e) {
                 Timber.e(e, "Geocoding error occurred while setting alarm %s.", index);
-            } catch (RetrofitError e) {
-                Timber.e(e, "Download error occured while setting alarm %s.", index);
             }
         }
     }

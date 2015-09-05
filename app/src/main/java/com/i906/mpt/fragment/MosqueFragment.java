@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.i906.mpt.R;
 import com.i906.mpt.adapter.MosqueAdapter;
 import com.i906.mpt.model.Mosque;
+import com.i906.mpt.util.Utils;
 import com.i906.mpt.view.DividerItemDecoration;
 
-import java.util.List;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import timber.log.Timber;
 
 public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapter.MosqueListener {
 
@@ -36,9 +37,9 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
         super.onViewCreated(view, savedInstanceState);
 
         if (mAdapter.isEmpty()) {
-            onRefresh();
+            onRefresh(false);
         } else {
-            setListShown(true, false);
+            showContent();
         }
     }
 
@@ -51,26 +52,14 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(boolean pull) {
         Subscription s = mMosqueHelper.getNearbyMosques()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Mosque>>() {
-                    @Override
-                    public void onCompleted() {
-                        mListContainer.setRefreshing(false);
-                        setListShown(true, true);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(List<Mosque> mosques) {
-                        mAdapter.setMosqueList(mosques);
-                    }
+                .compose(Utils.applySchedulers())
+                .subscribe(mosques -> {
+                    mAdapter.setMosqueList(mosques);
+                    showContent();
+                }, e -> {
+                    showError(getErrorMessage(e));
                 });
 
         mSubscription.add(s);
@@ -85,6 +74,17 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
         String uri = "geo:0,0?q=" + Uri.encode(String.format("%s@%f,%f", name, lat, lng), "UTF-8");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
+    }
+
+    private int getErrorMessage(Throwable e) {
+        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
+            return R.string.mpt_error_no_network;
+        } else if (e instanceof retrofit.HttpException) {
+            return R.string.mpt_error_unexpected;
+        } else {
+            Timber.w(e, "Mosque error.");
+            return R.string.mpt_error_unexpected;
+        }
     }
 
     @Override

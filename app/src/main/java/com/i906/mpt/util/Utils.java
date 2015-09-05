@@ -7,6 +7,10 @@ import android.hardware.SensorManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 @Singleton
 public class Utils {
 
@@ -23,5 +27,10 @@ public class Utils {
         Sensor b = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         Sensor c = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         return a != null || (b != null && c != null);
+    }
+
+    public static <T> Observable.Transformer<T, T> applySchedulers() {
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

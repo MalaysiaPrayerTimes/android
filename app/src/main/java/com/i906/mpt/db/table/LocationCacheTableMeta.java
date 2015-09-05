@@ -1,4 +1,4 @@
-package com.i906.mpt.model.database;
+package com.i906.mpt.db.table;
 
 import android.content.ContentValues;
 import android.database.Cursor;
