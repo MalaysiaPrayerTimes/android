@@ -14,11 +14,18 @@ import com.i906.mpt.util.QiblaHelper;
 import com.i906.mpt.util.preference.GeneralPrefs;
 import com.squareup.leakcanary.RefWatcher;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import rx.Subscription;
 
 public abstract class BaseFragment extends Fragment {
+
+    protected List<Subscription> mSubscriptions;
 
     @Inject
     protected GeneralPrefs mPrefs;
@@ -51,6 +58,24 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+    }
+
+    protected void addSubscription(Subscription... s) {
+        if (mSubscriptions == null) mSubscriptions = new ArrayList<>();
+        if (s != null) Collections.addAll(mSubscriptions, s);
+    }
+
+    protected void unsubscribeAll() {
+        if (mSubscriptions == null) return;
+        for (Subscription s : mSubscriptions) {
+            s.unsubscribe();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unsubscribeAll();
     }
 
     @Override

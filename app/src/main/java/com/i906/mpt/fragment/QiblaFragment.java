@@ -16,8 +16,6 @@ import rx.Subscription;
 
 public class QiblaFragment extends BaseFragment {
 
-    private Subscription mSubscription;
-
     @Bind(R.id.compass)
     protected CompassView mCompassView;
 
@@ -31,7 +29,7 @@ public class QiblaFragment extends BaseFragment {
         super.onStart();
 
         int orientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
-        mSubscription = mQiblaHelper.requestQiblaAngles(orientation)
+        Subscription s = mQiblaHelper.requestQiblaAngles(orientation)
                 .compose(Utils.applySchedulers())
                 .subscribe(new Subscriber<SensorObservable.AngleInfo>() {
                     @Override
@@ -48,11 +46,7 @@ public class QiblaFragment extends BaseFragment {
                         mCompassView.setAngleZ(angleInfo.z);
                     }
                 });
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        mSubscription.unsubscribe();
+        addSubscription(s);
     }
 }

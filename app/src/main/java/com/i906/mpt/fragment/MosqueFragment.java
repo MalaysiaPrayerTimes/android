@@ -16,12 +16,11 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapter.MosqueListener {
 
-    private CompositeSubscription mSubscription = new CompositeSubscription();
     private LinearLayoutManager mLayoutManager;
     private MosqueAdapter mAdapter;
 
@@ -62,7 +61,7 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
                     showError(getErrorMessage(e));
                 });
 
-        mSubscription.add(s);
+        addSubscription(s);
     }
 
     @Override
@@ -96,7 +95,6 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
     @Override
     public void onStop() {
         super.onStop();
-        mSubscription.unsubscribe();
         mAdapter.removeMosqueListener(this);
     }
 }
