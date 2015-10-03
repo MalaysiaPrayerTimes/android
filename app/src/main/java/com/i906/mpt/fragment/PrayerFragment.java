@@ -31,12 +31,12 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
 
     private void setPrayerView(FrameLayout v) {
         Timber.d("Selected prayer view: %s", mSelectedView);
-        PrayerView pv = mExtensionManager.getPrayerView(mSelectedView);
+        PrayerView pv = mExtensionManager.getPrayerView(getActivity(), mSelectedView);
 
         if (pv == null) {
             mPrefs.resetSelectedPrayerView();
             mSelectedView = mPrefs.getSelectedPrayerView();
-            pv = mExtensionManager.getPrayerView(mSelectedView);
+            pv = mExtensionManager.getPrayerView(getActivity(), mSelectedView);
         }
 
         if (pv != null) {

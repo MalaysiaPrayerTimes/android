@@ -64,7 +64,7 @@ public class ExtensionInfo {
             return isNative;
         }
 
-        public Class getNativeView() {
+        public Class<? extends PrayerView> getNativeView() {
             return nativeView;
         }
 

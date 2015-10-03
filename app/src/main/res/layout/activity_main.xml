@@ -54,6 +54,6 @@
         android:layout_marginBottom="16dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        style="@style/MainScreen.Settings" />
+        style="?actionOverflowButtonStyle" />
 
 </RelativeLayout>

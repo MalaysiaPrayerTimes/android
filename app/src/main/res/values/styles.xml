@@ -42,7 +42,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="PrayerList.ErrorText" parent="Base.TextAppearance.AppCompat.Medium">
+    <style name="PrayerList.ErrorText" parent="TextAppearance.AppCompat.Medium">
         <item name="android:layout_marginTop">32dp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:gravity">center</item>
@@ -67,7 +67,7 @@
         <item name="android:src">@drawable/ic_prayer_progress</item>
     </style>
 
-    <style name="PrayerList.List" parent="Base.TextAppearance.AppCompat.Large">
+    <style name="PrayerList.List" parent="TextAppearance.AppCompat.Large">
         <item name="android:textSize">@dimen/size_prayer_list</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
@@ -126,12 +126,12 @@
 
     <style name="MosqueList" />
 
-    <style name="MosqueList.Address" parent="Base.TextAppearance.AppCompat.Small">
+    <style name="MosqueList.Address" parent="TextAppearance.AppCompat.Small">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="MosqueList.Distance" parent="Base.TextAppearance.AppCompat.Small">
+    <style name="MosqueList.Distance" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
