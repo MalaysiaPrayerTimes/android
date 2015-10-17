@@ -36,7 +36,7 @@ def buildCount() {
 }
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
     def build_count = buildCount()
@@ -44,7 +44,7 @@ android {
     defaultConfig {
         applicationId "com.i906.mpt"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode build_count
         versionName "2.0.0"
 
@@ -88,8 +88,8 @@ dependencies {
     compile project(':mpt-extension:extension')
 
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:recyclerview-v7:23.1.0'
 
     // View Injection
     compile 'com.jakewharton:butterknife:7.0.1'
