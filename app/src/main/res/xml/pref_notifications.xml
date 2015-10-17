@@ -25,6 +25,8 @@
         <ListPreference
             android:key="notification_alarm_offset"
             android:defaultValue="0"
+            android:entries="@array/pref_alarm_offset"
+            android:entryValues="@array/pref_alarm_offset_values"
             android:title="@string/label_alarm_offset" />
 
     </PreferenceCategory>

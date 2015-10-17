@@ -43,6 +43,26 @@
     <string name="label_theme_dark">Dark</string>
     <string name="label_version">Version</string>
 
+    <string-array name="pref_alarm_offset">
+        <item>15 minutes earlier</item>
+        <item>10 minutes earlier</item>
+        <item>5 minutes earlier</item>
+        <item>No offset</item>
+        <item>5 minutes later</item>
+        <item>10 minutes later</item>
+        <item>15 minutes later</item>
+    </string-array>
+
+    <string-array name="pref_alarm_offset_values" translatable="false">
+        <item>-900000</item>
+        <item>-600000</item>
+        <item>-300000</item>
+        <item>0</item>
+        <item>300000</item>
+        <item>600000</item>
+        <item>900000</item>
+    </string-array>
+
     <string-array name="pref_notification_clear">
         <item>Notification never hidden</item>
         <item>5 minutes</item>
@@ -50,6 +70,8 @@
         <item>15 minutes</item>
         <item>20 minutes</item>
         <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
     </string-array>
 
     <string-array name="pref_reminder_appear">
@@ -59,6 +81,8 @@
         <item>15 minutes</item>
         <item>20 minutes</item>
         <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
     </string-array>
 
     <string-array name="pref_duration_values" translatable="false">
@@ -68,6 +92,8 @@
         <item>900000</item>
         <item>1200000</item>
         <item>1800000</item>
+        <item>2700000</item>
+        <item>3600000</item>
     </string-array>
 
 </resources>
