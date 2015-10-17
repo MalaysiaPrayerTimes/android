@@ -173,11 +173,15 @@ public class DefaultPrayerView extends PrayerView {
                 mErrorMessageView.setText(R.string.mpt_error_no_network);
                 break;
             case PrayerInterface.ERROR_LOCATION:
-                if ("ERROR_ADDRESS".equals(code) || "ERROR_PLACE".equals(code)) {
+                if (PrayerInterface.LOCATION_ERROR_ADDRESS.equals(code) ||
+                        PrayerInterface.LOCATION_ERROR_PLACE.equals(code)) {
                     mErrorMessageView.setText(R.string.mpt_error_undetectable_location);
                 } else {
                     mErrorMessageView.setText(R.string.mpt_error_no_location);
                 }
+                break;
+            case PrayerInterface.ERROR_PLAY_SERVICES:
+                mErrorMessageView.setText(R.string.mpt_error_play_service);
                 break;
             default:
                 mErrorMessageView.setText(R.string.mpt_error_unexpected);

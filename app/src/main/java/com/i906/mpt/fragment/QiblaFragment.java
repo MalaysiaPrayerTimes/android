@@ -31,20 +31,11 @@ public class QiblaFragment extends BaseFragment {
         int orientation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
         Subscription s = mQiblaHelper.requestQiblaAngles(orientation)
                 .compose(Utils.applySchedulers())
-                .subscribe(new Subscriber<SensorObservable.AngleInfo>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+                .subscribe(angleInfo -> {
+                    mCompassView.setAngleX(angleInfo.x);
+                    mCompassView.setAngleZ(angleInfo.z);
+                }, error -> {
 
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(SensorObservable.AngleInfo angleInfo) {
-                        mCompassView.setAngleX(angleInfo.x);
-                        mCompassView.setAngleZ(angleInfo.z);
-                    }
                 });
 
         addSubscription(s);

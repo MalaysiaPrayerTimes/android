@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.i906.mpt.R;
 import com.i906.mpt.extension.PrayerView;
 import com.i906.mpt.provider.MptInterface;
+import com.i906.mpt.ui.MainActivity;
 
 import timber.log.Timber;
 
@@ -19,6 +21,7 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPrayerInterface.setMptListener(this);
         mSelectedView = mPrefs.getSelectedPrayerView();
     }
 
@@ -53,6 +56,11 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
     @Override
     public void onPrayerExtensionCrashed(Throwable t) {
         setPrayerView((FrameLayout) this.getView());
+    }
+
+    @Override
+    public void onPlayServiceResult(ConnectionResult result) {
+        ((MainActivity) getActivity()).onPlayServiceResult(result);
     }
 
     @Override

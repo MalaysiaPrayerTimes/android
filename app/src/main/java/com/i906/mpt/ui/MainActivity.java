@@ -1,5 +1,7 @@
 package com.i906.mpt.ui;
 
+import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.i906.mpt.R;
 import com.i906.mpt.adapter.MainAdapter;
 
@@ -23,6 +27,7 @@ public class MainActivity extends BaseActivity {
 
     protected boolean mHasSensors = false;
     protected boolean mLandscapeMode = false;
+    protected boolean mResolvingError = false;
 
     protected int mQPos = 0;
     protected int mPPos = 1;
@@ -76,6 +81,32 @@ public class MainActivity extends BaseActivity {
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+    }
+
+    public void onPlayServiceResult(ConnectionResult result) {
+        if (mResolvingError) {
+        } else if (result.hasResolution()) {
+            try {
+                mResolvingError = true;
+                result.startResolutionForResult(this, 3455);
+            } catch (IntentSender.SendIntentException ignored) {
+            }
+        } else {
+            GoogleApiAvailability.getInstance().showErrorDialogFragment(this, result.getErrorCode(), 3455);
+            mResolvingError = true;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 3455) {
+            mResolvingError = false;
+            if (resultCode == RESULT_OK) {
+                mPrayerInterface.refresh();
+            }
         }
     }
 
@@ -133,7 +164,7 @@ public class MainActivity extends BaseActivity {
                 mPrayerButton.setColorFilter(normal, PorterDuff.Mode.SRC_IN);
             }
 
-            if (!mLandscapeMode) {
+            if (!mLandscapeMode && mSettingsButton != null) {
                 if (moresize == 0) moresize = mSettingsButton.getHeight() * 2;
 
                 if (position == mPPos - 1) {

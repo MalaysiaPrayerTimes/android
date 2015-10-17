@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.gson.stream.MalformedJsonException;
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.extension.PrayerInterface;
@@ -27,6 +28,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import pl.charmas.android.reactivelocation.observables.GoogleAPIConnectionException;
 import rx.Observable;
 import rx.Subscriber;
 import timber.log.Timber;
@@ -257,12 +259,18 @@ public class MptInterface implements PrayerInterface {
             Timber.e(e, "A HTTP error has occurred.");
         } else if (e instanceof GeocoderHelper.GeocoderError) {
             if (e instanceof GeocoderHelper.EmptyPlaceError) {
-                onError(ERROR_LOCATION, "EMPTY_PLACE");
+                onError(ERROR_LOCATION, LOCATION_ERROR_PLACE);
             } else if (e instanceof GeocoderHelper.EmptyAddressError) {
-                onError(ERROR_LOCATION, "EMPTY_ADDRESS");
+                onError(ERROR_LOCATION, LOCATION_ERROR_ADDRESS);
             } else {
-                onError(ERROR_NETWORK, "ERROR_GEOCODER");
+                onError(ERROR_NETWORK, LOCATION_ERROR_GEOCODER);
             }
+        } else if (e instanceof GoogleAPIConnectionException) {
+            GoogleAPIConnectionException ge = (GoogleAPIConnectionException) e;
+            ConnectionResult cr = ge.getConnectionResult();
+            onError(ERROR_PLAY_SERVICES, "PLAY_SERVICE_ERROR_" + cr.getErrorCode());
+            if (mMptListener != null) mMptListener.onPlayServiceResult(cr);
+            Timber.e(e, "error " + "PLAY_SERVICE_ERROR_" + cr.getErrorCode());
         } else {
             onError(ERROR_OTHER, null);
             Timber.e(e, "An unexpected error has occurred.");
@@ -302,5 +310,6 @@ public class MptInterface implements PrayerInterface {
 
     public interface MptListener {
         void onPrayerExtensionCrashed(Throwable t);
+        void onPlayServiceResult(ConnectionResult cr);
     }
 }

@@ -15,8 +15,8 @@ import com.i906.mpt.view.DividerItemDecoration;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import pl.charmas.android.reactivelocation.observables.GoogleAPIConnectionException;
 import rx.Subscription;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapter.MosqueListener {
@@ -80,6 +80,8 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
             return R.string.mpt_error_no_network;
         } else if (e instanceof retrofit.HttpException) {
             return R.string.mpt_error_unexpected;
+        } else if (e instanceof GoogleAPIConnectionException) {
+            return R.string.mpt_error_play_service;
         } else {
             Timber.w(e, "Mosque error.");
             return R.string.mpt_error_unexpected;
