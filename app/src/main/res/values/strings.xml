@@ -14,6 +14,13 @@
     <string name="label_extensions">Extensions</string>
     <string name="label_uninstall">Uninstall</string>
 
+    <!-- NotificationActivity -->
+
+    <string name="label_notification">Notification</string>
+    <string name="label_set_notification_tone">Set notification tone…</string>
+    <string name="label_set_reminder_tone">Set reminder tone…</string>
+    <string name="label_vibrate">Vibrate</string>
+
     <!-- NotificationHelper -->
 
     <string name="notification_prayer_normal">Prayer time is now %s.</string>
