@@ -24,6 +24,10 @@
     <dimen name="size_main_time">125sp</dimen>
     <dimen name="size_second_line">14sp</dimen>
 
+    <!-- Notification -->
+
+    <dimen name="card_spacing">8dp</dimen>
+
     <!-- Prayer List -->
 
     <dimen name="size_prayer_list">24sp</dimen>

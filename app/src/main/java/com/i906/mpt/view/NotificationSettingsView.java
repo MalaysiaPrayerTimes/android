@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.i906.mpt.R;
@@ -126,8 +125,6 @@ public class NotificationSettingsView extends CardView {
     }
 
     public void setCardExpanded(boolean expanded, boolean animate) {
-        if (expanded == isCardExpanded) return;
-
         if (mOriginalHeight == 0) {
             mOriginalHeight = settings.getHeight();
         }
@@ -155,6 +152,7 @@ public class NotificationSettingsView extends CardView {
             return;
         }
 
+        if (expanded == isCardExpanded) return;
         if (mOriginalHeight == 0) return;
 
         ValueAnimator valueAnimator;

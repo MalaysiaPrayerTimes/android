@@ -14,7 +14,11 @@ public class NotificationPrefs extends Prefs {
     @Inject
     public NotificationPrefs(Context context) {
         super(context);
-        convertLegacyPrefs();
+
+        if (!getBoolean("converted_legacy", false)) {
+            convertLegacyPrefs();
+            setBoolean("converted_legacy", true);
+        }
     }
 
     @Override
@@ -34,12 +38,28 @@ public class NotificationPrefs extends Prefs {
         return Long.valueOf(getString("alarm_offset", "0"));
     }
 
-    public boolean isNotificationEnabled(int prayer) {
+    public boolean isPrayerEnabled(int prayer) {
         return getBoolean("prayer_" + prayer, true);
+    }
+
+    public void setPrayerEnabled(int prayer, boolean enabled) {
+        setBoolean("prayer_" + prayer, enabled);
+    }
+
+    public boolean isNotificationEnabled(int prayer) {
+        return getBoolean("notification_" + prayer, true);
+    }
+
+    public void setNotificationEnabled(int prayer, boolean enabled) {
+        setBoolean("notification_" + prayer, enabled);
     }
 
     public boolean isVibrationEnabled(int prayer) {
         return getBoolean("vibrate_" + prayer, true);
+    }
+
+    public void setVibrationEnabled(int prayer, boolean enabled) {
+        setBoolean("vibrate_" + prayer, enabled);
     }
 
     public boolean isSoundEnabled(int prayer) {
@@ -79,16 +99,20 @@ public class NotificationPrefs extends Prefs {
 
         for (int i = 0; i < 8; i++) {
             String ak = "azan_" + i;
+            String nt = "noti_" + i;
             String vb = "vibr_" + i;
             String sd = "ring_" + i;
             boolean b = getLegacyBoolean(ak, true);
-            boolean v = getLegacyBoolean(vb, false);
+            boolean n = getLegacyBoolean(nt, true);
+            boolean v = getLegacyBoolean(vb, true);
             String s = getLegacyString(sd);
 
             clearLegacy(ak);
+            clearLegacy(nt);
             clearLegacy(vb);
             clearLegacy(sd);
             setBoolean("prayer_" + i, b);
+            setBoolean("notification_" + i, n);
             setBoolean("vibrate_" + i, v);
             setString("sound_" + i, s);
         }

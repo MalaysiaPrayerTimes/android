@@ -5,7 +5,7 @@
 
         <PreferenceScreen
             android:title="@string/label_configure_notifications">
-            <intent android:action="com.i906.mpt.action.NOTIFICATION_SETTING" />
+            <intent android:action="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
         </PreferenceScreen>
 
         <ListPreference
