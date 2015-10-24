@@ -9,6 +9,11 @@
     <string name="label_retry">Retry</string>
     <string name="label_settings">Settings</string>
 
+    <!-- AzanPickerActivity -->
+
+    <string name="label_alarm">Alarm</string>
+    <string name="label_none">None</string>
+
     <!-- ExtensionsActivity -->
 
     <string name="label_extensions">Extensions</string>

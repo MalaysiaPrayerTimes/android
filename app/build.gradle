@@ -123,6 +123,7 @@ dependencies {
 
     // Database
     compile 'com.pushtorefresh.storio:sqlite:1.5.0'
+    compile 'com.pushtorefresh.storio:content-resolver:1.5.0'
 
     // Memory Leak Detector
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
