@@ -15,6 +15,6 @@
     <string name="label_version">Versi</string>
     <string name="label_extension_description">Membenarkan extension ditambah ke Waktu Solat Malaysia</string>
     <string name="label_extension_permission">menambah extension ke Waktu Solat Malaysia</string>
-    <string name="label_extensions">Extensions</string>
+    <string name="label_extensions">Skrin Solat</string>
     <string name="label_refresh">Semak semula</string>
 </resources>

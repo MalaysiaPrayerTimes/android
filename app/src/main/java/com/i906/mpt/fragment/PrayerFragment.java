@@ -21,7 +21,6 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPrayerInterface.setMptListener(this);
         mSelectedView = mPrefs.getSelectedPrayerView();
     }
 
@@ -75,5 +74,12 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
         }
 
         mPrayerInterface.refresh();
+        mPrayerInterface.setMptListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPrayerInterface.setMptListener(null);
     }
 }

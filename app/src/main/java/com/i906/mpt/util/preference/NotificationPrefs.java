@@ -71,8 +71,8 @@ public class NotificationPrefs extends Prefs {
         setBoolean(VIBRATE_KEY + prayer, enabled);
     }
 
-    public boolean isSoundEnabled(int prayer) {
-        String s = getString(NOTIFICATION_TONE_KEY + prayer);
+    public boolean hasReminderTone(int prayer) {
+        String s = getString(REMINDER_TONE_KEY + prayer);
         return s != null && s.length() != 0;
     }
 
@@ -83,6 +83,11 @@ public class NotificationPrefs extends Prefs {
 
     public void setReminderTone(int prayer, String uri) {
         setString(REMINDER_TONE_KEY + prayer, uri);
+    }
+
+    public boolean hasNotificationTone(int prayer) {
+        String s = getString(NOTIFICATION_TONE_KEY + prayer);
+        return s != null && s.length() != 0;
     }
 
     @Nullable

@@ -67,16 +67,18 @@ public class NotificationSettingsView extends CardView {
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         setOnClickListener(v -> setCardExpanded(!isCardExpanded, true));
 
-        getViewTreeObserver()
-                .addOnGlobalLayoutListener(
-                        new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                                mOriginalHeight = settings.getHeight();
-                                if (!isCardExpanded) settings.setVisibility(GONE);
-                            }
-                        });
+        getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mOriginalHeight = settings.getHeight();
+                if (!isCardExpanded) {
+                    settings.setVisibility(GONE);
+                    settings.getLayoutParams().height = 0;
+                }
+                getViewTreeObserver().removeOnPreDrawListener(this);
+                return true;
+            }
+        });
     }
 
     public void setSettingsEnabled(boolean enabled) {
@@ -120,6 +122,22 @@ public class NotificationSettingsView extends CardView {
         vibrate.setChecked(enabled);
     }
 
+    public void setReminderToneName(String name) {
+        if (name != null) {
+            reminderTone.setText(name);
+        } else {
+            reminderTone.setText(R.string.label_set_reminder_tone);
+        }
+    }
+
+    public void setNotificationToneName(String name) {
+        if (name != null) {
+            notificationTone.setText(name);
+        } else {
+            notificationTone.setText(R.string.label_set_notification_tone);
+        }
+    }
+
     public boolean isCardExpanded() {
         return isCardExpanded;
     }
@@ -144,6 +162,7 @@ public class NotificationSettingsView extends CardView {
 
                 if (mOriginalHeight != 0) {
                     settings.setVisibility(GONE);
+                    settings.getLayoutParams().height = 0;
                 }
 
                 isCardExpanded = false;

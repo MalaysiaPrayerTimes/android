@@ -7,6 +7,7 @@ import android.widget.CompoundButton;
 
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
+import com.i906.mpt.util.RingtoneHelper;
 import com.i906.mpt.util.preference.NotificationPrefs;
 import com.i906.mpt.view.NotificationSettingsView;
 
@@ -22,6 +23,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Inject
     protected NotificationPrefs mPrefs;
+
+    @Inject
+    protected RingtoneHelper mRingtoneHelper;
 
     private final boolean[] mExpandState;
     private final String[] mPrayerNames;
@@ -50,6 +54,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         v.setNotificationEnabled(mPrefs.isNotificationEnabled(position));
         v.setVibrateEnabled(mPrefs.isVibrationEnabled(position));
         v.setCardExpanded(mExpandState[position], false);
+        v.setReminderToneName(mRingtoneHelper.getToneName(mPrefs.getReminderTone(position)));
+        v.setNotificationToneName(mRingtoneHelper.getToneName(mPrefs.getNotificationTone(position)));
     }
 
     @Override
@@ -70,7 +76,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public void onReminderButtonClicked(int prayer) {
+        if (mListener != null) mListener.onReminderButtonClicked(prayer);
+    }
 
+    public void onNotificationButtonClicked(int prayer) {
+        if (mListener != null) mListener.onNotificationButtonClicked(prayer);
     }
 
     public void setListener(NotificationListener listener) {
@@ -112,9 +122,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         protected void onReminderButtonClicked() {
             adapter.onReminderButtonClicked(getAdapterPosition());
         }
+
+        @OnClick(R.id.btn_notification)
+        protected void onNotificationButtonClicked() {
+            adapter.onNotificationButtonClicked(getAdapterPosition());
+        }
     }
 
     public interface NotificationListener {
         void onReminderButtonClicked(int prayer);
+        void onNotificationButtonClicked(int prayer);
     }
 }

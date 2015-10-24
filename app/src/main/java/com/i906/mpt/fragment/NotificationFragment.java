@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.i906.mpt.adapter.NotificationAdapter;
+import com.i906.mpt.ui.NotificationActivity;
 import com.i906.mpt.view.NotificationItemDecoration;
 
 /**
@@ -39,9 +40,20 @@ public class NotificationFragment extends BaseRecyclerFragment implements Notifi
     public void onRefresh(boolean pull) {
     }
 
+    public void refresh() {
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onReminderButtonClicked(int prayer) {
+        ((NotificationActivity) getActivity())
+                .showAzanPicker(prayer, mNotificationPrefs.getReminderTone(prayer), false);
+    }
 
+    @Override
+    public void onNotificationButtonClicked(int prayer) {
+        ((NotificationActivity) getActivity())
+                .showAzanPicker(prayer, mNotificationPrefs.getNotificationTone(prayer), true);
     }
 
     @Override
