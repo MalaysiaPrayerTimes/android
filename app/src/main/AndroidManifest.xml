@@ -60,6 +60,16 @@
         </activity>
 
         <activity
+            android:name=".ui.NotificationActivity"
+            android:label="@string/label_notifications"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/label_settings"
             android:launchMode="singleTask">

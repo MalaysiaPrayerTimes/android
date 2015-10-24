@@ -1,0 +1,13 @@
+<resources>
+
+    <declare-styleable name="MptTheme">
+        <attr name="notificationSettingsStyle" format="reference" />
+        <attr name="toolbarColor" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TintableButton">
+        <attr name="android:tint" />
+        <attr name="tintableButtonStyle" format="reference" />
+    </declare-styleable>
+
+</resources>

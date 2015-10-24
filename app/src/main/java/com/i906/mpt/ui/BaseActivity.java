@@ -12,6 +12,7 @@ import com.i906.mpt.R;
 import com.i906.mpt.extension.ExtensionManager;
 import com.i906.mpt.provider.MptInterface;
 import com.i906.mpt.util.Utils;
+import com.i906.mpt.util.preference.NotificationPrefs;
 
 import javax.inject.Inject;
 
@@ -28,6 +29,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject
     protected MptInterface mPrayerInterface;
+
+    @Inject
+    protected NotificationPrefs mNotificationPrefs;
 
     @Nullable
     @Bind(R.id.toolbar)

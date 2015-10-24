@@ -105,7 +105,7 @@ public class ExtensionsAdapter extends RecyclerView.Adapter<ExtensionsAdapter.Vi
         mListener = null;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected ExtensionsAdapter adapter;
         protected ExtensionInfo extension;

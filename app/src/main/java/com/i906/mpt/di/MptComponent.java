@@ -2,8 +2,10 @@ package com.i906.mpt.di;
 
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.adapter.ExtensionsAdapter;
+import com.i906.mpt.adapter.NotificationAdapter;
 import com.i906.mpt.api.ApiModule;
 import com.i906.mpt.db.DbModule;
+import com.i906.mpt.fragment.AzanPickerFragment;
 import com.i906.mpt.fragment.BaseFragment;
 import com.i906.mpt.receiver.AlarmReceiver;
 import com.i906.mpt.service.AlarmSetupService;
@@ -22,10 +24,12 @@ import dagger.Component;
 public interface MptComponent {
 
     void inject(BaseFragment fragment);
+    void inject(AzanPickerFragment fragment);
     void inject(BaseActivity activity);
     void inject(AlarmSetupService service);
     void inject(AlarmReceiver receiver);
     void inject(ExtensionsAdapter adapter);
+    void inject(NotificationAdapter adapter);
 
     final class Initializer {
         public static MptComponent init(MptApplication app) {

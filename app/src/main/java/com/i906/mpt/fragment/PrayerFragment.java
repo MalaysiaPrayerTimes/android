@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.i906.mpt.R;
 import com.i906.mpt.extension.PrayerView;
 import com.i906.mpt.provider.MptInterface;
+import com.i906.mpt.ui.MainActivity;
 
 import timber.log.Timber;
 
@@ -31,12 +33,12 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
 
     private void setPrayerView(FrameLayout v) {
         Timber.d("Selected prayer view: %s", mSelectedView);
-        PrayerView pv = mExtensionManager.getPrayerView(mSelectedView);
+        PrayerView pv = mExtensionManager.getPrayerView(getActivity(), mSelectedView);
 
         if (pv == null) {
             mPrefs.resetSelectedPrayerView();
             mSelectedView = mPrefs.getSelectedPrayerView();
-            pv = mExtensionManager.getPrayerView(mSelectedView);
+            pv = mExtensionManager.getPrayerView(getActivity(), mSelectedView);
         }
 
         if (pv != null) {
@@ -56,6 +58,11 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
     }
 
     @Override
+    public void onPlayServiceResult(ConnectionResult result) {
+        ((MainActivity) getActivity()).onPlayServiceResult(result);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         String sv = mPrefs.getSelectedPrayerView();
@@ -67,5 +74,12 @@ public class PrayerFragment extends BaseFragment implements MptInterface.MptList
         }
 
         mPrayerInterface.refresh();
+        mPrayerInterface.setMptListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPrayerInterface.setMptListener(null);
     }
 }

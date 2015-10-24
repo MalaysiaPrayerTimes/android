@@ -41,17 +41,23 @@ public class NotificationHelper {
         fillStrings();
     }
 
-    public void showPrayerReminder(int prayer, long time, String location) {
+    public void showPrayerReminder(int prayer, long time, String location, boolean ticker) {
+        if (!mNotificationPrefs.isPrayerEnabled(prayer)) return;
+
         long pt = time + mNotificationPrefs.getAlarmOffset();
         int minutes = (int) (pt - System.currentTimeMillis()) / 60000;
         String prayerName = mPrayerNames[prayer];
         String reminder = getReminderText(prayer, minutes);
+        Uri toneUri = null;
+
+        if (mNotificationPrefs.hasReminderTone(prayer)) {
+            toneUri = Uri.parse(mNotificationPrefs.getReminderTone(prayer));
+        }
 
         if (mNotificationPrefs.isNotificationEnabled(prayer)) {
             NotificationCompat.Builder builder = getNotificationTemplate();
 
-            builder.setTicker(reminder)
-                    .setWhen(time)
+            builder.setWhen(time)
                     .setContentTitle(prayerName)
                     .setContentText(reminder)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
@@ -59,6 +65,14 @@ public class NotificationHelper {
                                     .bigText(reminder)
                                     .setSummaryText(location)
                     );
+
+            if (ticker) {
+                builder.setTicker(reminder);
+
+                if (toneUri != null) {
+                    playRingtone(toneUri);
+                }
+            }
 
             mNotifier.notify("reminder", prayer, builder.build());
         }
@@ -76,8 +90,15 @@ public class NotificationHelper {
     }
 
     public void showPrayerNotification(int prayer, long time, String location) {
+        if (!mNotificationPrefs.isPrayerEnabled(prayer)) return;
+
         String prayerName = mPrayerNames[prayer];
         String notification = getPrayerText(prayer);
+        Uri toneUri = null;
+
+        if (mNotificationPrefs.hasNotificationTone(prayer)) {
+            toneUri = Uri.parse(mNotificationPrefs.getNotificationTone(prayer));
+        }
 
         if (mNotificationPrefs.isNotificationEnabled(prayer)) {
             NotificationCompat.Builder builder = getNotificationTemplate();
@@ -96,8 +117,8 @@ public class NotificationHelper {
                 builder.setVibrate(PATTERN_VIBRATE);
             }
 
-            if (mNotificationPrefs.isSoundEnabled(prayer)) {
-                builder.setSound(mNotificationPrefs.getSound(prayer));
+            if (toneUri != null) {
+                builder.setSound(toneUri);
             }
 
             mNotifier.notify("prayer", prayer, builder.build());
@@ -106,8 +127,8 @@ public class NotificationHelper {
                 playVibration();
             }
 
-            if (mNotificationPrefs.isSoundEnabled(prayer)) {
-                playRingtone(mNotificationPrefs.getSound(prayer));
+            if (toneUri != null) {
+                playRingtone(toneUri);
             }
         }
 
@@ -135,7 +156,7 @@ public class NotificationHelper {
                 mContext, 907, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         return new NotificationCompat.Builder(mContext)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
                 .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_EVENT)
                 .setColor(r.getColor(R.color.mpt_color_accent))

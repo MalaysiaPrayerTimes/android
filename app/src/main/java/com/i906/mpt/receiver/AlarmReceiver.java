@@ -29,10 +29,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (prayer == -1 || time == -1) return;
 
-        if (AlarmSetupService.ACTION_NOTIFICATION_REMINDER.equals(action) ||
-                AlarmSetupService.ACTION_NOTIFICATION_REMINDER_TICK.equals(action)) {
-            mNotificationHelper.showPrayerReminder(prayer, time, location);
+        if (AlarmSetupService.ACTION_NOTIFICATION_REMINDER.equals(action)) {
+            mNotificationHelper.showPrayerReminder(prayer, time, location, true);
             AlarmSetupService.setAlarm(context, prayer);
+        }
+
+        if (AlarmSetupService.ACTION_NOTIFICATION_REMINDER_TICK.equals(action)) {
+            mNotificationHelper.showPrayerReminder(prayer, time, location, false);
         }
 
         if (AlarmSetupService.ACTION_NOTIFICATION_PRAYER.equals(action)) {

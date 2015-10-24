@@ -15,13 +15,12 @@ import com.i906.mpt.view.DividerItemDecoration;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import pl.charmas.android.reactivelocation.observables.GoogleAPIConnectionException;
 import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapter.MosqueListener {
 
-    private CompositeSubscription mSubscription = new CompositeSubscription();
     private LinearLayoutManager mLayoutManager;
     private MosqueAdapter mAdapter;
 
@@ -62,7 +61,7 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
                     showError(getErrorMessage(e));
                 });
 
-        mSubscription.add(s);
+        addSubscription(s);
     }
 
     @Override
@@ -81,6 +80,8 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
             return R.string.mpt_error_no_network;
         } else if (e instanceof retrofit.HttpException) {
             return R.string.mpt_error_unexpected;
+        } else if (e instanceof GoogleAPIConnectionException) {
+            return R.string.mpt_error_play_service;
         } else {
             Timber.w(e, "Mosque error.");
             return R.string.mpt_error_unexpected;
@@ -96,7 +97,6 @@ public class MosqueFragment extends BaseRecyclerFragment implements MosqueAdapte
     @Override
     public void onStop() {
         super.onStop();
-        mSubscription.unsubscribe();
         mAdapter.removeMosqueListener(this);
     }
 }

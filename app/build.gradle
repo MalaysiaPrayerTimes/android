@@ -1,7 +1,6 @@
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 
@@ -37,7 +36,7 @@ def buildCount() {
 }
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
     def build_count = buildCount()
@@ -45,7 +44,7 @@ android {
     defaultConfig {
         applicationId "com.i906.mpt"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode build_count
         versionName "2.0.0"
 
@@ -89,8 +88,9 @@ dependencies {
     compile project(':mpt-extension:extension')
 
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+    compile 'com.android.support:cardview-v7:23.1.0'
 
     // View Injection
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -111,18 +111,20 @@ dependencies {
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
 
     // Play Services
-    compile 'com.google.android.gms:play-services-location:7.8.0'
+    compile 'com.google.android.gms:play-services-location:8.1.0'
 
     // UI Libraries
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
 
     // Rx
+    compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'pl.charmas.android:android-reactive-location:0.7@aar'
+    compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
     // Database
-    compile 'com.pushtorefresh.storio:sqlite:1.3.0'
+    compile 'com.pushtorefresh.storio:sqlite:1.5.0'
+    compile 'com.pushtorefresh.storio:content-resolver:1.5.0'
 
     // Memory Leak Detector
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'

@@ -103,30 +103,30 @@ public class ExtensionManager {
     }
 
     @Nullable
-    public PrayerView getPrayerView(String screenView) {
+    public PrayerView getPrayerView(Context context, String screenView) {
         List<ExtensionInfo.Screen> screens = getScreens();
 
         for (ExtensionInfo.Screen s : screens) {
-            if (s.getView().equals(screenView)) return getPrayerView(s);
+            if (s.getView().equals(screenView)) return getPrayerView(context, s);
         }
 
         return null;
     }
 
     @Nullable
-    public PrayerView getPrayerView(ExtensionInfo.Screen screen) {
+    public PrayerView getPrayerView(Context context, ExtensionInfo.Screen screen) {
         if (screen.isNative()) {
-            return createNativePrayerView(screen);
+            return createNativePrayerView(context, screen);
         } else {
             return createExtensionPrayerView(screen);
         }
     }
 
     @Nullable
-    private PrayerView createNativePrayerView(ExtensionInfo.Screen screen) {
+    private PrayerView createNativePrayerView(Context context, ExtensionInfo.Screen screen) {
         try {
             Constructor c = screen.getNativeView().getConstructor(Context.class);
-            return (PrayerView) c.newInstance(mContext);
+            return (PrayerView) c.newInstance(context);
         } catch (Exception e) {
             e.printStackTrace();
         }
