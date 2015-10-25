@@ -17,8 +17,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 /**
  * Created by Noorzaini Ilhami on 24/10/2015.
  */
@@ -119,11 +117,7 @@ public class PrayerProvider extends ContentProvider {
         List<Object> r = new ArrayList<>();
 
         if (!mPrayerInterface.isPrayerTimesLoaded()) {
-            Timber.w("pt not yet loaded");
             mPrayerInterface.refreshBlocking();
-            Timber.w("pt loaded a");
-        } else {
-            Timber.w("pt loaded");
         }
 
         r.add(mPrayerInterface.getLocation());
