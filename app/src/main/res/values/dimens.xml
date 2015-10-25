@@ -33,4 +33,8 @@
     <dimen name="size_prayer_list">24sp</dimen>
     <dimen name="margin_container_top">-56dp</dimen>
 
+    <!-- Widget -->
+
+    <dimen name="size_widget_bar_prayer_table">12sp</dimen>
+
 </resources>
