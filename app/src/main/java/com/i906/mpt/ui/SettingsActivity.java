@@ -50,6 +50,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         addPreferencesFromResource(R.xml.pref_interface);
         addPreferencesFromResource(R.xml.pref_notifications);
+        addPreferencesFromResource(R.xml.pref_misc);
         addPreferencesFromResource(R.xml.pref_about);
 
         Preference version = findPreference("general_pref_version");
@@ -61,6 +62,7 @@ public class SettingsActivity extends PreferenceActivity {
         bindPreferenceSummaryToValue(findPreference("notification_appear_before_duration"));
         bindPreferenceSummaryToValue(findPreference("notification_clear_after_duration"));
         bindPreferenceSummaryToValue(findPreference("notification_alarm_offset"));
+        bindPreferenceSummaryToValue(findPreference("general_hijri_offset"));
 
         version.setSummary(BuildConfig.VERSION_NAME);
         build.setSummary(String.format("%s %s %s",

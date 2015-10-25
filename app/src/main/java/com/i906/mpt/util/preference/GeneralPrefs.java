@@ -33,4 +33,8 @@ public class GeneralPrefs extends Prefs {
     public void resetSelectedPrayerView() {
         setSelectedPrayerView(DefaultPrayerView.class.getCanonicalName());
     }
+
+    public int getHijriOffset() {
+        return Integer.valueOf(getString("hijri_offset", "0"));
+    }
 }

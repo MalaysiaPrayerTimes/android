@@ -1,6 +1,5 @@
 package com.i906.mpt.api;
 
-import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
@@ -38,10 +37,10 @@ public class ApiModule {
     private static final String FOURSQUARE_API_VERSION = "20150905";
     private static final String FOURSQUARE_URL = "https://api.foursquare.com/v2/";
 
-    protected Application mContext;
+    protected Context mContext;
 
-    public ApiModule(Application application) {
-        mContext = application;
+    public ApiModule(Context context) {
+        mContext = context;
     }
 
     @Provides

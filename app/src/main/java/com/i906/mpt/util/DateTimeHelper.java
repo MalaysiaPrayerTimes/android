@@ -1,6 +1,13 @@
 package com.i906.mpt.util;
 
+import com.i906.mpt.util.preference.GeneralPrefs;
+
+import org.joda.time.DateTime;
+import org.joda.time.chrono.IslamicChronology;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
@@ -9,11 +16,14 @@ import javax.inject.Singleton;
 @Singleton
 public class DateTimeHelper {
 
-    protected Calendar mCalendar;
+    private Calendar mCalendar;
+    private DateTime mHijriCalendar;
+    private GeneralPrefs mPrefs;
 
     @Inject
-    public DateTimeHelper() {
+    public DateTimeHelper(GeneralPrefs p) {
         refresh();
+        mPrefs = p;
     }
 
     public int getCurrentDate() {
@@ -68,6 +78,7 @@ public class DateTimeHelper {
     private void refresh() {
         if (mCalendar == null) mCalendar = getNewCalendarInstance();
         mCalendar.setTimeInMillis(getCurrentTime());
+        mHijriCalendar = new DateTime(IslamicChronology.getInstance());
     }
 
     public long getCurrentTime() {
@@ -81,5 +92,18 @@ public class DateTimeHelper {
 
     public Calendar getNewCalendarInstance() {
         return Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+    }
+
+    public List<Integer> getHijriDate(boolean maghribPassed) {
+        List<Integer> l = new ArrayList<>(3);
+        refresh();
+
+        if (maghribPassed) mHijriCalendar = mHijriCalendar.plusDays(1);
+        mHijriCalendar = mHijriCalendar.plusDays(mPrefs.getHijriOffset());
+        l.add(mHijriCalendar.getDayOfMonth());
+        l.add(mHijriCalendar.getMonthOfYear() - 1);
+        l.add(mHijriCalendar.getYear());
+
+        return l;
     }
 }
