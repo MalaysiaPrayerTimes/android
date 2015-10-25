@@ -34,6 +34,10 @@ public class GeneralPrefs extends Prefs {
         setSelectedPrayerView(DefaultPrayerView.class.getCanonicalName());
     }
 
+    public boolean is3DCompassEnabled() {
+        return getBoolean("3d_compass", false);
+    }
+
     public int getHijriOffset() {
         return Integer.valueOf(getString("hijri_offset", "0"));
     }

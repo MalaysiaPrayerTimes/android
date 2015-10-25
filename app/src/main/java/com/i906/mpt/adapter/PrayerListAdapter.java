@@ -29,10 +29,10 @@ public class PrayerListAdapter extends BaseAdapter {
     protected int mDefaultColor = -1;
     protected int mHighlightedColor = -1;
 
-    public PrayerListAdapter(List<Date> dateList, String[] prayerNames) {
+    public PrayerListAdapter(List<Date> dateList, String[] prayerNames, String dateFormat) {
         mDateList = dateList;
         mPrayerNames = prayerNames;
-        mDateFormatter = new SimpleDateFormat("hh:mm");
+        mDateFormatter = new SimpleDateFormat(dateFormat);
     }
 
     @Override

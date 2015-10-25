@@ -39,6 +39,7 @@
 
     <!-- SettingsActivity -->
 
+    <string name="label_3d_compass">Enable 3D compass</string>
     <string name="label_about">About</string>
     <string name="label_alarm_offset">Alarm offset</string>
     <string name="label_build">Build number</string>
