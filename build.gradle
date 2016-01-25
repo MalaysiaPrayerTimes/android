@@ -2,19 +2,76 @@ buildscript {
 
     repositories {
         jcenter()
-        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.1'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha7'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.0-SNAPSHOT'
     }
 }
 
 allprojects {
+
     repositories {
         jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
+}
+
+ext {
+
+    // Android
+    buildToolsVersion = '23.0.2'
+    minSdkVersion = 16
+    targetSdkVersion = 22
+    compileSdkVersion = 23
+
+    // Libraries
+    androidSupportVersion = '23.1.1'
+    gsonVersion = '2.4'
+    okhttpVersion = '2.6.0'
+    retrofitVersion = '2.0.0-beta2'
+    rxJavaVersion = '1.1.0'
+    rxAndroidVersion = '1.1.0'
+    daggerVersion = '2.0.2'
+    javaAnnotationsVersion = '1.0'
+    storioVersion = '1.6.0'
+
+    libraries = [
+            // Android Support
+            appCompat: "com.android.support:appcompat-v7:${androidSupportVersion}",
+            cardView: "com.android.support:cardview-v7:${androidSupportVersion}",
+            design: "com.android.support:design:${androidSupportVersion}",
+            recyclerView: "com.android.support:recyclerview-v7:${androidSupportVersion}",
+            supportAnnotations: "com.android.support:support-annotations:${androidSupportVersion}",
+            supportV4: "com.android.support:support-v4:${androidSupportVersion}",
+            supportV13: "com.android.support:support-v13:${androidSupportVersion}",
+
+            // RxJava
+            rxJava: "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid: "io.reactivex:rxandroid:${rxAndroidVersion}",
+
+            // Dagger
+            dagger: "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
+            javaAnnotations: "javax.annotation:jsr250-api:${javaAnnotationsVersion}",
+
+            // HTTP
+            gson: "com.google.code.gson:gson:${gsonVersion}",
+            okhttpLogging: "com.squareup.okhttp:logging-interceptor:${okhttpVersion}",
+            okhttp: "com.squareup.okhttp:okhttp:${okhttpVersion}",
+            retrofit: "com.squareup.retrofit:retrofit:${retrofitVersion}",
+            retrofitGsonConverter: "com.squareup.retrofit:converter-gson:${retrofitVersion}",
+            retrofitRxJavaAdapter: "com.squareup.retrofit:adapter-rxjava:${retrofitVersion}",
+
+            // Database
+            storioSqlite: "com.pushtorefresh.storio:sqlite:${storioVersion}",
+            storioContentResolver: "com.pushtorefresh.storio:content-resolver:${storioVersion}",
+
+            // Misc
+            timber: 'com.jakewharton.timber:timber:4.1.0',
+            butterknife: 'com.jakewharton:butterknife:7.0.1',
+    ]
 }

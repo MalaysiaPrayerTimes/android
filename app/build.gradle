@@ -12,9 +12,14 @@ def gitSha() {
     def gitpath = "git"
     def Properties localProps = new Properties()
     def localPropsFile = rootProject.file('local.properties')
-    localProps.load(new FileInputStream(localPropsFile))
-    def localgitpath = localProps['GIT_PATH']
-    if (localgitpath != null && !localgitpath.toString().isEmpty()) gitpath = localgitpath
+
+    try {
+        def localGitPath
+        localProps.load(new FileInputStream(localPropsFile))
+        localGitPath = localProps['GIT_PATH']
+        if (localGitPath != null && !localGitPath.toString().isEmpty()) gitpath = localGitPath
+    } catch (FileNotFoundException ignored) { }
+
     String ex = gitpath + ' rev-parse --short HEAD'
     return ex.execute().text.trim()
 }
@@ -25,27 +30,15 @@ def buildTime() {
     return df.format(new Date())
 }
 
-def buildCount() {
-    def Properties versionProps = new Properties()
-    def versionPropsFile = file('version.properties')
-    if (versionPropsFile.exists()) versionProps.load(new FileInputStream(versionPropsFile))
-    def code = (versionProps['VERSION_CODE'] ?: "0").toInteger() + 1
-    versionProps['VERSION_CODE'] = code.toString()
-    versionProps.store(versionPropsFile.newWriter(), null)
-    return code
-}
-
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
-
-    def build_count = buildCount()
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.i906.mpt"
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode build_count
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 3979
         versionName "2.0.0"
 
         buildConfigField STRING, GIT_SHA, "\"${ gitSha() }\""
@@ -75,6 +68,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def finalName = "mpt-" + variant.versionName + "-" + variant.buildType.name + ".apk";
+                output.outputFile = new File(output.outputFile.parent, finalName)
+            }
+        }
     }
 
     packagingOptions {
@@ -93,27 +92,27 @@ dependencies {
     compile project(':mpt-extension:extension')
 
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:cardview-v7:23.1.0'
+    compile libraries.appCompat
+    compile libraries.cardView
+    compile libraries.recyclerView
 
     // View Injection
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile libraries.butterknife
 
     // Logging
-    compile 'com.jakewharton.timber:timber:4.1.0'
+    compile libraries.timber
 
     // Dependency Injection
-    compile 'com.google.dagger:dagger:2.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
-    provided 'javax.annotation:jsr250-api:1.0'
+    compile libraries.dagger
+    apt libraries.daggerCompiler
+    provided libraries.javaAnnotations
 
     // HTTP Libraries
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
+    compile libraries.gson
+    compile libraries.okhttp
+    compile libraries.retrofit
+    compile libraries.retrofitGsonConverter
+    compile libraries.retrofitRxJavaAdapter
 
     // Play Services
     compile 'com.google.android.gms:play-services-location:8.1.0'
@@ -123,13 +122,13 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
 
     // Rx
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'io.reactivex:rxandroid:1.0.1'
+    compile libraries.rxJava
+    compile libraries.rxAndroid
     compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
     // Database
-    compile 'com.pushtorefresh.storio:sqlite:1.6.0'
-    compile 'com.pushtorefresh.storio:content-resolver:1.6.0'
+    compile libraries.storioSqlite
+    compile libraries.storioContentResolver
 
     // Memory Leak Detector
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
