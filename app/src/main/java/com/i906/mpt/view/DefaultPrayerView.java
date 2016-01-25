@@ -1,6 +1,7 @@
 package com.i906.mpt.view;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.i906.mpt.extension.PrayerInterface;
 import com.i906.mpt.extension.PrayerView;
 import com.linearlistview.LinearListView;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +23,13 @@ import butterknife.OnClick;
 
 public class DefaultPrayerView extends PrayerView {
 
-    protected SimpleDateFormat mDateFormatter;
+    private final static String FORMAT_24 = "kk:mm";
+    private final static String FORMAT_12 = "hh:mm";
+
     protected String[] mPrayerNames;
     protected String[] mHijriNames;
     protected PrayerListAdapter mAdapter;
+    protected String mDateFormat;
 
     @Bind(R.id.content_container)
     protected View mContentView;
@@ -68,9 +71,9 @@ public class DefaultPrayerView extends PrayerView {
         LayoutInflater.from(context).inflate(R.layout.view_default_prayer, this, true);
         ButterKnife.bind(this);
 
-        mDateFormatter = new SimpleDateFormat("hh:mm");
         mPrayerNames = getResources().getStringArray(R.array.mpt_prayer_names);
-        mHijriNames = getResources().getStringArray(R.array.mpt_hijri_dates);
+        mHijriNames = getResources().getStringArray(R.array.mpt_hijri_months);
+        mDateFormat = DateFormat.is24HourFormat(context) ? FORMAT_24 : FORMAT_12;
     }
 
     private void updatePrayerHeader() {
@@ -79,18 +82,18 @@ public class DefaultPrayerView extends PrayerView {
         int currentIndex = getInterface().getCurrentPrayerIndex();
         int nextIndex = getInterface().getNextPrayerIndex();
         String location = getInterface().getLocation();
-        int[] hijri = getInterface().getHijriDate();
+        List<Integer> hijri = getInterface().getHijriDate();
 
-        String date = String.format("%s %s %s", hijri[PrayerInterface.DATE_DATE],
-                mHijriNames[hijri[PrayerInterface.DATE_MONTH]], hijri[PrayerInterface.DATE_YEAR]);
+        String date = getResources().getString(R.string.label_date, hijri.get(PrayerInterface.DATE_DAY),
+                mHijriNames[hijri.get(PrayerInterface.DATE_MONTH)], hijri.get(PrayerInterface.DATE_YEAR));
 
         if (mAdapter == null) {
-            mAdapter = new PrayerListAdapter(times, mPrayerNames);
+            mAdapter = new PrayerListAdapter(times, mPrayerNames, mDateFormat);
         }
 
         mAdapter.setHighlightedIndex(currentIndex);
 
-        mMainTimeView.setText(mDateFormatter.format(nextTime));
+        mMainTimeView.setText(getFormattedDate(nextTime));
         mMainPrayerView.setText(mPrayerNames[nextIndex]);
         mLocationView.setText(location);
         mDateView.setText(date);
@@ -186,5 +189,9 @@ public class DefaultPrayerView extends PrayerView {
             default:
                 mErrorMessageView.setText(R.string.mpt_error_unexpected);
         }
+    }
+
+    private String getFormattedDate(Date date) {
+        return DateFormat.format(mDateFormat, date).toString();
     }
 }

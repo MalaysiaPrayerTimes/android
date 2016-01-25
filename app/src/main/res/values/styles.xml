@@ -141,7 +141,7 @@
         <item name="android:padding">16dp</item>
     </style>
 
-    <style name="MosqueList.Name" parent="Base.TextAppearance.AppCompat.Large">
+    <style name="MosqueList.Name" parent="TextAppearance.AppCompat.Large">
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
@@ -154,6 +154,14 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- Widgets -->
+
+    <style name="WidgetPrayerTable" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/size_widget_bar_prayer_table</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>

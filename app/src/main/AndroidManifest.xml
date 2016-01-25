@@ -19,6 +19,10 @@
         android:label="@string/label_extension_permission"
         android:protectionLevel="normal" />
 
+    <permission
+        android:name="com.i906.mpt.permission.WRITE_PRAYER_DATA"
+        android:protectionLevel="signature" />
+
     <application
         android:name=".MptApplication"
         android:allowBackup="true"
@@ -45,6 +49,10 @@
             <intent-filter android:label="@string/app_name_short">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.MAIN_SCREEN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -82,6 +90,28 @@
                 <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".provider.PrayerProvider"
+            android:authorities="${applicationId}.provider.prayer"
+            android:enabled="true"
+            android:exported="true"
+            android:writePermission="com.i906.mpt.permission.WRITE_PRAYER_DATA" />
+
+        <receiver
+            android:name=".widget.BarWidgetProvider"
+            android:label="@string/label_widget_bar"
+            android:icon="@drawable/ic_launcher">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_bar" />
+        </receiver>
 
         <receiver
             android:name=".receiver.StartupReceiver">

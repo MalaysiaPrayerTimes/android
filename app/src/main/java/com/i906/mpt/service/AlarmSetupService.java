@@ -9,13 +9,13 @@ import android.net.Uri;
 import android.os.Build;
 
 import com.i906.mpt.MptApplication;
+import com.i906.mpt.provider.MptContract;
 import com.i906.mpt.provider.MptInterface;
 import com.i906.mpt.receiver.AlarmReceiver;
 import com.i906.mpt.util.DateTimeHelper;
 import com.i906.mpt.util.GeocoderHelper;
 import com.i906.mpt.util.preference.NotificationPrefs;
 
-import java.net.SocketTimeoutException;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +102,7 @@ public class AlarmSetupService extends IntentService {
         Timber.d("Refreshing alarms.");
         if (mInterface.isPrayerTimesLoaded()) {
             processPrayerTimes(-1);
+            broadcastPrayerUpdated();
         }
     }
 
@@ -110,6 +111,7 @@ public class AlarmSetupService extends IntentService {
         try {
             mInterface.refreshBlocking();
             processPrayerTimes(-1);
+            broadcastPrayerUpdated();
         } catch (GeocoderHelper.GeocoderError e) {
             Timber.e(e, "Geocoding error occurred while setting alarms.");
         }
@@ -171,7 +173,6 @@ public class AlarmSetupService extends IntentService {
     private void setReminderUpdater(int index, long prayerTime, String location) {
         long now = mDateTimeHelper.getCurrentTime();
         long trigger;
-        boolean first = false;
 
         int updates = (int) (mNotificationAppearBefore / 60000);
         String action;
@@ -180,8 +181,7 @@ public class AlarmSetupService extends IntentService {
             trigger = (i * mNotificationAppearBefore / updates);
 
             if (now < prayerTime - trigger + mNotificationOffset) {
-                action = !first ? ACTION_NOTIFICATION_REMINDER : ACTION_NOTIFICATION_REMINDER_TICK;
-                first = true;
+                action = i == updates - 1 ? ACTION_NOTIFICATION_REMINDER : ACTION_NOTIFICATION_REMINDER_TICK;
                 setAlarm(action, index, prayerTime, -trigger + mNotificationOffset, location);
             }
         }
@@ -198,6 +198,11 @@ public class AlarmSetupService extends IntentService {
         }
 
         Timber.v("Created alarm %s: %s %s %s", index, action, new Date(time + triggerOffset), location);
+    }
+
+    private void broadcastPrayerUpdated() {
+        sendBroadcast(new Intent(MptContract.Actions.PRAYER_TIME_UPDATED));
+        getContentResolver().update(MptContract.CurrentDataInfo.URI, null, null, null);
     }
 
     private Intent createIntent(String action, int index, long time, String location) {

@@ -77,6 +77,11 @@ android {
 
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -96,7 +101,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
 
     // Logging
-    compile 'com.jakewharton.timber:timber:3.1.0'
+    compile 'com.jakewharton.timber:timber:4.1.0'
 
     // Dependency Injection
     compile 'com.google.dagger:dagger:2.0.1'
@@ -104,7 +109,7 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 
     // HTTP Libraries
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
@@ -123,8 +128,8 @@ dependencies {
     compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
     // Database
-    compile 'com.pushtorefresh.storio:sqlite:1.5.0'
-    compile 'com.pushtorefresh.storio:content-resolver:1.5.0'
+    compile 'com.pushtorefresh.storio:sqlite:1.6.0'
+    compile 'com.pushtorefresh.storio:content-resolver:1.6.0'
 
     // Memory Leak Detector
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
@@ -132,4 +137,5 @@ dependencies {
 
     // Others
     compile 'com.opencsv:opencsv:3.4'
+    compile 'net.danlew:android.joda:2.8.2'
 }

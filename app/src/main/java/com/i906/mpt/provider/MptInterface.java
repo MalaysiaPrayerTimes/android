@@ -126,8 +126,8 @@ public class MptInterface implements PrayerInterface {
     }
 
     @Override
-    public int[] getHijriDate() {
-        return new int[] { 22, 4, 1436 } ;
+    public List<Integer> getHijriDate() {
+        return mDateTimeHelper.getHijriDate(maghribPassed());
     }
 
     @Nullable
@@ -291,6 +291,10 @@ public class MptInterface implements PrayerInterface {
 
     private boolean subuhPassed() {
         return prayerHasPassed(PRAYER_SUBUH);
+    }
+
+    private boolean maghribPassed() {
+        return prayerHasPassed(PRAYER_MAGRHIB);
     }
 
     @Override

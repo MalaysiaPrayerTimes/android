@@ -1,7 +1,6 @@
 package com.i906.mpt.di;
 
 import android.app.AlarmManager;
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -16,10 +15,10 @@ import dagger.Provides;
 @Module
 public class SystemModule {
 
-    private Application mContext;
+    private Context mContext;
 
-    public SystemModule(Application application) {
-        mContext = application;
+    public SystemModule(Context context) {
+        mContext = context;
     }
 
     @Provides

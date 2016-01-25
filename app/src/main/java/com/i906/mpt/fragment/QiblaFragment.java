@@ -6,12 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.i906.mpt.R;
-import com.i906.mpt.util.SensorObservable;
 import com.i906.mpt.util.Utils;
 import com.i906.mpt.view.CompassView;
 
 import butterknife.Bind;
-import rx.Subscriber;
 import rx.Subscription;
 
 public class QiblaFragment extends BaseFragment {
@@ -32,7 +30,7 @@ public class QiblaFragment extends BaseFragment {
         Subscription s = mQiblaHelper.requestQiblaAngles(orientation)
                 .compose(Utils.applySchedulers())
                 .subscribe(angleInfo -> {
-                    mCompassView.setAngleX(angleInfo.x);
+                    if (mPrefs.is3DCompassEnabled()) mCompassView.setAngleX(angleInfo.x);
                     mCompassView.setAngleZ(angleInfo.z);
                 }, error -> {
 
