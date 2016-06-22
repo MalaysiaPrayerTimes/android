@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -63,10 +64,16 @@ android {
 }
 
 dependencies {
-    def androidSupportVersion = rootProject.ext.androidSupportVersion;
+    def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION;
+    def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION;
 
     // Android Support Libraries
-    compile "com.android.support:appcompat-v7:${androidSupportVersion}"
+    compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+
+    // Dagger
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    provided 'javax.annotation:jsr250-api:1.0'
 
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
