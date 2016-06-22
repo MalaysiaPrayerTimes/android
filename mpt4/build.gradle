@@ -64,11 +64,16 @@ android {
 }
 
 dependencies {
+    def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION;
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION;
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION;
 
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+
+    // Butterknife
+    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    apt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
     // Dagger
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
