@@ -27,13 +27,13 @@ task clean(type: Delete) {
 ext {
 
     // Android
-    buildToolsVersion = '23.0.2'
-    minSdkVersion = 16
-    targetSdkVersion = 22
-    compileSdkVersion = 23
+    buildToolsVersion = '24.0.0'
+    minSdkVersion = 21
+    targetSdkVersion = 24
+    compileSdkVersion = 24
 
     // Libraries
-    androidSupportVersion = '23.1.1'
+    androidSupportVersion = '24.0.0'
     gsonVersion = '2.4'
     okhttpVersion = '2.6.0'
     retrofitVersion = '2.0.0-beta2'
