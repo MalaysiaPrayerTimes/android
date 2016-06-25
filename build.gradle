@@ -17,6 +17,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -33,6 +34,7 @@ ext {
     compileSdkVersion = 24
 
     // Libraries
+    BUTTERKNIFE_VERSION = '8.1.0'
     DAGGER_VERSION = '2.4'
     SUPPORT_VERSION = '24.0.0'
     gsonVersion = '2.4'
