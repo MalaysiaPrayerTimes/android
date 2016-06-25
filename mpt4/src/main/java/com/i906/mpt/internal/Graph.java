@@ -1,5 +1,7 @@
 package com.i906.mpt.internal;
 
+import com.i906.mpt.main.MainActivity;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -12,4 +14,5 @@ import dagger.Component;
         AppModule.class,
 })
 public interface Graph {
+    void inject(MainActivity activity);
 }
