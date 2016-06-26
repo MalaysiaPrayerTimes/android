@@ -16,6 +16,7 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
 
@@ -50,6 +51,7 @@ public class MosqueManager {
                         mIsLoading.set(true);
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<Location, Observable<List<Mosque>>>() {
                     @Override
                     public Observable<List<Mosque>> call(Location location) {
