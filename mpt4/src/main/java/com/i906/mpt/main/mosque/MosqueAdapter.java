@@ -21,7 +21,7 @@ import butterknife.OnClick;
 class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder> {
 
     private List<Mosque> mList;
-    private List<MosqueListener> mListeners;
+    private MosqueListener mListener;
 
     MosqueAdapter() {
         mList = new ArrayList<>();
@@ -64,17 +64,12 @@ class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void addMosqueListener(MosqueListener listener) {
-        if (mListeners == null) {
-            mListeners = new ArrayList<>();
-        }
-        mListeners.add(listener);
+    public void setMosqueListener(MosqueListener listener) {
+        mListener = listener;
     }
 
     public void removeMosqueListener(MosqueListener listener) {
-        if (mListeners != null) {
-            mListeners.remove(listener);
-        }
+        mListener = null;
     }
 
     public Mosque getItem(int position) {
@@ -96,10 +91,8 @@ class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder> {
     }
 
     protected void onMosqueSelected(Mosque mosque) {
-        if (mListeners != null) {
-            for (int i = mListeners.size() - 1; i >= 0; i--) {
-                mListeners.get(i).onMosqueSelected(mosque);
-            }
+        if (mListener != null) {
+            mListener.onMosqueSelected(mosque);
         }
     }
 

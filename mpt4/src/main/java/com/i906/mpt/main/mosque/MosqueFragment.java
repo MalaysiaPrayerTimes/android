@@ -1,5 +1,7 @@
 package com.i906.mpt.main.mosque;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -24,7 +26,7 @@ import butterknife.BindView;
 /**
  * @author Noorzaini Ilhami
  */
-public class MosqueFragment extends BaseFragment implements MosqueView {
+public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAdapter.MosqueListener {
 
     @Inject
     MosquePresenter mPresenter;
@@ -98,6 +100,17 @@ public class MosqueFragment extends BaseFragment implements MosqueView {
         mSnackbar.show();
     }
 
+    @Override
+    public void onMosqueSelected(Mosque mosque) {
+        String name = mosque.getName();
+        double lat = mosque.getLatitude();
+        double lng = mosque.getLongitude();
+
+        String uri = "geo:0,0?q=" + Uri.encode(String.format("%s@%f,%f", name, lat, lng), "UTF-8");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+    }
+
     private void showSwipeRefreshLoading(final boolean loading) {
         mRefreshLayout.post(new Runnable() {
             @Override
@@ -105,6 +118,18 @@ public class MosqueFragment extends BaseFragment implements MosqueView {
                 mRefreshLayout.setRefreshing(loading);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.setMosqueListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAdapter.removeMosqueListener(this);
     }
 
     @Override
