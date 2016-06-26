@@ -95,7 +95,13 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         if (mAdapter.isEmpty()) setViewVisibility(mProgressLayout, true, true);
 
         mSnackbar = Snackbar.make(getView(), getErrorMessage(error, R.string.error_unexpected),
-                Snackbar.LENGTH_INDEFINITE);
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.label_retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPresenter.getMosqueList(true);
+                    }
+                });
 
         mSnackbar.show();
     }

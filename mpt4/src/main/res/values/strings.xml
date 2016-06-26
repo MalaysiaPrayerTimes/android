@@ -8,5 +8,6 @@
 
     <string name="label_mosque">Mosques</string>
     <string name="label_prayer">Prayer Times</string>
+    <string name="label_retry">Retry</string>
     <string name="label_qibla">Qibla</string>
 </resources>
