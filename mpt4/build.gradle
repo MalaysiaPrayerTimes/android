@@ -12,6 +12,12 @@ android {
         versionCode 3979
         versionName "2.0.0"
 
+        def fid = project.hasProperty('FOURSQUARE_ID') ? FOURSQUARE_ID : System.getenv("FOURSQUARE_ID")
+        def fsc = project.hasProperty('FOURSQUARE_SECRET') ? FOURSQUARE_SECRET : System.getenv("FOURSQUARE_SECRET")
+
+        buildConfigField "String", "FOURSQUARE_ID", "\"$fid\""
+        buildConfigField "String", "FOURSQUARE_SECRET", "\"$fsc\""
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
