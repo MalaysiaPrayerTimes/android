@@ -1,12 +1,10 @@
-package com.i906.mpt.api;
+package com.i906.mpt.api.foursquare;
 
-import com.i906.mpt.model.FoursquareResponse;
-
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
-public interface FoursquareApi {
+interface FoursquareApi {
 
     @GET("venues/search")
     Observable<FoursquareResponse> searchVenue(
@@ -14,7 +12,6 @@ public interface FoursquareApi {
             @Query("radius") int radius,
             @Query("limit") int limit,
             @Query("categoryId") String categoryId,
-            @Query("ll") String latLng,
-            @Query("llAcc") float accuracy
+            @Query("ll") String latLng
     );
 }
