@@ -1,9 +1,9 @@
 package com.i906.mpt.main.mosque;
 
-import android.support.v4.app.Fragment;
+import com.i906.mpt.common.BaseFragment;
 
 /**
  * @author Noorzaini Ilhami
  */
-public class MosqueFragment extends Fragment {
+public class MosqueFragment extends BaseFragment {
 }
