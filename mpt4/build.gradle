@@ -64,16 +64,20 @@ android {
 }
 
 dependencies {
-    def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION;
-    def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION;
-    def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION;
-    def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION;
+    def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
+    def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
+    def PLAYSERVICES_VERSION = rootProject.ext.PLAYSERVICES_VERSION
+    def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION
+    def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
 
     compile project(':api-client');
 
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
+
+    // Play Service
+    compile "com.google.android.gms:play-services-location:$PLAYSERVICES_VERSION"
 
     // Butterknife
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
@@ -86,6 +90,7 @@ dependencies {
 
     // RX
     compile "io.reactivex:rxandroid:$RXANDROID_VERSION"
+    compile 'pl.charmas.android:android-reactive-location:0.9@aar'
 
     // Misc
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'
