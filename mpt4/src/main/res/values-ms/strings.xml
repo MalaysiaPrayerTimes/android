@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Waktu Solat Malaysia</string>
+    <string name="app_name_short">Eaktu Solat</string>
+
+    <string name="label_mosque">Masjid</string>
+    <string name="label_prayer">Waktu Solat</string>
+    <string name="label_qibla">Kiblat</string>
+</resources>

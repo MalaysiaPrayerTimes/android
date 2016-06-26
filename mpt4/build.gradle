@@ -70,6 +70,7 @@ dependencies {
 
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+    compile "com.android.support:design:$SUPPORT_VERSION"
 
     // Butterknife
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
