@@ -66,6 +66,7 @@ android {
 dependencies {
     def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION;
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION;
+    def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION;
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION;
 
     compile project(':api-client');
@@ -82,6 +83,9 @@ dependencies {
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'javax.annotation:jsr250-api:1.0'
+
+    // RX
+    compile "io.reactivex:rxandroid:$RXANDROID_VERSION"
 
     // Misc
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'

@@ -4,6 +4,8 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.i906.mpt.MptApplication;
+import com.i906.mpt.internal.ActivityGraph;
+import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Graph;
 
 import butterknife.ButterKnife;
@@ -14,6 +16,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
+    }
+
+    protected ActivityGraph activityGraph() {
+        return graph().activityGraph(new ActivityModule(this));
     }
 
     protected Graph graph() {

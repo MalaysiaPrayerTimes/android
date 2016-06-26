@@ -1,0 +1,1449 @@
+[
+  {
+    "id": "4bc806e492b376b051d5503a",
+    "name": "Masjid Sultan Salahuddin Abdul Aziz Shah",
+    "contact": {},
+    "location": {
+      "address": "Persiaran Masjid, Seksyen 14",
+      "lat": 3.078637593130273,
+      "lng": 101.52068853378296,
+      "distance": 18653,
+      "postalCode": "40000",
+      "cc": "MY",
+      "city": "Shah Alam",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Persiaran Masjid, Seksyen 14",
+        "40000 Shah Alam, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 62214,
+      "usersCount": 24738,
+      "tipCount": 170
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bda67222a3a0f474b16abb6",
+    "name": "Masjid Tuanku Mizan Zainal Abidin (Masjid Besi)",
+    "contact": {
+      "phone": "+60182003004",
+      "formattedPhone": "+60 18-200 3004"
+    },
+    "location": {
+      "address": "Presint 3",
+      "crossStreet": "Persiaran Perdana",
+      "lat": 2.919296914795055,
+      "lng": 101.68112754821777,
+      "distance": 24460,
+      "postalCode": "62000",
+      "cc": "MY",
+      "city": "Putrajaya",
+      "state": "WP Putrajaya",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Presint 3 (Persiaran Perdana)",
+        "62000 Putrajaya, WP Putrajaya",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 42844,
+      "usersCount": 22377,
+      "tipCount": 202
+    },
+    "url": "http://www.masjidtuankumizan.com",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b593cfef964a520958228e3",
+    "name": "Masjid Wilayah Persekutuan",
+    "contact": {
+      "phone": "+60362018791",
+      "formattedPhone": "+60 3-6201 8791"
+    },
+    "location": {
+      "address": "Jalan Sultan Haji Ahmad Shah",
+      "crossStreet": "off Jalan Duta",
+      "lat": 3.1718396354742406,
+      "lng": 101.67069911956787,
+      "distance": 3727,
+      "postalCode": "50480",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Sultan Haji Ahmad Shah (off Jalan Duta)",
+        "50480 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 32500,
+      "usersCount": 13240,
+      "tipCount": 149
+    },
+    "url": "http://www.jawi.gov.my/masjid.wpkl",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b525d67f964a520887927e3",
+    "name": "Masjid Putra (Putra Mosque)",
+    "contact": {
+      "phone": "+60388885678",
+      "formattedPhone": "+60 3-8888 5678"
+    },
+    "location": {
+      "address": "Dataran Putrajaya",
+      "crossStreet": "Perdana Putra",
+      "lat": 2.9357549001367698,
+      "lng": 101.6897964477539,
+      "distance": 22668,
+      "postalCode": "62000",
+      "cc": "MY",
+      "city": "Putrajaya",
+      "state": "WP Putrajaya",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Dataran Putrajaya (Perdana Putra)",
+        "62000 Putrajaya, WP Putrajaya",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 31061,
+      "usersCount": 19754,
+      "tipCount": 104
+    },
+    "url": "http://www.masjidputra.gov.my",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4e2e28078877341a51463b06",
+    "name": "Masjid Tengku Ampuan Jemaah",
+    "contact": {},
+    "location": {
+      "address": "Bukit Jelutong",
+      "lat": 3.0997929077165436,
+      "lng": 101.53942809602668,
+      "distance": 15927,
+      "postalCode": "40150",
+      "cc": "MY",
+      "city": "Shah Alam",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Bukit Jelutong",
+        "40150 Shah Alam, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 14596,
+      "usersCount": 4518,
+      "tipCount": 46
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b058802f964a5201eac22e3",
+    "name": "Masjid Negara (National Mosque)",
+    "contact": {
+      "phone": "+60326937784",
+      "formattedPhone": "+60 3-2693 7784",
+      "facebook": "107285755973317",
+      "facebookUsername": "PKKMN",
+      "facebookName": "Badan Kebajikan Masjid Negara(BKKMN)"
+    },
+    "location": {
+      "address": "Jalan Perdana",
+      "lat": 3.141812342694625,
+      "lng": 101.69169545173645,
+      "distance": 1636,
+      "postalCode": "50480",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Perdana",
+        "50480 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": true,
+    "stats": {
+      "checkinsCount": 39607,
+      "usersCount": 18325,
+      "tipCount": 157
+    },
+    "url": "http://www.masjidnegara.gov.my",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "venuePage": {
+      "id": "36450369"
+    },
+    "storeId": "",
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "515e1fd0e4b0592f226975f8",
+    "name": "Masjid Raja Haji Fi Sabilillah Cyberjaya",
+    "contact": {
+      "facebook": "412149122279671",
+      "facebookUsername": "masjidcyberjaya",
+      "facebookName": "Masjid Raja Haji Fi Sabilillah - Cyberjaya"
+    },
+    "location": {
+      "address": "Persiaran Semarak Api, Cyber 1",
+      "lat": 2.931774653939575,
+      "lng": 101.64789816236888,
+      "distance": 23297,
+      "postalCode": "63000",
+      "cc": "MY",
+      "city": "Cyberjaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Persiaran Semarak Api, Cyber 1",
+        "63000 Cyberjaya, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 4473,
+      "usersCount": 2302,
+      "tipCount": 13
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b99d2f2f964a5207a9335e3",
+    "name": "Masjid UNITEN",
+    "contact": {},
+    "location": {
+      "address": "Universiti Tenaga Nasional",
+      "crossStreet": "Tepian Tasik Uniten",
+      "lat": 2.9720398277593065,
+      "lng": 101.73235774040222,
+      "distance": 19569,
+      "postalCode": "43000",
+      "cc": "MY",
+      "city": "Kajang",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Universiti Tenaga Nasional (Tepian Tasik Uniten)",
+        "43000 Kajang, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 19910,
+      "usersCount": 5629,
+      "tipCount": 45
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4c6bd4daa48420a162c70a0b",
+    "name": "Masjid Al-Hasanah",
+    "contact": {},
+    "location": {
+      "address": "Seksyen 9, Bandar Baru Bangi",
+      "crossStreet": "Persiaran Usahawan",
+      "lat": 2.9591985384050634,
+      "lng": 101.75305366516113,
+      "distance": 21717,
+      "postalCode": "43650",
+      "cc": "MY",
+      "city": "Bangi",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Seksyen 9, Bandar Baru Bangi (Persiaran Usahawan)",
+        "43650 Bangi, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 15278,
+      "usersCount": 6124,
+      "tipCount": 81
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "51d96419498e309c6c7d07af",
+    "name": "Masjid Al-Ikhlas",
+    "contact": {
+      "twitter": "sha_instagram"
+    },
+    "location": {
+      "address": "Jalan Lompat Pagar 13/37",
+      "crossStreet": "Section 13",
+      "lat": 3.0869389934715565,
+      "lng": 101.54517333950234,
+      "distance": 15782,
+      "postalCode": "40100",
+      "cc": "MY",
+      "city": "Shah Alam",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Lompat Pagar 13/37 (Section 13)",
+        "40100 Shah Alam, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 8947,
+      "usersCount": 3529,
+      "tipCount": 39
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bc7ed672f94d13a17eb127f",
+    "name": "Masjid Jamek Kuala Lumpur",
+    "contact": {},
+    "location": {
+      "address": "Jalan Tun Perak",
+      "lat": 3.149075534766799,
+      "lng": 101.69590651988983,
+      "distance": 2358,
+      "postalCode": "50350",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Tun Perak",
+        "50350 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 29896,
+      "usersCount": 17749,
+      "tipCount": 83
+    },
+    "url": "http://www.arkib.gov.my/en/masjid_jamek",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b90954cf964a520029133e3",
+    "name": "Masjid At-Taqwa",
+    "contact": {
+      "phone": "+60377293710",
+      "formattedPhone": "+60 3-7729 3710"
+    },
+    "location": {
+      "address": "Jalan Datuk Sulaiman, Taman Tun Dr Ismail",
+      "lat": 3.146086705218056,
+      "lng": 101.62977933883667,
+      "distance": 5333,
+      "postalCode": "60000",
+      "cc": "MY",
+      "city": "Taman Tun Dr Ismail",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Datuk Sulaiman, Taman Tun Dr Ismail",
+        "60000 Taman Tun Dr Ismail, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 20505,
+      "usersCount": 5776,
+      "tipCount": 79
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4ecf25e80aafd1868d6e761e",
+    "name": "Masjid Tuanku Mizan",
+    "contact": {
+      "phone": "+60355442666",
+      "formattedPhone": "+60 3-5544 2666"
+    },
+    "location": {
+      "address": "Universiti Teknologi MARA (UiTM)",
+      "lat": 3.0679670413424165,
+      "lng": 101.50300741195679,
+      "distance": 20918,
+      "postalCode": "40450",
+      "cc": "MY",
+      "city": "Shah Alam",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Universiti Teknologi MARA (UiTM)",
+        "40450 Shah Alam, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 12470,
+      "usersCount": 4690,
+      "tipCount": 38
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bbebe2ff353d13ad0b47d10",
+    "name": "Masjid Kota Damansara (مسجد کوتا دامنسارا) (Masjid Kota Damansara)",
+    "contact": {},
+    "location": {
+      "address": "Jalan Sepah Puteri",
+      "crossStreet": "Persiaran Mahogani",
+      "lat": 3.1613664275462807,
+      "lng": 101.58789664506911,
+      "distance": 10237,
+      "postalCode": "47810",
+      "cc": "MY",
+      "city": "Petaling Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Sepah Puteri (Persiaran Mahogani)",
+        "47810 Petaling Jaya, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 12355,
+      "usersCount": 3651,
+      "tipCount": 45
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4e2e2999ae60231c0320df10",
+    "name": "Masjid Puncak Alam",
+    "contact": {},
+    "location": {
+      "address": "Bandar Baru Puncak Alam",
+      "lat": 3.2342240587130413,
+      "lng": 101.42642653367123,
+      "distance": 29824,
+      "postalCode": "42300",
+      "cc": "MY",
+      "city": "Kuala Selangor",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Bandar Baru Puncak Alam",
+        "42300 Kuala Selangor, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 4197,
+      "usersCount": 2094,
+      "tipCount": 15
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4cfafb67084f54818ca37e09",
+    "name": "Masjid Al Falah",
+    "contact": {},
+    "location": {
+      "address": "Jalan USJ 9/5J",
+      "crossStreet": "Off Persiaran Kewajipan",
+      "lat": 3.044755292310207,
+      "lng": 101.58747602635813,
+      "distance": 14478,
+      "postalCode": "47620",
+      "cc": "MY",
+      "city": "Subang Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan USJ 9/5J (Off Persiaran Kewajipan)",
+        "47620 Subang Jaya, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 14078,
+      "usersCount": 3768,
+      "tipCount": 56
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bac49cff964a520f0ee3ae3",
+    "name": "Masjid Asy-Syakirin",
+    "contact": {
+      "phone": "+60323801293",
+      "formattedPhone": "+60 3-2380 1293"
+    },
+    "location": {
+      "address": "41, Seksyen 58, Jalan Pinang",
+      "lat": 3.1572920936344855,
+      "lng": 101.71615719795227,
+      "distance": 4780,
+      "postalCode": "50480",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "41, Seksyen 58, Jalan Pinang",
+        "50480 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 29990,
+      "usersCount": 10528,
+      "tipCount": 127
+    },
+    "url": "http://www.masjidklcc.com",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "53c8c1dc498ed67cda4dabd5",
+    "name": "Masjid Baru Seksyen 7 Shah Alam",
+    "contact": {},
+    "location": {
+      "address": "Seksyen 7",
+      "lat": 3.071140057844205,
+      "lng": 101.48156073537402,
+      "distance": 23025,
+      "cc": "MY",
+      "city": "Shah Alam",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Seksyen 7",
+        "Shah Alam, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 3146,
+      "usersCount": 1775,
+      "tipCount": 3
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bff524f68c7a593248c4044",
+    "name": "Masjid Mu'adz Bin Jabal",
+    "contact": {},
+    "location": {
+      "address": "Persiaran Setiawangsa, Taman Setiawangsa",
+      "crossStreet": "Persiaran Setiawangsa",
+      "lat": 3.1781813570101782,
+      "lng": 101.73807621002197,
+      "distance": 8046,
+      "postalCode": "54200",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Persiaran Setiawangsa, Taman Setiawangsa (Persiaran Setiawangsa)",
+        "54200 Setiawangsa, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 16120,
+      "usersCount": 5162,
+      "tipCount": 46
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bff5accc30a2d7fc7e7101d",
+    "name": "Masjid KLIA (Sultan Abdul Samad Mosque)",
+    "contact": {},
+    "location": {
+      "address": "Jalan Masjid",
+      "crossStreet": "KLIA",
+      "lat": 2.787301127107331,
+      "lng": 101.67736934157156,
+      "distance": 39150,
+      "postalCode": "64000",
+      "cc": "MY",
+      "city": "Sepang",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Masjid (KLIA)",
+        "64000 Sepang, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": true,
+    "stats": {
+      "checkinsCount": 12849,
+      "usersCount": 8178,
+      "tipCount": 52
+    },
+    "url": "http://en.wikipedia.org/wiki/Sultan_Abdul_Samad_Mosque",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "venuePage": {
+      "id": "34572127"
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4e2916632271752a459b857f",
+    "name": "Masjid Putra Nilai",
+    "contact": {},
+    "location": {
+      "address": "Bandar Baru Nilai",
+      "lat": 2.8214354522677727,
+      "lng": 101.78852122459001,
+      "distance": 37453,
+      "cc": "MY",
+      "city": "Kampung Baharu Nilai",
+      "state": "Negeri Sembilan",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Bandar Baru Nilai",
+        "Kampung Baharu Nilai, Negeri Sembilan",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 7246,
+      "usersCount": 3115,
+      "tipCount": 26
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4ba5d52ef964a520ca2439e3",
+    "name": "Masjid Jamek Kg Baru (مسجد جامع)",
+    "contact": {},
+    "location": {
+      "address": "Jalan Raja Alang",
+      "crossStreet": "Kg Baru",
+      "lat": 3.1642338032842634,
+      "lng": 101.70336842536926,
+      "distance": 4040,
+      "postalCode": "50300",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Raja Alang (Kg Baru)",
+        "50300 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 12412,
+      "usersCount": 6167,
+      "tipCount": 53
+    },
+    "allowMenuUrlEdit": true,
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b6271b0f964a520e4472ae3",
+    "name": "Masjid Darul Ehsan",
+    "contact": {
+      "phone": "+60356340741",
+      "formattedPhone": "+60 3-5634 0741",
+      "twitter": "MDESJ"
+    },
+    "location": {
+      "address": "1 Jalan SS 15/5C",
+      "crossStreet": "at Jalan SS 15/2E",
+      "lat": 3.0805124280479683,
+      "lng": 101.58544778823853,
+      "distance": 12103,
+      "postalCode": "47500",
+      "cc": "MY",
+      "city": "Subang Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "1 Jalan SS 15/5C (at Jalan SS 15/2E)",
+        "47500 Subang Jaya, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 10986,
+      "usersCount": 3874,
+      "tipCount": 59
+    },
+    "url": "http://www.mdesj.com",
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4d79b14db39b2c0f2776e790",
+    "name": "Masjid Jamek Sultan Abdul Aziz",
+    "contact": {},
+    "location": {
+      "address": "Jalan Templer",
+      "crossStreet": "Jalan Masjid 3/ 69",
+      "lat": 3.0906471927323134,
+      "lng": 101.65046989917755,
+      "distance": 6150,
+      "postalCode": "46000",
+      "cc": "MY",
+      "city": "Petaling Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Templer (Jalan Masjid 3/ 69)",
+        "46000 Petaling Jaya, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 8865,
+      "usersCount": 2588,
+      "tipCount": 36
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b876055f964a52098bd31e3",
+    "name": "Masjid UPM",
+    "contact": {},
+    "location": {
+      "address": "Persiaran Masjid",
+      "crossStreet": "Universiti Putra Malaysia",
+      "lat": 3.002012968172354,
+      "lng": 101.71696186065674,
+      "distance": 15875,
+      "postalCode": "43400",
+      "cc": "MY",
+      "city": "Serdang",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Persiaran Masjid (Universiti Putra Malaysia)",
+        "43400 Serdang, Selangor",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 12886,
+      "usersCount": 5241,
+      "tipCount": 50
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "51809bba498e2a3b235aac20",
+    "name": "PETRONAS Station",
+    "contact": {
+      "twitter": "petronasbrands"
+    },
+    "location": {
+      "address": "KM 5.75 Penchala Link (Arah KL)",
+      "crossStreet": "Sungai Penchala",
+      "lat": 3.164489429176084,
+      "lng": 101.62074631622602,
+      "distance": 6890,
+      "postalCode": "60000",
+      "cc": "MY",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "KM 5.75 Penchala Link (Arah KL) (Sungai Penchala)",
+        "60000 , Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d113951735",
+        "name": "Gas Station",
+        "pluralName": "Gas Stations",
+        "shortName": "Gas Station",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/shops/gas_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 1465,
+      "usersCount": 854,
+      "tipCount": 10
+    },
+    "url": "http://www.mymesra.com.my",
+    "allowMenuUrlEdit": true,
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b875550f964a520e9bb31e3",
+    "name": "Masjid Al-Hidayah",
+    "contact": {},
+    "location": {
+      "address": "Taman Melawati",
+      "crossStreet": "Jalan Melawati 5",
+      "lat": 3.2133172139547073,
+      "lng": 101.75392270088196,
+      "distance": 11877,
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Taman Melawati (Jalan Melawati 5)",
+        "Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 5749,
+      "usersCount": 2138,
+      "tipCount": 15
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4b6008bff964a520c6d329e3",
+    "name": "Masjid Saidina Umar Al-Khattab",
+    "contact": {},
+    "location": {
+      "address": "Pinggiran Setiabudi, Bukit Damansara",
+      "lat": 3.150125372501379,
+      "lng": 101.65516376495361,
+      "distance": 2748,
+      "postalCode": "50490",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Pinggiran Setiabudi, Bukit Damansara",
+        "50490 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 9461,
+      "usersCount": 2628,
+      "tipCount": 32
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4bda672963c5c9b665082468",
+    "name": "Masjid Saidina Abu Bakar As-Siddiq (مسجد سيدنا ابو بكر الصديق) (Masjid Saidina Abu Bakar As-Siddiq)",
+    "contact": {},
+    "location": {
+      "address": "Jalan Telawi 1, Bangsar Baru",
+      "crossStreet": "Jalan Telawi 1",
+      "lat": 3.129728335990084,
+      "lng": 101.67179346084595,
+      "distance": 1196,
+      "postalCode": "59100",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Jalan Telawi 1, Bangsar Baru (Jalan Telawi 1)",
+        "59100 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 14922,
+      "usersCount": 4969,
+      "tipCount": 56
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  },
+  {
+    "id": "4fd5d805e4b06a2d8e192b04",
+    "name": "Masjid Ar Rahah",
+    "contact": {},
+    "location": {
+      "address": "Kg Kerinchi",
+      "lat": 3.114294381104773,
+      "lng": 101.66880444085058,
+      "distance": 2905,
+      "postalCode": "59200",
+      "cc": "MY",
+      "city": "Kuala Lumpur",
+      "state": "Kuala Lumpur",
+      "country": "Malaysia",
+      "formattedAddress": [
+        "Kg Kerinchi",
+        "59200 Kuala Lumpur, Kuala Lumpur",
+        "Malaysia"
+      ]
+    },
+    "categories": [
+      {
+        "id": "4bf58dd8d48988d138941735",
+        "name": "Mosque",
+        "pluralName": "Mosques",
+        "shortName": "Mosque",
+        "icon": {
+          "prefix": "https://ss3.4sqi.net/img/categories_v2/building/religious_mosque_",
+          "suffix": ".png"
+        },
+        "primary": true
+      }
+    ],
+    "verified": false,
+    "stats": {
+      "checkinsCount": 4490,
+      "usersCount": 1092,
+      "tipCount": 18
+    },
+    "specials": {
+      "count": 0,
+      "items": []
+    },
+    "referralId": "v-1466915700",
+    "venueChains": []
+  }
+]

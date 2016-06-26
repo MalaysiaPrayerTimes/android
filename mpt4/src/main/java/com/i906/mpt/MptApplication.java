@@ -6,6 +6,7 @@ import android.content.Context;
 import com.i906.mpt.internal.AppModule;
 import com.i906.mpt.internal.DaggerGraph;
 import com.i906.mpt.internal.Graph;
+import com.mpt.i906.internal.ApiModule;
 
 public class MptApplication extends Application {
 
@@ -16,6 +17,7 @@ public class MptApplication extends Application {
         super.onCreate();
 
         setGraph(DaggerGraph.builder()
+                .apiModule(new ApiModule())
                 .appModule(new AppModule(this))
                 .build());
     }

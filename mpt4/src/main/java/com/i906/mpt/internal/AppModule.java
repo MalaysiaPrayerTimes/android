@@ -1,6 +1,6 @@
 package com.i906.mpt.internal;
 
-import android.content.Context;
+import android.app.Application;
 
 import com.i906.mpt.prefs.CommonPreferences;
 import com.i906.mpt.prefs.SharedCommonPreferences;
@@ -13,21 +13,21 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private Context mContext;
+    private Application mContext;
 
-    public AppModule(Context context) {
+    public AppModule(Application context) {
         mContext = context;
     }
 
     @Provides
     @Singleton
-    Context provideContext() {
+    Application provideContext() {
         return mContext;
     }
 
     @Provides
     @Singleton
-    CommonPreferences provideCommonPreferences(Context context) {
+    CommonPreferences provideCommonPreferences(Application context) {
         return new SharedCommonPreferences(context);
     }
 }
