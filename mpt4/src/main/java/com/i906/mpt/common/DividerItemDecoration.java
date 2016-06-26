@@ -1,4 +1,4 @@
-package com.i906.mpt.view;
+package com.i906.mpt.common;
 
 import android.content.Context;
 import android.content.res.TypedArray;

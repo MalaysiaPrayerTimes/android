@@ -2,11 +2,16 @@ package com.i906.mpt.common;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import com.i906.mpt.MptApplication;
+import com.i906.mpt.R;
 import com.i906.mpt.internal.ActivityGraph;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Graph;
+
+import java.net.ConnectException;
 
 import butterknife.ButterKnife;
 
@@ -16,6 +21,37 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
+    }
+
+    public void setViewVisibility(View view, boolean visible, boolean animate) {
+        if (view.getVisibility() == View.VISIBLE && visible) return;
+        if (view.getVisibility() == View.GONE && !visible) return;
+
+        if (visible) {
+            if (animate) {
+                view.startAnimation(
+                        AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+            } else {
+                view.clearAnimation();
+            }
+            view.setVisibility(View.VISIBLE);
+        } else {
+            if (animate) {
+                view.startAnimation(
+                        AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+            } else {
+                view.clearAnimation();
+            }
+            view.setVisibility(View.GONE);
+        }
+    }
+
+    public int getErrorMessage(Throwable e, int defaultResId) {
+        if (e instanceof ConnectException) {
+            return R.string.error_no_network;
+        } else {
+            return defaultResId;
+        }
     }
 
     protected ActivityGraph activityGraph() {

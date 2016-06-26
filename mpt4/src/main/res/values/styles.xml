@@ -1,3 +1,26 @@
 <resources>
 
+    <!-- Mosque List -->
+
+    <style name="MosqueList" />
+
+    <style name="MosqueList.Address" parent="TextAppearance.AppCompat.Small">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="MosqueList.Distance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="MosqueList.Item">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="MosqueList.Name" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
 </resources>

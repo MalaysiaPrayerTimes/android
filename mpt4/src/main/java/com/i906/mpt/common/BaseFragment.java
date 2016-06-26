@@ -20,6 +20,14 @@ public abstract class BaseFragment extends Fragment {
         mUnbinder = ButterKnife.bind(this, view);
     }
 
+    protected void setViewVisibility(View view, boolean visible, boolean animate) {
+        ((BaseActivity) getActivity()).setViewVisibility(view, visible, animate);
+    }
+
+    protected int getErrorMessage(Throwable e, int defaultResId) {
+        return ((BaseActivity) getActivity()).getErrorMessage(e, defaultResId);
+    }
+
     protected Graph graph() {
         return ((BaseActivity) getActivity()).graph();
     }
