@@ -68,6 +68,8 @@ dependencies {
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION;
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION;
 
+    compile project(':api-client');
+
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
