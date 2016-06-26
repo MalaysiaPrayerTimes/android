@@ -3,6 +3,7 @@ package com.i906.mpt.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
@@ -37,6 +38,9 @@ public class MainActivity extends BaseActivity {
     @Inject
     CommonPreferences mCommonPreferences;
 
+    @BindView(R.id.coordinator)
+    CoordinatorLayout mCoordinatorLayout;
+
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
@@ -60,6 +64,7 @@ public class MainActivity extends BaseActivity {
         mAdapter = new MainAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(1, false);
+        mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 
         for (int i = 0; i < mTabLayout.getTabCount(); i++) {

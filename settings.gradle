@@ -1,1 +1,1 @@
-include ':mpt4'
+include ':mpt4', ':api-client'

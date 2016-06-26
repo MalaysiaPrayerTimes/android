@@ -1,4 +1,4 @@
-package com.i906.mpt.model;
+package com.i906.mpt.api.foursquare;
 
 import java.util.List;
 
