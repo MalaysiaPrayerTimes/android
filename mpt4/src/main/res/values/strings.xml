@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Malaysia Prayer Times</string>
     <string name="app_name_short">Prayer Times</string>
+
+    <string name="label_mosque">Mosques</string>
+    <string name="label_prayer">Prayer Times</string>
+    <string name="label_qibla">Qibla</string>
 </resources>
