@@ -7,7 +7,6 @@ import com.i906.mpt.api.foursquare.Mosque;
 import com.mpt.i906.api.MockApiUtils;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -27,8 +26,8 @@ public class MockFoursquareClient implements FoursquareClient {
     @Override
     public Observable<List<Mosque>> getMosqueList(double lat, double lng, int radius) {
         Log.w("MockFoursquareClient", "Performing network tasks. Lat: " + lat + " Lng: " + lng);
-        return Observable.just(randomInt(0, 10))
-                .delay(randomInt(0, 5000), TimeUnit.MILLISECONDS)
+        return Observable.just(mUtils.randomInt(0, 10))
+                .delay(mUtils.randomInt(0, 5000), TimeUnit.MILLISECONDS)
                 .flatMap(new Func1<Integer, Observable<List<Mosque>>>() {
                     @Override
                     public Observable<List<Mosque>> call(Integer r) {
@@ -42,9 +41,5 @@ public class MockFoursquareClient implements FoursquareClient {
                         }
                     }
                 });
-    }
-
-    private int randomInt(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

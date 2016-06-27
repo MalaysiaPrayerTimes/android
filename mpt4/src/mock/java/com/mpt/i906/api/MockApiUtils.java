@@ -11,6 +11,7 @@ import java.io.Reader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,6 +31,17 @@ public class MockApiUtils {
         mGson = gson;
     }
 
+    public <M> M getData(Class<M> clazz, String path) {
+        try {
+            InputStream is = mContext.getAssets().open(path);
+            Reader reader = new InputStreamReader(is);
+            return mGson.fromJson(reader, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public <M> List<M> getDataList(Class<M> clazz, String path) {
         try {
             InputStream is = mContext.getAssets().open(path);
@@ -39,6 +51,10 @@ public class MockApiUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int randomInt(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
     static class WrappedType implements ParameterizedType {
