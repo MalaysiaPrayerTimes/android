@@ -1,4 +1,4 @@
-package com.i906.mpt.main.mosque;
+package com.i906.mpt.mosque;
 
 import com.i906.mpt.api.foursquare.Mosque;
 import com.i906.mpt.internal.PerActivity;

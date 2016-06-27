@@ -1,4 +1,4 @@
-package com.i906.mpt.main.qibla;
+package com.i906.mpt.qibla;
 
 import android.support.v4.app.Fragment;
 

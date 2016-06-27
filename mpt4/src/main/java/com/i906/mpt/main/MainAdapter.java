@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.i906.mpt.main.mosque.MosqueFragment;
-import com.i906.mpt.main.prayer.PrayerFragment;
-import com.i906.mpt.main.qibla.QiblaFragment;
+import com.i906.mpt.mosque.MosqueFragment;
+import com.i906.mpt.prayer.PrayerFragment;
+import com.i906.mpt.qibla.QiblaFragment;
 
 import java.util.ArrayList;
 import java.util.List;
