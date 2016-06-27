@@ -7,6 +7,8 @@ import com.i906.mpt.BuildConfig;
 import com.i906.mpt.api.foursquare.FoursquareClient;
 import com.i906.mpt.api.foursquare.FoursquareHttpInterceptor;
 import com.i906.mpt.api.foursquare.RetrofitFoursquareClient;
+import com.i906.mpt.api.prayer.PrayerClient;
+import com.i906.mpt.api.prayer.RetrofitPrayerClient;
 
 import java.io.File;
 
@@ -23,6 +25,12 @@ import okhttp3.OkHttpClient;
  */
 @Module
 public class ApiModule {
+
+    @Provides
+    @Singleton
+    PrayerClient providePrayerClient(OkHttpClient client) {
+        return new RetrofitPrayerClient(client);
+    }
 
     @Provides
     @Singleton

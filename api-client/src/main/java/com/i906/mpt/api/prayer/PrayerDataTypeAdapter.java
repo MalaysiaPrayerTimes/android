@@ -1,16 +1,15 @@
-package com.i906.mpt.api;
+package com.i906.mpt.api.prayer;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.i906.mpt.model.PrayerData;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
+public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
 
     @Override
     public PrayerData read(JsonReader in) throws IOException {
@@ -20,23 +19,17 @@ class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
 
         while (in.hasNext()) {
             switch (in.nextName()) {
+                case "provider":
+                    pd.setProvider(in.nextString());
+                    break;
                 case "code":
                     pd.setCode(in.nextString());
                     break;
-                case "origin":
-                    pd.setOrigin(in.nextString());
+                case "year":
+                    pd.setYear(in.nextInt());
                     break;
-                case "jakim":
-                    pd.setJakimCode(in.nextString());
-                    break;
-                case "source":
-                    pd.setSource(in.nextString());
-                    break;
-                case "readableDate":
-                    pd.setReadableDate(in.nextString());
-                    break;
-                case "lastModified":
-                    pd.setLastModified(in.nextString());
+                case "month":
+                    pd.setMonth(in.nextInt());
                     break;
                 case "place":
                     pd.setLocation(in.nextString());

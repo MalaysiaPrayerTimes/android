@@ -1,4 +1,4 @@
-package com.i906.mpt.main.mosque;
+package com.i906.mpt.mosque;
 
 import android.content.Intent;
 import android.net.Uri;
