@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
+public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
 
     @Override
     public PrayerData read(JsonReader in) throws IOException {
