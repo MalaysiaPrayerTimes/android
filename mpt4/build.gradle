@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -25,6 +26,7 @@ android {
         debug {
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
+            testCoverageEnabled true
         }
 
         release {

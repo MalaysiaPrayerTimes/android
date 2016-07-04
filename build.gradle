@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'org.jacoco:org.jacoco.core:jacoco-0.7.7.201606060606'
         classpath 'me.tatarka:gradle-retrolambda:3.3.0-SNAPSHOT'
     }
 }
@@ -37,7 +38,7 @@ ext {
     DAGGER_VERSION = '2.4'
     GSON_VERSION = '2.4'
     MOCKITO_VERSION = '1.10.19'
-    PLAYSERVICES_VERSION = '9.0.2'
+    PLAYSERVICES_VERSION = '9.2.0'
     RETROFIT_VERSION = '2.1.0'
     RXANDROID_VERSION = '1.2.1'
     RXJAVA_VERSION = '1.1.6'
