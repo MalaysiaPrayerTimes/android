@@ -6,6 +6,7 @@ import com.i906.mpt.api.foursquare.FoursquareClient;
 import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.api.prayer.PrayerDataTypeAdapter;
+import com.i906.mpt.date.DateTimeHelper;
 import com.mpt.i906.api.MockApiUtils;
 import com.mpt.i906.api.foursquare.MockFoursquareClient;
 import com.mpt.i906.api.prayer.MockPrayerClient;
@@ -37,7 +38,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    PrayerClient providePrayerClient(MockApiUtils utils) {
-        return new MockPrayerClient(utils);
+    PrayerClient providePrayerClient(MockApiUtils utils, DateTimeHelper date) {
+        return new MockPrayerClient(utils, date);
     }
 }

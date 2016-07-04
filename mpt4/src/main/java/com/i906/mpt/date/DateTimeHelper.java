@@ -1,14 +1,6 @@
-package com.i906.mpt.util;
+package com.i906.mpt.date;
 
-import com.i906.mpt.util.preference.GeneralPrefs;
-
-import org.joda.time.DateTime;
-import org.joda.time.chrono.IslamicChronology;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -16,14 +8,13 @@ import javax.inject.Singleton;
 @Singleton
 public class DateTimeHelper {
 
+    private final DateProvider mProvider;
     private Calendar mCalendar;
-    private DateTime mHijriCalendar;
-    private GeneralPrefs mPrefs;
 
     @Inject
-    public DateTimeHelper(GeneralPrefs p) {
+    public DateTimeHelper(DateProvider provider) {
+        mProvider = provider;
         refresh();
-        mPrefs = p;
     }
 
     public int getCurrentDate() {
@@ -76,34 +67,14 @@ public class DateTimeHelper {
     }
 
     private void refresh() {
-        if (mCalendar == null) mCalendar = getNewCalendarInstance();
-        mCalendar.setTimeInMillis(getCurrentTime());
-        mHijriCalendar = new DateTime(IslamicChronology.getInstance());
-    }
-
-    public long getCurrentTime() {
-        return System.currentTimeMillis();
+        mCalendar = mProvider.getNow();
     }
 
     public Calendar getNow() {
-        refresh();
-        return mCalendar;
+        return mProvider.getNow();
     }
 
-    public Calendar getNewCalendarInstance() {
-        return Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
-    }
-
-    public List<Integer> getHijriDate(boolean maghribPassed) {
-        List<Integer> l = new ArrayList<>(3);
-        refresh();
-
-        if (maghribPassed) mHijriCalendar = mHijriCalendar.plusDays(1);
-        mHijriCalendar = mHijriCalendar.plusDays(mPrefs.getHijriOffset());
-        l.add(mHijriCalendar.getDayOfMonth());
-        l.add(mHijriCalendar.getMonthOfYear() - 1);
-        l.add(mHijriCalendar.getYear());
-
-        return l;
+    public Calendar getCalendarInstance() {
+        return mProvider.getCalendarInstance();
     }
 }
