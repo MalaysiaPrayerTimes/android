@@ -72,6 +72,7 @@ android {
 dependencies {
     def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
+    def MOCKITO_VERSION = rootProject.ext.MOCKITO_VERSION
     def PLAYSERVICES_VERSION = rootProject.ext.PLAYSERVICES_VERSION
     def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
@@ -102,6 +103,10 @@ dependencies {
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'
 
     testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile 'org.assertj:assertj-core:1.7.1'
+
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:24.0.0'
