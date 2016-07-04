@@ -75,6 +75,7 @@ dependencies {
     def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
     def MOCKITO_VERSION = rootProject.ext.MOCKITO_VERSION
+    def OKHTTP_VERSION = rootProject.ext.OKHTTP_VERSION
     def PLAYSERVICES_VERSION = rootProject.ext.PLAYSERVICES_VERSION
     def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
@@ -91,6 +92,9 @@ dependencies {
     // Butterknife
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     apt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+
+    // OkHttp Logging
+    compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
     // Dagger
     compile "com.google.dagger:dagger:$DAGGER_VERSION"

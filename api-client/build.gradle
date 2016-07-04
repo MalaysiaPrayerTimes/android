@@ -5,11 +5,15 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     def GSON_VERSION = rootProject.ext.GSON_VERSION;
+    def OKHTTP_VERSION = rootProject.ext.OKHTTP_VERSION;
     def RETROFIT_VERSION = rootProject.ext.RETROFIT_VERSION;
     def RXJAVA_VERSION = rootProject.ext.RXJAVA_VERSION;
 
     compile "io.reactivex:rxjava:$RXJAVA_VERSION"
     compile "com.google.code.gson:gson:$GSON_VERSION"
+
+    // OkHttp
+    compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
 
     // Retrofit
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"

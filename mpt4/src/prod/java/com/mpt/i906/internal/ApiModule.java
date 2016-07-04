@@ -19,6 +19,7 @@ import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * @author Noorzaini Ilhami
@@ -29,7 +30,15 @@ public class ApiModule {
     @Provides
     @Singleton
     PrayerClient providePrayerClient(OkHttpClient client) {
-        return new RetrofitPrayerClient(client);
+        OkHttpClient.Builder mptClient = client.newBuilder();
+
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor hli = new HttpLoggingInterceptor();
+            hli.setLevel(HttpLoggingInterceptor.Level.BODY);
+            mptClient.addInterceptor(hli);
+        }
+
+        return new RetrofitPrayerClient(mptClient.build());
     }
 
     @Provides
@@ -38,11 +47,16 @@ public class ApiModule {
         Interceptor i = new FoursquareHttpInterceptor(BuildConfig.FOURSQUARE_ID,
                 BuildConfig.FOURSQUARE_SECRET);
 
-        OkHttpClient foursquareClient = client.newBuilder()
-                .addInterceptor(i)
-                .build();
+        OkHttpClient.Builder foursquareClient = client.newBuilder()
+                .addInterceptor(i);
 
-        return new RetrofitFoursquareClient(foursquareClient);
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor hli = new HttpLoggingInterceptor();
+            hli.setLevel(HttpLoggingInterceptor.Level.BODY);
+            foursquareClient.addInterceptor(hli);
+        }
+
+        return new RetrofitFoursquareClient(foursquareClient.build());
     }
 
     @Provides

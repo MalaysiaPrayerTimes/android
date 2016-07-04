@@ -46,10 +46,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @Override
     public void showError(Throwable error) {
+        Log.e("PrayerFragment", "error", error);
     }
 
     @Override
     public void showLoading() {
+        Log.v("PrayerFragment", "loading");
     }
 
     @Override
