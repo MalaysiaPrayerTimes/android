@@ -80,14 +80,14 @@ public class PrayerManagerTest {
 
         TestSubscriber<PrayerContext> testSubscriber = new TestSubscriber<>();
         TestSubscriber<PrayerContext> testSubscriber2 = new TestSubscriber<>();
+
         prayerManager.getPrayerContext(false).subscribe(testSubscriber);
-
         testSubscriber.assertNoErrors();
+
+        verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(4));
+        verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(5));
+
         List<PrayerContext> prayers = testSubscriber.getOnNextEvents();
-
-        verify(mPrayerClient).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(4));
-        verify(mPrayerClient).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(5));
-
         assertThat(prayers).hasSize(1);
 
         prayerManager.getPrayerContext(false).subscribe(testSubscriber2);

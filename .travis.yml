@@ -16,6 +16,9 @@ cache:
     - $HOME/.m2
     - $HOME/.gradle
 
+before_install:
+- export TZ=Asia/Kuala_Lumpur
+
 script:
   - ./gradlew testMockDebugUnitTestCoverage
 
