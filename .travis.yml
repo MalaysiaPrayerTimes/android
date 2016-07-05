@@ -20,7 +20,7 @@ before_install:
 - export TZ=Asia/Kuala_Lumpur
 
 script:
-  - ./gradlew testMockDebugUnitTestCoverage
+  - ./gradlew clean testMockDebugUnitTestCoverage -PdisablePreDex
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

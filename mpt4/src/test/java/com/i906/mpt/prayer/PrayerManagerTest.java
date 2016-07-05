@@ -2,12 +2,14 @@ package com.i906.mpt.prayer;
 
 import android.location.Location;
 
+import com.i906.mpt.RxJavaResetRule;
 import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.location.LocationRepository;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -29,6 +31,9 @@ import static org.mockito.Mockito.when;
  * @author Noorzaini Ilhami
  */
 public class PrayerManagerTest {
+
+    @Rule
+    public RxJavaResetRule mResetRule = new RxJavaResetRule();
 
     @Mock
     private DateTimeHelper mDateHelper;
@@ -84,10 +89,10 @@ public class PrayerManagerTest {
         prayerManager.getPrayerContext(false).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
 
+        List<PrayerContext> prayers = testSubscriber.getOnNextEvents();
+
         verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(4));
         verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(5));
-
-        List<PrayerContext> prayers = testSubscriber.getOnNextEvents();
         assertThat(prayers).hasSize(1);
 
         prayerManager.getPrayerContext(false).subscribe(testSubscriber2);
