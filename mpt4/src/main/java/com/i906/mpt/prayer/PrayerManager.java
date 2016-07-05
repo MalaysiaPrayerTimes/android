@@ -32,6 +32,7 @@ public class PrayerManager {
     private final PrayerClient mPrayerClient;
 
     private Location mLastLocation;
+    private PrayerContext mLastPrayerContext;
     private Subject<PrayerContext, PrayerContext> mPrayerStream;
     private AtomicBoolean mIsLoading = new AtomicBoolean(false);
 
@@ -59,14 +60,20 @@ public class PrayerManager {
                     @Override
                     public Observable<PrayerContext> call(Location location) {
                         float distance = LocationRepository.getDistance(mLastLocation, location);
-                        if (distance >= 5000 || refresh) {
+                        if (distance >= 5000 || refresh || mLastPrayerContext == null) {
                             mLastLocation = location;
 
                             return getCurrentPrayerTimesByCoordinate(location)
-                                    .zipWith(getNextPrayerTimesByCoordinate(location), mPrayerContextCreator);
+                                    .zipWith(getNextPrayerTimesByCoordinate(location), mPrayerContextCreator)
+                                    .doOnNext(new Action1<PrayerContext>() {
+                                        @Override
+                                        public void call(PrayerContext prayerContext) {
+                                            mLastPrayerContext = prayerContext;
+                                        }
+                                    });
                         }
 
-                        return Observable.empty();
+                        return Observable.just(mLastPrayerContext);
                     }
                 })
                 .subscribe(new Action1<PrayerContext>() {
@@ -93,7 +100,7 @@ public class PrayerManager {
         int year = mDateHelper.getCurrentYear();
         int month = mDateHelper.getCurrentMonth();
 
-        return mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month);
+        return mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month + 1);
     }
 
     private Observable<PrayerData> getNextPrayerTimesByCoordinate(Location location) {
@@ -107,7 +114,7 @@ public class PrayerManager {
             year = mDateHelper.getNextYear();
         }
 
-        return mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month);
+        return mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month + 1);
     }
 
     private final Func2<PrayerData, PrayerData, PrayerContext> mPrayerContextCreator =

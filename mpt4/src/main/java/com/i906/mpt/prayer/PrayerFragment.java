@@ -41,7 +41,9 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     @Override
     public void showPrayerContext(PrayerContext prayerContext) {
         Prayer current = prayerContext.getCurrentPrayer();
+        Prayer next = prayerContext.getNextPrayer();
         Log.d("PrayerFragment", "currentPrayer: " + current);
+        Log.d("PrayerFragment", "nextPrayer: " + next);
     }
 
     @Override
