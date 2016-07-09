@@ -79,6 +79,7 @@ dependencies {
     def PLAYSERVICES_VERSION = rootProject.ext.PLAYSERVICES_VERSION
     def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
+    def TIMBER_VERSION = rootProject.ext.TIMBER_VERSION
 
     compile project(':api-client');
 
@@ -107,6 +108,7 @@ dependencies {
 
     // Misc
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'
+    compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"

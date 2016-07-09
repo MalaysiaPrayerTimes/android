@@ -44,6 +44,7 @@ ext {
     RXANDROID_VERSION = '1.2.1'
     RXJAVA_VERSION = '1.1.6'
     SUPPORT_VERSION = '24.0.0'
+    TIMBER_VERSION = '4.1.2'
     storioVersion = '1.6.0'
 }
 
