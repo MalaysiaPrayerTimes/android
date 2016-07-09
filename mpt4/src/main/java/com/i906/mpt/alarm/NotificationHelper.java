@@ -1,5 +1,6 @@
-package com.i906.mpt.util;
+package com.i906.mpt.alarm;
 
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +11,12 @@ import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.i906.mpt.R;
-import com.i906.mpt.provider.MptInterface;
-import com.i906.mpt.ui.MainActivity;
-import com.i906.mpt.util.preference.NotificationPrefs;
+import com.i906.mpt.main.MainActivity;
+import com.i906.mpt.prayer.Prayer;
+import com.i906.mpt.prefs.NotificationPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,18 +28,17 @@ public class NotificationHelper {
 
     private Context mContext;
     private NotificationManagerCompat mNotifier;
-    private NotificationPrefs mNotificationPrefs;
+    private NotificationPreferences mNotificationPrefs;
     private Vibrator mVibrator;
 
     private String[] mPrayerNames;
 
     @Inject
-    public NotificationHelper(Context context, NotificationManagerCompat notifier,
-                              NotificationPrefs prefs, Vibrator vibrator) {
+    public NotificationHelper(Application context, NotificationPreferences prefs) {
         mContext = context;
-        mNotifier = notifier;
+        mNotifier = NotificationManagerCompat.from(mContext);
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         mNotificationPrefs = prefs;
-        mVibrator = vibrator;
         fillStrings();
     }
 
@@ -140,9 +141,9 @@ public class NotificationHelper {
         String name = mPrayerNames[prayer];
 
         switch (prayer) {
-            case MptInterface.PRAYER_IMSAK:
-            case MptInterface.PRAYER_SYURUK:
-            case MptInterface.PRAYER_DHUHA:
+            case Prayer.PRAYER_IMSAK:
+            case Prayer.PRAYER_SYURUK:
+            case Prayer.PRAYER_DHUHA:
                 return r.getString(R.string.notification_prayer_others, name);
             default:
                 return r.getString(R.string.notification_prayer_normal, name);
@@ -157,9 +158,9 @@ public class NotificationHelper {
 
         return new NotificationCompat.Builder(mContext)
                 .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
-                .setSmallIcon(R.drawable.ic_stat_prayer)
-                .setCategory(NotificationCompat.CATEGORY_EVENT)
-                .setColor(r.getColor(R.color.mpt_color_accent))
+                .setSmallIcon(R.drawable.ic_tab_mosque_normal)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
                 .setAutoCancel(true)
                 .setContentIntent(pi);
     }
@@ -171,7 +172,12 @@ public class NotificationHelper {
             mediaPlayer.setDataSource(mContext, sound);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
             mediaPlayer.prepare();
-            mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.release();
+                }
+            });
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -192,6 +198,6 @@ public class NotificationHelper {
 
     private void fillStrings() {
         Resources r = mContext.getResources();
-        mPrayerNames = r.getStringArray(R.array.mpt_prayer_names);
+        mPrayerNames = r.getStringArray(R.array.prayer_names);
     }
 }
