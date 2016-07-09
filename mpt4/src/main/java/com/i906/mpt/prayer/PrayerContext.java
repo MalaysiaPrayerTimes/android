@@ -14,4 +14,6 @@ public interface PrayerContext {
     List<Prayer> getCurrentPrayerList();
 
     List<Prayer> getNextPrayerList();
+
+    String getLocationName();
 }

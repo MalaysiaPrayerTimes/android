@@ -63,6 +63,11 @@ class PrayerContextImpl implements PrayerContext {
         return list;
     }
 
+    @Override
+    public String getLocationName() {
+        return mCurrentPrayer.getLocation();
+    }
+
     private int getCurrentPrayerIndex() {
         int pos = 0;
 
