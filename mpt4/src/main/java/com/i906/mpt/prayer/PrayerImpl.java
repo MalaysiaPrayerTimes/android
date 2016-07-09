@@ -26,7 +26,7 @@ class PrayerImpl implements Prayer {
     }
 
     @Override
-    public Date getTime() {
+    public Date getDate() {
         return mDate;
     }
 
@@ -34,7 +34,7 @@ class PrayerImpl implements Prayer {
     public boolean hasPassed() {
         Calendar n = mDateHelper.getNow();
         Calendar s = mDateHelper.getCalendarInstance();
-        s.setTime(getTime());
+        s.setTime(getDate());
         return n.after(s);
     }
 

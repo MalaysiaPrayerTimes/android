@@ -63,7 +63,7 @@ public class PrayerContextTest {
 
         Prayer prayer = mPrayerContext.getCurrentPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_ZOHOR);
-        assertThat(prayer.getTime()).hasTime(1464930840000L);
+        assertThat(prayer.getDate()).hasTime(1464930840000L);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class PrayerContextTest {
 
         Prayer prayer = mPrayerContext.getNextPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_ASAR);
-        assertThat(prayer.getTime()).hasTime(1464943140000L);
+        assertThat(prayer.getDate()).hasTime(1464943140000L);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class PrayerContextTest {
 
         Prayer prayer = mPrayerContext.getNextPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_IMSAK);
-        assertThat(prayer.getTime()).hasTime(1464989400000L);
+        assertThat(prayer.getDate()).hasTime(1464989400000L);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class PrayerContextTest {
 
         Prayer prayer = mPrayerContext.getNextPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_IMSAK);
-        assertThat(prayer.getTime()).hasTime(1467322440000L);
+        assertThat(prayer.getDate()).hasTime(1467322440000L);
     }
 
     @Test
@@ -159,10 +159,10 @@ public class PrayerContextTest {
             Prayer c = list.get(i);
 
             assertThat(c.getIndex()).isEqualTo(i);
-            assertThat(c.getTime()).isInSameDayAs("2016-06-30");
+            assertThat(c.getDate()).isInSameDayAs("2016-06-30");
 
             if (p != null) {
-                assertThat(c.getTime()).isAfter(p.getTime());
+                assertThat(c.getDate()).isAfter(p.getDate());
             }
 
             p = c;
@@ -187,10 +187,10 @@ public class PrayerContextTest {
             Prayer c = list.get(i);
 
             assertThat(c.getIndex()).isEqualTo(i);
-            assertThat(c.getTime()).isInSameDayAs("2016-06-04");
+            assertThat(c.getDate()).isInSameDayAs("2016-06-04");
 
             if (p != null) {
-                assertThat(c.getTime()).isAfter(p.getTime());
+                assertThat(c.getDate()).isAfter(p.getDate());
             }
 
             p = c;
@@ -215,10 +215,10 @@ public class PrayerContextTest {
             Prayer c = list.get(i);
 
             assertThat(c.getIndex()).isEqualTo(i);
-            assertThat(c.getTime()).isInSameDayAs("2016-07-01");
+            assertThat(c.getDate()).isInSameDayAs("2016-07-01");
 
             if (p != null) {
-                assertThat(c.getTime()).isAfter(p.getTime());
+                assertThat(c.getDate()).isAfter(p.getDate());
             }
 
             p = c;
