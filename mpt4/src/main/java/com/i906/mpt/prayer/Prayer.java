@@ -18,4 +18,5 @@ public interface Prayer {
 
     int getIndex();
     Date getTime();
+    boolean hasPassed();
 }

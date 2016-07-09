@@ -29,14 +29,14 @@ class PrayerContextImpl implements PrayerContext {
     public Prayer getCurrentPrayer() {
         int index = getCurrentPrayerIndex();
         Date date = getCurrentPrayerTime();
-        return new PrayerImpl(index, date);
+        return new PrayerImpl(mDateHelper, index, date);
     }
 
     @Override
     public Prayer getNextPrayer() {
         int index = getNextPrayerIndex();
         Date date = getNextPrayerTime();
-        return new PrayerImpl(index, date);
+        return new PrayerImpl(mDateHelper, index, date);
     }
 
     @Override
@@ -45,7 +45,7 @@ class PrayerContextImpl implements PrayerContext {
         List<Date> dates = getCurrentPrayerTimeList();
 
         for (int i = 0; i < 8; i++) {
-            list.add(new PrayerImpl(i, dates.get(i)));
+            list.add(new PrayerImpl(mDateHelper, i, dates.get(i)));
         }
 
         return list;
@@ -57,7 +57,7 @@ class PrayerContextImpl implements PrayerContext {
         List<Date> dates = getNextDayPrayerTimes();
 
         for (int i = 0; i < 8; i++) {
-            list.add(new PrayerImpl(i, dates.get(i)));
+            list.add(new PrayerImpl(mDateHelper, i, dates.get(i)));
         }
 
         return list;
