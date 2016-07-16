@@ -5,10 +5,10 @@
     android:padding="48dp"
     android:orientation="vertical">
 
-    <com.i906.mpt.view.CompassView
+    <com.i906.mpt.qibla.CompassView
         android:id="@+id/compass"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/app_compass" />
+        android:layout_gravity="center" />
 
 </FrameLayout>
