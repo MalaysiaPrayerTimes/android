@@ -1,4 +1,4 @@
-package com.i906.mpt.receiver;
+package com.i906.mpt.alarm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
