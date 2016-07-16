@@ -1,7 +1,8 @@
 package com.i906.mpt.internal;
 
-import com.i906.mpt.mosque.MosqueFragment;
-import com.i906.mpt.prayer.PrayerFragment;
+import com.i906.mpt.mosque.ui.MosqueFragment;
+import com.i906.mpt.prayer.ui.PrayerFragment;
+import com.i906.mpt.qibla.QiblaFragment;
 
 import dagger.Subcomponent;
 
@@ -15,4 +16,5 @@ import dagger.Subcomponent;
 public interface ActivityGraph {
     void inject(MosqueFragment fragment);
     void inject(PrayerFragment fragment);
+    void inject(QiblaFragment fragment);
 }

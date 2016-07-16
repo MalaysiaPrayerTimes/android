@@ -1,4 +1,4 @@
-package com.i906.mpt.mosque;
+package com.i906.mpt.mosque.ui;
 
 import com.i906.mpt.api.foursquare.Mosque;
 

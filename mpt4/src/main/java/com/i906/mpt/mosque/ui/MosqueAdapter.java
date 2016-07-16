@@ -1,4 +1,4 @@
-package com.i906.mpt.mosque;
+package com.i906.mpt.mosque.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;

@@ -1,4 +1,6 @@
-package com.i906.mpt.prayer;
+package com.i906.mpt.prayer.ui;
+
+import com.i906.mpt.prayer.PrayerContext;
 
 /**
  * @author Noorzaini Ilhami
