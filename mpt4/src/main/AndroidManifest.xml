@@ -26,7 +26,17 @@
             android:name=".intro.MainIntroActivity"
             android:theme="@style/Theme.Intro" />
 
+        <receiver android:name=".alarm.StartupReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".alarm.AlarmReceiver" />
+
+        <service android:name=".alarm.AlarmService" />
+
     </application>
 
 </manifest>
- 

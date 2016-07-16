@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.i906.mpt.R;
+import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.intro.MainIntroActivity;
 import com.i906.mpt.prefs.CommonPreferences;
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity {
         }
 
         setup();
+        StartupReceiver.startAlarmStartup(this);
     }
 
     private void setup() {

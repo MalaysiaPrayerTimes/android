@@ -4,15 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.i906.mpt.service.AlarmSetupService;
-
-import timber.log.Timber;
-
 public class StartupReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Timber.d("Received startup action.");
-        AlarmSetupService.setAllAlarms(context);
+        startAlarmStartup(context);
+    }
+
+    public static void startAlarmStartup(Context context) {
+        Intent alarm = new Intent(context, AlarmService.class);
+        alarm.setAction(AlarmService.ACTION_STARTUP);
+        context.startService(alarm);
     }
 }
