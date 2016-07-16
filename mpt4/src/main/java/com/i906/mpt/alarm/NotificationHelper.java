@@ -158,7 +158,7 @@ public class NotificationHelper {
 
         return new NotificationCompat.Builder(mContext)
                 .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
-                .setSmallIcon(R.drawable.ic_tab_mosque_normal)
+                .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
                 .setAutoCancel(true)
