@@ -1,7 +1,5 @@
 package com.mpt.i906.api.prayer;
 
-import android.util.Log;
-
 import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
@@ -13,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.functions.Func1;
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -29,26 +28,24 @@ public class MockPrayerClient implements PrayerClient {
 
     @Override
     public Observable<PrayerData> getPrayerTimesByCode(String code, final int year, final int month) {
-        Log.w("MockPrayerClient", "Performing network tasks. Code: " + code
-                + " Year: " + year + " Month: " + month);
-
+        Timber.v("Performing network tasks. Code: %s Year: %s Month: %s", code, year, month);
         return Observable.just(mUtils.randomInt(0, 10))
                 .delay(mUtils.randomInt(0, 5000), TimeUnit.MILLISECONDS)
                 .flatMap(new Func1<Integer, Observable<PrayerData>>() {
                     @Override
                     public Observable<PrayerData> call(Integer r) {
                         if (r % 4 == 0) {
-                            Log.w("MockPrayerClient", "Returning error.");
+                            Timber.v("Returning error.");
                             return Observable.error(new RuntimeException("Random error."));
                         } else {
-                            Log.w("MockPrayerClient", "Returning data.");
+                            Timber.v("Returning data.");
                             PrayerData data = mUtils.getData(PrayerData.class, "json/prayer.json");
 
                             List<List<Date>> dailyDates = data.getPrayerTimes();
 
                             for (List<Date> dates : dailyDates) {
                                 for (Date date : dates) {
-                                    date.setMonth(month);
+                                    date.setMonth(month - 1);
                                     date.setYear(year - 1900);
                                 }
                             }
@@ -61,9 +58,7 @@ public class MockPrayerClient implements PrayerClient {
 
     @Override
     public Observable<PrayerData> getPrayerTimesByCoordinates(double lat, double lng, int year, int month) {
-        Log.w("MockPrayerClient", "Performing network tasks. Lat: " + lat + " Lng: " + lng
-                + " Year: " + year + " Month: " + month);
-
+        Timber.v("Performing network tasks. Lat: %s Lng: %s Year: %s Month: %s", lat, lng, year, month);
         return getPrayerTimesByCode("xxx", year, month);
     }
 }

@@ -8,9 +8,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.i906.mpt.R;
+import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.intro.MainIntroActivity;
 import com.i906.mpt.prefs.CommonPreferences;
+import com.i906.mpt.prefs.NotificationPreferences;
 
 import javax.inject.Inject;
 
@@ -38,6 +40,9 @@ public class MainActivity extends BaseActivity {
     @Inject
     CommonPreferences mCommonPreferences;
 
+    @Inject
+    NotificationPreferences mNotificationPreferences;
+
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
 
@@ -55,9 +60,11 @@ public class MainActivity extends BaseActivity {
 
         if (mCommonPreferences.isFirstStart()) {
             showIntro();
+            mNotificationPreferences.convertLegacyPreferences();
         }
 
         setup();
+        StartupReceiver.startAlarmStartup(this);
     }
 
     private void setup() {

@@ -20,6 +20,7 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -34,7 +35,9 @@ public class PrayerManager {
     private Location mLastLocation;
     private PrayerContext mLastPrayerContext;
     private Subject<PrayerContext, PrayerContext> mPrayerStream;
+
     private AtomicBoolean mIsLoading = new AtomicBoolean(false);
+    private AtomicBoolean mIsError = new AtomicBoolean(false);
 
     @Inject
     public PrayerManager(DateTimeHelper date, LocationRepository location, PrayerClient prayer) {
@@ -44,8 +47,15 @@ public class PrayerManager {
     }
 
     public Observable<PrayerContext> getPrayerContext(final boolean refresh) {
-        if (mPrayerStream == null || (refresh && !isLoading())) {
+        Timber.v("Error: %s, Loading: %s, Refresh: %s", hasError(), isLoading(), refresh);
+
+        if (mPrayerStream == null || hasError() && !isLoading()) {
             mPrayerStream = BehaviorSubject.create();
+            Timber.v("New behavior subject.");
+        }
+
+        if (isLoading() && !refresh) {
+            return mPrayerStream.asObservable();
         }
 
         mLocationRepository.getLocation()
@@ -53,6 +63,7 @@ public class PrayerManager {
                     @Override
                     public void call() {
                         mIsLoading.set(true);
+                        mIsError.set(false);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -80,12 +91,14 @@ public class PrayerManager {
                     @Override
                     public void call(PrayerContext prayer) {
                         mIsLoading.set(false);
+                        mIsError.set(false);
                         mPrayerStream.onNext(prayer);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         mIsLoading.set(false);
+                        mIsError.set(true);
                         mPrayerStream.onError(throwable);
                     }
                 });
@@ -124,6 +137,10 @@ public class PrayerManager {
                     return new PrayerContextImpl(mDateHelper, current, next);
                 }
             };
+
+    public boolean hasError() {
+        return mIsError.get();
+    }
 
     public boolean isLoading() {
         return mIsLoading.get();

@@ -1,5 +1,7 @@
 package com.i906.mpt.internal;
 
+import com.i906.mpt.alarm.AlarmReceiver;
+import com.i906.mpt.alarm.AlarmService;
 import com.i906.mpt.main.MainActivity;
 import com.mpt.i906.internal.ApiModule;
 
@@ -18,4 +20,6 @@ import dagger.Component;
 public interface Graph {
     ActivityGraph activityGraph(ActivityModule module);
     void inject(MainActivity activity);
+    void inject(AlarmService service);
+    void inject(AlarmReceiver receiver);
 }

@@ -1,7 +1,5 @@
 package com.mpt.i906.api.foursquare;
 
-import android.util.Log;
-
 import com.i906.mpt.api.foursquare.FoursquareClient;
 import com.i906.mpt.api.foursquare.Mosque;
 import com.mpt.i906.api.MockApiUtils;
@@ -11,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.functions.Func1;
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -25,17 +24,17 @@ public class MockFoursquareClient implements FoursquareClient {
 
     @Override
     public Observable<List<Mosque>> getMosqueList(double lat, double lng, int radius) {
-        Log.w("MockFoursquareClient", "Performing network tasks. Lat: " + lat + " Lng: " + lng);
+        Timber.v("Performing network tasks. Lat: %s Lng: %s", lat, lng);
         return Observable.just(mUtils.randomInt(0, 10))
                 .delay(mUtils.randomInt(0, 5000), TimeUnit.MILLISECONDS)
                 .flatMap(new Func1<Integer, Observable<List<Mosque>>>() {
                     @Override
                     public Observable<List<Mosque>> call(Integer r) {
                         if (r % 4 == 0) {
-                            Log.w("MockFoursquareClient", "Returning error.");
+                            Timber.v("Returning error.");
                             return Observable.error(new RuntimeException("Random error."));
                         } else {
-                            Log.w("MockFoursquareClient", "Returning data.");
+                            Timber.v("Returning data.");
                             List<Mosque> mosqueList = mUtils.getDataList(Mosque.class, "json/mosque.json");
                             return Observable.just(mosqueList);
                         }

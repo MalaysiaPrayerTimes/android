@@ -8,6 +8,8 @@ import com.i906.mpt.internal.DaggerGraph;
 import com.i906.mpt.internal.Graph;
 import com.mpt.i906.internal.ApiModule;
 
+import timber.log.Timber;
+
 public class MptApplication extends Application {
 
     private Graph mComponent;
@@ -20,6 +22,11 @@ public class MptApplication extends Application {
                 .apiModule(new ApiModule())
                 .appModule(new AppModule(this))
                 .build());
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+
     }
 
     public Graph getGraph() {

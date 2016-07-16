@@ -17,5 +17,6 @@ public interface Prayer {
     int PRAYER_ISYAK = 7;
 
     int getIndex();
-    Date getTime();
+    Date getDate();
+    boolean hasPassed();
 }
