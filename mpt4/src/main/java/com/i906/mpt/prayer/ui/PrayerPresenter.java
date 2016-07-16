@@ -1,9 +1,8 @@
-package com.i906.mpt.mosque;
+package com.i906.mpt.prayer.ui;
 
-import com.i906.mpt.api.foursquare.Mosque;
 import com.i906.mpt.internal.PerActivity;
-
-import java.util.List;
+import com.i906.mpt.prayer.PrayerContext;
+import com.i906.mpt.prayer.PrayerManager;
 
 import javax.inject.Inject;
 
@@ -18,20 +17,20 @@ import rx.subscriptions.CompositeSubscription;
  * @author Noorzaini Ilhami
  */
 @PerActivity
-class MosquePresenter {
+class PrayerPresenter {
 
-    private final MosqueManager mMosqueManager;
+    private final PrayerManager mPrayerManager;
     private final CompositeSubscription mSubscription = new CompositeSubscription();
 
-    private MosqueView mView;
+    private PrayerView mView;
 
     @Inject
-    MosquePresenter(MosqueManager manager) {
-        mMosqueManager = manager;
+    PrayerPresenter(PrayerManager prayer) {
+        mPrayerManager = prayer;
     }
 
-    public void getMosqueList(boolean refresh) {
-        Subscription s = mMosqueManager.getMosqueList(refresh)
+    public void getPrayerContext(final boolean refresh) {
+        Subscription s = mPrayerManager.getPrayerContext(refresh)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Action0() {
@@ -40,10 +39,10 @@ class MosquePresenter {
                         showLoading();
                     }
                 })
-                .subscribe(new Action1<List<Mosque>>() {
+                .subscribe(new Action1<PrayerContext>() {
                     @Override
-                    public void call(List<Mosque> mosques) {
-                        showMosqueList(mosques);
+                    public void call(PrayerContext prayerContext) {
+                        showPrayerContext(prayerContext);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -60,9 +59,9 @@ class MosquePresenter {
         mView.showLoading();
     }
 
-    private void showMosqueList(List<Mosque> mosqueList) {
+    private void showPrayerContext(PrayerContext prayer) {
         if (mView == null) return;
-        mView.showMosqueList(mosqueList);
+        mView.showPrayerContext(prayer);
     }
 
     private void showError(Throwable error) {
@@ -70,7 +69,7 @@ class MosquePresenter {
         mView.showError(error);
     }
 
-    public void setView(MosqueView view) {
+    public void setView(PrayerView view) {
         mView = view;
         if (view == null) mSubscription.clear();
     }

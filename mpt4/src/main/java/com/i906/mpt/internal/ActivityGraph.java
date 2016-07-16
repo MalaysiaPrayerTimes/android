@@ -1,7 +1,7 @@
 package com.i906.mpt.internal;
 
-import com.i906.mpt.mosque.MosqueFragment;
-import com.i906.mpt.prayer.PrayerFragment;
+import com.i906.mpt.mosque.ui.MosqueFragment;
+import com.i906.mpt.prayer.ui.PrayerFragment;
 
 import dagger.Subcomponent;
 

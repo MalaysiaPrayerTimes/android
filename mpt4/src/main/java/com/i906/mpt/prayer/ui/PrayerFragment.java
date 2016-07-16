@@ -1,4 +1,4 @@
-package com.i906.mpt.prayer;
+package com.i906.mpt.prayer.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
+import com.i906.mpt.prayer.Prayer;
+import com.i906.mpt.prayer.PrayerContext;
 
 import javax.inject.Inject;
 
