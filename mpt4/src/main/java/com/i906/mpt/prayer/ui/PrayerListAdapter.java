@@ -1,4 +1,4 @@
-package com.i906.mpt.adapter;
+package com.i906.mpt.prayer.ui;
 
 import android.content.Context;
 import android.content.res.Resources;

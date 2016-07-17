@@ -1,4 +1,4 @@
-package com.i906.mpt.view;
+package com.i906.mpt.prayer.ui;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -21,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DefaultPrayerView extends PrayerView {
+public class PrayerListView extends PrayerView {
 
     private final static String FORMAT_24 = "kk:mm";
     private final static String FORMAT_12 = "hh:mm";
@@ -58,15 +58,15 @@ public class DefaultPrayerView extends PrayerView {
     @Bind(R.id.list_prayer)
     protected LinearListView mPrayerListView;
 
-    public DefaultPrayerView(Context context) {
+    public PrayerListView(Context context) {
         this(context, null);
     }
 
-    public DefaultPrayerView(Context context, AttributeSet attrs) {
+    public PrayerListView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DefaultPrayerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PrayerListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.view_default_prayer, this, true);
         ButterKnife.bind(this);
