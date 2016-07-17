@@ -1,6 +1,8 @@
 package com.i906.mpt.mosque.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -49,6 +52,9 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.progress)
+    ImageView mProgressView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +85,11 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
+
+        Drawable drawable = mProgressView.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
     }
 
     @Override
