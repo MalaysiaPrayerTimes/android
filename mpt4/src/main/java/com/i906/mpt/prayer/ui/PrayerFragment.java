@@ -2,6 +2,7 @@ package com.i906.mpt.prayer.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
  */
 public class PrayerFragment extends BaseFragment implements PrayerView {
+
+    private Snackbar mSnackbar;
 
     @Inject
     PrayerPresenter mPresenter;
@@ -81,10 +83,23 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     public void showError(Throwable error) {
         showSwipeRefreshLoading(false);
         mPrayerListView.showError(error);
+        if (mSnackbar != null) mSnackbar.dismiss();
+
+        int errorMessage = getErrorMessage(error, R.string.error_unexpected);
 
         if (mViewFlipper.getDisplayedChild() != 1) {
             mViewFlipper.setDisplayedChild(2);
             mErrorMessageView.setText(getErrorMessage(error, R.string.error_unexpected));
+        } else {
+            mSnackbar = Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.label_retry, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mPresenter.getPrayerContext(true);
+                        }
+                    });
+
+            mSnackbar.show();
         }
     }
 
