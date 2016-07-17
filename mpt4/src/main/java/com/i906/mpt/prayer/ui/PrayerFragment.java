@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
@@ -14,6 +16,8 @@ import com.i906.mpt.prayer.PrayerContext;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -25,6 +29,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mRefreshLayout;
+
+    @BindView(R.id.viewflipper)
+    ViewFlipper mViewFlipper;
+
+    @BindView(R.id.tv_error)
+    TextView mErrorMessageView;
 
     @BindView(R.id.prayerlist)
     PrayerListView mPrayerListView;
@@ -55,25 +65,42 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
         mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRefreshLayout.setOnRefreshListener(refreshListener);
-        mPrayerListView.setOnRefreshListener(refreshListener);
     }
 
     @Override
     public void showPrayerContext(PrayerContext prayerContext) {
         showSwipeRefreshLoading(false);
         mPrayerListView.showPrayerContext(prayerContext);
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(1);
+        }
     }
 
     @Override
     public void showError(Throwable error) {
         showSwipeRefreshLoading(false);
         mPrayerListView.showError(error);
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(2);
+            mErrorMessageView.setText(getErrorMessage(error, R.string.error_unexpected));
+        }
     }
 
     @Override
     public void showLoading() {
         showSwipeRefreshLoading(true);
         mPrayerListView.showLoading();
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(0);
+        }
+    }
+
+    @OnClick(R.id.btn_retry)
+    void onRetryButtonClicked() {
+        mPresenter.getPrayerContext(true);
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {
