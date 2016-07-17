@@ -1,8 +1,8 @@
 package com.i906.mpt.prayer.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,26 +11,27 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.i906.mpt.R;
+import com.i906.mpt.prayer.Prayer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PrayerListAdapter extends BaseAdapter {
+class PrayerListAdapter extends BaseAdapter {
 
-    protected SimpleDateFormat mDateFormatter;
-    protected List<Date> mDateList;
-    protected String[] mPrayerNames;
-    protected int mHighlightedIndex;
+    private final SimpleDateFormat mDateFormatter;
+    private final List<Prayer> mPrayerList;
+    private final String[] mPrayerNames;
+    private int mHighlightedIndex;
 
-    protected int mDefaultColor = -1;
-    protected int mHighlightedColor = -1;
+    private int mDefaultColor = -1;
+    private int mHighlightedColor = -1;
 
-    public PrayerListAdapter(List<Date> dateList, String[] prayerNames, String dateFormat) {
-        mDateList = dateList;
+    PrayerListAdapter(List<Prayer> prayerList, String[] prayerNames, String dateFormat) {
+        mPrayerList = prayerList;
         mPrayerNames = prayerNames;
         mDateFormatter = new SimpleDateFormat(dateFormat);
     }
@@ -66,23 +67,21 @@ public class PrayerListAdapter extends BaseAdapter {
         return view;
     }
 
-    protected int getHighlightedColor(Context ctx) {
+    private int getHighlightedColor(Context ctx) {
 
         if (mHighlightedColor != -1) return mHighlightedColor;
-        Resources r = ctx.getResources();
-        mHighlightedColor = r.getColor(R.color.mpt_color_accent);
+        mHighlightedColor = ContextCompat.getColor(ctx, R.color.colorAccent);
 
         return mHighlightedColor;
     }
 
-    protected int getDefaultTextColor(Context ctx) {
-
+    private int getDefaultTextColor(Context ctx) {
         if (mDefaultColor != -1) return mDefaultColor;
 
         TypedValue typedValue = new TypedValue();
         ctx.getTheme().resolveAttribute(android.R.attr.textColorPrimary, typedValue, true);
 
-        int[] textColorAttr = new int[] { android.R.attr.textColorPrimary };
+        int[] textColorAttr = new int[] {android.R.attr.textColorPrimary};
         TypedArray a = ctx.obtainStyledAttributes(typedValue.data, textColorAttr);
         mDefaultColor = a.getColor(0, -1);
         a.recycle();
@@ -97,12 +96,12 @@ public class PrayerListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDateList.size();
+        return mPrayerList.size();
     }
 
     @Override
     public Date getItem(int position) {
-        return mDateList.get(position);
+        return mPrayerList.get(position).getDate();
     }
 
     @Override
@@ -110,15 +109,15 @@ public class PrayerListAdapter extends BaseAdapter {
         return position;
     }
 
-    public static class ViewHolder {
+    static class ViewHolder {
 
-        @Bind(R.id.tv_prayer_name)
+        @BindView(R.id.tv_prayer_name)
         protected TextView name;
 
-        @Bind(R.id.tv_prayer_time)
+        @BindView(R.id.tv_prayer_time)
         protected TextView time;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

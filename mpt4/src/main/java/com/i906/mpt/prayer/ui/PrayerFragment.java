@@ -2,17 +2,18 @@ package com.i906.mpt.prayer.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
-import com.i906.mpt.prayer.Prayer;
 import com.i906.mpt.prayer.PrayerContext;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
 
 /**
  * @author Noorzaini Ilhami
@@ -21,6 +22,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @Inject
     PrayerPresenter mPresenter;
+
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mRefreshLayout;
+
+    @BindView(R.id.prayerlist)
+    PrayerListView mPrayerListView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,24 +45,44 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         mPresenter.getPrayerContext(false);
+
+        SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getPrayerContext(true);
+            }
+        };
+
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setOnRefreshListener(refreshListener);
+        mPrayerListView.setOnRefreshListener(refreshListener);
     }
 
     @Override
     public void showPrayerContext(PrayerContext prayerContext) {
-        Prayer current = prayerContext.getCurrentPrayer();
-        Prayer next = prayerContext.getNextPrayer();
-        Log.d("PrayerFragment", "currentPrayer: " + current);
-        Log.d("PrayerFragment", "nextPrayer: " + next);
+        showSwipeRefreshLoading(false);
+        mPrayerListView.showPrayerContext(prayerContext);
     }
 
     @Override
     public void showError(Throwable error) {
-        Log.e("PrayerFragment", "error", error);
+        showSwipeRefreshLoading(false);
+        mPrayerListView.showError(error);
     }
 
     @Override
     public void showLoading() {
-        Log.v("PrayerFragment", "loading");
+        showSwipeRefreshLoading(true);
+        mPrayerListView.showLoading();
+    }
+
+    private void showSwipeRefreshLoading(final boolean loading) {
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(loading);
+            }
+        });
     }
 
     @Override

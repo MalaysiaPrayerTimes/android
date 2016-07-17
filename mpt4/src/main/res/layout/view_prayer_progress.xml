@@ -1,4 +1,6 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="128dp"
-    android:layout_height="128dp"
-    style="@style/PrayerList.LargeIcon.Progress" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    android:src="@drawable/ic_tab_prayer_normal"
+    android:tint="#666666" />

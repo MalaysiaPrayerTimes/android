@@ -1,5 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/frame"
+<FrameLayout android:id="@+id/frame"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" />
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.i906.mpt.prayer.ui.PrayerListView
+            android:id="@+id/prayerlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inAnimation="@anim/fade_in"
+            android:outAnimation="@anim/fade_out" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</FrameLayout>

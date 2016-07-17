@@ -108,6 +108,7 @@ dependencies {
 
     // Misc
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'
+    compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
 
     testCompile 'junit:junit:4.12'

@@ -1,62 +1,67 @@
 package com.i906.mpt.prayer.ui;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
-import com.i906.mpt.adapter.PrayerListAdapter;
-import com.i906.mpt.extension.PrayerInterface;
-import com.i906.mpt.extension.PrayerView;
+import com.i906.mpt.prayer.Prayer;
+import com.i906.mpt.prayer.PrayerContext;
 import com.linearlistview.LinearListView;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pl.charmas.android.reactivelocation.observables.GoogleAPIConnectionException;
 
-public class PrayerListView extends PrayerView {
+public class PrayerListView extends ViewFlipper implements PrayerView {
 
     private final static String FORMAT_24 = "kk:mm";
     private final static String FORMAT_12 = "hh:mm";
 
-    protected String[] mPrayerNames;
-    protected String[] mHijriNames;
-    protected PrayerListAdapter mAdapter;
-    protected String mDateFormat;
+    private String[] mPrayerNames;
+    private String[] mHijriNames;
+    private PrayerListAdapter mAdapter;
+    private String mDateFormat;
+    private PrayerContext mPrayerContext;
+    private SwipeRefreshLayout.OnRefreshListener mListener;
 
-    @Bind(R.id.content_container)
-    protected View mContentView;
+    @BindView(R.id.content_container)
+    View mContentView;
 
-    @Bind(R.id.progress_container)
-    protected View mProgressView;
+    @BindView(R.id.progress_container)
+    View mProgressView;
 
-    @Bind(R.id.error_container)
-    protected View mErrorView;
+    @BindView(R.id.error_container)
+    View mErrorView;
 
-    @Bind(R.id.tv_prayer_time)
-    protected TextView mMainTimeView;
+    @BindView(R.id.tv_prayer_time)
+    TextView mMainTimeView;
 
-    @Bind(R.id.tv_prayer_name)
-    protected TextView mMainPrayerView;
+    @BindView(R.id.tv_prayer_name)
+    TextView mMainPrayerView;
 
-    @Bind(R.id.tv_location)
-    protected TextView mLocationView;
+    @BindView(R.id.tv_location)
+    TextView mLocationView;
 
-    @Bind(R.id.tv_date)
-    protected TextView mDateView;
+    @BindView(R.id.tv_date)
+    TextView mDateView;
 
-    @Bind(R.id.tv_error)
-    protected TextView mErrorMessageView;
+    @BindView(R.id.tv_error)
+    TextView mErrorMessageView;
 
-    @Bind(R.id.list_prayer)
-    protected LinearListView mPrayerListView;
+    @BindView(R.id.list_prayer)
+    LinearListView mPrayerListView;
 
     public PrayerListView(Context context) {
         this(context, null);
@@ -67,25 +72,32 @@ public class PrayerListView extends PrayerView {
     }
 
     public PrayerListView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.view_default_prayer, this, true);
         ButterKnife.bind(this);
 
-        mPrayerNames = getResources().getStringArray(R.array.mpt_prayer_names);
-        mHijriNames = getResources().getStringArray(R.array.mpt_hijri_months);
+        mPrayerNames = getResources().getStringArray(R.array.prayer_names);
+        mHijriNames = getResources().getStringArray(R.array.hijri_months);
         mDateFormat = DateFormat.is24HourFormat(context) ? FORMAT_24 : FORMAT_12;
+        setDisplayedChild(1);
+    }
+
+    @Override
+    public void showPrayerContext(PrayerContext prayerContext) {
+        mPrayerContext = prayerContext;
+        updatePrayerHeader();
     }
 
     private void updatePrayerHeader() {
-        List<Date> times = getInterface().getCurrentDayPrayerTimes();
-        Date nextTime = getInterface().getNextPrayerTime();
-        int currentIndex = getInterface().getCurrentPrayerIndex();
-        int nextIndex = getInterface().getNextPrayerIndex();
-        String location = getInterface().getLocation();
-        List<Integer> hijri = getInterface().getHijriDate();
+        List<Prayer> times = mPrayerContext.getCurrentPrayerList();
+        Date nextTime = mPrayerContext.getNextPrayer().getDate();
+        int currentIndex = mPrayerContext.getCurrentPrayer().getIndex();
+        int nextIndex = mPrayerContext.getNextPrayer().getIndex();
+        String location = mPrayerContext.getLocationName();
+        List<Integer> hijri = mPrayerContext.getHijriDate();
 
-        String date = getResources().getString(R.string.label_date, hijri.get(PrayerInterface.DATE_DAY),
-                mHijriNames[hijri.get(PrayerInterface.DATE_MONTH)], hijri.get(PrayerInterface.DATE_YEAR));
+        String date = getResources().getString(R.string.label_date, hijri.get(0),
+                mHijriNames[hijri.get(1)], hijri.get(2));
 
         if (mAdapter == null) {
             mAdapter = new PrayerListAdapter(times, mPrayerNames, mDateFormat);
@@ -98,96 +110,48 @@ public class PrayerListView extends PrayerView {
         mLocationView.setText(location);
         mDateView.setText(date);
         mPrayerListView.setAdapter(mAdapter);
-    }
 
-    private void setViewVisibility(View view, boolean visible, boolean animate) {
-        if (view.getVisibility() == View.VISIBLE && visible) return;
-        if (view.getVisibility() == View.GONE && !visible) return;
+        setDisplayedChild(0);
 
-        if (visible) {
-            if (animate) {
-                view.startAnimation(
-                        AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in));
-            } else {
-                view.clearAnimation();
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updatePrayerHeader();
             }
-            view.setVisibility(View.VISIBLE);
-        } else {
-            if (animate) {
-                view.startAnimation(
-                        AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out));
-            } else {
-                view.clearAnimation();
-            }
-            view.setVisibility(View.GONE);
-        }
+        }, getTimeToNextPrayer());
     }
 
-    private void setContentVisibility(boolean visible, boolean animate) {
-        setViewVisibility(mContentView, visible, animate);
-    }
-
-    private void setProgressVisibility(boolean visible, boolean animate) {
-        setViewVisibility(mProgressView, visible, animate);
-    }
-
-    private void setErrorVisibility(boolean visible, boolean animate) {
-        setViewVisibility(mErrorView, visible, animate);
+    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
+        mListener = listener;
     }
 
     @OnClick(R.id.btn_retry)
     protected void onRetryButtonClicked() {
-        setContentVisibility(false, true);
-        setErrorVisibility(false, true);
-        setProgressVisibility(true, true);
-        getInterface().refresh();
-    }
-
-    @Override
-    public void onInterfaceLoaded() {
-        if (getInterface().isPrayerTimesLoaded()) {
-            setContentVisibility(true, true);
-            setProgressVisibility(false, true);
-            setErrorVisibility(false, true);
-            updatePrayerHeader();
-        } else {
-            setContentVisibility(false, false);
-            setProgressVisibility(true, false);
-            setErrorVisibility(false, false);
+        setDisplayedChild(1);
+        if (mListener != null) {
+            mListener.onRefresh();
         }
     }
 
-    @Override
-    public void onPrayerTimesChanged() {
-        updatePrayerHeader();
-        setContentVisibility(true, true);
-        setProgressVisibility(false, true);
-        setErrorVisibility(false, true);
+    private long getTimeToNextPrayer() {
+        long next = mPrayerContext.getNextPrayer().getDate().getTime();
+        return next - System.currentTimeMillis();
     }
 
     @Override
-    public void onError(int type, String code) {
-        setContentVisibility(false, true);
-        setProgressVisibility(false, true);
-        setErrorVisibility(true, true);
+    public void showLoading() {
+    }
 
-        switch (type) {
-            case PrayerInterface.ERROR_NETWORK:
-                mErrorMessageView.setText(R.string.mpt_error_no_network);
-                break;
-            case PrayerInterface.ERROR_LOCATION:
-                if (PrayerInterface.LOCATION_ERROR_ADDRESS.equals(code) ||
-                        PrayerInterface.LOCATION_ERROR_PLACE.equals(code)) {
-                    mErrorMessageView.setText(R.string.mpt_error_undetectable_location);
-                } else {
-                    mErrorMessageView.setText(R.string.mpt_error_no_location);
-                }
-                break;
-            case PrayerInterface.ERROR_PLAY_SERVICES:
-                mErrorMessageView.setText(R.string.mpt_error_play_service);
-                break;
-            default:
-                mErrorMessageView.setText(R.string.mpt_error_unexpected);
+    @Override
+    public void showError(Throwable e) {
+        setDisplayedChild(2);
+
+        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException) {
+            mErrorMessageView.setText(R.string.error_no_network);
+        } else if (e instanceof GoogleAPIConnectionException) {
+            mErrorMessageView.setText(R.string.error_play_service);
+        } else {
+            mErrorMessageView.setText(R.string.error_unexpected);
         }
     }
 

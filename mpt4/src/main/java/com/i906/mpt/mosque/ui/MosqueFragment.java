@@ -61,6 +61,7 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         mPresenter.setView(this);
         mPresenter.getMosqueList(false);
 
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
