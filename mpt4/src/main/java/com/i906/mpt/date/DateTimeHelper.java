@@ -1,6 +1,13 @@
 package com.i906.mpt.date;
 
+import com.i906.mpt.prefs.CommonPreferences;
+
+import org.joda.time.DateTime;
+import org.joda.time.chrono.IslamicChronology;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,11 +16,14 @@ import javax.inject.Singleton;
 public class DateTimeHelper {
 
     private final DateProvider mProvider;
+    private final CommonPreferences mPrefs;
     private Calendar mCalendar;
+    private DateTime mHijriCalendar;
 
     @Inject
-    public DateTimeHelper(DateProvider provider) {
+    public DateTimeHelper(DateProvider provider, CommonPreferences prefs) {
         mProvider = provider;
+        mPrefs = prefs;
         refresh();
     }
 
@@ -66,8 +76,22 @@ public class DateTimeHelper {
         return getCurrentYear() != tomyear;
     }
 
+    public List<Integer> getHijriDate(boolean maghribPassed) {
+        List<Integer> l = new ArrayList<>(3);
+        refresh();
+
+        if (maghribPassed) mHijriCalendar = mHijriCalendar.plusDays(1);
+        mHijriCalendar = mHijriCalendar.plusDays(mPrefs.getHijriOffset());
+        l.add(mHijriCalendar.getDayOfMonth());
+        l.add(mHijriCalendar.getMonthOfYear() - 1);
+        l.add(mHijriCalendar.getYear());
+
+        return l;
+    }
+
     private void refresh() {
         mCalendar = mProvider.getNow();
+        mHijriCalendar = new DateTime(IslamicChronology.getInstance());
     }
 
     public Calendar getNow() {

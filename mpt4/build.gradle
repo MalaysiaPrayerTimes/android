@@ -107,6 +107,7 @@ dependencies {
     compile 'pl.charmas.android:android-reactive-location:0.9@aar'
 
     // Misc
+    compile 'net.danlew:android.joda:2.9.4.1'
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
