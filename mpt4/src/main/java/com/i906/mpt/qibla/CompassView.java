@@ -61,8 +61,6 @@ public class CompassView extends View implements SensorEventListener {
     private Bitmap mBitmap;
     private Canvas mCanvas;
 
-    private Bitmap mOuterCircleBitmap;
-
     private Bitmap mArrowBitmap;
     private Matrix mArrowRotator;
 
@@ -130,15 +128,6 @@ public class CompassView extends View implements SensorEventListener {
         mRotationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
     }
 
-    private void initOuterCircle(int w, int h) {
-        mOuterCircleBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mOuterCircleBitmap.eraseColor(Color.TRANSPARENT);
-        Canvas outerCircleCanvas = new Canvas(mOuterCircleBitmap);
-
-        outerCircleCanvas.drawOval(mCircleOuterBounds, mOuterCirclePaint);
-        outerCircleCanvas.drawOval(mCircleInnerBounds, mEraserPaint);
-    }
-
     private void initArrows(int w, int h) {
         mArrowBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mArrowBitmap.eraseColor(Color.TRANSPARENT);
@@ -170,6 +159,8 @@ public class CompassView extends View implements SensorEventListener {
         path2.lineTo(g.x, g.y);
         path2.close();
 
+        arrowCanvas.drawOval(mCircleOuterBounds, mOuterCirclePaint);
+        arrowCanvas.drawOval(mCircleInnerBounds, mEraserPaint);
         arrowCanvas.drawPath(path, mCirclePaint);
         arrowCanvas.drawPath(path2, mOuterCirclePaint);
         arrowCanvas.save();
@@ -305,7 +296,6 @@ public class CompassView extends View implements SensorEventListener {
         mLastDirection = mDirection;
 
         canvas.drawBitmap(mArrowBitmap, mArrowRotator, null);
-        canvas.drawBitmap(mOuterCircleBitmap, 0, 0, null);
         canvas.drawBitmap(mBitmap, 0, 0, null);
     }
 
@@ -331,7 +321,6 @@ public class CompassView extends View implements SensorEventListener {
 
             updateAzimuthArc();
             updateOuterCircle();
-            initOuterCircle(w, h);
             initArrows(w, h);
         }
 
