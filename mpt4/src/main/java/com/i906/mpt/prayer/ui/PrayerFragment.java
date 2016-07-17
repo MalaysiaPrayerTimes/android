@@ -1,5 +1,7 @@
 package com.i906.mpt.prayer.ui;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -7,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -41,6 +44,9 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     @BindView(R.id.prayerlist)
     PrayerListView mPrayerListView;
 
+    @BindView(R.id.progress)
+    ImageView mProgressView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +73,11 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
         mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRefreshLayout.setOnRefreshListener(refreshListener);
+
+        Drawable drawable = mProgressView.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
     }
 
     @Override
