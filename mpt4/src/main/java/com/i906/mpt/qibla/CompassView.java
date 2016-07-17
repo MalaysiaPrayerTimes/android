@@ -58,21 +58,19 @@ public class CompassView extends View implements SensorEventListener {
     private Handler mHandler = new Handler();
     private ElapsedUpdater mUpdater;
 
-    private Bitmap mBitmap;
-    private Canvas mCanvas;
-
     private Bitmap mArrowBitmap;
     private Matrix mArrowRotator;
 
     private Paint mOuterCirclePaint;
     private Paint mCirclePaint;
+    private Paint mArcPaint;
     private Paint mEraserPaint;
 
     private RectF mCircleOuterBounds;
     private RectF mCircleInnerBounds;
 
-    private RectF mArcOuterBounds;
     private RectF mArcInnerBounds;
+    private RectF mArcCenterBounds;
 
     private float smoothSweep;
     private float smoothDelta;
@@ -92,7 +90,6 @@ public class CompassView extends View implements SensorEventListener {
 
     public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initPaints();
         initSensors();
 
         mOrientationEventListener = new OrientationEventListener(getContext()) {
@@ -103,7 +100,7 @@ public class CompassView extends View implements SensorEventListener {
         };
     }
 
-    private void initPaints() {
+    private void initPaints(int w, int h) {
         mOuterCirclePaint = new Paint();
         mOuterCirclePaint.setAntiAlias(true);
         mOuterCirclePaint.setColor(Color.WHITE);
@@ -111,6 +108,13 @@ public class CompassView extends View implements SensorEventListener {
         mCirclePaint = new Paint();
         mCirclePaint.setAntiAlias(true);
         mCirclePaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+        float thickness = w * THICKNESS_SCALE * 2;
+        mArcPaint = new Paint();
+        mArcPaint.setAntiAlias(true);
+        mArcPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        mArcPaint.setStrokeWidth(thickness);
+        mArcPaint.setStyle(Paint.Style.STROKE);
 
         mEraserPaint = new Paint();
         mEraserPaint.setAntiAlias(true);
@@ -287,16 +291,13 @@ public class CompassView extends View implements SensorEventListener {
             smoothSweep += (mDirection - smoothSweep) * 0.2;
         }
 
-        mCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-        mCanvas.drawArc(mArcOuterBounds, 270, smoothSweep, true, mCirclePaint);
-        mCanvas.drawOval(mArcInnerBounds, mEraserPaint);
+        canvas.drawArc(mArcCenterBounds, 270, smoothSweep, false, mArcPaint);
 
         mDirectionDelta = calculateAngleDifference(mLastDirection, mDirection);
         mArrowRotator.postRotate(smoothDelta, getWidth() / 2, getHeight() / 2);
         mLastDirection = mDirection;
 
         canvas.drawBitmap(mArrowBitmap, mArrowRotator, null);
-        canvas.drawBitmap(mBitmap, 0, 0, null);
     }
 
     @SuppressWarnings("SuspiciousNameCombination")
@@ -315,12 +316,9 @@ public class CompassView extends View implements SensorEventListener {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         if (w != oldw || h != oldh) {
-            mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            mBitmap.eraseColor(Color.TRANSPARENT);
-            mCanvas = new Canvas(mBitmap);
-
-            updateAzimuthArc();
-            updateOuterCircle();
+            initPaints(w, h);
+            updateAzimuthArc(w, h);
+            updateOuterCircle(w, h);
             initArrows(w, h);
         }
 
@@ -342,20 +340,28 @@ public class CompassView extends View implements SensorEventListener {
         stopUpdating();
     }
 
-    private void updateAzimuthArc() {
-        final float thickness = getWidth() * THICKNESS_SCALE * 2;
+    private void updateAzimuthArc(int w, int h) {
+        final float thickness = w * THICKNESS_SCALE * 2;
 
-        mArcOuterBounds = new RectF(0, 0, getWidth(), getHeight());
+        RectF arcOuterBounds = new RectF(0, 0, w, h);
+
         mArcInnerBounds = new RectF(
-                mArcOuterBounds.left + thickness,
-                mArcOuterBounds.top + thickness,
-                mArcOuterBounds.right - thickness,
-                mArcOuterBounds.bottom - thickness
+                arcOuterBounds.left + thickness,
+                arcOuterBounds.top + thickness,
+                arcOuterBounds.right - thickness,
+                arcOuterBounds.bottom - thickness
+        );
+
+        mArcCenterBounds = new RectF(
+                arcOuterBounds.left + thickness / 2,
+                arcOuterBounds.top + thickness / 2,
+                arcOuterBounds.right - thickness / 2,
+                arcOuterBounds.bottom - thickness / 2
         );
     }
 
-    private void updateOuterCircle() {
-        final float thickness = getWidth() * THICKNESS_SCALE;
+    private void updateOuterCircle(int w, int h) {
+        final float thickness = w * THICKNESS_SCALE;
 
         mCircleOuterBounds = new RectF(
                 mArcInnerBounds.left + thickness,
