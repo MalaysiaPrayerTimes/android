@@ -2,4 +2,6 @@
     <color name="colorPrimary">#333333</color>
     <color name="colorPrimaryDark">#222222</color>
     <color name="colorAccent">#ff8800</color>
+
+    <color name="light_grey">#999</color>
 </resources>

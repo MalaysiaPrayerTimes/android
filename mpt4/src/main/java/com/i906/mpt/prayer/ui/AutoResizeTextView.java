@@ -1,4 +1,4 @@
-package com.i906.mpt.view;
+package com.i906.mpt.prayer.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;

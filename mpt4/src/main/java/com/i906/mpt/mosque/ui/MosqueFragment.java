@@ -1,6 +1,8 @@
 package com.i906.mpt.mosque.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
 import com.i906.mpt.api.foursquare.Mosque;
@@ -22,6 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Noorzaini Ilhami
@@ -37,11 +43,17 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mRefreshLayout;
 
-    @BindView(R.id.progress_container)
-    View mProgressLayout;
+    @BindView(R.id.viewflipper)
+    ViewFlipper mViewFlipper;
+
+    @BindView(R.id.tv_error)
+    TextView mErrorMessageView;
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.progress)
+    ImageView mProgressView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +73,7 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         mPresenter.setView(this);
         mPresenter.getMosqueList(false);
 
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,38 +85,58 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
+
+        Drawable drawable = mProgressView.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
     }
 
     @Override
     public void showLoading() {
         showSwipeRefreshLoading(true);
-        if (mAdapter.isEmpty()) setViewVisibility(mProgressLayout, true, true);
-        if (mSnackbar != null) mSnackbar.dismiss();
+
+        if (mAdapter.isEmpty() || mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(0);
+        }
     }
 
     @Override
     public void showMosqueList(List<Mosque> mosqueList) {
         showSwipeRefreshLoading(false);
         mAdapter.setMosqueList(mosqueList);
-        setViewVisibility(mProgressLayout, mAdapter.isEmpty(), true);
         if (mSnackbar != null) mSnackbar.dismiss();
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(1);
+        }
     }
 
     @Override
     public void showError(Throwable error) {
         showSwipeRefreshLoading(false);
-        if (mAdapter.isEmpty()) setViewVisibility(mProgressLayout, true, true);
 
-        mSnackbar = Snackbar.make(getView(), getErrorMessage(error, R.string.error_unexpected),
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.label_retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mPresenter.getMosqueList(true);
-                    }
-                });
+        int errorMessage = getErrorMessage(error, R.string.error_unexpected);
 
-        mSnackbar.show();
+        if (mAdapter.isEmpty() || mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(2);
+            mErrorMessageView.setText(errorMessage);
+        } else {
+            mSnackbar = Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.label_retry, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mPresenter.getMosqueList(true);
+                        }
+                    });
+
+            mSnackbar.show();
+        }
+    }
+
+    @OnClick(R.id.btn_retry)
+    void onRetryButtonClicked() {
+        mPresenter.getMosqueList(true);
     }
 
     @Override

@@ -1,26 +1,51 @@
 package com.i906.mpt.prayer.ui;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
-import com.i906.mpt.prayer.Prayer;
 import com.i906.mpt.prayer.PrayerContext;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Noorzaini Ilhami
  */
 public class PrayerFragment extends BaseFragment implements PrayerView {
 
+    private Snackbar mSnackbar;
+
     @Inject
     PrayerPresenter mPresenter;
+
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mRefreshLayout;
+
+    @BindView(R.id.viewflipper)
+    ViewFlipper mViewFlipper;
+
+    @BindView(R.id.tv_error)
+    TextView mErrorMessageView;
+
+    @BindView(R.id.prayerlist)
+    PrayerListView mPrayerListView;
+
+    @BindView(R.id.progress)
+    ImageView mProgressView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,24 +63,79 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
         mPresenter.getPrayerContext(false);
+
+        SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getPrayerContext(true);
+            }
+        };
+
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setOnRefreshListener(refreshListener);
+
+        Drawable drawable = mProgressView.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
     }
 
     @Override
     public void showPrayerContext(PrayerContext prayerContext) {
-        Prayer current = prayerContext.getCurrentPrayer();
-        Prayer next = prayerContext.getNextPrayer();
-        Log.d("PrayerFragment", "currentPrayer: " + current);
-        Log.d("PrayerFragment", "nextPrayer: " + next);
+        showSwipeRefreshLoading(false);
+        mPrayerListView.showPrayerContext(prayerContext);
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(1);
+        }
     }
 
     @Override
     public void showError(Throwable error) {
-        Log.e("PrayerFragment", "error", error);
+        showSwipeRefreshLoading(false);
+        mPrayerListView.showError(error);
+        if (mSnackbar != null) mSnackbar.dismiss();
+
+        int errorMessage = getErrorMessage(error, R.string.error_unexpected);
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(2);
+            mErrorMessageView.setText(getErrorMessage(error, R.string.error_unexpected));
+        } else {
+            mSnackbar = Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.label_retry, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mPresenter.getPrayerContext(true);
+                        }
+                    });
+
+            mSnackbar.show();
+        }
     }
 
     @Override
     public void showLoading() {
-        Log.v("PrayerFragment", "loading");
+        showSwipeRefreshLoading(true);
+        mPrayerListView.showLoading();
+
+        if (mViewFlipper.getDisplayedChild() != 1) {
+            mViewFlipper.setDisplayedChild(0);
+        }
+    }
+
+    @OnClick(R.id.btn_retry)
+    void onRetryButtonClicked() {
+        mPresenter.getPrayerContext(true);
+    }
+
+    private void showSwipeRefreshLoading(final boolean loading) {
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(loading);
+            }
+        });
     }
 
     @Override

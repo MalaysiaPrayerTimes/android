@@ -28,4 +28,9 @@ public class SharedCommonPreferences implements CommonPreferences {
                 .putBoolean(KEY_IS_FIRST_START, firstStart)
                 .apply();
     }
+
+    @Override
+    public int getHijriOffset() {
+        return Integer.valueOf(mPrefs.getString("hijri_offset", "0"));
+    }
 }

@@ -6,6 +6,7 @@ import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.location.LocationRepository;
+import com.i906.mpt.prefs.CommonPreferences;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -29,6 +30,7 @@ import timber.log.Timber;
 public class PrayerManager {
 
     private final DateTimeHelper mDateHelper;
+    private final CommonPreferences mPreferences;
     private final LocationRepository mLocationRepository;
     private final PrayerClient mPrayerClient;
 
@@ -40,8 +42,10 @@ public class PrayerManager {
     private AtomicBoolean mIsError = new AtomicBoolean(false);
 
     @Inject
-    public PrayerManager(DateTimeHelper date, LocationRepository location, PrayerClient prayer) {
+    public PrayerManager(DateTimeHelper date, CommonPreferences prefs, LocationRepository location,
+                         PrayerClient prayer) {
         mDateHelper = date;
+        mPreferences = prefs;
         mLocationRepository = location;
         mPrayerClient = prayer;
     }
@@ -134,7 +138,7 @@ public class PrayerManager {
             new Func2<PrayerData, PrayerData, PrayerContext>() {
                 @Override
                 public PrayerContext call(PrayerData current, PrayerData next) {
-                    return new PrayerContextImpl(mDateHelper, current, next);
+                    return new PrayerContextImpl(mDateHelper, mPreferences, current, next);
                 }
             };
 

@@ -12,8 +12,10 @@ import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Graph;
 
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 
 import butterknife.ButterKnife;
+import pl.charmas.android.reactivelocation.observables.GoogleAPIConnectionException;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -47,8 +49,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public int getErrorMessage(Throwable e, int defaultResId) {
-        if (e instanceof ConnectException) {
+        if (e instanceof ConnectException || e instanceof UnknownHostException) {
             return R.string.error_no_network;
+        } else if (e instanceof GoogleAPIConnectionException) {
+            return R.string.error_play_service;
         } else {
             return defaultResId;
         }

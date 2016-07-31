@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.i906.mpt.view.AutoResizeTextView
+    <com.i906.mpt.prayer.ui.AutoResizeTextView
         android:id="@+id/tv_prayer_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

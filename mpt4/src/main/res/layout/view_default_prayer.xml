@@ -6,9 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        style="@style/PrayerList.Contents"
-        tools:visibility="visible">
+        style="@style/PrayerList.Contents">
 
         <include layout="@layout/view_prayer_header" />
 
@@ -25,26 +23,5 @@
             style="@style/PrayerList.ListContainer" />
 
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/progress_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:visibility="gone">
-
-        <include layout="@layout/view_prayer_progress" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/error_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="gone">
-
-        <include layout="@layout/view_prayer_error" />
-
-    </FrameLayout>
 
 </merge>

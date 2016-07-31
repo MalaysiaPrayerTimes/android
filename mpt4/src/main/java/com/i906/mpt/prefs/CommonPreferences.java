@@ -8,4 +8,6 @@ public interface CommonPreferences {
     boolean isFirstStart();
 
     void setFirstStart(boolean firstStart);
+
+    int getHijriOffset();
 }

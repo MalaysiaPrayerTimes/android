@@ -16,4 +16,6 @@ public interface PrayerContext {
     List<Prayer> getNextPrayerList();
 
     String getLocationName();
+
+    List<Integer> getHijriDate();
 }

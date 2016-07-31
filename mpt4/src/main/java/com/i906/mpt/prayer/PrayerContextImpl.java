@@ -2,12 +2,14 @@ package com.i906.mpt.prayer;
 
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
+import com.i906.mpt.prefs.CommonPreferences;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.i906.mpt.prayer.Prayer.PRAYER_MAGRHIB;
 import static com.i906.mpt.prayer.Prayer.PRAYER_SUBUH;
 
 /**
@@ -16,11 +18,13 @@ import static com.i906.mpt.prayer.Prayer.PRAYER_SUBUH;
 class PrayerContextImpl implements PrayerContext {
 
     private final DateTimeHelper mDateHelper;
+    private final CommonPreferences mPreferences;
     private final PrayerData mCurrentPrayer;
     private final PrayerData mNextPrayer;
 
-    PrayerContextImpl(DateTimeHelper date, PrayerData current, PrayerData next) {
+    PrayerContextImpl(DateTimeHelper date, CommonPreferences pref, PrayerData current, PrayerData next) {
         mDateHelper = date;
+        mPreferences = pref;
         mCurrentPrayer = current;
         mNextPrayer = next;
     }
@@ -79,6 +83,11 @@ class PrayerContextImpl implements PrayerContext {
         return (pos - 1 == -1) ? 7 : pos - 1;
     }
 
+    @Override
+    public List<Integer> getHijriDate() {
+        return mDateHelper.getHijriDate(hasMaghribPassed());
+    }
+
     private int getNextPrayerIndex() {
         int cpi = getCurrentPrayerIndex();
         if (cpi == -1) return -1;
@@ -121,6 +130,10 @@ class PrayerContextImpl implements PrayerContext {
 
     private boolean hasSubuhPassed() {
         return prayerHasPassed(PRAYER_SUBUH);
+    }
+
+    private boolean hasMaghribPassed() {
+        return prayerHasPassed(PRAYER_MAGRHIB);
     }
 
     private boolean prayerHasPassed(int prayer) {

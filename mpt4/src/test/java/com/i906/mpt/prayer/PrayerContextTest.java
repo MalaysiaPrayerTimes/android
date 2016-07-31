@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.api.prayer.PrayerDataTypeAdapter;
 import com.i906.mpt.date.DateTimeHelper;
+import com.i906.mpt.prefs.CommonPreferences;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,9 @@ public class PrayerContextTest {
     @Mock
     private DateTimeHelper mDateHelper;
 
+    @Mock
+    private CommonPreferences mPreferences;
+
     private PrayerContext mPrayerContext;
 
     @Before
@@ -42,7 +46,7 @@ public class PrayerContextTest {
         PrayerData p6 = gson.fromJson(new InputStreamReader(in6), PrayerData.class);
         PrayerData p7 = gson.fromJson(new InputStreamReader(in7), PrayerData.class);
 
-        mPrayerContext = new PrayerContextImpl(mDateHelper, p6, p7);
+        mPrayerContext = new PrayerContextImpl(mDateHelper, mPreferences, p6, p7);
     }
 
     @Test
