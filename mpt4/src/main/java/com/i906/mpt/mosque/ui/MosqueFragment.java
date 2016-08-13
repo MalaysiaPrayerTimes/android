@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -83,7 +84,7 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(llm);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getActivity(), R.drawable.divider)));
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
 
         Drawable drawable = mProgressView.getDrawable();
