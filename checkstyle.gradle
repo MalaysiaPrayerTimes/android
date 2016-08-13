@@ -30,6 +30,10 @@ task checkstyleMain(type: Checkstyle) {
     exclude '**/R.java'
     exclude '**/BuildConfig.java'
 
+    reports {
+        xml.destination "$project.buildDir/reports/checkstyle/main.xml"
+    }
+
     classpath = files()
     configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml")
 }
@@ -42,6 +46,10 @@ task checkstyleTest(type: Checkstyle) {
     exclude '**/gen/**'
     exclude '**/R.java'
     exclude '**/BuildConfig.java'
+
+    reports {
+        xml.destination "$project.buildDir/reports/checkstyle/test.xml"
+    }
 
     classpath = files()
     configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle-test.xml")
