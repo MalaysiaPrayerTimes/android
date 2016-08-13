@@ -21,6 +21,7 @@ before_install:
 
 script:
   - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex
+  - ./gradlew checkstyle
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
