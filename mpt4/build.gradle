@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'hu.supercluster.paperwork'
 apply from: '../jacoco.gradle'
 apply from: '../checkstyle.gradle'
 
@@ -72,6 +73,13 @@ android {
     }
 }
 
+paperwork {
+    set = [
+            buildTime: buildTime("yyyy-MM-dd HH:mm:ss", "GMT+0800"),
+            gitInfo: gitInfo()
+    ]
+}
+
 dependencies {
     def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
@@ -112,6 +120,7 @@ dependencies {
     compile 'com.heinrichreimersoftware:material-intro:1.5.4'
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
+    compile 'hu.supercluster:paperwork:1.2.7'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
