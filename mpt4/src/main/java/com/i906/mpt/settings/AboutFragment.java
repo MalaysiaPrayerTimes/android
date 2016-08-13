@@ -41,13 +41,13 @@ public class AboutFragment extends BasePreferenceFragment {
     }
 
     private void openPlayStore() {
-        String PACKAGE = BuildConfig.APPLICATION_ID;
+        String appid = BuildConfig.APPLICATION_ID;
         try {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=" + PACKAGE)));
+                    Uri.parse("market://details?id=" + appid)));
         } catch (android.content.ActivityNotFoundException anfe) {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=" + PACKAGE)));
+                    Uri.parse("https://play.google.com/store/apps/details?id=" + appid)));
         }
     }
 }

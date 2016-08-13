@@ -16,6 +16,7 @@ import android.widget.ViewFlipper;
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
 import com.i906.mpt.prayer.PrayerContext;
+import com.i906.mpt.settings.SettingsActivity;
 
 import javax.inject.Inject;
 
@@ -127,6 +128,11 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     @OnClick(R.id.btn_retry)
     void onRetryButtonClicked() {
         mPresenter.getPrayerContext(true);
+    }
+
+    @OnClick(R.id.btn_settings)
+    void onSettingsButtonClicked() {
+        SettingsActivity.start(getActivity());
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {

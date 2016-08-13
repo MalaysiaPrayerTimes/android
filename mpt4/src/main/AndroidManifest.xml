@@ -26,6 +26,20 @@
             android:name=".intro.MainIntroActivity"
             android:theme="@style/Theme.Intro" />
 
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/label_settings"
+            android:theme="@style/MptTheme.Settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
+
         <receiver android:name=".alarm.StartupReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

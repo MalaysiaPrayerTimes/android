@@ -53,4 +53,13 @@
 
     </ViewFlipper>
 
+    <ImageButton
+        android:id="@+id/btn_settings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_settings"
+        android:contentDescription="@string/label_settings"
+        android:background="?selectableItemBackgroundBorderless" />
+
 </FrameLayout>
