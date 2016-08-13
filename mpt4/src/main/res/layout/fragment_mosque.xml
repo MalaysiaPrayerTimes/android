@@ -17,14 +17,15 @@
             android:layout_height="match_parent"
             tools:visibility="gone">
 
-            <ImageView
+            <com.i906.mpt.common.SquareImageView
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:padding="32dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_mosque_progress"
-                android:tint="#666666"
-                tools:visibility="visible" />
+                android:tint="#666666" />
 
         </FrameLayout>
 
