@@ -143,11 +143,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @Override
     public void showLoading() {
-        showSwipeRefreshLoading(true);
         mPrayerListView.showLoading();
 
         if (mViewFlipper.getDisplayedChild() != 1) {
             mViewFlipper.setDisplayedChild(0);
+        } else {
+            showSwipeRefreshLoading(true);
         }
     }
 
@@ -173,12 +174,7 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {
-        mRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(loading);
-            }
-        });
+        mRefreshLayout.setRefreshing(loading);
     }
 
     @Override

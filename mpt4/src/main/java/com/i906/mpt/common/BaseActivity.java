@@ -12,6 +12,7 @@ import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Graph;
 
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import butterknife.ButterKnife;
@@ -49,7 +50,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public int getErrorMessage(Throwable e, int defaultResId) {
-        if (e instanceof ConnectException || e instanceof UnknownHostException) {
+        if (e instanceof ConnectException || e instanceof UnknownHostException
+                || e instanceof SocketTimeoutException) {
             return R.string.error_no_network;
         } else if (e instanceof GoogleAPIConnectionException) {
             return R.string.error_play_service;
