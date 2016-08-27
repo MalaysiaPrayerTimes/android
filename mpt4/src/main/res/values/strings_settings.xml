@@ -9,11 +9,14 @@
     <string name="label_hide_notification">Hide prayer notification</string>
     <string name="label_hijri_offset">Hijri date offset</string>
     <string name="label_interface">Interface</string>
+    <string name="label_location">Location</string>
     <string name="label_miscellaneous">Miscellaneous</string>
     <string name="label_none">None</string>
     <string name="label_notification">Notification</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_prayer_screen">Prayer screen</string>
+    <string name="label_preferred_location">Preferred location</string>
+    <string name="label_preferred_location_summary">Use preferred location to determine prayer times</string>
     <string name="label_refresh">Refresh</string>
     <string name="label_set_notification_tone">Set notification tone…</string>
     <string name="label_set_reminder_tone">Set reminder tone…</string>
@@ -25,6 +28,8 @@
     <string name="label_theme_dark">Dark</string>
     <string name="label_version">Version</string>
     <string name="label_vibrate">Vibrate</string>
+    <string name="label_use_location">Use my location</string>
+    <string name="label_use_location_summary">Automatically use current location to determine prayer times</string>
     <string name="pref_ringtone_silent">Silent</string>
 
     <string-array name="pref_alarm_offset">

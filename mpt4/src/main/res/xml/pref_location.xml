@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="location_automatic"
+        android:title="@string/label_use_location"
+        android:summary="@string/label_use_location_summary"
+        android:defaultValue="true"
+        android:disableDependentsState="true" />
+
+    <Preference
+        android:key="location_manual"
+        android:title="@string/label_preferred_location"
+        android:summary="@string/label_preferred_location_summary"
+        android:dependency="location_automatic"
+        android:enabled="false" />
+
+</PreferenceScreen>

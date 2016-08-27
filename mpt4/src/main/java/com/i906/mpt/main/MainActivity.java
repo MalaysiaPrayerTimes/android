@@ -60,6 +60,7 @@ public class MainActivity extends BaseActivity {
 
         if (mCommonPreferences.isFirstStart()) {
             showIntro();
+            mCommonPreferences.convertLegacyPreferences();
             mNotificationPreferences.convertLegacyPreferences();
         }
 
