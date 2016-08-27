@@ -1,4 +1,4 @@
-package com.i906.mpt.view;
+package com.i906.mpt.settings.prayer;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -10,11 +10,11 @@ import com.i906.mpt.R;
 /**
  * Created by Noorzaini Ilhami on 17/10/2015.
  */
-public class NotificationItemDecoration extends RecyclerView.ItemDecoration {
+class NotificationItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mMargin;
 
-    public NotificationItemDecoration(Context context) {
+    NotificationItemDecoration(Context context) {
         mMargin = (int) context.getResources().getDimension(R.dimen.card_spacing);
     }
 

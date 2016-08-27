@@ -1,6 +1,7 @@
-package com.i906.mpt.fragment;
+package com.i906.mpt.settings.azanpicker;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -17,17 +18,18 @@ import android.widget.TextView;
 
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
-import com.i906.mpt.adapter.AzanPickerAdapter;
-import com.i906.mpt.model.Tone;
 import com.i906.mpt.util.RingtoneHelper;
-import com.i906.mpt.util.Utils;
-import com.i906.mpt.view.DividerItemDecoration;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Noorzaini Ilhami on 18/10/2015.
@@ -47,30 +49,30 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
     private MediaPlayer mMediaPlayer;
 
     @Inject
-    protected RingtoneHelper mRingtoneHelper;
+    RingtoneHelper mRingtoneHelper;
 
-    @Bind(R.id.list)
+    @BindView(R.id.recyclerview)
     protected RecyclerView mRecyclerView;
 
-    @Bind(R.id.progress_container)
+    @BindView(R.id.progress_container)
     protected View mProgressContainer;
 
-    @Bind(R.id.error_container)
+    @BindView(R.id.error_container)
     protected View mErrorContainer;
 
-    @Bind(R.id.tv_error)
+    @BindView(R.id.tv_error)
     protected TextView mErrorMessageView;
 
-    @Bind(R.id.recycler_container)
+    @BindView(R.id.recycler_container)
     protected View mListContainer;
 
-    @Bind(R.id.swipe_container)
+    @BindView(R.id.swipe_container)
     protected SwipeRefreshLayout mSwipeContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MptApplication.component(getActivity()).inject(this);
+        MptApplication.graph(getActivity()).inject(this);
         mAdapter = new AzanPickerAdapter(getActivity());
         mAdapter.setListener(this);
         mMediaPlayer = new MediaPlayer();
@@ -94,11 +96,17 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.label_alarm)
                 .setView(v)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    String t = mAdapter.getSelectedToneUri();
-                    ((AzanListener) getActivity()).onToneSelected(mPrayerId, t, isNotification);
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String t = mAdapter.getSelectedToneUri();
+                        ((AzanListener) getActivity()).onToneSelected(mPrayerId, t, isNotification);
+                    }
                 })
-                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
                 })
                 .create();
     }
@@ -114,7 +122,6 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
     protected void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -182,13 +189,20 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
         super.onStart();
 
         mSubscription = mRingtoneHelper.getToneList()
-                .compose(Utils.applySchedulers())
-                .subscribe(tones -> {
-                    mAdapter.setToneList(tones);
-                    showContent();
-                }, e -> {
-                    e.printStackTrace();
-                    showError(R.string.mpt_error_unexpected);
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Tone>>() {
+                    @Override
+                    public void call(List<Tone> tones) {
+                        mAdapter.setToneList(tones);
+                        showContent();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable e) {
+                        e.printStackTrace();
+                        showError(R.string.error_unexpected);
+                    }
                 });
     }
 

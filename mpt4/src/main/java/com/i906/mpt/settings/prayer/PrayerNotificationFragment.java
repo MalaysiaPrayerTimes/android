@@ -1,43 +1,58 @@
-package com.i906.mpt.fragment;
+package com.i906.mpt.settings.prayer;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.i906.mpt.adapter.NotificationAdapter;
-import com.i906.mpt.ui.NotificationActivity;
-import com.i906.mpt.view.NotificationItemDecoration;
+import com.i906.mpt.MptApplication;
+import com.i906.mpt.R;
+import com.i906.mpt.common.BaseFragment;
+import com.i906.mpt.prefs.NotificationPreferences;
+import com.i906.mpt.settings.NotificationActivity;
+import com.i906.mpt.util.RingtoneHelper;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
 
 /**
  * Created by Noorzaini Ilhami on 17/10/2015.
  */
-public class NotificationFragment extends BaseRecyclerFragment implements NotificationAdapter.NotificationListener {
+public class PrayerNotificationFragment extends BaseFragment implements PrayerNotificationAdapter.NotificationListener {
 
-    protected NotificationAdapter mAdapter;
+    private PrayerNotificationAdapter mAdapter;
+
+    @Inject
+    NotificationPreferences mNotificationPrefs;
+
+    @Inject
+    RingtoneHelper mRingtoneHelper;
+
+    @BindView(R.id.recyclerview)
+    RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new NotificationAdapter(getActivity());
+        MptApplication.graph(getActivity()).inject(this);
+        mAdapter = new PrayerNotificationAdapter(getActivity(), mNotificationPrefs, mRingtoneHelper);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_prayer_notification, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSwipeContainer.setEnabled(false);
-        showContent();
-    }
-
-    @Override
-    protected void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new NotificationItemDecoration(getActivity()));
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onRefresh(boolean pull) {
     }
 
     public void refresh() {

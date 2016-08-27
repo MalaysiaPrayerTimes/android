@@ -1,24 +1,30 @@
 package com.i906.mpt.util;
 
-import android.content.Context;
+import android.Manifest;
+import android.app.Application;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 
-import com.i906.mpt.model.Tone;
+import com.i906.mpt.settings.azanpicker.Tone;
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.impl.DefaultStorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.get.DefaultGetResolver;
 import com.pushtorefresh.storio.contentresolver.queries.Query;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
+import rx.functions.Func1;
+import rx.functions.Func2;
 
 /**
  * Created by Noorzaini Ilhami on 18/10/2015.
@@ -26,16 +32,28 @@ import rx.Observable;
 @Singleton
 public class RingtoneHelper {
 
-    private StorIOContentResolver mResolver;
+    private final Application mContext;
+    private final StorIOContentResolver mResolver;
 
     @Inject
-    public RingtoneHelper(Context context) {
+    public RingtoneHelper(Application context) {
+        mContext = context;
         mResolver = DefaultStorIOContentResolver.builder()
                 .contentResolver(context.getContentResolver())
                 .build();
     }
 
+    private boolean hasExternalStoragePermission() {
+        return ContextCompat.checkSelfPermission(mContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
     public Observable<List<Tone>> getExternalMediaList() {
+        if (!hasExternalStoragePermission()) {
+            List<Tone> empty = Collections.emptyList();
+            return Observable.just(empty);
+        }
+
         Query q = Query.builder()
                 .uri(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
                 .build();
@@ -45,7 +63,7 @@ public class RingtoneHelper {
                 .withQuery(q)
                 .withGetResolver(TONE_RESOLVER)
                 .prepare()
-                .createObservable()
+                .asRxObservable()
                 .take(1);
     }
 
@@ -61,23 +79,37 @@ public class RingtoneHelper {
                 .withQuery(q)
                 .withGetResolver(TONE_RESOLVER)
                 .prepare()
-                .createObservable()
+                .asRxObservable()
                 .take(1);
     }
 
     public Observable<List<Tone>> getToneList() {
         return getInternalMediaList()
                 .mergeWith(getExternalMediaList())
-                .flatMap(Observable::from)
-                .toSortedList((x, y) -> {
-                    return x.getName().compareTo(y.getName());
+                .flatMapIterable(new Func1<List<Tone>, Iterable<Tone>>() {
+                    @Override
+                    public Iterable<Tone> call(List<Tone> tones) {
+                        return tones;
+                    }
+                })
+                .toSortedList(new Func2<Tone, Tone, Integer>() {
+                    @Override
+                    public Integer call(Tone x, Tone y) {
+                        return x.getName().compareTo(y.getName());
+                    }
                 });
     }
 
     @Nullable
     public String getToneName(String uri) {
         Observable<String> i = findTone(uri, MediaStore.Audio.Media.INTERNAL_CONTENT_URI);
-        Observable<String> e = findTone(uri, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        Observable<String> e;
+
+        if (!hasExternalStoragePermission()) {
+            e = Observable.empty();
+        } else {
+            e = findTone(uri, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        }
 
         return Observable.concat(i ,e)
                 .toBlocking()
@@ -92,16 +124,18 @@ public class RingtoneHelper {
                 .build();
 
         return mResolver.get()
-                .listOfObjects(Tone.class)
+                .object(Tone.class)
                 .withQuery(q)
                 .withGetResolver(TONE_RESOLVER)
                 .prepare()
-                .createObservable()
+                .asRxObservable()
                 .take(1)
-                .flatMap(tones -> {
-                    if (!tones.isEmpty()) {
-                        return Observable.just(tones.get(0).getName());
-                    } else {
+                .flatMap(new Func1<Tone, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(Tone tone) {
+                        if (tone != null) {
+                            return Observable.just(tone.getName());
+                        }
                         return Observable.empty();
                     }
                 });

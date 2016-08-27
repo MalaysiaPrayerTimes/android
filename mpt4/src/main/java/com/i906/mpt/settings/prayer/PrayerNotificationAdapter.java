@@ -1,17 +1,14 @@
-package com.i906.mpt.adapter;
+package com.i906.mpt.settings.prayer;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
+import com.i906.mpt.prefs.NotificationPreferences;
 import com.i906.mpt.util.RingtoneHelper;
-import com.i906.mpt.util.preference.NotificationPrefs;
-import com.i906.mpt.view.NotificationSettingsView;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,21 +16,19 @@ import butterknife.OnClick;
 /**
  * Created by Noorzaini Ilhami on 17/10/2015.
  */
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+class PrayerNotificationAdapter extends RecyclerView.Adapter<PrayerNotificationAdapter.ViewHolder> {
 
-    @Inject
-    protected NotificationPrefs mPrefs;
-
-    @Inject
-    protected RingtoneHelper mRingtoneHelper;
+    private final NotificationPreferences mPrefs;
+    private final RingtoneHelper mRingtoneHelper;
 
     private final boolean[] mExpandState;
     private final String[] mPrayerNames;
     private NotificationListener mListener;
 
-    public NotificationAdapter(Context context) {
-        MptApplication.component(context).inject(this);
-        mPrayerNames = context.getResources().getStringArray(R.array.mpt_prayer_names);
+    PrayerNotificationAdapter(Context context, NotificationPreferences prefs, RingtoneHelper ring) {
+        mPrefs = prefs;
+        mRingtoneHelper = ring;
+        mPrayerNames = context.getResources().getStringArray(R.array.prayer_names);
 
         mExpandState = new boolean[8];
         for (int i = 0; i < 8; i++) {
@@ -93,19 +88,27 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private NotificationAdapter adapter;
+        private PrayerNotificationAdapter adapter;
 
-        public ViewHolder(NotificationSettingsView v, NotificationAdapter adapter) {
+        public ViewHolder(final NotificationSettingsView v, final PrayerNotificationAdapter adapter) {
             super(v);
             ButterKnife.bind(this, v);
             this.adapter = adapter;
 
-            v.setPrayerOnClickListener(p -> {
-                boolean checked = ((CompoundButton) p).isChecked();
-                adapter.setPrayerEnabled(getAdapterPosition(), checked);
+            v.setPrayerOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View p) {
+                    boolean checked = ((CompoundButton) p).isChecked();
+                    adapter.setPrayerEnabled(ViewHolder.this.getAdapterPosition(), checked);
+                }
             });
 
-            v.setCardExpandListener(c -> adapter.mExpandState[getAdapterPosition()] = v.isCardExpanded());
+            v.setCardExpandListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View c) {
+                    adapter.mExpandState[ViewHolder.this.getAdapterPosition()] = v.isCardExpanded();
+                }
+            });
         }
 
         @OnClick(R.id.cb_notification)

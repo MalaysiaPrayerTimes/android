@@ -1,4 +1,4 @@
-package com.i906.mpt.adapter;
+package com.i906.mpt.settings.azanpicker;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -9,26 +9,25 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.i906.mpt.R;
-import com.i906.mpt.model.Tone;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by Noorzaini Ilhami on 19/10/2015.
  */
-public class AzanPickerAdapter extends RecyclerView.Adapter<AzanPickerAdapter.ViewHolder> {
+class AzanPickerAdapter extends RecyclerView.Adapter<AzanPickerAdapter.ViewHolder> {
 
     private List<Tone> mToneList;
     private String mNoneText;
     private String mSelectedTone;
     private AzanListener mListener;
 
-    public AzanPickerAdapter(Context context) {
+    AzanPickerAdapter(Context context) {
         mToneList = new ArrayList<>();
         mNoneText = context.getResources().getString(R.string.label_none);
     }
@@ -95,7 +94,7 @@ public class AzanPickerAdapter extends RecyclerView.Adapter<AzanPickerAdapter.Vi
         private AzanPickerAdapter adapter;
         private Tone tone;
 
-        @Bind(R.id.rb_selected)
+        @BindView(R.id.rb_selected)
         protected RadioButton selected;
 
         public ViewHolder(View v, AzanPickerAdapter adapter) {

@@ -1,4 +1,4 @@
-package com.i906.mpt.model;
+package com.i906.mpt.settings.azanpicker;
 
 /**
  * Created by Noorzaini Ilhami on 19/10/2015.

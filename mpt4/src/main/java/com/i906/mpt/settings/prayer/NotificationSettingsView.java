@@ -1,4 +1,4 @@
-package com.i906.mpt.view;
+package com.i906.mpt.settings.prayer;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.i906.mpt.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -31,25 +31,25 @@ public class NotificationSettingsView extends CardView {
     private OnClickListener mPrayerOnClickListener;
     private OnClickListener mCardExpandListener;
 
-    @Bind(R.id.v_notification)
+    @BindView(R.id.v_notification)
     protected View settings;
 
-    @Bind(R.id.tv_prayer_name)
+    @BindView(R.id.tv_prayer_name)
     protected TextView prayer;
 
-    @Bind(R.id.sw_prayer)
+    @BindView(R.id.sw_prayer)
     protected SwitchCompat mainSwitch;
 
-    @Bind(R.id.cb_notification)
+    @BindView(R.id.cb_notification)
     protected CheckBox notification;
 
-    @Bind(R.id.cb_vibrate)
+    @BindView(R.id.cb_vibrate)
     protected CheckBox vibrate;
 
-    @Bind(R.id.btn_reminder)
+    @BindView(R.id.btn_reminder)
     protected Button reminderTone;
 
-    @Bind(R.id.btn_notification)
+    @BindView(R.id.btn_notification)
     protected Button notificationTone;
 
     public NotificationSettingsView(Context context) {
@@ -65,7 +65,12 @@ public class NotificationSettingsView extends CardView {
         LayoutInflater.from(context).inflate(R.layout.card_notification, this, true);
         ButterKnife.bind(this);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        setOnClickListener(v -> setCardExpanded(!isCardExpanded, true));
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationSettingsView.this.setCardExpanded(!isCardExpanded, true);
+            }
+        });
 
         getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -142,7 +147,7 @@ public class NotificationSettingsView extends CardView {
         return isCardExpanded;
     }
 
-    public void setCardExpanded(boolean expanded, boolean animate) {
+    public void setCardExpanded(final boolean expanded, boolean animate) {
         if (mOriginalHeight == 0) {
             mOriginalHeight = settings.getHeight();
         }
@@ -184,11 +189,14 @@ public class NotificationSettingsView extends CardView {
             isCardExpanded = false;
         }
 
-        valueAnimator.addUpdateListener(animation -> {
-            int value = (int) animation.getAnimatedValue();
-            settings.getLayoutParams().height = value;
-            settings.setAlpha((float) value / mOriginalHeight);
-            settings.requestLayout();
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                settings.getLayoutParams().height = value;
+                settings.setAlpha((float) value / mOriginalHeight);
+                settings.requestLayout();
+            }
         });
 
         valueAnimator.addListener(new Animator.AnimatorListener() {
@@ -222,7 +230,7 @@ public class NotificationSettingsView extends CardView {
         if (mCardExpandListener != null) mCardExpandListener.onClick(this);
     }
 
-    public void setCardExpandListener(OnClickListener listener) {
+    public void setCardExpandListener(View.OnClickListener listener) {
         mCardExpandListener = listener;
     }
 

@@ -14,7 +14,6 @@ public class NotificationPreferences {
     public static final String ALARM_OFFSET_KEY = "alarm_offset";
     public static final String APPEAR_KEY = "appear_before_duration";
     public static final String CLEAR_KEY = "clear_after_duration";
-    public static final String LEGACY_KEY = "converted_legacy";
     public static final String NOTIFICATION_KEY = "notification_";
     public static final String NOTIFICATION_TONE_KEY = "tone_notification";
     public static final String PRAYER_KEY = "prayer_";

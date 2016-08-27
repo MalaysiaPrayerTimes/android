@@ -27,16 +27,26 @@
             android:theme="@style/Theme.Intro" />
 
         <activity
+            android:name=".settings.NotificationActivity"
+            android:label="@string/label_notifications"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/label_settings"
             android:theme="@style/MptTheme.Settings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.PREFERENCE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
             </intent-filter>
         </activity>
 
