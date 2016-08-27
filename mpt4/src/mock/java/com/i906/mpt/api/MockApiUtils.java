@@ -1,4 +1,4 @@
-package com.mpt.i906.api;
+package com.i906.mpt.api;
 
 import android.app.Application;
 

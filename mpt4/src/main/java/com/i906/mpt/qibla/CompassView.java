@@ -263,7 +263,6 @@ public class CompassView extends View implements SensorEventListener {
         float bearing = (float) Math.toDegrees(mOrientation[0]);
         if (bearing < 0) bearing += 360;
 
-        mDirection = bearing - mAzimuth;
         mDirection = mAzimuth - bearing;
         mDirection = (mDirection < 0) ? mDirection + 360 : mDirection;
     }

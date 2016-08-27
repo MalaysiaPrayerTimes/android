@@ -3,10 +3,10 @@ package com.i906.mpt;
 import android.app.Application;
 import android.content.Context;
 
+import com.i906.mpt.internal.ApiModule;
 import com.i906.mpt.internal.AppModule;
 import com.i906.mpt.internal.DaggerGraph;
 import com.i906.mpt.internal.Graph;
-import com.mpt.i906.internal.ApiModule;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
