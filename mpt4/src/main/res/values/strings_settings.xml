@@ -11,6 +11,7 @@
     <string name="label_miscellaneous">Miscellaneous</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_prayer_screen">Prayer screen</string>
+    <string name="label_refresh">Refresh</string>
     <string name="label_settings">Settings</string>
     <string name="label_show_reminder">Show prayer reminder</string>
     <string name="label_review">Rate and review MPT</string>

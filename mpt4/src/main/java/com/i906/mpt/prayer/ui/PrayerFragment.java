@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -48,6 +51,9 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     @BindView(R.id.progress)
     ImageView mProgressView;
 
+    @BindView(R.id.btn_settings)
+    ImageButton mSettingsButton;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +69,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.setView(this);
-        mPresenter.getPrayerContext(false);
+        refresh(false);
 
         SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getPrayerContext(true);
+                refresh(true);
             }
         };
 
@@ -79,6 +85,26 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         if (drawable instanceof Animatable) {
             ((Animatable) drawable).start();
         }
+    }
+
+    private void refresh(boolean force) {
+        mPresenter.getPrayerContext(force);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_refresh) {
+            refresh(true);
+            return true;
+        }
+
+        if (id == R.id.action_settings) {
+            SettingsActivity.start(getActivity());
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -132,7 +158,18 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @OnClick(R.id.btn_settings)
     void onSettingsButtonClicked() {
-        SettingsActivity.start(getActivity());
+        PopupMenu menu = new PopupMenu(getActivity(), mSettingsButton);
+        mSettingsButton.setOnTouchListener(menu.getDragToOpenListener());
+
+        menu.inflate(R.menu.menu_main);
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
+
+        menu.show();
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {
