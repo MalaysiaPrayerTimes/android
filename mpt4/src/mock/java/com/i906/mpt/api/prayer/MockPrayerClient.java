@@ -1,9 +1,7 @@
-package com.mpt.i906.api.prayer;
+package com.i906.mpt.api.prayer;
 
-import com.i906.mpt.api.prayer.PrayerClient;
-import com.i906.mpt.api.prayer.PrayerData;
+import com.i906.mpt.api.MockApiUtils;
 import com.i906.mpt.date.DateTimeHelper;
-import com.mpt.i906.api.MockApiUtils;
 
 import java.util.Date;
 import java.util.List;

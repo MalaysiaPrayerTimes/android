@@ -1,8 +1,6 @@
-package com.mpt.i906.api.foursquare;
+package com.i906.mpt.api.foursquare;
 
-import com.i906.mpt.api.foursquare.FoursquareClient;
-import com.i906.mpt.api.foursquare.Mosque;
-import com.mpt.i906.api.MockApiUtils;
+import com.i906.mpt.api.MockApiUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
