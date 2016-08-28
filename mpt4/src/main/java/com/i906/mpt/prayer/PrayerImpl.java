@@ -2,7 +2,6 @@ package com.i906.mpt.prayer;
 
 import com.i906.mpt.date.DateTimeHelper;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -28,14 +27,6 @@ class PrayerImpl implements Prayer {
     @Override
     public Date getDate() {
         return mDate;
-    }
-
-    @Override
-    public boolean hasPassed() {
-        Calendar n = mDateHelper.getNow();
-        Calendar s = mDateHelper.getCalendarInstance();
-        s.setTime(getDate());
-        return n.after(s);
     }
 
     @Override

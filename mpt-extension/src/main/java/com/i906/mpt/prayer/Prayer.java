@@ -16,7 +16,10 @@ public interface Prayer {
     int PRAYER_MAGRHIB = 6;
     int PRAYER_ISYAK = 7;
 
+    int HIJRI_DATE = 0;
+    int HIJRI_MONTH = 1;
+    int HIJRI_YEAR = 2;
+
     int getIndex();
     Date getDate();
-    boolean hasPassed();
 }

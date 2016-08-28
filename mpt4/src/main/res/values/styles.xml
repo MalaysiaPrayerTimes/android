@@ -64,4 +64,12 @@
         <item name="android:padding">8dp</item>
     </style>
 
+    <!-- Widgets -->
+
+    <style name="WidgetPrayerTable" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/size_widget_bar_prayer_table</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

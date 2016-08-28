@@ -9,17 +9,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.i906.mpt.R;
-import com.i906.mpt.extension.Utils;
-import com.i906.mpt.model.CurrentData;
-import com.i906.mpt.model.CurrentDataMapper;
-import com.i906.mpt.model.HijriDate;
-import com.i906.mpt.model.Prayer;
-import com.i906.mpt.provider.MptContract;
+import com.i906.mpt.extension.Extension;
+import com.i906.mpt.prayer.Prayer;
+import com.i906.mpt.prayer.PrayerContext;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -73,7 +71,7 @@ public class BarWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, widgetIntent);
         final String action = widgetIntent.getAction();
 
-        if (MptContract.Actions.PRAYER_TIME_UPDATED.equals(action)) {
+        if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
             AppWidgetManager mgr = AppWidgetManager.getInstance(context);
             ComponentName cn = new ComponentName(context, BarWidgetProvider.class);
             onUpdate(context, mgr, mgr.getAppWidgetIds(cn));
@@ -99,11 +97,11 @@ public class BarWidgetProvider extends AppWidgetProvider {
     }
 
     private RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId) {
-        Intent intent = new Intent(Utils.ACTION_MAIN_SCREEN);
+        Intent intent = new Intent(Extension.ACTION_MAIN_SCREEN);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_bar);
         Resources r = context.getResources();
-        String[] prayerNames = r.getStringArray(R.array.mpt_prayer_names);
+        String[] prayerNames = r.getStringArray(R.array.prayer_names);
         String[] hijriNames;
         String[] masihiNames;
         int dateString;
@@ -111,48 +109,52 @@ public class BarWidgetProvider extends AppWidgetProvider {
         boolean showDhuha;
 
         if (useLongDates(awm, appWidgetId)) {
-            hijriNames = r.getStringArray(R.array.mpt_hijri_months);
-            masihiNames = r.getStringArray(R.array.mpt_masihi_months);
+            hijriNames = r.getStringArray(R.array.hijri_months);
+            masihiNames = r.getStringArray(R.array.masihi_months);
             dateString = R.string.label_date;
             showImsak = true;
             showDhuha = true;
         } else {
-            hijriNames = r.getStringArray(R.array.mpt_hijri_months_short);
-            masihiNames = r.getStringArray(R.array.mpt_masihi_months_short);
+            hijriNames = r.getStringArray(R.array.hijri_months_short);
+            masihiNames = r.getStringArray(R.array.masihi_months_short);
             dateString = R.string.label_date_short;
             showImsak = false;
             showDhuha = false;
         }
 
-        int highlight = r.getColor(R.color.mpt_color_accent);
-        int normal = r.getColor(android.R.color.white);
+        int highlight = ContextCompat.getColor(context, R.color.colorAccent);
+        int normal = ContextCompat.getColor(context, android.R.color.white);
 
         rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
 
         Cursor c = context.getContentResolver()
-                .query(MptContract.CurrentDataInfo.URI, null, null, null, null);
+                .query(Extension.PRAYER_CONTEXT_URI, null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
-            CurrentData cd = CurrentDataMapper.mapFromCursor(c);
+            PrayerContext prayerContext = PrayerContext.Mapper.fromCursor(c);
             c.close();
 
-            List<Date> cdpt = cd.getCurrentDayPrayerTimes();
-            List<Integer> hdate = cd.getHijriDate();
+            List<Prayer> cdpt = prayerContext.getCurrentPrayerList();
+            List<Integer> hdate = prayerContext.getHijriDate();
             Calendar imsak = Calendar.getInstance();
-            imsak.setTime(cdpt.get(0));
+            imsak.setTime(cdpt.get(0).getDate());
 
-            int cpi = cd.getCurrentPrayerIndex();
-            int npi = cd.getNextPrayerIndex();
-            int hd = hdate.get(HijriDate.DATE_DAY);
-            int hm = hdate.get(HijriDate.DATE_MONTH);
-            int hy = hdate.get(HijriDate.DATE_YEAR);
+            Prayer cp = prayerContext.getCurrentPrayer();
+            Prayer np = prayerContext.getNextPrayer();
+
+            int cpi = cp.getIndex();
+            int npi = np.getIndex();
+
+            int hd = hdate.get(Prayer.HIJRI_DATE);
+            int hm = hdate.get(Prayer.HIJRI_MONTH);
+            int hy = hdate.get(Prayer.HIJRI_YEAR);
             int md = imsak.get(Calendar.DATE);
             int mm = imsak.get(Calendar.MONTH);
             int my = imsak.get(Calendar.YEAR);
 
             rv.setTextViewText(R.id.tv_prayer_name, prayerNames[npi]);
-            rv.setTextViewText(R.id.tv_prayer_time, getFormattedDate(context, cd.getNextPrayerTime()));
-            rv.setTextViewText(R.id.tv_location, cd.getLocation());
+            rv.setTextViewText(R.id.tv_prayer_time, getFormattedDate(context, np.getDate()));
+            rv.setTextViewText(R.id.tv_location, prayerContext.getLocationName());
             rv.setTextViewText(R.id.tv_hijri_date, context.getString(dateString, hd, hijriNames[hm], hy));
             rv.setTextViewText(R.id.tv_masihi_date, context.getString(dateString, md, masihiNames[mm], my));
             rv.setViewVisibility(R.id.progress_bar, View.GONE);
@@ -161,7 +163,7 @@ public class BarWidgetProvider extends AppWidgetProvider {
 
             for (int i = 0; i < prayerNames.length; i++) {
                 rv.setTextViewText(PRAYER_NAME[i], prayerNames[i]);
-                rv.setTextViewText(PRAYER_TIME[i], getFormattedDate(context, cdpt.get(i)));
+                rv.setTextViewText(PRAYER_TIME[i], getFormattedDate(context, cdpt.get(i).getDate()));
 
                 if (i == cpi || (!showImsak && i == Prayer.PRAYER_ISYAK && cpi == Prayer.PRAYER_IMSAK) ||
                         (!showDhuha && i == Prayer.PRAYER_SYURUK && cpi == Prayer.PRAYER_DHUHA)) {
