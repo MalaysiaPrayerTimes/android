@@ -11,15 +11,14 @@ import javax.inject.Singleton;
 @Singleton
 public class NotificationPreferences {
 
-    public static final String ALARM_OFFSET_KEY = "alarm_offset";
-    public static final String APPEAR_KEY = "appear_before_duration";
-    public static final String CLEAR_KEY = "clear_after_duration";
-    public static final String LEGACY_KEY = "converted_legacy";
-    public static final String NOTIFICATION_KEY = "notification_";
-    public static final String NOTIFICATION_TONE_KEY = "tone_notification";
-    public static final String PRAYER_KEY = "prayer_";
-    public static final String REMINDER_TONE_KEY = "tone_reminder";
-    public static final String VIBRATE_KEY = "vibrate_";
+    private static final String ALARM_OFFSET_KEY = "alarm_offset";
+    private static final String APPEAR_KEY = "appear_before_duration";
+    private static final String CLEAR_KEY = "clear_after_duration";
+    private static final String NOTIFICATION_KEY = "notification_";
+    private static final String NOTIFICATION_TONE_KEY = "tone_notification";
+    private static final String PRAYER_KEY = "prayer_";
+    private static final String REMINDER_TONE_KEY = "tone_reminder";
+    private static final String VIBRATE_KEY = "vibrate_";
 
     private final SharedPreferences mPrefs;
 

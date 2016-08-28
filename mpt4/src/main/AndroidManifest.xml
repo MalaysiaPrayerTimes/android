@@ -24,7 +24,52 @@
 
         <activity
             android:name=".intro.MainIntroActivity"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.Intro" />
+
+        <activity
+            android:name=".settings.DonateActivity"
+            android:label="@string/label_donate"
+            android:launchMode="singleTask"
+            android:parentActivityName=".settings.SettingsActivity"
+            android:theme="@style/MptTheme.Settings" />
+
+        <activity
+            android:name=".settings.LogoActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".settings.SettingsActivity" />
+
+        <activity
+            android:name=".settings.OpenSourceActivity"
+            android:label="@string/label_open_source_licenses"
+            android:launchMode="singleTask"
+            android:parentActivityName=".settings.SettingsActivity"
+            android:theme="@style/MptTheme.Settings" />
+
+        <activity
+            android:name=".settings.NotificationActivity"
+            android:label="@string/label_notifications"
+            android:launchMode="singleTask"
+            android:parentActivityName=".settings.SettingsActivity">
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/label_settings"
+            android:theme="@style/MptTheme.Settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".alarm.StartupReceiver">
             <intent-filter>

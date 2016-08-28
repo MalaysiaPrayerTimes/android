@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/label_feedback">
+
+        <Preference
+            android:key="general_pref_review"
+            android:summary="@string/label_review_summary"
+            android:title="@string/label_review" />
+
+        <Preference
+            android:key="general_pref_feedback"
+            android:title="@string/label_feedback" />
+
+        <Preference
+            android:key="general_pref_donate"
+            android:title="@string/label_donate" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/label_about">
+
+        <Preference
+            android:key="general_pref_licenses"
+            android:title="@string/label_open_source_licenses" />
+
+        <Preference
+            android:key="general_pref_version"
+            android:summary="2.0.0"
+            android:title="@string/label_version" />
+
+        <Preference
+            android:key="general_pref_build"
+            android:summary="3349 5594fd5 2015-05-31T10:29Z"
+            android:title="@string/label_build" />
+
+        <Preference
+            android:key="general_pref_about"
+            android:summary="@string/label_copyright_summary"
+            android:title="@string/label_copyright" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

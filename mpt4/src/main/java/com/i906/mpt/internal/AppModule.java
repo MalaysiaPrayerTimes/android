@@ -2,9 +2,6 @@ package com.i906.mpt.internal;
 
 import android.app.Application;
 
-import com.i906.mpt.prefs.CommonPreferences;
-import com.i906.mpt.prefs.SharedCommonPreferences;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,11 +20,5 @@ public class AppModule {
     @Singleton
     Application provideContext() {
         return mContext;
-    }
-
-    @Provides
-    @Singleton
-    CommonPreferences provideCommonPreferences(Application context) {
-        return new SharedCommonPreferences(context);
     }
 }

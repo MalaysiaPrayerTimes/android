@@ -1,0 +1,19 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header
+        android:fragment="com.i906.mpt.settings.LocationFragment"
+        android:title="@string/label_location" />
+
+    <header
+        android:fragment="com.i906.mpt.settings.NotificationFragment"
+        android:title="@string/label_notifications" />
+
+    <header
+        android:fragment="com.i906.mpt.settings.InterfaceFragment"
+        android:title="@string/label_interface" />
+
+    <header
+        android:fragment="com.i906.mpt.settings.AboutFragment"
+        android:title="@string/label_about" />
+
+</preference-headers>

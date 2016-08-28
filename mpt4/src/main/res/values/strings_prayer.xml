@@ -2,6 +2,7 @@
 
     <string name="label_date">%1$d %2$s %3$d</string>
     <string name="label_date_short">%1$d %2$s</string>
+    <string name="label_date_combined">%1$s  •  %2$s</string>
 
     <string name="prayer_imsak">Imsak</string>
     <string name="prayer_subuh">Subuh</string>

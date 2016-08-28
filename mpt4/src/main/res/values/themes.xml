@@ -11,4 +11,10 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="MptTheme.Settings" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>

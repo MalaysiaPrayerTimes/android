@@ -7,7 +7,7 @@ import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.location.LocationRepository;
-import com.i906.mpt.prefs.CommonPreferences;
+import com.i906.mpt.prefs.InterfacePreferences;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -52,7 +52,7 @@ public class PrayerManagerTest {
     private PrayerData mPrayerData;
 
     @Mock
-    private CommonPreferences mCommonPreferences;
+    private InterfacePreferences mInterfacePreferences;
 
     @Before
     public void setup() {
@@ -61,7 +61,7 @@ public class PrayerManagerTest {
 
     @Test
     public void getPrayerContextSameYear() {
-        PrayerManager prayerManager = new PrayerManager(mDateHelper, mCommonPreferences,
+        PrayerManager prayerManager = new PrayerManager(mDateHelper, mInterfacePreferences,
                 mLocationRepository, mPrayerClient);
 
         when(mLocation.getLatitude())
@@ -109,7 +109,7 @@ public class PrayerManagerTest {
 
     @Test
     public void getPrayerContextDifferentYear() {
-        PrayerManager prayerManager = new PrayerManager(mDateHelper, mCommonPreferences,
+        PrayerManager prayerManager = new PrayerManager(mDateHelper, mInterfacePreferences,
                 mLocationRepository, mPrayerClient);
 
         when(mLocation.getLatitude())

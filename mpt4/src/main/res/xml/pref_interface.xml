@@ -1,0 +1,40 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:enabled="false"
+        android:key="general_pref_theme"
+        android:summary="@string/label_theme_dark"
+        android:title="@string/label_theme" />
+
+    <PreferenceCategory android:title="@string/label_prayer_screen">
+
+        <ListPreference
+            android:defaultValue="current"
+            android:entries="@array/pref_highlight_settings"
+            android:entryValues="@array/pref_highlight_settings_values"
+            android:key="prayer_highlight"
+            android:title="@string/label_prayer_highlight" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_imsak"
+            android:title="@string/label_show_imsak" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_dhuha"
+            android:title="@string/label_show_dhuha" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="show_masihi"
+            android:title="@string/label_show_masihi_date" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_hijri"
+            android:title="@string/label_show_hijri_date" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,5 @@
+<resources>
+
+    <bool name="is_landscape">true</bool>
+
+</resources>
