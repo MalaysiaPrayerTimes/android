@@ -32,5 +32,6 @@
     <string name="label_qibla">Qibla</string>
     <string name="label_widget_bar">Prayer Times Bar</string>
     <string name="label_widget_mini">Prayer Times Mini</string>
+    <string name="label_widget_text">Prayer Times Text</string>
 
 </resources>
