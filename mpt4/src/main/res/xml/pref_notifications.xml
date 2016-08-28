@@ -1,34 +1,28 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/label_notifications">
+    <PreferenceScreen android:title="@string/label_configure_notifications">
+        <intent android:action="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
+    </PreferenceScreen>
 
-        <PreferenceScreen
-            android:title="@string/label_configure_notifications">
-            <intent android:action="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
-        </PreferenceScreen>
+    <ListPreference
+        android:defaultValue="900000"
+        android:entries="@array/pref_reminder_appear"
+        android:entryValues="@array/pref_duration_values"
+        android:key="notification_appear_before_duration"
+        android:title="@string/label_show_reminder" />
 
-        <ListPreference
-            android:key="notification_appear_before_duration"
-            android:defaultValue="900000"
-            android:entries="@array/pref_reminder_appear"
-            android:entryValues="@array/pref_duration_values"
-            android:title="@string/label_show_reminder" />
+    <ListPreference
+        android:defaultValue="900000"
+        android:entries="@array/pref_notification_clear"
+        android:entryValues="@array/pref_duration_values"
+        android:key="notification_clear_after_duration"
+        android:title="@string/label_hide_notification" />
 
-        <ListPreference
-            android:key="notification_clear_after_duration"
-            android:defaultValue="900000"
-            android:entries="@array/pref_notification_clear"
-            android:entryValues="@array/pref_duration_values"
-            android:title="@string/label_hide_notification" />
-
-        <ListPreference
-            android:key="notification_alarm_offset"
-            android:defaultValue="0"
-            android:entries="@array/pref_alarm_offset"
-            android:entryValues="@array/pref_alarm_offset_values"
-            android:title="@string/label_alarm_offset" />
-
-    </PreferenceCategory>
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/pref_alarm_offset"
+        android:entryValues="@array/pref_alarm_offset_values"
+        android:key="notification_alarm_offset"
+        android:title="@string/label_alarm_offset" />
 
 </PreferenceScreen>

@@ -4,7 +4,7 @@
         android:title="@string/label_miscellaneous">
 
         <ListPreference
-            android:key="general_hijri_offset"
+            android:key="hijri_offset"
             android:defaultValue="0"
             android:entries="@array/pref_hijri_offset"
             android:entryValues="@array/pref_hijri_offset_values"

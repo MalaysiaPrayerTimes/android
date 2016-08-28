@@ -2,7 +2,7 @@ package com.i906.mpt.prayer;
 
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
-import com.i906.mpt.prefs.CommonPreferences;
+import com.i906.mpt.prefs.InterfacePreferences;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,11 +18,11 @@ import static com.i906.mpt.prayer.Prayer.PRAYER_SUBUH;
 class PrayerContextImpl implements PrayerContext {
 
     private final DateTimeHelper mDateHelper;
-    private final CommonPreferences mPreferences;
+    private final InterfacePreferences mPreferences;
     private final PrayerData mCurrentPrayer;
     private final PrayerData mNextPrayer;
 
-    PrayerContextImpl(DateTimeHelper date, CommonPreferences pref, PrayerData current, PrayerData next) {
+    PrayerContextImpl(DateTimeHelper date, InterfacePreferences pref, PrayerData current, PrayerData next) {
         mDateHelper = date;
         mPreferences = pref;
         mCurrentPrayer = current;
@@ -92,6 +92,11 @@ class PrayerContextImpl implements PrayerContext {
         int cpi = getCurrentPrayerIndex();
         if (cpi == -1) return -1;
         return (cpi + 1) % 8;
+    }
+
+    @Override
+    public ViewSettings getViewSettings() {
+        return mPreferences;
     }
 
     private Date getCurrentPrayerTime() {

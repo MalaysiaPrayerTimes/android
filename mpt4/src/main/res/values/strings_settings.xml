@@ -24,13 +24,19 @@
     <string name="label_notification">Notification</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_open_source_licenses">Open-source licenses</string>
+    <string name="label_prayer_highlight">Prayer highlight</string>
     <string name="label_prayer_screen">Prayer screen</string>
+    <string name="label_prayer_widget">Widget</string>
     <string name="label_preferred_location">Preferred location</string>
     <string name="label_preferred_location_summary">Use preferred location to determine prayer times</string>
     <string name="label_refresh">Refresh</string>
     <string name="label_set_notification_tone">Set notification tone…</string>
     <string name="label_set_reminder_tone">Set reminder tone…</string>
     <string name="label_settings">Settings</string>
+    <string name="label_show_dhuha">Show Dhuha</string>
+    <string name="label_show_hijri_date">Show Hijri date</string>
+    <string name="label_show_imsak">Show Imsak</string>
+    <string name="label_show_masihi_date">Show Masihi date</string>
     <string name="label_show_reminder">Show prayer reminder</string>
     <string name="label_review">Rate and review MPT</string>
     <string name="label_review_summary">Rate and review MPT on Google Play</string>
@@ -61,6 +67,16 @@
         <item>300000</item>
         <item>600000</item>
         <item>900000</item>
+    </string-array>
+
+    <string-array name="pref_highlight_settings">
+        <item>Current prayer time</item>
+        <item>Next prayer time</item>
+    </string-array>
+
+    <string-array name="pref_highlight_settings_values">
+        <item>current</item>
+        <item>next</item>
     </string-array>
 
     <string-array name="pref_hijri_offset">

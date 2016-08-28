@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.i906.mpt.R;
 import com.i906.mpt.prayer.Prayer;
+import com.i906.mpt.prayer.PrayerContext;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,15 +24,16 @@ import butterknife.ButterKnife;
 class PrayerListAdapter extends BaseAdapter {
 
     private final SimpleDateFormat mDateFormatter;
-    private final List<Prayer> mPrayerList;
     private final String[] mPrayerNames;
+
+    private PrayerContext.ViewSettings mViewSettings;
+    private List<Prayer> mPrayerList;
     private int mHighlightedIndex;
 
     private int mDefaultColor = -1;
     private int mHighlightedColor = -1;
 
-    PrayerListAdapter(List<Prayer> prayerList, String[] prayerNames, String dateFormat) {
-        mPrayerList = prayerList;
+    PrayerListAdapter(String[] prayerNames, String dateFormat) {
         mPrayerNames = prayerNames;
         mDateFormatter = new SimpleDateFormat(dateFormat);
     }
@@ -40,7 +42,8 @@ class PrayerListAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         ViewHolder holder;
         Context ctx = parent.getContext();
-        Date d = getItem(position);
+        Prayer p = getItem(position);
+        Date d = p.getDate();
 
         int dc = getDefaultTextColor(ctx);
         int hc = getHighlightedColor(ctx);
@@ -53,10 +56,10 @@ class PrayerListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        holder.name.setText(mPrayerNames[position]);
+        holder.name.setText(mPrayerNames[p.getIndex()]);
         holder.time.setText(mDateFormatter.format(d));
 
-        if (mHighlightedIndex == position) {
+        if (getHighlightedIndex() == p.getIndex()) {
             holder.name.setTextColor(hc);
             holder.time.setTextColor(hc);
         } else {
@@ -67,8 +70,35 @@ class PrayerListAdapter extends BaseAdapter {
         return view;
     }
 
-    private int getHighlightedColor(Context ctx) {
+    void setPrayerList(List<Prayer> prayerList) {
+        mPrayerList = prayerList;
+        Prayer imsak = null;
+        Prayer dhuha = null;
 
+        for (Prayer p : mPrayerList) {
+            if (p.getIndex() == Prayer.PRAYER_DHUHA) {
+                dhuha = p;
+            }
+
+            if (p.getIndex() == Prayer.PRAYER_IMSAK) {
+                imsak = p;
+            }
+        }
+
+        if (!mViewSettings.isImsakEnabled()) {
+            mPrayerList.remove(imsak);
+        }
+
+        if (!mViewSettings.isDhuhaEnabled()) {
+            mPrayerList.remove(dhuha);
+        }
+    }
+
+    void setViewSettings(PrayerContext.ViewSettings settings) {
+        mViewSettings = settings;
+    }
+
+    private int getHighlightedColor(Context ctx) {
         if (mHighlightedColor != -1) return mHighlightedColor;
         mHighlightedColor = ContextCompat.getColor(ctx, R.color.colorAccent);
 
@@ -89,7 +119,17 @@ class PrayerListAdapter extends BaseAdapter {
         return mDefaultColor;
     }
 
-    public void setHighlightedIndex(int index) {
+    private int getHighlightedIndex() {
+        int hi = mHighlightedIndex;
+
+        if (!mViewSettings.isCurrentPrayerHighlightMode()) {
+            return (hi + 1) % 8;
+        }
+
+        return hi;
+    }
+
+    void setHighlightedIndex(int index) {
         mHighlightedIndex = index;
         notifyDataSetChanged();
     }
@@ -100,8 +140,8 @@ class PrayerListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Date getItem(int position) {
-        return mPrayerList.get(position).getDate();
+    public Prayer getItem(int position) {
+        return mPrayerList.get(position);
     }
 
     @Override

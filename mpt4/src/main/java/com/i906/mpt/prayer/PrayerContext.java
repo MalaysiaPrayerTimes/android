@@ -18,4 +18,18 @@ public interface PrayerContext {
     String getLocationName();
 
     List<Integer> getHijriDate();
+
+    ViewSettings getViewSettings();
+
+    interface ViewSettings {
+        boolean isCurrentPrayerHighlightMode();
+
+        boolean isDhuhaEnabled();
+
+        boolean isImsakEnabled();
+
+        boolean isHijriDateEnabled();
+
+        boolean isMasihiDateEnabled();
+    }
 }
