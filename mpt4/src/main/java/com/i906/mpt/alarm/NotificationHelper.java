@@ -1,6 +1,5 @@
 package com.i906.mpt.alarm;
 
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +33,7 @@ public class NotificationHelper {
     private String[] mPrayerNames;
 
     @Inject
-    public NotificationHelper(Application context, NotificationPreferences prefs) {
+    public NotificationHelper(Context context, NotificationPreferences prefs) {
         mContext = context;
         mNotifier = NotificationManagerCompat.from(mContext);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);

@@ -1,6 +1,6 @@
 package com.i906.mpt.location;
 
-import android.app.Application;
+import android.content.Context;
 import android.location.Location;
 
 import com.google.android.gms.location.LocationRequest;
@@ -24,7 +24,7 @@ public class LocationRepository {
     private ReactiveLocationProvider mProvider;
 
     @Inject
-    public LocationRepository(Application context) {
+    public LocationRepository(Context context) {
         mProvider = new ReactiveLocationProvider(context);
     }
 

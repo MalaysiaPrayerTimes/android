@@ -3,9 +3,7 @@ package com.i906.mpt;
 import android.app.Application;
 import android.content.Context;
 
-import com.i906.mpt.internal.ApiModule;
-import com.i906.mpt.internal.AppModule;
-import com.i906.mpt.internal.DaggerGraph;
+import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.Graph;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -21,10 +19,7 @@ public class MptApplication extends Application {
         super.onCreate();
         JodaTimeAndroid.init(this);
 
-        setGraph(DaggerGraph.builder()
-                .apiModule(new ApiModule())
-                .appModule(new AppModule(this))
-                .build());
+        setGraph(Dagger.getGraph(this));
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());

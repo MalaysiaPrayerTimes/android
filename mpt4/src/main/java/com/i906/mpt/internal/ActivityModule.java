@@ -1,6 +1,6 @@
 package com.i906.mpt.internal;
 
-import android.content.Context;
+import android.app.Activity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,15 +11,15 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private Context mContext;
+    private Activity mContext;
 
-    public ActivityModule(Context context) {
+    public ActivityModule(Activity context) {
         mContext = context;
     }
 
     @Provides
     @PerActivity
-    Context provideContext() {
+    Activity provideContext() {
         return mContext;
     }
 }

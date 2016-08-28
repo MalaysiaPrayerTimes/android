@@ -1,6 +1,6 @@
 package com.i906.mpt.prefs;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -23,7 +23,7 @@ public class NotificationPreferences {
     private final SharedPreferences mPrefs;
 
     @Inject
-    public NotificationPreferences(Application context) {
+    public NotificationPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
