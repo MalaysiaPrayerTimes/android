@@ -9,6 +9,9 @@ public final class Dagger {
 
     static Graph graph;
 
+    private Dagger() {
+    }
+
     public static Graph getGraph(Context context) {
         if (graph == null) {
             graph = DaggerGraph.builder()
