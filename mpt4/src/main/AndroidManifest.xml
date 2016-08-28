@@ -26,6 +26,8 @@
             android:name=".intro.MainIntroActivity"
             android:theme="@style/Theme.Intro" />
 
+        <activity android:name=".settings.LogoActivity" />
+
         <activity
             android:name=".settings.NotificationActivity"
             android:label="@string/label_notifications"
