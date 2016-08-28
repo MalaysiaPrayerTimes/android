@@ -11,6 +11,7 @@ import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.RetrofitPrayerClient;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.inject.Singleton;
 
@@ -19,6 +20,8 @@ import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -61,15 +64,16 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(Cache cache) {
+    OkHttpClient provideOkHttpClient(Cache cache) {
         return new OkHttpClient.Builder()
+                .addInterceptor(new HeaderInterceptor())
                 .cache(cache)
                 .build();
     }
 
     @Provides
     @Singleton
-    public Cache provideCache(Application context) {
+    Cache provideCache(Application context) {
         return new Cache(createDefaultCacheDir(context), 10 * 1024 * 1024);
     }
 
@@ -80,6 +84,20 @@ public class ApiModule {
             cache.mkdirs();
         }
         return cache;
+    }
+
+    private class HeaderInterceptor implements Interceptor {
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request r = chain.request()
+                    .newBuilder()
+                    .removeHeader("User-Agent")
+                    .addHeader("User-Agent", getDefaultUserAgent(BuildConfig.VERSION_NAME))
+                    .build();
+
+            return chain.proceed(r);
+        }
     }
 
     private String getDefaultUserAgent(String cversion) {
