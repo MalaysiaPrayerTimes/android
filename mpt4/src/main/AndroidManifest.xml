@@ -116,6 +116,22 @@
                 android:resource="@xml/widget_bar" />
         </receiver>
 
+        <receiver
+            android:name=".widget.MiniWidgetProvider"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/label_widget_mini">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_mini" />
+        </receiver>
+
         <receiver android:name=".alarm.AlarmReceiver" />
 
         <service android:name=".alarm.AlarmService" />
