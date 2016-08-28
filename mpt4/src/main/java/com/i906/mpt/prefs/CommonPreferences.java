@@ -36,6 +36,36 @@ public class CommonPreferences {
         return Integer.valueOf(mPrefs.getString("hijri_offset", "0"));
     }
 
+    public boolean isDeveloperUser() {
+        return mPrefs.getBoolean("mpt_developer_user", false);
+    }
+
+    public void setAsDeveloperUser() {
+        mPrefs.edit()
+                .putBoolean("mpt_developer_user", true)
+                .apply();
+    }
+
+    public boolean isGoodUser() {
+        return mPrefs.getBoolean("mpt_good_user", false);
+    }
+
+    public void setAsGoodUser() {
+        mPrefs.edit()
+                .putBoolean("mpt_good_user", true)
+                .apply();;
+    }
+
+    public boolean isGenerousUser() {
+        return mPrefs.getBoolean("mpt_generous_user", false);
+    }
+
+    public void setAsGenerousUser() {
+        mPrefs.edit()
+                .putBoolean("mpt_generous_user", true)
+                .apply();
+    }
+
     public void convertLegacyPreferences() {
         boolean al = mPrefs.getBoolean("automatic_location", true);
 
