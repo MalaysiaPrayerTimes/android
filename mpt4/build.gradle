@@ -127,6 +127,7 @@ dependencies {
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
     compile 'hu.supercluster:paperwork:1.2.7'
+    compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
