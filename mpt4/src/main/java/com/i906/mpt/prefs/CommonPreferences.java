@@ -1,6 +1,6 @@
 package com.i906.mpt.prefs;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -18,7 +18,7 @@ public class CommonPreferences {
     private final SharedPreferences mPrefs;
 
     @Inject
-    public CommonPreferences(Application context) {
+    public CommonPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 

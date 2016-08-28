@@ -3,6 +3,7 @@ package com.i906.mpt.internal;
 import com.i906.mpt.alarm.AlarmReceiver;
 import com.i906.mpt.alarm.AlarmService;
 import com.i906.mpt.main.MainActivity;
+import com.i906.mpt.prayer.PrayerProvider;
 import com.i906.mpt.settings.DonateActivity;
 import com.i906.mpt.settings.NotificationActivity;
 import com.i906.mpt.settings.azanpicker.AzanPickerFragment;
@@ -29,4 +30,5 @@ public interface Graph {
     void inject(DonateActivity activity);
     void inject(NotificationActivity activity);
     void inject(PrayerNotificationFragment fragment);
+    void inject(PrayerProvider provider);
 }

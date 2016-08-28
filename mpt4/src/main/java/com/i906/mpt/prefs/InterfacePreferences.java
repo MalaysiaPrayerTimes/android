@@ -1,6 +1,6 @@
 package com.i906.mpt.prefs;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -18,7 +18,7 @@ public class InterfacePreferences implements PrayerContext.ViewSettings {
     private final SharedPreferences mPrefs;
 
     @Inject
-    public InterfacePreferences(Application context) {
+    public InterfacePreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 

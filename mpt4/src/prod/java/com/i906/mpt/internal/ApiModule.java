@@ -1,6 +1,6 @@
 package com.i906.mpt.internal;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 
 import com.i906.mpt.BuildConfig;
@@ -73,11 +73,11 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Cache provideCache(Application context) {
+    Cache provideCache(Context context) {
         return new Cache(createDefaultCacheDir(context), 10 * 1024 * 1024);
     }
 
-    private File createDefaultCacheDir(Application context) {
+    private File createDefaultCacheDir(Context context) {
         File cache = new File(context.getCacheDir(), "okhttp-cache");
         if (!cache.exists()) {
             //noinspection ResultOfMethodCallIgnored

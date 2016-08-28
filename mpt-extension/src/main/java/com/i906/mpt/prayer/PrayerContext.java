@@ -1,5 +1,7 @@
 package com.i906.mpt.prayer;
 
+import android.database.Cursor;
+
 import java.util.List;
 
 /**
@@ -31,5 +33,11 @@ public interface PrayerContext {
         boolean isHijriDateEnabled();
 
         boolean isMasihiDateEnabled();
+    }
+
+    final class Mapper {
+        public static PrayerContext fromCursor(Cursor c) {
+            return new CursorPrayerContext(c);
+        }
     }
 }

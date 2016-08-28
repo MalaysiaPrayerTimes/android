@@ -91,7 +91,8 @@ dependencies {
     def TIMBER_VERSION = rootProject.ext.TIMBER_VERSION
     def STORIO_VERSION = rootProject.ext.STORIO_VERSION
 
-    compile project(':api-client');
+    compile project(':api-client')
+    compile project(':mpt-extension')
 
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"

@@ -1,6 +1,6 @@
 package com.i906.mpt.internal;
 
-import android.app.Application;
+import android.content.Context;
 
 import javax.inject.Singleton;
 
@@ -10,15 +10,15 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private Application mContext;
+    private Context mContext;
 
-    public AppModule(Application context) {
+    public AppModule(Context context) {
         mContext = context;
     }
 
     @Provides
     @Singleton
-    Application provideContext() {
+    Context provideContext() {
         return mContext;
     }
 }

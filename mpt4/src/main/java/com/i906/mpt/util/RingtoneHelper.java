@@ -1,7 +1,7 @@
 package com.i906.mpt.util;
 
 import android.Manifest;
-import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -32,11 +32,11 @@ import rx.functions.Func2;
 @Singleton
 public class RingtoneHelper {
 
-    private final Application mContext;
+    private final Context mContext;
     private final StorIOContentResolver mResolver;
 
     @Inject
-    public RingtoneHelper(Application context) {
+    public RingtoneHelper(Context context) {
         mContext = context;
         mResolver = DefaultStorIOContentResolver.builder()
                 .contentResolver(context.getContentResolver())

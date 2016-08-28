@@ -1,6 +1,6 @@
 package com.i906.mpt.api;
 
-import android.app.Application;
+import android.content.Context;
 
 import com.google.gson.Gson;
 
@@ -22,11 +22,11 @@ import javax.inject.Singleton;
 @Singleton
 public class MockApiUtils {
 
-    private Application mContext;
+    private Context mContext;
     private Gson mGson;
 
     @Inject
-    public MockApiUtils(Application context, Gson gson) {
+    public MockApiUtils(Context context, Gson gson) {
         mContext = context;
         mGson = gson;
     }
