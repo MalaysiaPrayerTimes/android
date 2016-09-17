@@ -18,6 +18,11 @@ public class BarWidgetProvider extends TableWidgetProvider {
     }
 
     @Override
+    protected Class getWidgetClass() {
+        return BarWidgetProvider.class;
+    }
+
+    @Override
     protected String[] getHijriNames(AppWidgetManager awm, Context context, int appWidgetId) {
         Resources r = context.getResources();
 

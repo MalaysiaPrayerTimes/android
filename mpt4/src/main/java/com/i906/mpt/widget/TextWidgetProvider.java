@@ -22,6 +22,11 @@ import timber.log.Timber;
 public class TextWidgetProvider extends MptWidgetProvider {
 
     @Override
+    protected Class getWidgetClass() {
+        return TextWidgetProvider.class;
+    }
+
+    @Override
     protected RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId) {
         Intent intent = new Intent(Extension.ACTION_MAIN_SCREEN);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

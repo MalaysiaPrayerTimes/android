@@ -17,6 +17,11 @@ public class MiniWidgetProvider extends TableWidgetProvider {
     }
 
     @Override
+    protected Class getWidgetClass() {
+        return MiniWidgetProvider.class;
+    }
+
+    @Override
     protected String[] getHijriNames(AppWidgetManager awm, Context context, int appWidgetId) {
         Resources r = context.getResources();
         return r.getStringArray(R.array.hijri_months_short);

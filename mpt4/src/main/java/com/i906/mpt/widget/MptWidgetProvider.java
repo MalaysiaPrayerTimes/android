@@ -28,7 +28,7 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
 
         if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
             AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-            ComponentName cn = new ComponentName(context, BarWidgetProvider.class);
+            ComponentName cn = new ComponentName(context, getWidgetClass());
             onUpdate(context, mgr, mgr.getAppWidgetIds(cn));
         }
     }
@@ -55,6 +55,8 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         String f = DateFormat.is24HourFormat(context) ? FORMAT_24 : FORMAT_12;
         return DateFormat.format(f, date).toString();
     }
+
+    protected abstract Class getWidgetClass();
 
     protected abstract RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId);
 }
