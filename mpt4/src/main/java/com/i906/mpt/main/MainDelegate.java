@@ -23,8 +23,8 @@ import rx.subscriptions.CompositeSubscription;
 @Singleton
 class MainDelegate {
 
-    private final long LOCATION_FASTEST_INTERVAL;
-    private final long LOCATION_INTERVAL;
+    private final long mLocationFastestInterval;
+    private final long mLocationInterval;
 
     private final CompositeSubscription mSubscription = new CompositeSubscription();
     private final LocationRepository mLocationRepository;
@@ -37,8 +37,8 @@ class MainDelegate {
         mLocationRepository = location;
         mPrayerManager = prayer;
 
-        LOCATION_FASTEST_INTERVAL = hpref.getLocationFastestInterval();
-        LOCATION_INTERVAL = hpref.getLocationInterval();
+        mLocationFastestInterval = hpref.getLocationFastestInterval();
+        mLocationInterval = hpref.getLocationInterval();
     }
 
     public void startLocationListener() {
@@ -48,8 +48,8 @@ class MainDelegate {
 
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-                .setFastestInterval(LOCATION_FASTEST_INTERVAL)
-                .setInterval(LOCATION_INTERVAL);
+                .setFastestInterval(mLocationFastestInterval)
+                .setInterval(mLocationInterval);
 
         Subscription s = mLocationRepository.getLocation(request)
                 .subscribeOn(Schedulers.io())

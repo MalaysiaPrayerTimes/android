@@ -21,8 +21,8 @@ import rx.functions.Func1;
 @Singleton
 public class LocationRepository {
 
-    private final long LOCATION_CACHE_DURATION;
-    private final long LOCATION_REQUEST_TIMEOUT;
+    private final long mCacheDuration;
+    private final long mRequestTimeout;
 
     private final RxFusedLocation mFusedLocation;
     private Location mLastLocation;
@@ -31,8 +31,8 @@ public class LocationRepository {
     public LocationRepository(Context context, HiddenPreferences prefs) {
         mFusedLocation = new RxFusedLocation(context);
 
-        LOCATION_CACHE_DURATION = prefs.getLocationCacheDuration();
-        LOCATION_REQUEST_TIMEOUT = prefs.getLocationRequestTimeout();
+        mCacheDuration = prefs.getLocationCacheDuration();
+        mRequestTimeout = prefs.getLocationRequestTimeout();
     }
 
     public Observable<Location> getLocation() {
@@ -45,7 +45,7 @@ public class LocationRepository {
 
         if (shouldRequestNewLocation() || force) {
             return getLocation(request)
-                    .timeout(LOCATION_REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+                    .timeout(mRequestTimeout, TimeUnit.MILLISECONDS)
                     .onErrorResumeNext(new Func1<Throwable, Observable<? extends Location>>() {
                         @Override
                         public Observable<? extends Location> call(Throwable e) {
@@ -77,7 +77,7 @@ public class LocationRepository {
             return true;
         }
 
-        if (System.currentTimeMillis() - mLastLocation.getTime() > LOCATION_CACHE_DURATION) {
+        if (System.currentTimeMillis() - mLastLocation.getTime() > mCacheDuration) {
             return true;
         }
 

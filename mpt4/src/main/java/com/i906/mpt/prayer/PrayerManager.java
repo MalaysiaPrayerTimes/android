@@ -29,7 +29,7 @@ import rx.subjects.Subject;
 @Singleton
 public class PrayerManager {
 
-    private final long LOCATION_DISTANCE_LIMIT;
+    private final long mLocationDistanceLimit;
 
     private final DateTimeHelper mDateHelper;
     private final InterfacePreferences mPreferences;
@@ -57,7 +57,7 @@ public class PrayerManager {
         mPrayerClient = prayer;
         mPrayerBroadcaster = broadcaster;
 
-        LOCATION_DISTANCE_LIMIT = hprefs.getLocationDistanceLimit();
+        mLocationDistanceLimit = hprefs.getLocationDistanceLimit();
     }
 
     public Observable<PrayerContext> getPrayerContext(final boolean refresh) {
@@ -121,7 +121,7 @@ public class PrayerManager {
 
         float distance = LocationRepository.getDistance(mLastLocation, location);
 
-        if (distance >= LOCATION_DISTANCE_LIMIT) {
+        if (distance >= mLocationDistanceLimit) {
             return true;
         }
 
