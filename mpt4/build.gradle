@@ -4,9 +4,16 @@ apply plugin: 'hu.supercluster.paperwork'
 apply from: '../jacoco.gradle'
 apply from: '../checkstyle.gradle'
 
+def IS_CI = "true".equals(System.getenv("CI"))
+def PRE_DEX = "true".equals(System.getProperty("pre-dex", "true"))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+
+    dexOptions {
+        preDexLibraries = PRE_DEX && !IS_CI
+    }
 
     defaultConfig {
         applicationId "com.i906.mpt"
@@ -28,7 +35,7 @@ android {
         debug {
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
-            testCoverageEnabled true
+            testCoverageEnabled IS_CI
         }
 
         release {
@@ -116,7 +123,6 @@ dependencies {
 
     // RX
     compile "io.reactivex:rxandroid:$RXANDROID_VERSION"
-    compile 'pl.charmas.android:android-reactive-location:0.9@aar'
 
     // Database
     compile "com.pushtorefresh.storio:sqlite:$STORIO_VERSION"

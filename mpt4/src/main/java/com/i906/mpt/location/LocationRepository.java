@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -25,12 +24,12 @@ public class LocationRepository {
     private final long LOCATION_CACHE_DURATION;
     private final long LOCATION_REQUEST_TIMEOUT;
 
-    private ReactiveLocationProvider mProvider;
+    private final RxFusedLocation mFusedLocation;
     private Location mLastLocation;
 
     @Inject
     public LocationRepository(Context context, HiddenPreferences prefs) {
-        mProvider = new ReactiveLocationProvider(context);
+        mFusedLocation = new RxFusedLocation(context);
 
         LOCATION_CACHE_DURATION = prefs.getLocationCacheDuration();
         LOCATION_REQUEST_TIMEOUT = prefs.getLocationRequestTimeout();
@@ -43,6 +42,17 @@ public class LocationRepository {
     public Observable<Location> getLocation(boolean force) {
         if (shouldRequestNewLocation() || force) {
             return getLocation(LocationRequest.create())
+                    .timeout(LOCATION_REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Location>>() {
+                        @Override
+                        public Observable<? extends Location> call(Throwable e) {
+                            if (mLastLocation == null) {
+                                return Observable.error(e);
+                            } else {
+                                return Observable.just(mLastLocation);
+                            }
+                        }
+                    })
                     .first();
         } else {
             return Observable.just(mLastLocation);
@@ -50,18 +60,7 @@ public class LocationRepository {
     }
 
     public Observable<Location> getLocation(LocationRequest req) {
-        return mProvider.getUpdatedLocation(req)
-                .timeout(LOCATION_REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Location>>() {
-                    @Override
-                    public Observable<? extends Location> call(Throwable e) {
-                        if (mLastLocation == null) {
-                            return Observable.error(e);
-                        } else {
-                            return Observable.just(mLastLocation);
-                        }
-                    }
-                })
+        return mFusedLocation.getLocation(req)
                 .doOnNext(new Action1<Location>() {
                     @Override
                     public void call(Location location) {
