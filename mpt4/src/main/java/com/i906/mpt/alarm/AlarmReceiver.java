@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.i906.mpt.MptApplication;
+import com.i906.mpt.prayer.PrayerBroadcaster;
 
 import javax.inject.Inject;
 
@@ -14,6 +15,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Inject
     NotificationHelper mNotificationHelper;
+
+    @Inject
+    PrayerBroadcaster mPrayerBroadcaster;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -39,6 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (AlarmService.ACTION_NOTIFICATION_PRAYER.equals(action)) {
             mNotificationHelper.showPrayerNotification(prayer, time, location);
+            mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
         }
 
         if (AlarmService.ACTION_NOTIFICATION_CANCEL.equals(action)) {

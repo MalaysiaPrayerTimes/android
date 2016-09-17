@@ -96,6 +96,8 @@
         <receiver android:name=".alarm.StartupReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
@@ -151,6 +153,8 @@
         <receiver android:name=".alarm.AlarmReceiver" />
 
         <service android:name=".alarm.AlarmService" />
+
+        <service android:name=".main.MainService" />
 
     </application>
 

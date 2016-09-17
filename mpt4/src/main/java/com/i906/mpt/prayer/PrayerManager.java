@@ -6,6 +6,7 @@ import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.location.LocationRepository;
+import com.i906.mpt.prefs.HiddenPreferences;
 import com.i906.mpt.prefs.InterfacePreferences;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,7 +22,6 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
-import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -29,10 +29,13 @@ import timber.log.Timber;
 @Singleton
 public class PrayerManager {
 
+    private final long LOCATION_DISTANCE_LIMIT;
+
     private final DateTimeHelper mDateHelper;
     private final InterfacePreferences mPreferences;
     private final LocationRepository mLocationRepository;
     private final PrayerClient mPrayerClient;
+    private final PrayerBroadcaster mPrayerBroadcaster;
 
     private Location mLastLocation;
     private PrayerContext mLastPrayerContext;
@@ -42,27 +45,31 @@ public class PrayerManager {
     private AtomicBoolean mIsError = new AtomicBoolean(false);
 
     @Inject
-    public PrayerManager(DateTimeHelper date, InterfacePreferences prefs, LocationRepository location,
-                         PrayerClient prayer) {
+    public PrayerManager(DateTimeHelper date,
+                         InterfacePreferences prefs,
+                         LocationRepository location,
+                         PrayerClient prayer,
+                         PrayerBroadcaster broadcaster,
+                         HiddenPreferences hprefs) {
         mDateHelper = date;
         mPreferences = prefs;
         mLocationRepository = location;
         mPrayerClient = prayer;
+        mPrayerBroadcaster = broadcaster;
+
+        LOCATION_DISTANCE_LIMIT = hprefs.getLocationDistanceLimit();
     }
 
     public Observable<PrayerContext> getPrayerContext(final boolean refresh) {
-        Timber.v("Error: %s, Loading: %s, Refresh: %s", hasError(), isLoading(), refresh);
-
         if (mPrayerStream == null || hasError() && !isLoading()) {
             mPrayerStream = BehaviorSubject.create();
-            Timber.v("New behavior subject.");
         }
 
         if (isLoading() && !refresh) {
             return mPrayerStream.asObservable();
         }
 
-        mLocationRepository.getLocation()
+        mLocationRepository.getLocation(refresh)
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
@@ -74,18 +81,10 @@ public class PrayerManager {
                 .flatMap(new Func1<Location, Observable<PrayerContext>>() {
                     @Override
                     public Observable<PrayerContext> call(Location location) {
-                        float distance = LocationRepository.getDistance(mLastLocation, location);
-                        if (distance >= 5000 || refresh || mLastPrayerContext == null) {
-                            mLastLocation = location;
+                        mLastLocation = location;
 
-                            return getCurrentPrayerTimesByCoordinate(location)
-                                    .zipWith(getNextPrayerTimesByCoordinate(location), mPrayerContextCreator)
-                                    .doOnNext(new Action1<PrayerContext>() {
-                                        @Override
-                                        public void call(PrayerContext prayerContext) {
-                                            mLastPrayerContext = prayerContext;
-                                        }
-                                    });
+                        if (shouldUpdatePrayerContext(location)) {
+                            return updatePrayerContext(location);
                         }
 
                         return Observable.just(mLastPrayerContext);
@@ -108,6 +107,37 @@ public class PrayerManager {
                 });
 
         return mPrayerStream.asObservable();
+    }
+
+    private void broadcastPrayerContext(PrayerContext context) {
+        mPrayerStream.onNext(context);
+        mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
+    }
+
+    public boolean shouldUpdatePrayerContext(Location location) {
+        if (mLastPrayerContext == null) {
+            return true;
+        }
+
+        float distance = LocationRepository.getDistance(mLastLocation, location);
+
+        if (distance >= LOCATION_DISTANCE_LIMIT) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public Observable<PrayerContext> updatePrayerContext(Location location) {
+        return getCurrentPrayerTimesByCoordinate(location)
+                .zipWith(getNextPrayerTimesByCoordinate(location), mPrayerContextCreator)
+                .doOnNext(new Action1<PrayerContext>() {
+                    @Override
+                    public void call(PrayerContext prayerContext) {
+                        mLastPrayerContext = prayerContext;
+                        broadcastPrayerContext(prayerContext);
+                    }
+                });
     }
 
     private Observable<PrayerData> getCurrentPrayerTimesByCoordinate(Location location) {

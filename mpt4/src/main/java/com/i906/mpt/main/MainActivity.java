@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
         }
 
         setup();
-        StartupReceiver.startAlarmStartup(this);
+        StartupReceiver.startup(this);
     }
 
     private void setup() {
