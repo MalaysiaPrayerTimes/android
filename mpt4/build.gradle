@@ -129,7 +129,7 @@ dependencies {
     compile "com.pushtorefresh.storio:content-resolver:$STORIO_VERSION"
 
     // Misc
-    compile 'net.danlew:android.joda:2.9.4.1'
+    compile 'com.github.msarhan:ummalqura-calendar:1.1.7'
     compile 'com.heinrichreimersoftware:material-intro:1.5.8'
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
