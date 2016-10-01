@@ -12,8 +12,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import rx.AsyncEmitter;
 import rx.Observable;
@@ -113,7 +113,7 @@ class RxFusedLocation {
         private List<LocationUpdates> observers;
 
         ApiCallbacks() {
-            observers = new ArrayList<>();
+            observers = new CopyOnWriteArrayList<>();
         }
 
         void addObserver(LocationUpdates observer) {
