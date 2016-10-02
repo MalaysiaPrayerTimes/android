@@ -10,8 +10,9 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.date.DateTimeHelper;
+import com.i906.mpt.internal.Dagger;
+import com.i906.mpt.internal.ServiceModule;
 import com.i906.mpt.prayer.Prayer;
 import com.i906.mpt.prayer.PrayerContext;
 import com.i906.mpt.prayer.PrayerManager;
@@ -65,7 +66,11 @@ public class AlarmService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        MptApplication.graph(this).inject(this);
+
+        Dagger.getGraph(this)
+                .serviceGraph(new ServiceModule(this))
+                .inject(this);
+
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         startObservable();
     }

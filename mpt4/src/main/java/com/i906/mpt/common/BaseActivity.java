@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
 import com.i906.mpt.internal.ActivityGraph;
 import com.i906.mpt.internal.ActivityModule;
+import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.Graph;
 import com.i906.mpt.location.ConnectionException;
 
@@ -65,6 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected Graph graph() {
-        return MptApplication.graph(this);
+        return Dagger.getGraph(this);
     }
 }

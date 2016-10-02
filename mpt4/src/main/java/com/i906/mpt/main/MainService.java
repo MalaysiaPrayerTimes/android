@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.i906.mpt.internal.Dagger;
+import com.i906.mpt.internal.ServiceModule;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,11 @@ public class MainService extends Service implements MainHandler {
     @Override
     public void onCreate() {
         super.onCreate();
-        Dagger.getGraph(this).inject(this);
+
+        Dagger.getGraph(this)
+                .serviceGraph(new ServiceModule(this))
+                .inject(this);
+
         mDelegate.setHandler(this);
     }
 
