@@ -1,5 +1,6 @@
 package com.i906.mpt.internal;
 
+import com.i906.mpt.intro.MainIntroActivity;
 import com.i906.mpt.main.MainActivity;
 import com.i906.mpt.mosque.ui.MosqueFragment;
 import com.i906.mpt.prayer.ui.PrayerFragment;
@@ -22,6 +23,7 @@ public interface ActivityGraph {
     void inject(AzanPickerFragment fragment);
     void inject(DonateActivity activity);
     void inject(MainActivity activity);
+    void inject(MainIntroActivity activity);
     void inject(MosqueFragment fragment);
     void inject(NotificationActivity activity);
     void inject(PrayerNotificationFragment fragment);

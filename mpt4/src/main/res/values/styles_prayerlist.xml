@@ -81,8 +81,8 @@
         <item name="android:textSize">@dimen/size_main_time</item>
         <item name="android:singleLine">true</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:paddingLeft">@dimen/padding_main_time</item>
-        <item name="android:paddingRight">@dimen/padding_main_time</item>
+        <item name="android:paddingStart">@dimen/padding_main_time</item>
+        <item name="android:paddingEnd">@dimen/padding_main_time</item>
         <item name="android:layout_marginTop">@dimen/margin_main_time_top</item>
         <item name="android:layout_marginBottom">@dimen/margin_main_time_top</item>
         <item name="android:fontFamily">sans-serif-thin</item>
