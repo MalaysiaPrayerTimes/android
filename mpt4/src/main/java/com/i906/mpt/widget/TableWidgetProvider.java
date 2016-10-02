@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -17,8 +16,6 @@ import com.i906.mpt.prayer.PrayerContext;
 
 import java.util.Calendar;
 import java.util.List;
-
-import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -89,11 +86,17 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
     }
 
     @Override
-    protected RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId) {
+    protected RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId, PrayerContext prayerContext) {
         Intent intent = new Intent(Extension.ACTION_MAIN_SCREEN);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), getWidgetLayout());
+        rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
+
+        if (prayerContext == null) {
+            return rv;
+        }
+
         Resources r = context.getResources();
 
         String[] prayerNames = r.getStringArray(R.array.prayer_names);
@@ -104,57 +107,45 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         int highlight = ContextCompat.getColor(context, R.color.colorAccent);
         int normal = ContextCompat.getColor(context, android.R.color.white);
 
-        rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
+        List<Prayer> cdpt = prayerContext.getCurrentPrayerList();
+        List<Integer> hdate = prayerContext.getHijriDate();
+        Calendar imsak = Calendar.getInstance();
+        imsak.setTime(cdpt.get(0).getDate());
 
-        Cursor c = context.getContentResolver()
-                .query(Extension.PRAYER_CONTEXT_URI, null, null, null, null);
+        Prayer cp = prayerContext.getCurrentPrayer();
+        Prayer np = prayerContext.getNextPrayer();
 
-        if (c != null && c.moveToFirst()) {
-            PrayerContext prayerContext = PrayerContext.Mapper.fromCursor(c);
-            c.close();
+        int cpi = cp.getIndex();
+        int npi = np.getIndex();
 
-            List<Prayer> cdpt = prayerContext.getCurrentPrayerList();
-            List<Integer> hdate = prayerContext.getHijriDate();
-            Calendar imsak = Calendar.getInstance();
-            imsak.setTime(cdpt.get(0).getDate());
+        int hd = hdate.get(Prayer.HIJRI_DATE);
+        int hm = hdate.get(Prayer.HIJRI_MONTH);
+        int hy = hdate.get(Prayer.HIJRI_YEAR);
+        int md = imsak.get(Calendar.DATE);
+        int mm = imsak.get(Calendar.MONTH);
+        int my = imsak.get(Calendar.YEAR);
 
-            Prayer cp = prayerContext.getCurrentPrayer();
-            Prayer np = prayerContext.getNextPrayer();
+        rv.setTextViewText(R.id.tv_prayer_name, prayerNames[npi]);
+        rv.setTextViewText(R.id.tv_prayer_time, getFormattedDate(context, np.getDate()));
+        rv.setTextViewText(R.id.tv_location, prayerContext.getLocationName());
+        rv.setTextViewText(R.id.tv_hijri_date, getHijriDate(awm, context, appWidgetId, hd, hm, hy));
+        rv.setTextViewText(R.id.tv_masihi_date, getMasihiDate(awm, context, appWidgetId, md, mm, my));
+        rv.setViewVisibility(R.id.progress_bar, View.GONE);
+        rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_IMSAK], showImsak ? View.VISIBLE : View.GONE);
+        rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_DHUHA], showDhuha ? View.VISIBLE : View.GONE);
 
-            int cpi = cp.getIndex();
-            int npi = np.getIndex();
+        for (int i = 0; i < prayerNames.length; i++) {
+            rv.setTextViewText(PRAYER_NAME[i], prayerNames[i]);
+            rv.setTextViewText(PRAYER_TIME[i], getFormattedDate(context, cdpt.get(i).getDate()));
 
-            int hd = hdate.get(Prayer.HIJRI_DATE);
-            int hm = hdate.get(Prayer.HIJRI_MONTH);
-            int hy = hdate.get(Prayer.HIJRI_YEAR);
-            int md = imsak.get(Calendar.DATE);
-            int mm = imsak.get(Calendar.MONTH);
-            int my = imsak.get(Calendar.YEAR);
-
-            rv.setTextViewText(R.id.tv_prayer_name, prayerNames[npi]);
-            rv.setTextViewText(R.id.tv_prayer_time, getFormattedDate(context, np.getDate()));
-            rv.setTextViewText(R.id.tv_location, prayerContext.getLocationName());
-            rv.setTextViewText(R.id.tv_hijri_date, getHijriDate(awm, context, appWidgetId, hd, hm, hy));
-            rv.setTextViewText(R.id.tv_masihi_date, getMasihiDate(awm, context, appWidgetId, md, mm, my));
-            rv.setViewVisibility(R.id.progress_bar, View.GONE);
-            rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_IMSAK], showImsak ? View.VISIBLE : View.GONE);
-            rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_DHUHA], showDhuha ? View.VISIBLE : View.GONE);
-
-            for (int i = 0; i < prayerNames.length; i++) {
-                rv.setTextViewText(PRAYER_NAME[i], prayerNames[i]);
-                rv.setTextViewText(PRAYER_TIME[i], getFormattedDate(context, cdpt.get(i).getDate()));
-
-                if (i == cpi || (!showImsak && i == Prayer.PRAYER_ISYAK && cpi == Prayer.PRAYER_IMSAK) ||
-                        (!showDhuha && i == Prayer.PRAYER_SYURUK && cpi == Prayer.PRAYER_DHUHA)) {
-                    rv.setTextColor(PRAYER_NAME[i], highlight);
-                    rv.setTextColor(PRAYER_TIME[i], highlight);
-                } else {
-                    rv.setTextColor(PRAYER_NAME[i], normal);
-                    rv.setTextColor(PRAYER_TIME[i], normal);
-                }
+            if (i == cpi || (!showImsak && i == Prayer.PRAYER_ISYAK && cpi == Prayer.PRAYER_IMSAK) ||
+                    (!showDhuha && i == Prayer.PRAYER_SYURUK && cpi == Prayer.PRAYER_DHUHA)) {
+                rv.setTextColor(PRAYER_NAME[i], highlight);
+                rv.setTextColor(PRAYER_TIME[i], highlight);
+            } else {
+                rv.setTextColor(PRAYER_NAME[i], normal);
+                rv.setTextColor(PRAYER_TIME[i], normal);
             }
-        } else {
-            Timber.w("cursor null");
         }
 
         return rv;

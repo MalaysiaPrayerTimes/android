@@ -156,6 +156,8 @@
 
         <service android:name=".main.MainService" />
 
+        <service android:name=".widget.WidgetService" />
+
     </application>
 
 </manifest>
