@@ -1,6 +1,7 @@
 package com.i906.mpt.internal;
 
 import com.i906.mpt.alarm.AlarmReceiver;
+import com.i906.mpt.db.DbModule;
 import com.i906.mpt.prayer.PrayerProvider;
 
 import javax.inject.Singleton;
@@ -14,6 +15,7 @@ import dagger.Component;
 @Component(modules = {
         ApiModule.class,
         AppModule.class,
+        DbModule.class,
 })
 public interface Graph {
     ActivityGraph activityGraph(ActivityModule module);
