@@ -1,5 +1,6 @@
 package com.i906.mpt.db;
 
+@SuppressWarnings("checkstyle:membername")
 public class LocationCache {
 
     private Long id;

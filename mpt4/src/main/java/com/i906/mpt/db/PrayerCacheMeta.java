@@ -33,6 +33,9 @@ public class PrayerCacheMeta {
 
     public static final String TABLE = "PrayerCache";
 
+    private PrayerCacheMeta() {
+    }
+
     public interface Columns extends BaseColumns {
         String CODE = "code";
         String MONTH = "month";

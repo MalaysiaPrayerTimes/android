@@ -95,16 +95,16 @@ class AzanPickerAdapter extends RecyclerView.Adapter<AzanPickerAdapter.ViewHolde
         private Tone tone;
 
         @BindView(R.id.rb_selected)
-        protected RadioButton selected;
+        RadioButton selected;
 
-        public ViewHolder(View v, AzanPickerAdapter adapter) {
+        ViewHolder(View v, AzanPickerAdapter adapter) {
             super(v);
             ButterKnife.bind(this, v);
             this.adapter = adapter;
         }
 
         @OnClick(R.id.list_item)
-        protected void onToneSelected() {
+        void onToneSelected() {
             adapter.setSelectedTone(tone);
         }
     }

@@ -22,6 +22,9 @@ public class LocationCacheMeta implements TypeColumns {
 
     public static final String TABLE = "LocationCache";
 
+    private LocationCacheMeta() {
+    }
+
     public interface Columns extends BaseColumns {
         String LATITUDE = "latitude";
         String LONGITUDE = "longitude";
