@@ -1,6 +1,6 @@
-package com.i906.mpt.db.table;
+package com.i906.mpt.db;
 
-public interface TypeColumns {
+interface TypeColumns {
 
     String TYPE_BOOLEAN = " INTEGER";
     String TYPE_INTEGER = " INTEGER";

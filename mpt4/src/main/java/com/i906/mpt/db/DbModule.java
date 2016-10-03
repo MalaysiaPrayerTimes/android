@@ -16,15 +16,17 @@ public class DbModule {
 
     @Provides
     @Singleton
-    public StorIOSQLite provideStorIOSQLite(SQLiteOpenHelper sqLiteOpenHelper) {
+    StorIOSQLite provideStorIOSQLite(SQLiteOpenHelper sqLiteOpenHelper) {
         return DefaultStorIOSQLite.builder()
                 .sqliteOpenHelper(sqLiteOpenHelper)
+                .addTypeMapping(PrayerCache.class, PrayerCacheMeta.MAPPER)
+                .addTypeMapping(LocationCache.class, LocationCacheMeta.MAPPER)
                 .build();
     }
 
     @Provides
     @Singleton
-    public SQLiteOpenHelper provideSQSqLiteOpenHelper(Context context) {
+    SQLiteOpenHelper provideSQSqLiteOpenHelper(Context context) {
         return new MptDatabase(context);
     }
 }

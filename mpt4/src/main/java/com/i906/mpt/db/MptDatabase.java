@@ -14,12 +14,14 @@ class MptDatabase extends SQLiteOpenHelper {
         this(context, null);
     }
 
-    MptDatabase(Context context, DatabaseErrorHandler errorHandler) {
+    private MptDatabase(Context context, DatabaseErrorHandler errorHandler) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, errorHandler);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(PrayerCacheMeta.getCreateTableQuery());
+        db.execSQL(LocationCacheMeta.getCreateTableQuery());
     }
 
     @Override
@@ -41,5 +43,6 @@ class MptDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS MptStatus");
         db.execSQL("DROP TABLE IF EXISTS Codex");
         db.execSQL("DROP TABLE IF EXISTS PrayerData");
+        db.execSQL(PrayerCacheMeta.getCreateTableQuery());
     }
 }
