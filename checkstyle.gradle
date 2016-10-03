@@ -20,6 +20,11 @@
 
 apply plugin: 'checkstyle'
 
+checkstyle {
+    toolVersion '7.1.1'
+    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml")
+}
+
 task checkstyleMain(type: Checkstyle) {
     ignoreFailures = false
     showViolations = true
@@ -35,26 +40,7 @@ task checkstyleMain(type: Checkstyle) {
     }
 
     classpath = files()
-    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml")
 }
-
-task checkstyleTest(type: Checkstyle) {
-    ignoreFailures = false
-    showViolations = true
-    source 'src/androidTest'
-    include '**/*.java'
-    exclude '**/gen/**'
-    exclude '**/R.java'
-    exclude '**/BuildConfig.java'
-
-    reports {
-        xml.destination "$project.buildDir/reports/checkstyle/test.xml"
-    }
-
-    classpath = files()
-    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle-test.xml")
-}
-
 
 task checkstyleReport << {
     checkType = project.ext.get("checkType")
@@ -66,7 +52,7 @@ task checkstyleReport << {
     }
 }
 
-task checkstyle(dependsOn: ['checkstyleMain', 'checkstyleTest']) {
+task checkstyle(dependsOn: ['checkstyleMain']) {
     description 'Runs Checkstyle inspection against Android sourcesets.'
     group = 'Code Quality'
 }

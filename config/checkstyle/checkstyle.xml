@@ -6,6 +6,7 @@
     <module name="FileLength" />
     <module name="FileTabCharacter" />
     <module name="NewlineAtEndOfFile" />
+    <module name="SuppressWarningsFilter" />
 
     <!-- Trailing spaces -->
     <module name="RegexpSingleline">
@@ -73,9 +74,10 @@
 
         <!-- Design -->
         <module name="HideUtilityClassConstructor" />
-        <module name="InterfaceIsType" />
 
         <!-- Misc -->
         <module name="ArrayTypeStyle" />
+        <module name="SuppressWarningsHolder" />
+
     </module>
 </module>

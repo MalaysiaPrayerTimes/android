@@ -15,7 +15,7 @@ class DateProvider {
     private final Calendar mCalendar;
 
     @Inject
-    public DateProvider() {
+    DateProvider() {
         mCalendar = getCalendarInstance();
     }
 

@@ -90,7 +90,7 @@ class PrayerNotificationAdapter extends RecyclerView.Adapter<PrayerNotificationA
 
         private PrayerNotificationAdapter adapter;
 
-        public ViewHolder(final NotificationSettingsView v, final PrayerNotificationAdapter adapter) {
+        ViewHolder(final NotificationSettingsView v, final PrayerNotificationAdapter adapter) {
             super(v);
             ButterKnife.bind(this, v);
             this.adapter = adapter;

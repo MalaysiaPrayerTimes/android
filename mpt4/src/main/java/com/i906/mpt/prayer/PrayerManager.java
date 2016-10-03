@@ -34,6 +34,7 @@ public class PrayerManager {
     private final DateTimeHelper mDateHelper;
     private final InterfacePreferences mPreferences;
     private final LocationRepository mLocationRepository;
+    private final PrayerCacheManager mPrayerCache;
     private final PrayerClient mPrayerClient;
     private final PrayerBroadcaster mPrayerBroadcaster;
 
@@ -48,12 +49,14 @@ public class PrayerManager {
     public PrayerManager(DateTimeHelper date,
                          InterfacePreferences prefs,
                          LocationRepository location,
+                         PrayerCacheManager cache,
                          PrayerClient prayer,
                          PrayerBroadcaster broadcaster,
                          HiddenPreferences hprefs) {
         mDateHelper = date;
         mPreferences = prefs;
         mLocationRepository = location;
+        mPrayerCache = cache;
         mPrayerClient = prayer;
         mPrayerBroadcaster = broadcaster;
 
@@ -140,28 +143,48 @@ public class PrayerManager {
                 });
     }
 
-    private Observable<PrayerData> getCurrentPrayerTimesByCoordinate(Location location) {
+    private Observable<PrayerData> getCurrentPrayerTimesByCoordinate(final Location location) {
         double lat = location.getLatitude();
         double lng = location.getLongitude();
 
         int year = mDateHelper.getCurrentYear();
-        int month = mDateHelper.getCurrentMonth();
+        int month = mDateHelper.getCurrentMonth() + 1;
 
-        return mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month + 1);
+        Observable<PrayerData> cache = mPrayerCache.get(year, month, location);
+
+        Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month)
+                .doOnNext(new Action1<PrayerData>() {
+                    @Override
+                    public void call(PrayerData data) {
+                        mPrayerCache.save(data, location);
+                    }
+                });
+
+        return cache.switchIfEmpty(api);
     }
 
-    private Observable<PrayerData> getNextPrayerTimesByCoordinate(Location location) {
+    private Observable<PrayerData> getNextPrayerTimesByCoordinate(final Location location) {
         double lat = location.getLatitude();
         double lng = location.getLongitude();
 
         int year = mDateHelper.getCurrentYear();
-        int month = mDateHelper.getNextMonth();
+        int month = mDateHelper.getNextMonth() + 1;
 
         if (mDateHelper.isNextMonthNewYear()) {
             year = mDateHelper.getNextYear();
         }
 
-        return mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month + 1);
+        Observable<PrayerData> cache = mPrayerCache.get(year, month, location);
+
+        Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month)
+                .doOnNext(new Action1<PrayerData>() {
+                    @Override
+                    public void call(PrayerData data) {
+                        mPrayerCache.save(data, location);
+                    }
+                });
+
+        return cache.switchIfEmpty(api);
     }
 
     private final Func2<PrayerData, PrayerData, PrayerContext> mPrayerContextCreator =

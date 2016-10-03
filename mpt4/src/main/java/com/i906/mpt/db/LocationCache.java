@@ -1,12 +1,13 @@
-package com.i906.mpt.model;
+package com.i906.mpt.db;
 
+@SuppressWarnings("checkstyle:membername")
 public class LocationCache {
 
     private Long id;
     private double latitude;
     private double longitude;
     private String code;
-    private String jakim;
+    private String provider_code;
 
     public Long getId() {
         return id;
@@ -25,7 +26,7 @@ public class LocationCache {
     }
 
     public String getJakimCode() {
-        return jakim;
+        return provider_code;
     }
 
     public static class Builder {
@@ -51,8 +52,8 @@ public class LocationCache {
             return this;
         }
 
-        public Builder setJakimCode(String jakim) {
-            cache.jakim = jakim;
+        public Builder setProviderCode(String jakim) {
+            cache.provider_code = jakim;
             return this;
         }
 
@@ -73,7 +74,7 @@ public class LocationCache {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", code='" + code + '\'' +
-                ", jakim='" + jakim + '\'' +
+                ", provider_code='" + provider_code + '\'' +
                 '}';
     }
 }
