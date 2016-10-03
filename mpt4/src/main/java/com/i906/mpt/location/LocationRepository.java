@@ -4,14 +4,16 @@ import android.content.Context;
 import android.location.Location;
 
 import com.google.android.gms.location.LocationRequest;
+import com.i906.mpt.prefs.HiddenPreferences;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * @author Noorzaini Ilhami
@@ -19,21 +21,67 @@ import rx.Observable;
 @Singleton
 public class LocationRepository {
 
-    private static final int LOCATION_REQUEST_TIMEOUT = 15 * 1000;
+    private final long mCacheDuration;
+    private final long mRequestTimeout;
 
-    private ReactiveLocationProvider mProvider;
+    private final RxFusedLocation mFusedLocation;
+    private Location mLastLocation;
 
     @Inject
-    public LocationRepository(Context context) {
-        mProvider = new ReactiveLocationProvider(context);
+    public LocationRepository(Context context, HiddenPreferences prefs) {
+        mFusedLocation = new RxFusedLocation(context);
+
+        mCacheDuration = prefs.getLocationCacheDuration();
+        mRequestTimeout = prefs.getLocationRequestTimeout();
     }
 
     public Observable<Location> getLocation() {
-        LocationRequest req = LocationRequest.create();
+        return getLocation(false);
+    }
 
-        return mProvider.getUpdatedLocation(req)
-                .timeout(LOCATION_REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
-                .first();
+    public Observable<Location> getLocation(boolean force) {
+        LocationRequest request = LocationRequest.create()
+                .setNumUpdates(1);
+
+        if (shouldRequestNewLocation() || force) {
+            return getLocation(request)
+                    .timeout(mRequestTimeout, TimeUnit.MILLISECONDS)
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends Location>>() {
+                        @Override
+                        public Observable<? extends Location> call(Throwable e) {
+                            if (mLastLocation == null) {
+                                return Observable.error(e);
+                            } else {
+                                return Observable.just(mLastLocation);
+                            }
+                        }
+                    })
+                    .first();
+        } else {
+            return Observable.just(mLastLocation);
+        }
+    }
+
+    public Observable<Location> getLocation(LocationRequest req) {
+        return mFusedLocation.getLocation(req)
+                .doOnNext(new Action1<Location>() {
+                    @Override
+                    public void call(Location location) {
+                        mLastLocation = location;
+                    }
+                });
+    }
+
+    private boolean shouldRequestNewLocation() {
+        if (mLastLocation == null) {
+            return true;
+        }
+
+        if (System.currentTimeMillis() - mLastLocation.getTime() > mCacheDuration) {
+            return true;
+        }
+
+        return false;
     }
 
     public static float getDistance(Location a, Location b) {

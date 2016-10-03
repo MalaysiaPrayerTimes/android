@@ -3,10 +3,9 @@ package com.i906.mpt;
 import android.app.Application;
 import android.content.Context;
 
+import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.Graph;
-
-import net.danlew.android.joda.JodaTimeAndroid;
 
 import timber.log.Timber;
 
@@ -17,13 +16,13 @@ public class MptApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        JodaTimeAndroid.init(this);
-
         setGraph(Dagger.getGraph(this));
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        StartupReceiver.startup(this);
     }
 
     public Graph getGraph() {

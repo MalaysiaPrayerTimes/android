@@ -42,13 +42,11 @@ public class OpenSourceActivity extends BaseActivity {
         mDataset = new ArrayList<>();
 
         mDataset.add(Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"));
-        mDataset.add(Licenses.fromGitHub("mcharmas/Android-ReactiveLocation", Licenses.LICENSE_APACHE_V2));
         mDataset.add(Licenses.fromGitHub("JakeWharton/butterknife"));
         mDataset.add(Licenses.fromGitHub("google/dagger"));
         mDataset.add(Licenses.fromGitHub("google/gson", Licenses.FILE_NO_EXTENSION));
-        mDataset.add(Licenses.fromGitHub("dlew/joda-time-android", Licenses.FILE_NO_EXTENSION));
-        mDataset.add(Licenses.fromGitHub("frankiesardo/LinearListView", Licenses.LICENSE_APACHE_V2));
         mDataset.add(Licenses.fromGitHub("yshrsmz/LicenseAdapter", Licenses.FILE_NO_EXTENSION));
+        mDataset.add(Licenses.fromGitHub("frankiesardo/LinearListView", Licenses.LICENSE_APACHE_V2));
         mDataset.add(Licenses.fromGitHub("HeinrichReimer/material-intro"));
         mDataset.add(Licenses.fromGitHub("square/okhttp"));
         mDataset.add(Licenses.fromGitHub("zsoltk/paperwork", Licenses.FILE_NO_EXTENSION));
@@ -57,5 +55,6 @@ public class OpenSourceActivity extends BaseActivity {
         mDataset.add(Licenses.fromGitHub("reactivex/rxjava", Licenses.FILE_NO_EXTENSION));
         mDataset.add(Licenses.fromGitHub("pushtorefresh/storio"));
         mDataset.add(Licenses.fromGitHub("JakeWharton/timber"));
+        mDataset.add(Licenses.fromGitHub("msarhan/ummalqura-calendar", Licenses.NAME_MIT, Licenses.FILE_NO_EXTENSION));
     }
 }

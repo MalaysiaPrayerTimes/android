@@ -24,4 +24,12 @@ class CursorPrayer implements Prayer {
     public Date getDate() {
         return date;
     }
+
+    @Override
+    public String toString() {
+        return "CursorPrayer{" +
+                "index=" + index +
+                ", date=" + date +
+                '}';
+    }
 }

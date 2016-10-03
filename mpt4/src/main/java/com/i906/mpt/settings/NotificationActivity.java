@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.prefs.NotificationPreferences;
@@ -31,7 +30,7 @@ public class NotificationActivity extends BaseActivity implements AzanPickerFrag
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        MptApplication.graph(this).inject(this);
+        activityGraph().inject(this);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);

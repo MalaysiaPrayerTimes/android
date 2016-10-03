@@ -5,18 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
 import com.i906.mpt.internal.ActivityGraph;
 import com.i906.mpt.internal.ActivityModule;
+import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.Graph;
+import com.i906.mpt.location.ConnectionException;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import butterknife.ButterKnife;
-import pl.charmas.android.reactivelocation.observables.GoogleAPIConnectionException;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -53,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (e instanceof ConnectException || e instanceof UnknownHostException
                 || e instanceof SocketTimeoutException) {
             return R.string.error_no_network;
-        } else if (e instanceof GoogleAPIConnectionException) {
+        } else if (e instanceof ConnectionException) {
             return R.string.error_play_service;
         } else {
             return defaultResId;
@@ -65,6 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected Graph graph() {
-        return MptApplication.graph(this);
+        return Dagger.getGraph(this);
     }
 }

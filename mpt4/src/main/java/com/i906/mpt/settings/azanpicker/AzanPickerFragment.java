@@ -16,8 +16,9 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
+import com.i906.mpt.internal.ActivityModule;
+import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.util.RingtoneHelper;
 
 import java.util.List;
@@ -72,7 +73,11 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MptApplication.graph(getActivity()).inject(this);
+
+        Dagger.getGraph(getActivity())
+                .activityGraph(new ActivityModule(getActivity()))
+                .inject(this);
+
         mAdapter = new AzanPickerAdapter(getActivity());
         mAdapter.setListener(this);
         mMediaPlayer = new MediaPlayer();

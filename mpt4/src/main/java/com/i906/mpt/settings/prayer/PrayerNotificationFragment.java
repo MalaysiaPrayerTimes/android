@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
 import com.i906.mpt.prefs.NotificationPreferences;
@@ -37,7 +36,7 @@ public class PrayerNotificationFragment extends BaseFragment implements PrayerNo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MptApplication.graph(getActivity()).inject(this);
+        activityGraph().inject(this);
         mAdapter = new PrayerNotificationAdapter(getActivity(), mNotificationPrefs, mRingtoneHelper);
     }
 

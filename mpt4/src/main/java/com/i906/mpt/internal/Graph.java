@@ -1,12 +1,9 @@
 package com.i906.mpt.internal;
 
 import com.i906.mpt.alarm.AlarmReceiver;
-import com.i906.mpt.alarm.AlarmService;
-import com.i906.mpt.main.MainActivity;
 import com.i906.mpt.prayer.PrayerProvider;
 import com.i906.mpt.settings.DonateActivity;
 import com.i906.mpt.settings.NotificationActivity;
-import com.i906.mpt.settings.azanpicker.AzanPickerFragment;
 import com.i906.mpt.settings.prayer.PrayerNotificationFragment;
 
 import javax.inject.Singleton;
@@ -23,12 +20,7 @@ import dagger.Component;
 })
 public interface Graph {
     ActivityGraph activityGraph(ActivityModule module);
-    void inject(MainActivity activity);
-    void inject(AlarmService service);
+    ServiceGraph serviceGraph(ServiceModule module);
     void inject(AlarmReceiver receiver);
-    void inject(AzanPickerFragment fragment);
-    void inject(DonateActivity activity);
-    void inject(NotificationActivity activity);
-    void inject(PrayerNotificationFragment fragment);
     void inject(PrayerProvider provider);
 }

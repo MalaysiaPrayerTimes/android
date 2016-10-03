@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.prefs.CommonPreferences;
@@ -35,7 +34,7 @@ public class DonateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
-        MptApplication.graph(this).inject(this);
+        activityGraph().inject(this);
 
         if (mPreferences.isGenerousUser()) {
             mCodeView.setVisibility(View.VISIBLE);

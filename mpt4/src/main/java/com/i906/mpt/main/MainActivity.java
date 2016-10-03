@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.i906.mpt.R;
-import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.intro.MainIntroActivity;
 import com.i906.mpt.prefs.CommonPreferences;
@@ -56,16 +55,15 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        graph().inject(this);
+        activityGraph().inject(this);
 
         if (mCommonPreferences.isFirstStart()) {
             showIntro();
             mCommonPreferences.convertLegacyPreferences();
             mNotificationPreferences.convertLegacyPreferences();
+        } else {
+            setup();
         }
-
-        setup();
-        StartupReceiver.startAlarmStartup(this);
     }
 
     private void setup() {
@@ -98,8 +96,9 @@ public class MainActivity extends BaseActivity {
                 mCommonPreferences.setFirstStart(true);
                 finish();
             }
-            if (resultCode == RESULT_OK) {
 
+            if (resultCode == RESULT_OK) {
+                setup();
             }
         }
     }

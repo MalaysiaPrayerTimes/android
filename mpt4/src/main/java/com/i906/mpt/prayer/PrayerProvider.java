@@ -17,6 +17,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.schedulers.Schedulers;
+
 /**
  * Created by Noorzaini Ilhami on 24/10/2015.
  */
@@ -117,6 +119,7 @@ public class PrayerProvider extends ContentProvider {
         List<Object> r = new ArrayList<>();
 
         PrayerContext prayerContext = mPrayerManager.getPrayerContext(false)
+                .observeOn(Schedulers.immediate())
                 .toBlocking()
                 .first();
 

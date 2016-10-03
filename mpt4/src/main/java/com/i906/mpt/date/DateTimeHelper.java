@@ -1,9 +1,7 @@
 package com.i906.mpt.date;
 
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar;
 import com.i906.mpt.prefs.CommonPreferences;
-
-import org.joda.time.DateTime;
-import org.joda.time.chrono.IslamicChronology;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +16,7 @@ public class DateTimeHelper {
     private final DateProvider mProvider;
     private final CommonPreferences mPrefs;
     private Calendar mCalendar;
-    private DateTime mHijriCalendar;
+    private UmmalquraCalendar mHijriCalendar;
 
     @Inject
     public DateTimeHelper(DateProvider provider, CommonPreferences prefs) {
@@ -80,18 +78,22 @@ public class DateTimeHelper {
         List<Integer> l = new ArrayList<>(3);
         refresh();
 
-        if (maghribPassed) mHijriCalendar = mHijriCalendar.plusDays(1);
-        mHijriCalendar = mHijriCalendar.plusDays(mPrefs.getHijriOffset());
-        l.add(mHijriCalendar.getDayOfMonth());
-        l.add(mHijriCalendar.getMonthOfYear() - 1);
-        l.add(mHijriCalendar.getYear());
+        if (maghribPassed) {
+            mHijriCalendar.add(Calendar.DATE, 1);
+        }
+
+        mHijriCalendar.add(Calendar.DATE, mPrefs.getHijriOffset());
+        l.add(mHijriCalendar.get(Calendar.DATE));
+        l.add(mHijriCalendar.get(Calendar.MONTH));
+        l.add(mHijriCalendar.get(Calendar.YEAR));
 
         return l;
     }
 
     private void refresh() {
         mCalendar = mProvider.getNow();
-        mHijriCalendar = new DateTime(IslamicChronology.getInstance());
+        mHijriCalendar = new UmmalquraCalendar();
+        mHijriCalendar.setTimeInMillis(mProvider.getCurrentTime());
     }
 
     public Calendar getNow() {
