@@ -33,7 +33,7 @@ public class CommonPreferences {
     }
 
     public int getHijriOffset() {
-        return Integer.valueOf(mPrefs.getString("hijri_offset", "-1"));
+        return Integer.valueOf(mPrefs.getString("hijri_offset", "0"));
     }
 
     public boolean isDeveloperUser() {
