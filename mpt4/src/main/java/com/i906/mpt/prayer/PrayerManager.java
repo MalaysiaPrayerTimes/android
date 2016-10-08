@@ -22,6 +22,7 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -64,9 +65,7 @@ public class PrayerManager {
     }
 
     public Observable<PrayerContext> getPrayerContext(final boolean refresh) {
-        if (mPrayerStream == null || hasError() && !isLoading()) {
-            mPrayerStream = BehaviorSubject.create();
-        }
+        checkPrayerStream();
 
         if (isLoading() && !refresh) {
             return mPrayerStream.asObservable();
@@ -76,7 +75,6 @@ public class PrayerManager {
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mIsLoading.set(true);
                         mIsError.set(false);
                     }
                 })
@@ -90,20 +88,22 @@ public class PrayerManager {
                             return updatePrayerContext(location);
                         }
 
-                        return Observable.just(mLastPrayerContext);
+                        if (mLastPrayerContext != null) {
+                            return Observable.just(mLastPrayerContext);
+                        } else {
+                            return Observable.empty();
+                        }
                     }
                 })
                 .subscribe(new Action1<PrayerContext>() {
                     @Override
                     public void call(PrayerContext prayer) {
-                        mIsLoading.set(false);
                         mIsError.set(false);
                         mPrayerStream.onNext(prayer);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mIsLoading.set(false);
                         mIsError.set(true);
                         mPrayerStream.onError(throwable);
                     }
@@ -112,26 +112,54 @@ public class PrayerManager {
         return mPrayerStream.asObservable();
     }
 
+    private void checkPrayerStream() {
+        if (mPrayerStream == null || hasError() && !isLoading()) {
+            mPrayerStream = BehaviorSubject.create();
+        }
+    }
+
     private void broadcastPrayerContext(PrayerContext context) {
+        Timber.i("Broadcasting updated prayer context");
+
         mPrayerStream.onNext(context);
         mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
     }
 
-    public boolean shouldUpdatePrayerContext(Location location) {
+    private boolean shouldUpdatePrayerContext(Location location) {
         if (mLastPrayerContext == null) {
             return true;
         }
 
-        float distance = LocationRepository.getDistance(mLastLocation, location);
-
-        if (distance >= mLocationDistanceLimit) {
-            return true;
-        }
-
-        return false;
+        return shouldUpdateLocation(location);
     }
 
-    public Observable<PrayerContext> updatePrayerContext(Location location) {
+    private boolean shouldUpdateLocation(Location location) {
+        float distance = LocationRepository.getDistance(mLastLocation, location);
+        return distance >= mLocationDistanceLimit;
+    }
+
+    public Observable<PrayerContext> refreshPrayerContext(Location location) {
+        checkPrayerStream();
+
+        if (shouldUpdateLocation(location)) {
+            updatePrayerContext(location)
+                    .subscribe(new Action1<PrayerContext>() {
+                        @Override
+                        public void call(PrayerContext context) {
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable e) {
+                        }
+                    });
+        }
+
+        return mPrayerStream.asObservable();
+    }
+
+    private Observable<PrayerContext> updatePrayerContext(Location location) {
+        Timber.i("Updating prayer context");
+
         return getCurrentPrayerTimesByCoordinate(location)
                 .zipWith(getNextPrayerTimesByCoordinate(location), mPrayerContextCreator)
                 .doOnNext(new Action1<PrayerContext>() {
@@ -139,6 +167,18 @@ public class PrayerManager {
                     public void call(PrayerContext prayerContext) {
                         mLastPrayerContext = prayerContext;
                         broadcastPrayerContext(prayerContext);
+                    }
+                })
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mIsLoading.set(false);
                     }
                 });
     }

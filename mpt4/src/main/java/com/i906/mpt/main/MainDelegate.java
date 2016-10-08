@@ -11,6 +11,7 @@ import com.i906.mpt.prefs.HiddenPreferences;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -25,12 +26,14 @@ class MainDelegate {
 
     private final long mLocationFastestInterval;
     private final long mLocationInterval;
+    private final long mLocationSmallestDisplacement;
 
     private final CompositeSubscription mSubscription = new CompositeSubscription();
     private final LocationRepository mLocationRepository;
     private final PrayerManager mPrayerManager;
 
     private MainHandler mView;
+    private Observable<Location> mLocationObservable;
 
     @Inject
     MainDelegate(LocationRepository location, PrayerManager prayer, HiddenPreferences hpref) {
@@ -39,21 +42,26 @@ class MainDelegate {
 
         mLocationFastestInterval = hpref.getLocationFastestInterval();
         mLocationInterval = hpref.getLocationInterval();
+        mLocationSmallestDisplacement = hpref.getLocationDistanceLimit();
+
+        prepareObservables();
     }
 
-    public void startLocationListener() {
-        if (mSubscription.hasSubscriptions()) {
-            return;
-        }
-
+    private void prepareObservables() {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
                 .setFastestInterval(mLocationFastestInterval)
-                .setInterval(mLocationInterval);
+                .setInterval(mLocationInterval)
+                .setSmallestDisplacement(mLocationSmallestDisplacement);
 
-        Subscription s = mLocationRepository.getLocation(request)
+        mLocationObservable = mLocationRepository.getLocation(request)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public void startLocationListener() {
+        Subscription s = mLocationObservable
+                .share()
                 .subscribe(new Action1<Location>() {
                     @Override
                     public void call(Location location) {
@@ -71,22 +79,28 @@ class MainDelegate {
     }
 
     private void updatePrayerContext(Location location) {
-        if (mPrayerManager.shouldUpdatePrayerContext(location)) {
-            Subscription s = mPrayerManager.updatePrayerContext(location)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<PrayerContext>() {
-                        @Override
-                        public void call(PrayerContext prayerContext) {
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                        }
-                    });
+        Subscription s = mPrayerManager.refreshPrayerContext(location)
+                .first()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<PrayerContext>() {
+                    @Override
+                    public void call(PrayerContext prayerContext) {
+                        handlePrayerContext(prayerContext);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        handleError(throwable);
+                    }
+                });
 
-            mSubscription.add(s);
-        }
+        mSubscription.add(s);
+    }
+
+    private void handlePrayerContext(PrayerContext prayerContext) {
+        if (mView == null) return;
+        mView.handlePrayerContext(prayerContext);
     }
 
     private void handleLocation(Location location) {
