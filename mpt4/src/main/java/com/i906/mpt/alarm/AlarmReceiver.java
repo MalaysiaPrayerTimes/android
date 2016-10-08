@@ -3,6 +3,7 @@ package com.i906.mpt.alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.extension.Extension;
@@ -37,13 +38,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (prayer == -1 || time == -1) return;
 
         if (AlarmService.ACTION_NOTIFICATION_REMINDER.equals(action)) {
-            mNotificationHelper.showPrayerReminder(prayer, time, location, true);
-            startAlarmService(context, AlarmService.ACTION_UPDATE_REMINDER);
-        }
-
-        if (AlarmService.ACTION_NOTIFICATION_REMINDER_TICK.equals(action)) {
-            mNotificationHelper.showPrayerReminder(prayer, time, location, false);
-            startAlarmService(context, AlarmService.ACTION_UPDATE_REMINDER);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mNotificationHelper.showNougatPrayerReminder(prayer, time, location);
+            } else {
+                startAlarmService(context, AlarmService.ACTION_UPDATE_REMINDER);
+            }
         }
 
         if (AlarmService.ACTION_NOTIFICATION_PRAYER.equals(action)) {
