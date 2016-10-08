@@ -150,7 +150,11 @@
                 android:resource="@xml/widget_text" />
         </receiver>
 
-        <receiver android:name=".alarm.AlarmReceiver" />
+        <receiver android:name=".alarm.AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+            </intent-filter>
+        </receiver>
 
         <service android:name=".alarm.AlarmService" />
 

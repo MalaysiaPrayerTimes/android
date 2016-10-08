@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.i906.mpt.MptApplication;
+import com.i906.mpt.extension.Extension;
 import com.i906.mpt.prayer.PrayerBroadcaster;
 
 import javax.inject.Inject;
@@ -25,9 +26,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         Timber.d("Received alarm action: %s", intent);
 
         String action = intent.getAction();
-        int prayer =  intent.getIntExtra(AlarmService.EXTRA_PRAYER_INDEX, -1);
+        int prayer = intent.getIntExtra(AlarmService.EXTRA_PRAYER_INDEX, -1);
         long time = intent.getLongExtra(AlarmService.EXTRA_PRAYER_TIME, -1);
         String location = intent.getStringExtra(AlarmService.EXTRA_PRAYER_LOCATION);
+
+        if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
+            startAlarmService(context, Extension.ACTION_PRAYER_TIME_UPDATED);
+        }
 
         if (prayer == -1 || time == -1) return;
 
