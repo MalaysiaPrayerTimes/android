@@ -17,6 +17,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -56,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else if (e instanceof ConnectionException) {
             return R.string.error_play_service;
         } else {
+            Timber.w(e);
             return defaultResId;
         }
     }

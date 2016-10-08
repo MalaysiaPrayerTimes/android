@@ -40,10 +40,10 @@ public class LocationRepository {
     }
 
     public Observable<Location> getLocation(boolean force) {
-        LocationRequest request = LocationRequest.create()
-                .setNumUpdates(1);
-
         if (shouldRequestNewLocation() || force) {
+            LocationRequest request = LocationRequest.create()
+                    .setNumUpdates(1);
+
             return getLocation(request)
                     .timeout(mRequestTimeout, TimeUnit.MILLISECONDS)
                     .onErrorResumeNext(new Func1<Throwable, Observable<? extends Location>>() {

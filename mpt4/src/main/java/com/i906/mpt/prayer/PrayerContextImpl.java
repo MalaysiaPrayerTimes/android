@@ -149,4 +149,12 @@ class PrayerContextImpl implements PrayerContext {
         s.setTime(cdpt.get(prayer));
         return n.after(s);
     }
+
+    @Override
+    public String toString() {
+        return "PrayerContextImpl{" +
+                "current=" + mCurrentPrayer +
+                ", next=" + mNextPrayer +
+                '}';
+    }
 }
