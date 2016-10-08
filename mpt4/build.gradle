@@ -96,6 +96,7 @@ dependencies {
     def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
     def TIMBER_VERSION = rootProject.ext.TIMBER_VERSION
+    def STETHO_VERSION = '1.4.1'
     def STORIO_VERSION = rootProject.ext.STORIO_VERSION
 
     compile project(':api-client')
@@ -127,6 +128,11 @@ dependencies {
     // Database
     compile "com.pushtorefresh.storio:sqlite:$STORIO_VERSION"
     compile "com.pushtorefresh.storio:content-resolver:$STORIO_VERSION"
+
+    // Stetho
+    debugCompile "com.facebook.stetho:stetho:$STETHO_VERSION"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:$STETHO_VERSION"
+    debugCompile "com.facebook.stetho:stetho-timber:$STETHO_VERSION"
 
     // Misc
     compile 'com.github.msarhan:ummalqura-calendar:1.1.7'

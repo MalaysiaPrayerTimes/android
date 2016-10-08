@@ -15,7 +15,9 @@ import dagger.Component;
 @Component(modules = {
         ApiModule.class,
         AppModule.class,
+        BaseOkHttpModule.class,
         DbModule.class,
+        OkHttpModule.class,
 })
 public interface Graph {
     ActivityGraph activityGraph(ActivityModule module);
