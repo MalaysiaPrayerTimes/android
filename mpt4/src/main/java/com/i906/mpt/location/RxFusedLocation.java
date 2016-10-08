@@ -102,7 +102,6 @@ class RxFusedLocation {
 
         @Override
         public void cancel() throws Exception {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mClient, this);
             if (mClient.isConnected()) {
                 LocationServices.FusedLocationApi.removeLocationUpdates(mClient, this);
             }

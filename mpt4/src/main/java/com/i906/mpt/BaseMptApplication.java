@@ -7,9 +7,7 @@ import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.Graph;
 
-import timber.log.Timber;
-
-public class MptApplication extends Application {
+public class BaseMptApplication extends Application {
 
     private Graph mComponent;
 
@@ -17,12 +15,11 @@ public class MptApplication extends Application {
     public void onCreate() {
         super.onCreate();
         setGraph(Dagger.getGraph(this));
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
-
+        onPreCreate();
         StartupReceiver.startup(this);
+    }
+
+    public void onPreCreate() {
     }
 
     public Graph getGraph() {
@@ -34,6 +31,6 @@ public class MptApplication extends Application {
     }
 
     public static Graph graph(Context context) {
-        return ((MptApplication) context.getApplicationContext()).getGraph();
+        return ((BaseMptApplication) context.getApplicationContext()).getGraph();
     }
 }
