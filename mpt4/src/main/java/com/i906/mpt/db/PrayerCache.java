@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * @author Noorzaini Ilhami
  */
+@SuppressWarnings("checkstyle:membername")
 public class PrayerCache {
     public Long id;
     public String code;
