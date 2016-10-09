@@ -27,6 +27,10 @@ public class LocationPreferences {
         return mPrefs.getBoolean("location_automatic", true);
     }
 
+    public boolean hasPreferredLocation() {
+        return getPreferredLocation() != null;
+    }
+
     @Nullable
     public PreferredLocation getPreferredLocation() {
         String code = mPrefs.getString("location_manual_code", null);

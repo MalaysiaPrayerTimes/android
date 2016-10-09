@@ -2,12 +2,10 @@ package com.i906.mpt.prayer;
 
 import android.location.Location;
 
-import com.i906.mpt.api.prayer.PrayerClient;
-import com.i906.mpt.api.prayer.PrayerData;
-import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.location.LocationRepository;
+import com.i906.mpt.location.PreferredLocation;
 import com.i906.mpt.prefs.HiddenPreferences;
-import com.i906.mpt.prefs.InterfacePreferences;
+import com.i906.mpt.prefs.LocationPreferences;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -18,7 +16,6 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
@@ -32,14 +29,13 @@ public class PrayerManager {
 
     private final long mLocationDistanceLimit;
 
-    private final DateTimeHelper mDateHelper;
-    private final InterfacePreferences mPreferences;
+    private final LocationPreferences mLocationPreferences;
     private final LocationRepository mLocationRepository;
-    private final PrayerCacheManager mPrayerCache;
-    private final PrayerClient mPrayerClient;
     private final PrayerBroadcaster mPrayerBroadcaster;
+    private final PrayerDownloader mPrayerDownloader;
 
     private Location mLastLocation;
+    private PreferredLocation mLastPreferredLocation;
     private PrayerContext mLastPrayerContext;
     private Subject<PrayerContext, PrayerContext> mPrayerStream;
 
@@ -47,19 +43,15 @@ public class PrayerManager {
     private AtomicBoolean mIsError = new AtomicBoolean(false);
 
     @Inject
-    public PrayerManager(DateTimeHelper date,
-                         InterfacePreferences prefs,
+    public PrayerManager(PrayerDownloader downloader,
                          LocationRepository location,
-                         PrayerCacheManager cache,
-                         PrayerClient prayer,
                          PrayerBroadcaster broadcaster,
-                         HiddenPreferences hprefs) {
-        mDateHelper = date;
-        mPreferences = prefs;
+                         HiddenPreferences hprefs,
+                         LocationPreferences lprefs) {
+        mLocationPreferences = lprefs;
         mLocationRepository = location;
-        mPrayerCache = cache;
-        mPrayerClient = prayer;
         mPrayerBroadcaster = broadcaster;
+        mPrayerDownloader = downloader;
 
         mLocationDistanceLimit = hprefs.getLocationDistanceLimit();
     }
@@ -71,7 +63,33 @@ public class PrayerManager {
             return mPrayerStream.asObservable();
         }
 
-        mLocationRepository.getLocation(refresh)
+        Observable<PrayerContext> data;
+
+        if (!useAutomaticLocation()) {
+            data = getPreferredPrayerContext(refresh);
+        } else {
+            data = getAutomaticPrayerContext(refresh);
+        }
+
+        data.subscribe(new Action1<PrayerContext>() {
+            @Override
+            public void call(PrayerContext prayer) {
+                mIsError.set(false);
+                mPrayerStream.onNext(prayer);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                mIsError.set(true);
+                mPrayerStream.onError(throwable);
+            }
+        });
+
+        return mPrayerStream.asObservable();
+    }
+
+    private Observable<PrayerContext> getAutomaticPrayerContext(boolean refresh) {
+        return mLocationRepository.getLocation(refresh)
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
@@ -94,22 +112,43 @@ public class PrayerManager {
                             return Observable.empty();
                         }
                     }
-                })
-                .subscribe(new Action1<PrayerContext>() {
+                });
+    }
+
+    private Observable<PrayerContext> getPreferredPrayerContext(boolean refresh) {
+        final PreferredLocation location = mLocationPreferences.getPreferredLocation();
+
+        if (location == null) {
+            return getAutomaticPrayerContext(refresh);
+        }
+
+        return Observable.just(location.getCode())
+                .doOnSubscribe(new Action0() {
                     @Override
-                    public void call(PrayerContext prayer) {
+                    public void call() {
                         mIsError.set(false);
-                        mPrayerStream.onNext(prayer);
                     }
-                }, new Action1<Throwable>() {
+                })
+                .flatMap(new Func1<String, Observable<PrayerContext>>() {
                     @Override
-                    public void call(Throwable throwable) {
-                        mIsError.set(true);
-                        mPrayerStream.onError(throwable);
+                    public Observable<PrayerContext> call(String code) {
+                        if (shouldUpdatePrayerContext(code)) {
+                            mLastPreferredLocation = location;
+                            return updatePrayerContext(code);
+                        }
+
+                        if (mLastPrayerContext != null) {
+                            return Observable.just(mLastPrayerContext);
+                        } else {
+                            return Observable.empty();
+                        }
                     }
                 });
+    }
 
-        return mPrayerStream.asObservable();
+    private boolean useAutomaticLocation() {
+        return mLocationPreferences.isUsingAutomaticLocation()
+                || !mLocationPreferences.hasPreferredLocation();
     }
 
     private void checkPrayerStream() {
@@ -123,6 +162,20 @@ public class PrayerManager {
 
         mPrayerStream.onNext(context);
         mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
+    }
+
+    private boolean shouldUpdatePrayerContext(String code) {
+        if (mLastPrayerContext == null) {
+            return true;
+        }
+
+        if (mLastPreferredLocation != null) {
+            if (!mLastPreferredLocation.getCode().equals(code)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private boolean shouldUpdatePrayerContext(Location location) {
@@ -157,11 +210,10 @@ public class PrayerManager {
         return mPrayerStream.asObservable();
     }
 
-    private Observable<PrayerContext> updatePrayerContext(Location location) {
-        Timber.i("Updating prayer context");
+    private Observable<PrayerContext> updatePrayerContext(String code) {
+        Timber.i("Updating preferred prayer context");
 
-        return getCurrentPrayerTimesByCoordinate(location)
-                .zipWith(getNextPrayerTimesByCoordinate(location), mPrayerContextCreator)
+        return mPrayerDownloader.getPrayerTimes(code)
                 .doOnNext(new Action1<PrayerContext>() {
                     @Override
                     public void call(PrayerContext prayerContext) {
@@ -183,57 +235,30 @@ public class PrayerManager {
                 });
     }
 
-    private Observable<PrayerData> getCurrentPrayerTimesByCoordinate(final Location location) {
-        double lat = location.getLatitude();
-        double lng = location.getLongitude();
+    private Observable<PrayerContext> updatePrayerContext(Location location) {
+        Timber.i("Updating prayer context");
 
-        int year = mDateHelper.getCurrentYear();
-        int month = mDateHelper.getCurrentMonth() + 1;
-
-        Observable<PrayerData> cache = mPrayerCache.get(year, month, location);
-
-        Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month)
-                .doOnNext(new Action1<PrayerData>() {
+        return mPrayerDownloader.getPrayerTimes(location)
+                .doOnNext(new Action1<PrayerContext>() {
                     @Override
-                    public void call(PrayerData data) {
-                        mPrayerCache.save(data, location);
+                    public void call(PrayerContext prayerContext) {
+                        mLastPrayerContext = prayerContext;
+                        broadcastPrayerContext(prayerContext);
+                    }
+                })
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mIsLoading.set(false);
                     }
                 });
-
-        return cache.switchIfEmpty(api);
     }
-
-    private Observable<PrayerData> getNextPrayerTimesByCoordinate(final Location location) {
-        double lat = location.getLatitude();
-        double lng = location.getLongitude();
-
-        int year = mDateHelper.getCurrentYear();
-        int month = mDateHelper.getNextMonth() + 1;
-
-        if (mDateHelper.isNextMonthNewYear()) {
-            year = mDateHelper.getNextYear();
-        }
-
-        Observable<PrayerData> cache = mPrayerCache.get(year, month, location);
-
-        Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month)
-                .doOnNext(new Action1<PrayerData>() {
-                    @Override
-                    public void call(PrayerData data) {
-                        mPrayerCache.save(data, location);
-                    }
-                });
-
-        return cache.switchIfEmpty(api);
-    }
-
-    private final Func2<PrayerData, PrayerData, PrayerContext> mPrayerContextCreator =
-            new Func2<PrayerData, PrayerData, PrayerContext>() {
-                @Override
-                public PrayerContext call(PrayerData current, PrayerData next) {
-                    return new PrayerContextImpl(mDateHelper, mPreferences, current, next);
-                }
-            };
 
     public boolean hasError() {
         return mIsError.get();
