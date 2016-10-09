@@ -101,6 +101,10 @@ public class NotificationPreferences {
                 .apply();
     }
 
+    public boolean isHeadsUpEnabled() {
+        return mPrefs.getBoolean("prayer_headsup", false);
+    }
+
     public void convertLegacyPreferences() {
         String nb = mPrefs.getString("notf_before", null);
         String na = mPrefs.getString("notf_after", null);

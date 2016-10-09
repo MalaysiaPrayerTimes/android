@@ -139,6 +139,12 @@ public class NotificationHelper {
         String notification = getPrayerText(prayer);
         Uri toneUri = null;
 
+        int priority = NotificationCompat.PRIORITY_DEFAULT;
+
+        if (mNotificationPrefs.isHeadsUpEnabled()) {
+            priority = NotificationCompat.PRIORITY_HIGH;
+        }
+
         if (mNotificationPrefs.hasNotificationTone(prayer)) {
             toneUri = Uri.parse(mNotificationPrefs.getNotificationTone(prayer));
         }
@@ -150,7 +156,7 @@ public class NotificationHelper {
                     .setWhen(time)
                     .setContentTitle(prayerName)
                     .setContentText(notification)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setPriority(priority)
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(notification)
                             .setSummaryText(location)
@@ -200,7 +206,7 @@ public class NotificationHelper {
 
     private NotificationCompat.Builder getNotificationTemplate() {
         return new NotificationCompat.Builder(mContext)
-                .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
@@ -210,7 +216,7 @@ public class NotificationHelper {
 
     private Notification.Builder getNougatNotificationTemplate() {
         return new Notification.Builder(mContext)
-                .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
