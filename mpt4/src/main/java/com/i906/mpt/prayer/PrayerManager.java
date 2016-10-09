@@ -2,8 +2,8 @@ package com.i906.mpt.prayer;
 
 import android.location.Location;
 
+import com.i906.mpt.api.prayer.PrayerCode;
 import com.i906.mpt.location.LocationRepository;
-import com.i906.mpt.location.PreferredLocation;
 import com.i906.mpt.prefs.HiddenPreferences;
 import com.i906.mpt.prefs.LocationPreferences;
 
@@ -35,7 +35,7 @@ public class PrayerManager {
     private final PrayerDownloader mPrayerDownloader;
 
     private Location mLastLocation;
-    private PreferredLocation mLastPreferredLocation;
+    private PrayerCode mLastPreferredLocation;
     private PrayerContext mLastPrayerContext;
     private Subject<PrayerContext, PrayerContext> mPrayerStream;
 
@@ -116,7 +116,7 @@ public class PrayerManager {
     }
 
     private Observable<PrayerContext> getPreferredPrayerContext(boolean refresh) {
-        final PreferredLocation location = mLocationPreferences.getPreferredLocation();
+        final PrayerCode location = mLocationPreferences.getPreferredLocation();
 
         if (location == null) {
             return getAutomaticPrayerContext(refresh);

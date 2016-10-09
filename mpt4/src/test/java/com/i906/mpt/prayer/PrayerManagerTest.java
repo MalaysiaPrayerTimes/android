@@ -3,8 +3,8 @@ package com.i906.mpt.prayer;
 import android.location.Location;
 
 import com.i906.mpt.RxJavaResetRule;
+import com.i906.mpt.api.prayer.PrayerCode;
 import com.i906.mpt.location.LocationRepository;
-import com.i906.mpt.location.PreferredLocation;
 import com.i906.mpt.prefs.HiddenPreferences;
 import com.i906.mpt.prefs.LocationPreferences;
 
@@ -136,7 +136,10 @@ public class PrayerManagerTest {
 
     @Test
     public void manualLocation() {
-        PreferredLocation pl = new PreferredLocation("ext-157", "Jitra");
+        PrayerCode pc = new PrayerCode.Builder()
+                .setCode("ext-153")
+                .setCity("Jitra")
+                .build();
 
         when(mHiddenPreferences.getLocationDistanceLimit())
                 .thenReturn(5000L);
@@ -145,7 +148,7 @@ public class PrayerManagerTest {
                 .thenReturn(false);
 
         when(mLocationPreferences.getPreferredLocation())
-                .thenReturn(pl);
+                .thenReturn(pc);
 
         when(mLocationPreferences.hasPreferredLocation())
                 .thenReturn(true);
@@ -153,7 +156,7 @@ public class PrayerManagerTest {
         when(mPrayerDownloader.getPrayerTimes(eq(mLocation)))
                 .thenReturn(Observable.just(mPrayerContext1));
 
-        when(mPrayerDownloader.getPrayerTimes(eq(pl.getCode())))
+        when(mPrayerDownloader.getPrayerTimes(eq(pc.getCode())))
                 .thenReturn(Observable.just(mPrayerContext2));
 
         PrayerManager prayerManager = new PrayerManager(

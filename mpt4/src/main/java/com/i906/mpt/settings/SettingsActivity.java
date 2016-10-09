@@ -24,9 +24,9 @@ import android.widget.TextView;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.R;
+import com.i906.mpt.api.prayer.PrayerCode;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
-import com.i906.mpt.location.PreferredLocation;
 import com.i906.mpt.prefs.LocationPreferences;
 import com.i906.mpt.prefs.NotificationPreferences;
 
@@ -73,11 +73,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         for (Header header : target) {
             if (header.id == R.id.header_location) {
-                PreferredLocation pl = mLocationPreferences.getPreferredLocation();
+                PrayerCode pl = mLocationPreferences.getPreferredLocation();
                 boolean auto = mLocationPreferences.isUsingAutomaticLocation();
 
                 if (pl != null) {
-                    header.summary = getString(R.string.summary_location_manual, pl.getName());
+                    header.summary = getString(R.string.summary_location_manual, pl.getCity());
                 }
 
                 if (auto) {
