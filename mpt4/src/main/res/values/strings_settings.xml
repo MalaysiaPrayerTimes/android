@@ -50,6 +50,13 @@
     <string name="label_vibrate">Vibrate</string>
     <string name="pref_ringtone_silent">Silent</string>
 
+    <string name="summary_location_automatic">Automatic location is ON</string>
+    <string name="summary_location_forced">No location set, forcing automatic location</string>
+    <string name="summary_location_manual">Prefer %s</string>
+    <string name="summary_notification_all">All notifications are ON</string>
+    <string name="summary_notification_none">All notifications are OFF</string>
+    <string name="summary_notification_some">%d notifications are ON</string>
+
     <string-array name="pref_alarm_offset">
         <item>15 minutes earlier</item>
         <item>10 minutes earlier</item>

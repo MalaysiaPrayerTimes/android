@@ -1,19 +1,27 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header
+        android:id="@+id/header_location"
         android:fragment="com.i906.mpt.settings.LocationFragment"
+        android:icon="@drawable/ic_place"
         android:title="@string/label_location" />
 
     <header
+        android:id="@+id/header_notifications"
         android:fragment="com.i906.mpt.settings.NotificationFragment"
+        android:icon="@drawable/ic_notifications"
         android:title="@string/label_notifications" />
 
     <header
+        android:id="@+id/header_interface"
         android:fragment="com.i906.mpt.settings.InterfaceFragment"
+        android:icon="@drawable/ic_interface"
         android:title="@string/label_interface" />
 
     <header
+        android:id="@+id/header_about"
         android:fragment="com.i906.mpt.settings.AboutFragment"
+        android:icon="@drawable/ic_info"
         android:title="@string/label_about" />
 
 </preference-headers>

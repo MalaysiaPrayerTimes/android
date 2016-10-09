@@ -11,6 +11,7 @@ import com.i906.mpt.R;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.intro.MainIntroActivity;
 import com.i906.mpt.prefs.CommonPreferences;
+import com.i906.mpt.prefs.LocationPreferences;
 import com.i906.mpt.prefs.NotificationPreferences;
 
 import javax.inject.Inject;
@@ -42,6 +43,9 @@ public class MainActivity extends BaseActivity {
     @Inject
     NotificationPreferences mNotificationPreferences;
 
+    @Inject
+    LocationPreferences mLocationPreferences;
+
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
 
@@ -61,6 +65,7 @@ public class MainActivity extends BaseActivity {
             showIntro();
             mCommonPreferences.convertLegacyPreferences();
             mNotificationPreferences.convertLegacyPreferences();
+            mLocationPreferences.convertLegacyPreferences();
         } else {
             setup();
         }
