@@ -50,6 +50,13 @@
             android:theme="@style/MptTheme.Settings" />
 
         <activity
+            android:name=".settings.locationpicker.LocationPickerActivity"
+            android:label="@string/label_preferred_location"
+            android:launchMode="singleTask"
+            android:parentActivityName=".settings.SettingsActivity"
+            android:theme="@style/MptTheme.Settings" />
+
+        <activity
             android:name=".settings.LogoActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".settings.SettingsActivity" />
