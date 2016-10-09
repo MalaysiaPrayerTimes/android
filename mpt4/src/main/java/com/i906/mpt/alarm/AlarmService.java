@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 
 import com.i906.mpt.date.DateTimeHelper;
+import com.i906.mpt.extension.Extension;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
 import com.i906.mpt.prayer.Prayer;
@@ -21,12 +22,16 @@ import com.i906.mpt.prefs.NotificationPreferences;
 import java.util.ArrayDeque;
 import java.util.Date;
 import java.util.Deque;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
@@ -37,11 +42,9 @@ import timber.log.Timber;
 public class AlarmService extends Service {
 
     public static final String ACTION_UPDATE_REMINDER = "com.i906.mpt.action.ACTION_UPDATE_REMINDER";
-    public static final String ACTION_STARTUP = "com.i906.mpt.action.ACTION_STARTUP";
 
     public static final String ACTION_NOTIFICATION_PRAYER = "com.i906.mpt.action.NOTIFICATION_PRAYER";
     public static final String ACTION_NOTIFICATION_REMINDER = "com.i906.mpt.action.NOTIFICATION_REMINDER";
-    public static final String ACTION_NOTIFICATION_REMINDER_TICK = "com.i906.mpt.action.NOTIFICATION_REMINDER_TICK";
     public static final String ACTION_NOTIFICATION_CANCEL = "com.i906.mpt.action.NOTIFICATION_CANCEL";
 
     public static final String EXTRA_PRAYER_INDEX = "prayer_index";
@@ -61,6 +64,9 @@ public class AlarmService extends Service {
     NotificationPreferences mNotificationPreferences;
 
     @Inject
+    NotificationHelper mNotificationHelper;
+
+    @Inject
     PrayerManager mPrayerManager;
 
     @Override
@@ -76,7 +82,7 @@ public class AlarmService extends Service {
     }
 
     private void startObservable() {
-        Subscription s = mPrayerManager.getPrayerContext(true)
+        Subscription s = mPrayerManager.getPrayerContext(false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<PrayerContext>() {
@@ -103,7 +109,7 @@ public class AlarmService extends Service {
             if (mPrayerContext == null) {
                 mQueue.add(Pair.create(action, startId));
             } else {
-                handleAction(action, mPrayerContext);
+                handleAction(action, mPrayerContext, startId);
             }
 
             return START_STICKY;
@@ -118,16 +124,16 @@ public class AlarmService extends Service {
 
         while (!mQueue.isEmpty()) {
             Pair<String, Integer> pair = mQueue.remove();
-            handleAction(pair.first, mPrayerContext);
-            stopSelf(pair.second);
+            handleAction(pair.first, mPrayerContext, pair.second);
         }
     }
 
-    private void handleAction(String action, PrayerContext prayerContext) {
-        if (ACTION_STARTUP.equals(action)) {
+    private void handleAction(String action, PrayerContext prayerContext, int startId) {
+        if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
             setupInitialAlarm(prayerContext);
+            stopSelf(startId);
         } else if (ACTION_UPDATE_REMINDER.equals(action)) {
-            updateReminderAlarm(prayerContext);
+            updateReminderAlarm(prayerContext, startId);
         }
     }
 
@@ -156,28 +162,45 @@ public class AlarmService extends Service {
         }
     }
 
-    private void updateReminderAlarm(PrayerContext prayerContext) {
+    private void updateReminderAlarm(PrayerContext prayerContext, final int startId) {
         Prayer next = prayerContext.getNextPrayer();
-        String location = prayerContext.getLocationName();
+        final String location = prayerContext.getLocationName();
 
-        long now = mDateHelper.getNow().getTimeInMillis();
         long appearBefore = mNotificationPreferences.getAppearBeforeDuration();
-        long alarmOffset = mNotificationPreferences.getAlarmOffset();
+        final long alarmOffset = mNotificationPreferences.getAlarmOffset();
         int updates = (int) (appearBefore / 60000);
 
-        int npi = next.getIndex();
-        long npt = next.getDate().getTime();
-        long srt = npt - appearBefore;
+        final int npi = next.getIndex();
+        final long npt = next.getDate().getTime();
 
-        for (int i = 1; i < updates; i++) {
-            long nrt = srt + i * 60000;
-            long trigger = i * 60000;
+        Subscription s = Observable.range(0, updates)
+                .concatMap(new Func1<Integer, Observable<Integer>>() {
+                    @Override
+                    public Observable<Integer> call(Integer integer) {
+                        long initial = integer == 0 ? 0 : TimeUnit.MINUTES.toMillis(1);
+                        long delay = initial + alarmOffset;
+                        return Observable.just(integer)
+                                .delay(delay, TimeUnit.MILLISECONDS);
+                    }
+                })
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        mNotificationHelper.showPrayerReminder(npi, npt, location, true);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Timber.w(throwable);
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        stopSelf(startId);
+                    }
+                });
 
-            if (now < nrt) {
-                setAlarm(ACTION_NOTIFICATION_REMINDER_TICK, npi, npt, -trigger + alarmOffset, location);
-                break;
-            }
-        }
+        mSubscription.add(s);
     }
 
     private void setAlarm(String action, int index, long time, long triggerOffset, String location) {
@@ -185,7 +208,7 @@ public class AlarmService extends Service {
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
-        Timber.v("Created alarm %s: %s %s %s", index, action, new Date(time + triggerOffset), location);
+        Timber.i("Created alarm %s: %s %s %s", index, action, new Date(time + triggerOffset), location);
     }
 
     private Intent createIntent(String action, int index, long time, String location) {

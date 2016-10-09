@@ -22,6 +22,8 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                 case "provider":
                     pd.setProvider(in.nextString());
                     break;
+                case "provider_code":
+                    pd.setProviderCode(in.nextString());
                 case "code":
                     pd.setCode(in.nextString());
                     break;
@@ -77,6 +79,30 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
 
     @Override
     public void write(JsonWriter out, PrayerData value) throws IOException {
-        // no need to serialize prayer data
+        out.beginObject();
+        out.name("provider").value(value.getProvider());
+        out.name("provider_code").value(value.getProviderCode());
+        out.name("code").value(value.getCode());
+        out.name("year").value(value.getYear());
+        out.name("month").value(value.getMonth());
+        out.name("place").value(value.getLocation());
+        out.name("times");
+
+        out.beginArray();
+
+        List<List<Date>> monthData = value.getPrayerTimes();
+
+        for (List<Date> dayData : monthData) {
+            out.beginArray();
+
+            for (Date date : dayData) {
+                out.value(date.getTime() / 1000);
+            }
+
+            out.endArray();
+        }
+
+        out.endArray();
+        out.endObject();
     }
 }

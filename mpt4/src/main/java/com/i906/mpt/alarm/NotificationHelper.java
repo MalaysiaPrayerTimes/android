@@ -1,5 +1,6 @@
 package com.i906.mpt.alarm;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -7,15 +8,20 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 
 import com.i906.mpt.R;
 import com.i906.mpt.main.MainActivity;
 import com.i906.mpt.prayer.Prayer;
 import com.i906.mpt.prefs.NotificationPreferences;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,19 +68,56 @@ public class NotificationHelper {
                     .setContentText(reminder)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
                     .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(reminder)
-                                    .setSummaryText(location)
+                            .bigText(reminder)
+                            .setSummaryText(location)
                     );
 
             if (ticker) {
                 builder.setTicker(reminder);
-
-                if (toneUri != null) {
-                    playRingtone(toneUri);
-                }
             }
 
             mNotifier.notify("reminder", prayer, builder.build());
+        }
+
+        if (ticker && toneUri != null) {
+            playRingtone(toneUri);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void showNougatPrayerReminder(int prayer, long time, String location) {
+        if (!mNotificationPrefs.isPrayerEnabled(prayer)) return;
+
+        Resources r = mContext.getResources();
+        String formattedTime = DateFormat.getTimeFormat(mContext).format(new Date(time));
+        String prayerName = mPrayerNames[prayer];
+        String reminder = r.getString(R.string.notification_reminder_time, prayerName, formattedTime);
+        Uri toneUri = null;
+
+        if (mNotificationPrefs.hasReminderTone(prayer)) {
+            toneUri = Uri.parse(mNotificationPrefs.getReminderTone(prayer));
+        }
+
+        if (mNotificationPrefs.isNotificationEnabled(prayer)) {
+            Notification.Builder nougatBuilder = getNougatNotificationTemplate();
+
+            nougatBuilder.setWhen(time)
+                    .setContentTitle(prayerName)
+                    .setContentText(reminder)
+                    .setUsesChronometer(true)
+                    .setChronometerCountDown(true)
+                    .setPriority(Notification.PRIORITY_MIN)
+                    .setTicker(reminder)
+                    .setStyle(new Notification.BigTextStyle()
+                            .bigText(reminder)
+                            .setSummaryText(location)
+                    );
+
+            mNotifier.notify("reminder", prayer, nougatBuilder.build());
+        }
+
+        if (toneUri != null) {
+            playRingtone(toneUri);
         }
     }
 
@@ -96,6 +139,12 @@ public class NotificationHelper {
         String notification = getPrayerText(prayer);
         Uri toneUri = null;
 
+        int priority = NotificationCompat.PRIORITY_DEFAULT;
+
+        if (mNotificationPrefs.isHeadsUpEnabled()) {
+            priority = NotificationCompat.PRIORITY_HIGH;
+        }
+
         if (mNotificationPrefs.hasNotificationTone(prayer)) {
             toneUri = Uri.parse(mNotificationPrefs.getNotificationTone(prayer));
         }
@@ -107,10 +156,10 @@ public class NotificationHelper {
                     .setWhen(time)
                     .setContentTitle(prayerName)
                     .setContentText(notification)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setPriority(priority)
                     .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(notification)
-                                    .setSummaryText(location)
+                            .bigText(notification)
+                            .setSummaryText(location)
                     );
 
             if (mNotificationPrefs.isVibrationEnabled(prayer)) {
@@ -149,19 +198,30 @@ public class NotificationHelper {
         }
     }
 
-    private NotificationCompat.Builder getNotificationTemplate() {
-        Resources r = mContext.getResources();
+    private PendingIntent getContentIntent() {
         Intent i = new Intent(mContext, MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(
+        return PendingIntent.getActivity(
                 mContext, 907, i, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 
+    private NotificationCompat.Builder getNotificationTemplate() {
         return new NotificationCompat.Builder(mContext)
-                .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
                 .setAutoCancel(true)
-                .setContentIntent(pi);
+                .setContentIntent(getContentIntent());
+    }
+
+    private Notification.Builder getNougatNotificationTemplate() {
+        return new Notification.Builder(mContext)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setSmallIcon(R.drawable.ic_stat_prayer)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
+                .setAutoCancel(true)
+                .setContentIntent(getContentIntent());
     }
 
     private void playRingtone(Uri sound) {

@@ -8,8 +8,11 @@ import android.support.annotation.Nullable;
 
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
+import com.i906.mpt.prayer.PrayerContext;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -48,11 +51,22 @@ public class MainService extends Service implements MainHandler {
     }
 
     @Override
+    public void handlePrayerContext(PrayerContext prayerContext) {
+        Timber.i("Got updated prayer context %s", prayerContext);
+    }
+
+    @Override
     public void handleLocation(Location location) {
+        Timber.i("Got updated location %s", location);
     }
 
     @Override
     public void handleError(Throwable t) {
+        if (t instanceof SecurityException) {
+            stopSelf();
+        } else {
+            Timber.w(t);
+        }
     }
 
     @Override

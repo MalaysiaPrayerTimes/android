@@ -24,6 +24,7 @@
     <string name="label_notification">Notification</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_open_source_licenses">Open-source licenses</string>
+    <string name="label_prayer_headsup">Enable heads-up notifications</string>
     <string name="label_prayer_highlight">Prayer highlight</string>
     <string name="label_prayer_screen">Prayer screen</string>
     <string name="label_prayer_widget">Widget</string>

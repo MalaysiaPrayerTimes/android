@@ -38,19 +38,43 @@ class PrayerCacheManager {
     }
 
     boolean save(PrayerData data, Location location) {
-        boolean l = mSqlite.put()
+        boolean l = saveLocation(data, location);
+        boolean p = savePrayer(data);
+        return l && p;
+    }
+
+    private boolean saveLocation(PrayerData data, Location location) {
+        boolean saveCache = getClosestLocation(location)
+                .isEmpty()
+                .toBlocking()
+                .first();
+
+        if (!saveCache) {
+            return true;
+        }
+
+        return mSqlite.put()
                 .object(LocationCacheMeta.createCacheModel(data, location))
                 .prepare()
                 .executeAsBlocking()
                 .wasInserted();
+    }
 
-        boolean p = mSqlite.put()
+    private boolean savePrayer(PrayerData data) {
+        boolean saveCache = getPrayerData(data.getYear(), data.getMonth(), data.getCode())
+                .isEmpty()
+                .toBlocking()
+                .first();
+
+        if (!saveCache) {
+            return true;
+        }
+
+        return mSqlite.put()
                 .object(PrayerCacheMeta.createCacheModel(data))
                 .prepare()
                 .executeAsBlocking()
                 .wasInserted();
-
-        return l && p;
     }
 
     Observable<PrayerData> get(final int year, final int month, final Location location) {

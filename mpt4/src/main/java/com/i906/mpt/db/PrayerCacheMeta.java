@@ -6,6 +6,7 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.pushtorefresh.storio.sqlite.SQLiteTypeMapping;
 import com.pushtorefresh.storio.sqlite.operations.delete.DefaultDeleteResolver;
@@ -32,6 +33,14 @@ import static com.i906.mpt.db.TypeColumns.TYPE_TEXT;
 public class PrayerCacheMeta {
 
     public static final String TABLE = "PrayerCache";
+
+    private static final Gson GSON;
+
+    static {
+        GSON = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+    }
 
     private PrayerCacheMeta() {
     }
@@ -71,7 +80,6 @@ public class PrayerCacheMeta {
     }
 
     private static PrayerCache createCacheModel(Cursor cursor) {
-        Gson gson = new Gson();
         PrayerCache m = new PrayerCache();
 
         m.id = getLongValue(cursor, Columns._ID);
@@ -82,13 +90,12 @@ public class PrayerCacheMeta {
         m.year = getIntValue(cursor, Columns.YEAR);
 
         String t = getStringValue(cursor, Columns.TIMES);
-        m.times = gson.fromJson(t, TimeHolder.class).times;
+        m.times = GSON.fromJson(t, TimeHolder.class).times;
 
         return m;
     }
 
     private static ContentValues createContentValues(PrayerCache object) {
-        Gson gson = new Gson();
         ContentValues v = new ContentValues(7);
 
         v.put(Columns._ID, object.id);
@@ -96,7 +103,7 @@ public class PrayerCacheMeta {
         v.put(Columns.MONTH, object.month);
         v.put(Columns.PLACE, object.place);
         v.put(Columns.PROVIDER, object.provider);
-        v.put(Columns.TIMES, gson.toJson(new TimeHolder(object.times)));
+        v.put(Columns.TIMES, GSON.toJson(new TimeHolder(object.times)));
         v.put(Columns.YEAR, object.year);
 
         return v;

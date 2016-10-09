@@ -2,6 +2,7 @@
     <string name="notification_prayer_normal">Prayer time is now %s.</string>
     <string name="notification_prayer_others">It is now %s.</string>
     <string name="notification_reminder_soon">It will be %1$s in a moment.</string>
+    <string name="notification_reminder_time">It will be %1$s at %2$s.</string>
 
     <plurals name="notification_reminder">
         <item quantity="one">It will be %1$s in %2$s minute.</item>

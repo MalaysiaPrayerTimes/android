@@ -14,14 +14,7 @@ public class StartupReceiver extends BroadcastReceiver {
     }
 
     public static void startup(Context context) {
-        startAlarmStartup(context);
         startPrayerService(context);
-    }
-
-    public static void startAlarmStartup(Context context) {
-        Intent alarm = new Intent(context, AlarmService.class);
-        alarm.setAction(AlarmService.ACTION_STARTUP);
-        context.startService(alarm);
     }
 
     public static void startPrayerService(Context context) {

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.SimpleSlide;
 import com.i906.mpt.R;
+import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
 
@@ -70,5 +71,6 @@ public class MainIntroActivity extends IntroActivity implements IntroView {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         mIntroPresenter.refreshPrayerContext();
+        StartupReceiver.startPrayerService(this);
     }
 }
