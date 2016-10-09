@@ -24,4 +24,8 @@ interface PrayerApi {
             @Query("year") int year,
             @Query("month") int month
     );
+
+    @GET("app/codes")
+    Observable<CodeResponse> getSupportedCodes(
+    );
 }

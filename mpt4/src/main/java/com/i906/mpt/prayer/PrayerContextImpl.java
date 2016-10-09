@@ -150,6 +150,14 @@ class PrayerContextImpl implements PrayerContext {
         return n.after(s);
     }
 
+    PrayerData getCurrentPrayerData() {
+        return mCurrentPrayer;
+    }
+
+    PrayerData getNextPrayerData() {
+        return mNextPrayer;
+    }
+
     @Override
     public String toString() {
         return "PrayerContextImpl{" +

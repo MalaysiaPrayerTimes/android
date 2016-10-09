@@ -7,6 +7,7 @@ import com.i906.mpt.location.LocationRepository;
 import com.i906.mpt.prayer.PrayerContext;
 import com.i906.mpt.prayer.PrayerManager;
 import com.i906.mpt.prefs.HiddenPreferences;
+import com.i906.mpt.prefs.LocationPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,14 +32,20 @@ class MainDelegate {
     private final CompositeSubscription mSubscription = new CompositeSubscription();
     private final LocationRepository mLocationRepository;
     private final PrayerManager mPrayerManager;
+    private final LocationPreferences mLocationPreferences;
 
     private MainHandler mView;
     private Observable<Location> mLocationObservable;
 
     @Inject
-    MainDelegate(LocationRepository location, PrayerManager prayer, HiddenPreferences hpref) {
+    MainDelegate(LocationRepository location,
+                 PrayerManager prayer,
+                 HiddenPreferences hpref,
+                 LocationPreferences lpref) {
         mLocationRepository = location;
         mPrayerManager = prayer;
+
+        mLocationPreferences = lpref;
 
         mLocationFastestInterval = hpref.getLocationFastestInterval();
         mLocationInterval = hpref.getLocationInterval();
@@ -60,6 +67,10 @@ class MainDelegate {
     }
 
     public void startLocationListener() {
+        if (!useAutomaticLocation()) {
+            return;
+        }
+
         Subscription s = mLocationObservable
                 .share()
                 .subscribe(new Action1<Location>() {
@@ -96,6 +107,11 @@ class MainDelegate {
                 });
 
         mSubscription.add(s);
+    }
+
+    private boolean useAutomaticLocation() {
+        return mLocationPreferences.isUsingAutomaticLocation()
+                || !mLocationPreferences.hasPreferredLocation();
     }
 
     private void handlePrayerContext(PrayerContext prayerContext) {

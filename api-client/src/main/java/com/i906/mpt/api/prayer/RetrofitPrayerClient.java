@@ -3,6 +3,8 @@ package com.i906.mpt.api.prayer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -51,6 +53,17 @@ public class RetrofitPrayerClient implements PrayerClient {
                     @Override
                     public PrayerData call(PrayerResponse r) {
                         return r.getData();
+                    }
+                });
+    }
+
+    @Override
+    public Observable<List<PrayerCode>> getSupportedCodes() {
+        return mApi.getSupportedCodes()
+                .map(new Func1<CodeResponse, List<PrayerCode>>() {
+                    @Override
+                    public List<PrayerCode> call(CodeResponse r) {
+                        return r.getPrayerCodes();
                     }
                 });
     }

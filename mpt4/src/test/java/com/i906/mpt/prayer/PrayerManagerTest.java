@@ -3,12 +3,10 @@ package com.i906.mpt.prayer;
 import android.location.Location;
 
 import com.i906.mpt.RxJavaResetRule;
-import com.i906.mpt.api.prayer.PrayerClient;
-import com.i906.mpt.api.prayer.PrayerData;
-import com.i906.mpt.date.DateTimeHelper;
+import com.i906.mpt.api.prayer.PrayerCode;
 import com.i906.mpt.location.LocationRepository;
 import com.i906.mpt.prefs.HiddenPreferences;
-import com.i906.mpt.prefs.InterfacePreferences;
+import com.i906.mpt.prefs.LocationPreferences;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,13 +20,8 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyDouble;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -40,31 +33,28 @@ public class PrayerManagerTest {
     public RxJavaResetRule mResetRule = new RxJavaResetRule();
 
     @Mock
-    private DateTimeHelper mDateHelper;
-
-    @Mock
     private LocationRepository mLocationRepository;
-
-    @Mock
-    private PrayerCacheManager mPrayerCache;
-
-    @Mock
-    private PrayerClient mPrayerClient;
 
     @Mock
     private Location mLocation;
 
     @Mock
-    private PrayerData mPrayerData;
+    private PrayerContext mPrayerContext1;
 
     @Mock
-    private InterfacePreferences mInterfacePreferences;
+    private PrayerContext mPrayerContext2;
 
     @Mock
     private PrayerBroadcaster mPrayerBroadcaster;
 
     @Mock
+    private PrayerDownloader mPrayerDownloader;
+
+    @Mock
     private HiddenPreferences mHiddenPreferences;
+
+    @Mock
+    private LocationPreferences mLocationPreferences;
 
     @Before
     public void setup() {
@@ -72,123 +62,119 @@ public class PrayerManagerTest {
     }
 
     @Test
-    public void getPrayerContextSameYear() {
+    public void automaticLocation() {
         when(mHiddenPreferences.getLocationDistanceLimit())
                 .thenReturn(5000L);
 
-        PrayerManager prayerManager = new PrayerManager(
-                mDateHelper,
-                mInterfacePreferences,
-                mLocationRepository,
-                mPrayerCache,
-                mPrayerClient,
-                mPrayerBroadcaster,
-                mHiddenPreferences
-        );
+        when(mLocationPreferences.isUsingAutomaticLocation())
+                .thenReturn(true);
 
-        when(mLocation.getLatitude())
-                .thenReturn(3.28011);
-
-        when(mLocation.getLongitude())
-                .thenReturn(101.556);
-
-        when(mLocation.distanceTo(any(Location.class)))
-                .thenReturn(0f);
-
-        when(mDateHelper.getCurrentMonth())
-                .thenReturn(3);
-
-        when(mDateHelper.getCurrentYear())
-                .thenReturn(2016);
-
-        when(mDateHelper.getNextMonth())
-                .thenReturn(4);
-
-        when(mDateHelper.isNextMonthNewYear())
-                .thenReturn(false);
+        when(mPrayerDownloader.getPrayerTimes(eq(mLocation)))
+                .thenReturn(Observable.just(mPrayerContext1));
 
         when(mLocationRepository.getLocation(anyBoolean()))
                 .thenReturn(Observable.just(mLocation));
 
-        when(mPrayerCache.get(anyInt(), anyInt(), eq(mLocation)))
-                .thenReturn(Observable.<PrayerData>empty());
-
-        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), anyInt()))
-                .thenReturn(Observable.just(mPrayerData));
+        PrayerManager prayerManager = new PrayerManager(
+                mPrayerDownloader,
+                mLocationRepository,
+                mPrayerBroadcaster,
+                mHiddenPreferences,
+                mLocationPreferences
+        );
 
         TestSubscriber<PrayerContext> testSubscriber = new TestSubscriber<>();
-        TestSubscriber<PrayerContext> testSubscriber2 = new TestSubscriber<>();
 
         prayerManager.getPrayerContext(false).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
 
         List<PrayerContext> prayers = testSubscriber.getOnNextEvents();
 
-        verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(4));
-        verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(5));
         assertThat(prayers).hasSize(1);
-
-        prayerManager.getPrayerContext(false).subscribe(testSubscriber2);
-        List<PrayerContext> prayers2 = testSubscriber2.getOnNextEvents();
-
-        assertThat(prayers2).hasSize(1);
-        assertThat(prayers2.get(0)).isEqualTo(prayers.get(0));
+        assertThat(prayers.get(0)).isEqualTo(mPrayerContext1);
     }
 
     @Test
-    public void getPrayerContextDifferentYear() {
+    public void manualLocationButNotSet() {
         when(mHiddenPreferences.getLocationDistanceLimit())
                 .thenReturn(5000L);
 
-        PrayerManager prayerManager = new PrayerManager(
-                mDateHelper,
-                mInterfacePreferences,
-                mLocationRepository,
-                mPrayerCache,
-                mPrayerClient,
-                mPrayerBroadcaster,
-                mHiddenPreferences
-        );
+        when(mLocationPreferences.isUsingAutomaticLocation())
+                .thenReturn(false);
 
-        when(mLocation.getLatitude())
-                .thenReturn(3.28011);
+        when(mLocationPreferences.getPreferredLocation())
+                .thenReturn(null);
 
-        when(mLocation.getLongitude())
-                .thenReturn(101.556);
-
-        when(mLocation.distanceTo(any(Location.class)))
-                .thenReturn(0f);
-
-        when(mDateHelper.getCurrentMonth())
-                .thenReturn(11);
-
-        when(mDateHelper.getCurrentYear())
-                .thenReturn(2016);
-
-        when(mDateHelper.getNextYear())
-                .thenReturn(2017);
-
-        when(mDateHelper.getNextMonth())
-                .thenReturn(0);
-
-        when(mDateHelper.isNextMonthNewYear())
-                .thenReturn(true);
+        when(mLocationPreferences.hasPreferredLocation())
+                .thenReturn(false);
 
         when(mLocationRepository.getLocation(anyBoolean()))
                 .thenReturn(Observable.just(mLocation));
 
-        when(mPrayerCache.get(anyInt(), anyInt(), eq(mLocation)))
-                .thenReturn(Observable.<PrayerData>empty());
+        when(mPrayerDownloader.getPrayerTimes(eq(mLocation)))
+                .thenReturn(Observable.just(mPrayerContext1));
 
-        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), anyInt()))
-                .thenReturn(Observable.just(mPrayerData));
+        PrayerManager prayerManager = new PrayerManager(
+                mPrayerDownloader,
+                mLocationRepository,
+                mPrayerBroadcaster,
+                mHiddenPreferences,
+                mLocationPreferences
+        );
 
         TestSubscriber<PrayerContext> testSubscriber = new TestSubscriber<>();
-        prayerManager.getPrayerContext(false).subscribe(testSubscriber);
 
+        prayerManager.getPrayerContext(false).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
 
-        verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2016), eq(12));
-        verify(mPrayerClient, times(1)).getPrayerTimesByCoordinates(eq(3.28011), eq(101.556), eq(2017), eq(1));
+        List<PrayerContext> prayers = testSubscriber.getOnNextEvents();
+
+        assertThat(prayers).hasSize(1);
+        assertThat(prayers.get(0)).isEqualTo(mPrayerContext1);
+    }
+
+
+    @Test
+    public void manualLocation() {
+        PrayerCode pc = new PrayerCode.Builder()
+                .setCode("ext-153")
+                .setCity("Jitra")
+                .build();
+
+        when(mHiddenPreferences.getLocationDistanceLimit())
+                .thenReturn(5000L);
+
+        when(mLocationPreferences.isUsingAutomaticLocation())
+                .thenReturn(false);
+
+        when(mLocationPreferences.getPreferredLocation())
+                .thenReturn(pc);
+
+        when(mLocationPreferences.hasPreferredLocation())
+                .thenReturn(true);
+
+        when(mPrayerDownloader.getPrayerTimes(eq(mLocation)))
+                .thenReturn(Observable.just(mPrayerContext1));
+
+        when(mPrayerDownloader.getPrayerTimes(eq(pc.getCode())))
+                .thenReturn(Observable.just(mPrayerContext2));
+
+        PrayerManager prayerManager = new PrayerManager(
+                mPrayerDownloader,
+                mLocationRepository,
+                mPrayerBroadcaster,
+                mHiddenPreferences,
+                mLocationPreferences
+        );
+
+        TestSubscriber<PrayerContext> testSubscriber = new TestSubscriber<>();
+
+        prayerManager.getPrayerContext(false).subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+
+        List<PrayerContext> prayers = testSubscriber.getOnNextEvents();
+
+        assertThat(prayers).hasSize(1);
+        assertThat(prayers.get(0)).isEqualTo(mPrayerContext2);
     }
 }

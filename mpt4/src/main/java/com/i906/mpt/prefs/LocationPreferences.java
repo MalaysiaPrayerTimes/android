@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
-import com.i906.mpt.location.PreferredLocation;
+import com.i906.mpt.api.prayer.PrayerCode;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,16 +27,33 @@ public class LocationPreferences {
         return mPrefs.getBoolean("location_automatic", true);
     }
 
+    public boolean hasPreferredLocation() {
+        return getPreferredLocation() != null;
+    }
+
     @Nullable
-    public PreferredLocation getPreferredLocation() {
+    public PrayerCode getPreferredLocation() {
         String code = mPrefs.getString("location_manual_code", null);
         String name = mPrefs.getString("location_manual_name", null);
 
         if (code != null && name != null) {
-            return new PreferredLocation(code, name);
+            return new PrayerCode.Builder()
+                    .setCode(code)
+                    .setCity(name)
+                    .build();
         }
 
         return null;
+    }
+
+    public void setPreferredLocation(PrayerCode prayerCode) {
+        String code = prayerCode.getCode();
+        String name = prayerCode.getCity();
+
+        mPrefs.edit()
+                .putString("location_manual_code", code)
+                .putString("location_manual_name", name)
+                .apply();
     }
 
     public void convertLegacyPreferences() {

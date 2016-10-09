@@ -59,4 +59,14 @@ public class MockPrayerClient implements PrayerClient {
         Timber.v("Performing network tasks. Lat: %s Lng: %s Year: %s Month: %s", lat, lng, year, month);
         return getPrayerTimesByCode("xxx", year, month);
     }
+
+    @Override
+    public Observable<List<PrayerCode>> getSupportedCodes() {
+        PrayerCodeWrapper pcw = mUtils.getData(PrayerCodeWrapper.class, "json/codes.json");
+        return Observable.just(pcw.supported_codes);
+    }
+
+    private static class PrayerCodeWrapper {
+        List<PrayerCode> supported_codes;
+    }
 }

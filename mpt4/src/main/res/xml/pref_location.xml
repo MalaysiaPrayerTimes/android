@@ -11,7 +11,6 @@
         android:key="location_manual"
         android:title="@string/label_preferred_location"
         android:summary="@string/label_preferred_location_summary"
-        android:dependency="location_automatic"
-        android:enabled="false" />
+        android:dependency="location_automatic" />
 
 </PreferenceScreen>

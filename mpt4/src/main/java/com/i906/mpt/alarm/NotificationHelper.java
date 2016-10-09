@@ -64,6 +64,7 @@ public class NotificationHelper {
             NotificationCompat.Builder builder = getNotificationTemplate();
 
             builder.setWhen(time)
+                    .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
                     .setContentTitle(prayerName)
                     .setContentText(reminder)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
@@ -74,6 +75,10 @@ public class NotificationHelper {
 
             if (ticker) {
                 builder.setTicker(reminder);
+
+                if (toneUri != null) {
+                    builder.setSound(toneUri);
+                }
             }
 
             mNotifier.notify("reminder", prayer, builder.build());
@@ -113,6 +118,10 @@ public class NotificationHelper {
                             .setSummaryText(location)
                     );
 
+            if (toneUri != null) {
+                nougatBuilder.setSound(toneUri);
+            }
+
             mNotifier.notify("reminder", prayer, nougatBuilder.build());
         }
 
@@ -135,6 +144,7 @@ public class NotificationHelper {
     public void showPrayerNotification(int prayer, long time, String location) {
         if (!mNotificationPrefs.isPrayerEnabled(prayer)) return;
 
+        int defaults = NotificationCompat.DEFAULT_LIGHTS;
         String prayerName = mPrayerNames[prayer];
         String notification = getPrayerText(prayer);
         Uri toneUri = null;
@@ -147,12 +157,15 @@ public class NotificationHelper {
 
         if (mNotificationPrefs.hasNotificationTone(prayer)) {
             toneUri = Uri.parse(mNotificationPrefs.getNotificationTone(prayer));
+        } else {
+            defaults = defaults | NotificationCompat.DEFAULT_SOUND;
         }
 
         if (mNotificationPrefs.isNotificationEnabled(prayer)) {
             NotificationCompat.Builder builder = getNotificationTemplate();
 
             builder.setTicker(notification)
+                    .setDefaults(defaults)
                     .setWhen(time)
                     .setContentTitle(prayerName)
                     .setContentText(notification)
@@ -206,7 +219,6 @@ public class NotificationHelper {
 
     private NotificationCompat.Builder getNotificationTemplate() {
         return new NotificationCompat.Builder(mContext)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
@@ -216,7 +228,6 @@ public class NotificationHelper {
 
     private Notification.Builder getNougatNotificationTemplate() {
         return new Notification.Builder(mContext)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_prayer)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))

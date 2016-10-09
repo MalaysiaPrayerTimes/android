@@ -43,6 +43,10 @@ class PrayerCacheManager {
         return l && p;
     }
 
+    boolean save(PrayerData data) {
+        return savePrayer(data);
+    }
+
     private boolean saveLocation(PrayerData data, Location location) {
         boolean saveCache = getClosestLocation(location)
                 .isEmpty()
@@ -82,9 +86,13 @@ class PrayerCacheManager {
                 .flatMap(new Func1<LocationCache, Observable<PrayerData>>() {
                     @Override
                     public Observable<PrayerData> call(LocationCache cache) {
-                        return getPrayerData(year, month, cache.getCode());
+                        return get(year, month, cache.getCode());
                     }
                 });
+    }
+
+    Observable<PrayerData> get(final int year, final int month, final String code) {
+        return getPrayerData(year, month, code);
     }
 
     private Observable<PrayerData> getPrayerData(int year, int month, String code) {
