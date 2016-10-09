@@ -76,14 +76,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 PreferredLocation pl = mLocationPreferences.getPreferredLocation();
                 boolean auto = mLocationPreferences.isUsingAutomaticLocation();
 
+                if (pl != null) {
+                    header.summary = getString(R.string.summary_location_manual, pl.getName());
+                }
+
                 if (auto) {
                     header.summary = getString(R.string.summary_location_automatic);
                 } else if (pl == null) {
                     header.summary = getString(R.string.summary_location_forced);
-                }
-
-                if (pl != null) {
-                    header.summary = getString(R.string.summary_location_manual, pl.getName());
                 }
             }
 
