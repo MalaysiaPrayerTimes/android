@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="intro_title_prayer">Prayer times at a glance</string>
+    <string name="intro_description_prayer">Instantly get prayer times, reminders, and notifications for your current location.</string>
+
+    <string name="intro_title_mosque">Browse nearby mosques</string>
+    <string name="intro_description_mosque">Easily discover mosques and prayer rooms in your area.</string>
+
+    <string name="intro_title_qibla">Determine qibla</string>
+    <string name="intro_description_qibla">Accurately get the qibla direction from your device.</string>
+
+</resources>

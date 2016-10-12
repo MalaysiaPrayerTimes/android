@@ -1,3 +1,6 @@
-<bitmap
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/ic_audio" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:drawable="@drawable/ic_btn_audio_normal" android:state_enabled="false" app:alpha="?android:disabledAlpha"/>
+    <item android:drawable="@drawable/ic_btn_audio_normal" />
+
+</selector>

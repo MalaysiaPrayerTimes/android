@@ -1,136 +1,37 @@
 <resources>
-
     <string name="app_name">Malaysia Prayer Times</string>
     <string name="app_name_short">Prayer Times</string>
 
-    <string name="label_extension_permission">add extensions to Malaysia Prayer Times</string>
-    <string name="label_extension_description">Allows to add extensions to Malaysia Prayer Times</string>
-    <string name="label_refresh">Refresh</string>
+    <string name="donate_contribute">Contribute</string>
+    <string name="donate_digitalocean">Referral Link</string>
+    <string name="donate_extra_support">Extra Support</string>
+    <string name="donate_github">Github Page</string>
+    <string name="donate_mbb">MBB-152068940752</string>
+    <string name="donate_share">Share</string>
+    <string name="donate_share_subject">Take a look at "Malaysia Prayer Times"</string>
+    <string name="donate_share_via">Share "Malaysia Prayer Times" via</string>
+    <string name="donate_spread_the_word">Spread The Word</string>
+    <string name="donate_text_1">Alhamdullilah. Thank you for your interest in donating towards Malaysia Prayer Times.</string>
+    <string name="donate_text_2">You can help MPT by spreading the word! Share your experience in using MPT with your friends!</string>
+    <string name="donate_text_3">MPT is now open sourced on GitHub and hosted on DigitalOcean.
+        \n\nIf you are a developer you can improve MPT codes.
+        You can create a DigitalOcean account with the referral link if you do not have one yet.</string>
+    <string name="donate_text_4">If you would like to further support MPT\'s development, you can donate to Noorzaini Ilhami.
+        \n\nMPT will always remain as a free app with no advertisements.</string>
+
+    <string name="error_no_location">Oops! Have you enabled your location settings?</string>
+    <string name="error_no_network">Oops! Have you checked your internet connection?</string>
+    <string name="error_play_service">Uhoh! There is something wrong with Play Services!</string>
+    <string name="error_server">Oops! There might be something wrong with the server!</string>
+    <string name="error_undetectable_location">Uhoh! We are unable to recognize your location!</string>
+    <string name="error_unexpected">Uhoh! We are not expecting this error!</string>
+
+    <string name="label_mosque">Mosques</string>
+    <string name="label_prayer">Prayer Times</string>
     <string name="label_retry">Retry</string>
-    <string name="label_settings">Settings</string>
-
-    <!-- AzanPickerActivity -->
-
-    <string name="label_alarm">Alarm</string>
-    <string name="label_none">None</string>
-
-    <!-- ExtensionsActivity -->
-
-    <string name="label_extensions">Prayer Screens</string>
-    <string name="label_uninstall">Uninstall</string>
-
-    <!-- NotificationActivity -->
-
-    <string name="label_notification">Notification</string>
-    <string name="label_set_notification_tone">Set notification tone…</string>
-    <string name="label_set_reminder_tone">Set reminder tone…</string>
-    <string name="label_vibrate">Vibrate</string>
-
-    <!-- NotificationHelper -->
-
-    <string name="notification_prayer_normal">Prayer time is now %s.</string>
-    <string name="notification_prayer_others">It is now %s.</string>
-    <string name="notification_reminder_soon">It will be %1$s in a moment.</string>
-
-    <plurals name="notification_reminder">
-        <item quantity="one">It will be %1$s in %2$s minute.</item>
-        <item quantity="other">It will be %1$s in %2$s minutes.</item>
-    </plurals>
-
-    <!-- SettingsActivity -->
-
-    <string name="label_3d_compass">Enable 3D compass</string>
-    <string name="label_about">About</string>
-    <string name="label_alarm_offset">Alarm offset</string>
-    <string name="label_build">Build number</string>
-    <string name="label_configure_notifications">Configure notifications</string>
-    <string name="label_feedback">Feedback</string>
-    <string name="label_hide_notification">Hide prayer notification</string>
-    <string name="label_hijri_offset">Hijri date offset</string>
-    <string name="label_interface">Interface</string>
-    <string name="label_miscellaneous">Miscellaneous</string>
-    <string name="label_notifications">Notifications</string>
-    <string name="label_prayer_screen">Prayer screen</string>
-    <string name="label_show_reminder">Show prayer reminder</string>
-    <string name="label_review">Rate and review MPT</string>
-    <string name="label_review_summary">Rate and review MPT on Google Play</string>
-    <string name="label_theme">Theme</string>
-    <string name="label_theme_dark">Dark</string>
-    <string name="label_version">Version</string>
-
-    <!-- Widgets -->
-
-    <string name="label_date">%1$d %2$s %3$d</string>
-    <string name="label_date_short">%1$d %2$s</string>
+    <string name="label_qibla">Qibla</string>
     <string name="label_widget_bar">Prayer Times Bar</string>
-
-    <string-array name="pref_alarm_offset">
-        <item>15 minutes earlier</item>
-        <item>10 minutes earlier</item>
-        <item>5 minutes earlier</item>
-        <item>No offset</item>
-        <item>5 minutes later</item>
-        <item>10 minutes later</item>
-        <item>15 minutes later</item>
-    </string-array>
-
-    <string-array name="pref_alarm_offset_values" translatable="false">
-        <item>-900000</item>
-        <item>-600000</item>
-        <item>-300000</item>
-        <item>0</item>
-        <item>300000</item>
-        <item>600000</item>
-        <item>900000</item>
-    </string-array>
-
-    <string-array name="pref_hijri_offset">
-        <item>-2 days</item>
-        <item>-1 day</item>
-        <item>No offset</item>
-        <item>+1 day</item>
-        <item>+2 days</item>
-    </string-array>
-
-    <string-array name="pref_hijri_offset_values" translatable="false">
-        <item>-2</item>
-        <item>-1</item>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
-    <string-array name="pref_notification_clear">
-        <item>Notification never hidden</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
-        <item>15 minutes</item>
-        <item>20 minutes</item>
-        <item>30 minutes</item>
-        <item>45 minutes</item>
-        <item>1 hour</item>
-    </string-array>
-
-    <string-array name="pref_reminder_appear">
-        <item>No reminder shown</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
-        <item>15 minutes</item>
-        <item>20 minutes</item>
-        <item>30 minutes</item>
-        <item>45 minutes</item>
-        <item>1 hour</item>
-    </string-array>
-
-    <string-array name="pref_duration_values" translatable="false">
-        <item>0</item>
-        <item>300000</item>
-        <item>600000</item>
-        <item>900000</item>
-        <item>1200000</item>
-        <item>1800000</item>
-        <item>2700000</item>
-        <item>3600000</item>
-    </string-array>
+    <string name="label_widget_mini">Prayer Times Mini</string>
+    <string name="label_widget_text">Prayer Times Text</string>
 
 </resources>

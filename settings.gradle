@@ -1,2 +1,3 @@
 include ':app'
-include ':mpt-extension:extension'
+include ':api-client'
+include ':mpt-extension'

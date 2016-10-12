@@ -1,0 +1,6 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_tab_mosque_normal">
+    <target
+        android:name="mosque_star"
+        android:animation="@animator/animator_star" />
+</animated-vector>

@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/ic_tab_qibla_active" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_tab_qibla_normal" />
+
+</selector>

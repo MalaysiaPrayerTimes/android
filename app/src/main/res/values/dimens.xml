@@ -16,12 +16,12 @@
 
     <!-- Main Time -->
 
-    <dimen name="margin_main_time_bottom">-24dp</dimen>
-    <dimen name="margin_main_time_top">-24dp</dimen>
+    <dimen name="margin_main_time_bottom">-20dp</dimen>
+    <dimen name="margin_main_time_top">-20dp</dimen>
     <dimen name="padding_first_line">32dp</dimen>
     <dimen name="padding_main_time">24dp</dimen>
     <dimen name="size_first_line">18sp</dimen>
-    <dimen name="size_main_time">125sp</dimen>
+    <dimen name="size_main_time">128sp</dimen>
     <dimen name="size_second_line">14sp</dimen>
 
     <!-- Notification -->
@@ -36,5 +36,8 @@
     <!-- Widget -->
 
     <dimen name="size_widget_bar_prayer_table">12sp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 
 </resources>

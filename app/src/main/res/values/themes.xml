@@ -1,31 +1,20 @@
 <resources>
 
     <style name="MptTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@color/mpt_color_accent</item>
-        <item name="notificationSettingsStyle">@style/NotificationSettings</item>
-        <item name="popupMenuStyle">@style/Widget.AppCompat.PopupMenu.Overflow</item>
-        <item name="toolbarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MptTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="toolbarColor">@color/mpt_color_accent</item>
+    <style name="MptTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="elevation">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="ProgressCircle" parent="android:Widget.Holo.ProgressBar">
-        <item name="cpb_color">@color/mpt_color_accent</item>
-    </style>
-
-    <style name="NotificationSettings" parent="CardView.Dark">
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-    </style>
-
-    <style name="Toolbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="contentInsetStart">0dp</item>
-        <item name="android:theme">@style/ThemeOverlay.AppCompat</item>
-        <item name="android:background">?toolbarColor</item>
+    <style name="MptTheme.Settings" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>

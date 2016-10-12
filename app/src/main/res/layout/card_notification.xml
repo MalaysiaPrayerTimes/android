@@ -60,7 +60,7 @@
 
             </RelativeLayout>
 
-            <com.i906.mpt.view.TintableButton
+            <Button
                 android:id="@+id/btn_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,9 +68,12 @@
                 android:drawableLeft="@drawable/ic_btn_audio"
                 android:text="@string/label_set_reminder_tone"
                 android:background="?selectableItemBackground"
+                android:drawablePadding="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 style="?checkboxStyle" />
 
-            <com.i906.mpt.view.TintableButton
+            <Button
                 android:id="@+id/btn_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,6 +81,9 @@
                 android:drawableLeft="@drawable/ic_btn_audio"
                 android:text="@string/label_set_notification_tone"
                 android:background="?selectableItemBackground"
+                android:drawablePadding="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 style="?checkboxStyle" />
 
         </LinearLayout>

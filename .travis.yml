@@ -1,0 +1,27 @@
+language: android
+jdk: oraclejdk8
+
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-24.0.2
+    - android-24
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle
+
+before_install:
+- export TZ=Asia/Kuala_Lumpur
+
+script:
+  - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex
+  - ./gradlew checkstyle
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

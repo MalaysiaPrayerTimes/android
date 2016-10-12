@@ -1,141 +1,152 @@
-import java.text.SimpleDateFormat
-
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'hu.supercluster.paperwork'
+apply from: '../jacoco.gradle'
+apply from: '../checkstyle.gradle'
 
-def STRING = "String"
-def GIT_SHA = "GIT_SHA"
-def BUILD_TIME = "BUILD_TIME"
-
-def gitSha() {
-    def gitpath = "git"
-    def Properties localProps = new Properties()
-    def localPropsFile = rootProject.file('local.properties')
-    localProps.load(new FileInputStream(localPropsFile))
-    def localgitpath = localProps['GIT_PATH']
-    if (localgitpath != null && !localgitpath.toString().isEmpty()) gitpath = localgitpath
-    String ex = gitpath + ' rev-parse --short HEAD'
-    return ex.execute().text.trim()
-}
-
-def buildTime() {
-    def df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
-    df.setTimeZone(TimeZone.getTimeZone("UTC"))
-    return df.format(new Date())
-}
-
-def buildCount() {
-    def Properties versionProps = new Properties()
-    def versionPropsFile = file('version.properties')
-    if (versionPropsFile.exists()) versionProps.load(new FileInputStream(versionPropsFile))
-    def code = (versionProps['VERSION_CODE'] ?: "0").toInteger() + 1
-    versionProps['VERSION_CODE'] = code.toString()
-    versionProps.store(versionPropsFile.newWriter(), null)
-    return code
-}
+def IS_CI = "true".equals(System.getenv("CI"))
+def PRE_DEX = "true".equals(System.getProperty("pre-dex", "true"))
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
-    def build_count = buildCount()
+    dexOptions {
+        preDexLibraries = PRE_DEX && !IS_CI
+    }
 
     defaultConfig {
         applicationId "com.i906.mpt"
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode build_count
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 3979
         versionName "2.0.0"
 
-        buildConfigField STRING, GIT_SHA, "\"${ gitSha() }\""
-        buildConfigField STRING, BUILD_TIME, "\"${ buildTime() }\""
-    }
+        def fid = project.hasProperty('FOURSQUARE_ID') ? FOURSQUARE_ID : System.getenv("FOURSQUARE_ID")
+        def fsc = project.hasProperty('FOURSQUARE_SECRET') ? FOURSQUARE_SECRET : System.getenv("FOURSQUARE_SECRET")
 
-    signingConfigs {
-        release {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-        }
+        buildConfigField "String", "FOURSQUARE_ID", "\"$fid\""
+        buildConfigField "String", "FOURSQUARE_SECRET", "\"$fsc\""
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-
         debug {
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
-            ext.enableCrashlytics = false
+            testCoverageEnabled IS_CI
         }
 
         release {
-            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
     }
 
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
+    productFlavors {
+        mock {
+        }
+
+        prod {
+        }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            exceptionFormat 'full'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def finalName = "mpt-" + variant.versionName + "-" +
+                    variant.productFlavors[0].name + "-" + variant.buildType.name + ".apk";
+            output.outputFile = new File(output.outputFile.parent, finalName)
+        }
+    }
+
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
     }
 }
 
+paperwork {
+    set = [
+            buildTime: buildTime("yyyy-MM-dd HH:mm:ss", "GMT+0800"),
+            gitInfo: gitInfo()
+    ]
+}
+
 dependencies {
-    // MPT Extension
-    compile project(':mpt-extension:extension')
+    def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
+    def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
+    def MOCKITO_VERSION = rootProject.ext.MOCKITO_VERSION
+    def OKHTTP_VERSION = rootProject.ext.OKHTTP_VERSION
+    def PLAYSERVICES_VERSION = rootProject.ext.PLAYSERVICES_VERSION
+    def RXANDROID_VERSION = rootProject.ext.RXANDROID_VERSION
+    def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
+    def TIMBER_VERSION = rootProject.ext.TIMBER_VERSION
+    def STETHO_VERSION = '1.4.1'
+    def STORIO_VERSION = rootProject.ext.STORIO_VERSION
+
+    compile project(':api-client')
+    compile project(':mpt-extension')
 
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:cardview-v7:23.1.0'
+    compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+    compile "com.android.support:cardview-v7:$SUPPORT_VERSION"
+    compile "com.android.support:design:$SUPPORT_VERSION"
 
-    // View Injection
-    compile 'com.jakewharton:butterknife:7.0.1'
+    // Play Service
+    compile "com.google.android.gms:play-services-location:$PLAYSERVICES_VERSION"
 
-    // Logging
-    compile 'com.jakewharton.timber:timber:4.1.0'
+    // Butterknife
+    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
-    // Dependency Injection
-    compile 'com.google.dagger:dagger:2.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    // OkHttp Logging
+    compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
+
+    // Dagger
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'javax.annotation:jsr250-api:1.0'
 
-    // HTTP Libraries
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
-
-    // Play Services
-    compile 'com.google.android.gms:play-services-location:8.1.0'
-
-    // UI Libraries
-    compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
-    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
-
-    // Rx
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'pl.charmas.android:android-reactive-location:0.8@aar'
+    // RX
+    compile "io.reactivex:rxandroid:$RXANDROID_VERSION"
 
     // Database
-    compile 'com.pushtorefresh.storio:sqlite:1.6.0'
-    compile 'com.pushtorefresh.storio:content-resolver:1.6.0'
+    compile "com.pushtorefresh.storio:sqlite:$STORIO_VERSION"
+    compile "com.pushtorefresh.storio:content-resolver:$STORIO_VERSION"
 
-    // Memory Leak Detector
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    // Stetho
+    debugCompile "com.facebook.stetho:stetho:$STETHO_VERSION"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:$STETHO_VERSION"
+    debugCompile "com.facebook.stetho:stetho-timber:$STETHO_VERSION"
 
-    // Others
-    compile 'com.opencsv:opencsv:3.4'
-    compile 'net.danlew:android.joda:2.8.2'
+    // Misc
+    compile 'com.github.msarhan:ummalqura-calendar:1.1.7'
+    compile 'com.heinrichreimersoftware:material-intro:1.6'
+    compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
+    compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
+    compile 'hu.supercluster:paperwork:1.2.7'
+    compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile 'org.assertj:assertj-core:1.7.1'
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile "com.android.support:support-annotations:$SUPPORT_VERSION"
 }

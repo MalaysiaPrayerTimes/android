@@ -1,7 +1,6 @@
-<LinearLayout
+<LinearLayout android:id="@+id/widget_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/widget_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -12,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_widget_header"
+        android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:baselineAligned="false"
         android:paddingBottom="4dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
@@ -27,6 +26,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="left"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#fff"
             android:textSize="25sp"
             tools:text="20:10" />
 
@@ -106,11 +106,11 @@
 
         <ProgressBar
             android:id="@+id/progress_bar"
+            style="?android:progressBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:visibility="gone"
-            style="?android:progressBarStyleSmall" />
+            tools:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_imsak" />
+                    tools:text="@string/prayer_imsak" />
 
                 <TextView
                     android:id="@+id/row_time_1"
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_subuh"  />
+                    tools:text="@string/prayer_subuh" />
 
                 <TextView
                     android:id="@+id/row_time_2"
@@ -181,7 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_syuruk" />
+                    tools:text="@string/prayer_syuruk" />
 
                 <TextView
                     android:id="@+id/row_time_3"
@@ -205,7 +205,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_dhuha" />
+                    tools:text="@string/prayer_dhuha" />
 
                 <TextView
                     android:id="@+id/row_time_4"
@@ -229,7 +229,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_zohor" />
+                    tools:text="@string/prayer_zohor" />
 
                 <TextView
                     android:id="@+id/row_time_5"
@@ -253,7 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_asar" />
+                    tools:text="@string/prayer_asar" />
 
                 <TextView
                     android:id="@+id/row_time_6"
@@ -277,7 +277,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_maghrib" />
+                    tools:text="@string/prayer_maghrib" />
 
                 <TextView
                     android:id="@+id/row_time_7"
@@ -301,7 +301,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/WidgetPrayerTable"
-                    tools:text="@string/mpt_prayer_isyak" />
+                    tools:text="@string/prayer_isyak" />
 
                 <TextView
                     android:id="@+id/row_time_8"

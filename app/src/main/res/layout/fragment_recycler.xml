@@ -11,13 +11,13 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <fr.castorflex.android.circularprogressbar.CircularProgressBar
-            android:id="@+id/progress_bar"
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            style="@style/ProgressCircle" />
+            android:id="@+id/progress_bar" />
 
     </FrameLayout>
 
@@ -39,7 +39,7 @@
             android:id="@+id/tv_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/mpt_error_no_location"
+            tools:text="@string/error_no_location"
             style="@style/PrayerList.ErrorText" />
 
         <Button
@@ -65,7 +65,7 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
+                android:id="@+id/recyclerview"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

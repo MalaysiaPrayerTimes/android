@@ -4,15 +4,11 @@
         android:title="@string/label_miscellaneous">
 
         <ListPreference
-            android:key="general_hijri_offset"
+            android:key="hijri_offset"
             android:defaultValue="0"
             android:entries="@array/pref_hijri_offset"
             android:entryValues="@array/pref_hijri_offset_values"
             android:title="@string/label_hijri_offset" />
-
-        <CheckBoxPreference
-            android:key="general_3d_compass"
-            android:title="@string/label_3d_compass" />
 
     </PreferenceCategory>
 

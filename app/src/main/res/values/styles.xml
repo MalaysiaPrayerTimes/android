@@ -1,125 +1,28 @@
 <resources>
 
-    <!-- Main Screen -->
+    <!-- Logo -->
 
-    <style name="MainScreen" />
+    <style name="Logo" />
 
-    <style name="MainScreen.Settings">
-        <item name="android:src">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="MainScreen.ToolbarButtons">
-        <item name="android:tint">#fff</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="MainScreen.ToolbarButtons.Mosque">
-        <item name="android:src">@drawable/ic_tab_mosque</item>
-    </style>
-
-    <style name="MainScreen.ToolbarButtons.Prayer">
-        <item name="android:src">@drawable/ic_tab_prayer</item>
-    </style>
-
-    <style name="MainScreen.ToolbarButtons.Qibla">
-        <item name="android:src">@drawable/ic_tab_qibla</item>
-    </style>
-
-    <!-- Prayer List -->
-
-    <style name="PrayerList" />
-
-    <style name="PrayerList.Contents">
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-    </style>
-
-    <style name="PrayerList.ErrorContainer">
-        <item name="android:padding">@dimen/padding_error_container</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="PrayerList.ErrorText" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:layout_marginTop">32dp</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="PrayerList.FirstLine">
-        <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">@dimen/padding_first_line</item>
-        <item name="android:paddingRight">@dimen/padding_first_line</item>
-    </style>
-
-    <style name="PrayerList.LargeIcon">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:tint">@color/main_location</item>
-    </style>
-
-    <style name="PrayerList.LargeIcon.Error">
-        <item name="android:src">@drawable/ic_error</item>
-    </style>
-
-    <style name="PrayerList.LargeIcon.Progress">
-        <item name="android:src">@drawable/ic_prayer_progress</item>
-    </style>
-
-    <style name="PrayerList.List" parent="TextAppearance.AppCompat.Large">
-        <item name="android:textSize">@dimen/size_prayer_list</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-    </style>
-
-    <style name="PrayerList.ListContainer">
-        <item name="android:paddingLeft">@dimen/padding_list_container</item>
-        <item name="android:paddingRight">@dimen/padding_list_container</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="PrayerList.LocationIcon">
-        <item name="android:layout_width">16dp</item>
-        <item name="android:layout_height">16dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
-        <item name="android:src">@drawable/ic_place</item>
-        <item name="android:tint">@color/main_location</item>
-    </style>
-
-    <style name="PrayerList.MainDate">
-        <item name="android:gravity">center</item>
+    <style name="Logo.Link">
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:padding">8dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">@dimen/size_second_line</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#33b5e5</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Logo.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:fontFamily">sans-serif-condensed</item>
-    </style>
-
-    <style name="PrayerList.MainLocation" parent="PrayerList.MainPrayerName">
-        <item name="android:textColor">@color/main_location</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="PrayerList.MainPrayerName">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">@dimen/size_first_line</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="PrayerList.MainTime">
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/size_main_time</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:paddingLeft">@dimen/padding_main_time</item>
-        <item name="android:paddingRight">@dimen/padding_main_time</item>
-        <item name="android:layout_marginTop">@dimen/margin_main_time_top</item>
-        <item name="android:layout_marginBottom">@dimen/margin_main_time_top</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
-        <item name="android:ellipsize">none</item>
+    <style name="Logo.SmallAbout" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">roboto-condensed</item>
     </style>
 
     <!-- Mosque List -->
@@ -128,7 +31,6 @@
 
     <style name="MosqueList.Address" parent="TextAppearance.AppCompat.Small">
         <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
     </style>
 
     <style name="MosqueList.Distance" parent="TextAppearance.AppCompat.Small">
@@ -154,6 +56,12 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="Ringtone">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:padding">8dp</item>
     </style>
 
     <!-- Widgets -->

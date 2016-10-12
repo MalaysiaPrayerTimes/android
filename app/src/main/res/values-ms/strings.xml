@@ -1,20 +1,8 @@
 <resources>
     <string name="app_name">Waktu Solat Malaysia</string>
-    <string name="app_name_short">Waktu Solat</string>
-    <string name="label_about">Maklumat</string>
-    <string name="label_build">Nombor binaan</string>
-    <string name="label_feedback">Maklum Balas</string>
-    <string name="label_interface">Antara Muka</string>
-    <string name="label_prayer_screen">Skrin solat</string>
-    <string name="label_retry">Cuba Lagi</string>
-    <string name="label_review">Ulas MPT</string>
-    <string name="label_review_summary">Ulas MPT di Google Play</string>
-    <string name="label_settings">Tetapan</string>
-    <string name="label_theme">Tema</string>
-    <string name="label_theme_dark">Gelap</string>
-    <string name="label_version">Versi</string>
-    <string name="label_extension_description">Membenarkan extension ditambah ke Waktu Solat Malaysia</string>
-    <string name="label_extension_permission">menambah extension ke Waktu Solat Malaysia</string>
-    <string name="label_extensions">Skrin Solat</string>
-    <string name="label_refresh">Semak semula</string>
+    <string name="app_name_short">Eaktu Solat</string>
+
+    <string name="label_mosque">Masjid</string>
+    <string name="label_prayer">Waktu Solat</string>
+    <string name="label_qibla">Kiblat</string>
 </resources>
