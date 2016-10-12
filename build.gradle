@@ -9,6 +9,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.2.1'
         classpath 'org.jacoco:org.jacoco.core:jacoco-0.7.7.201606060606'
         classpath 'hu.supercluster:paperwork-plugin:1.2.7'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 
@@ -35,6 +36,7 @@ ext {
     // Libraries
     BUTTERKNIFE_VERSION = '8.4.0'
     DAGGER_VERSION = '2.7'
+    FIREBASE_VERSION = '9.6.1'
     GSON_VERSION = '2.7'
     MOCKITO_VERSION = '1.10.19'
     OKHTTP_VERSION = '3.4.1'
