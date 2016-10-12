@@ -1,5 +1,58 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/frame"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" />
+    tools:context=".main.MainActivity">
+
+    <ViewFlipper
+        android:id="@+id/viewflipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inAnimation="@anim/fade_in"
+        android:outAnimation="@anim/fade_out">
+
+        <FrameLayout
+            android:id="@+id/progress_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:visibility="gone">
+
+            <com.i906.mpt.common.SquareImageView
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="32dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_mosque_progress"
+                android:tint="#666666" />
+
+        </FrameLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <FrameLayout
+            android:id="@+id/error_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <include layout="@layout/view_prayer_error" />
+
+        </FrameLayout>
+
+    </ViewFlipper>
+
+</FrameLayout>

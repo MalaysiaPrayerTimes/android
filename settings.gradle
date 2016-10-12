@@ -1,1 +1,3 @@
-include ':mpt4', ':api-client', ':mpt-extension'
+include ':app'
+include ':api-client'
+include ':mpt-extension'
