@@ -5,7 +5,10 @@ import android.content.Context;
 
 import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.internal.Dagger;
+import com.i906.mpt.internal.FirebaseTree;
 import com.i906.mpt.internal.Graph;
+
+import timber.log.Timber;
 
 public class BaseMptApplication extends Application {
 
@@ -20,6 +23,7 @@ public class BaseMptApplication extends Application {
     }
 
     public void onPreCreate() {
+        Timber.plant(new FirebaseTree());
     }
 
     public Graph getGraph() {
