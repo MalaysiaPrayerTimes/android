@@ -30,6 +30,6 @@ class OkHttpModule {
     @Singleton
     @Named("network")
     List<Interceptor> provideOkHttpNetworkInterceptors() {
-        return Collections.emptyList();;
+        return Collections.emptyList();
     }
 }
