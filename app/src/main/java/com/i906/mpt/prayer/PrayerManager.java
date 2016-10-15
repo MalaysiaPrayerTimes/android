@@ -260,6 +260,10 @@ public class PrayerManager {
                 });
     }
 
+    public void notifyPreferenceChanged() {
+        mLastPrayerContext = null;
+    }
+
     public boolean hasError() {
         return mIsError.get();
     }
