@@ -26,6 +26,7 @@ class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.ViewHolder> {
 
     CodeAdapter() {
         mList = new ArrayList<>();
+        setHasStableIds(true);
     }
 
     @Override
@@ -65,6 +66,11 @@ class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.ViewHolder> {
         if (mListener != null) {
             mListener.onCodeSelected(code);
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return getItem(position).getCity().hashCode();
     }
 
     @Override

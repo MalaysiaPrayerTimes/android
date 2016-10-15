@@ -6,6 +6,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -77,6 +82,37 @@ public class LocationPickerActivity extends BaseActivity implements CodeView, Co
 
     private void showSwipeRefreshLoading(boolean loading) {
         mRefreshLayout.setRefreshing(loading);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_location_picker, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+
+        if (searchItem != null) {
+            SearchView sv = (SearchView) searchItem.getActionView();
+            sv.setSubmitButtonEnabled(false);
+            sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (TextUtils.isEmpty(newText)) {
+                        mPresenter.filter(null);
+                    } else {
+                        mPresenter.filter(newText);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        return true;
     }
 
     @Override

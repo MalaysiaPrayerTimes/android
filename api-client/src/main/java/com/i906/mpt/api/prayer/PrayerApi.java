@@ -1,5 +1,8 @@
 package com.i906.mpt.api.prayer;
 
+import java.util.List;
+import java.util.Map;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -26,6 +29,6 @@ interface PrayerApi {
     );
 
     @GET("app/codes")
-    Observable<CodeResponse> getSupportedCodes(
+    Observable<Map<String,List<PrayerCode>>> getSupportedCodes(
     );
 }

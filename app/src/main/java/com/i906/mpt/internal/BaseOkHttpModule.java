@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -21,12 +22,17 @@ class BaseOkHttpModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache, List<Interceptor> interceptors) {
+    OkHttpClient provideOkHttpClient(Cache cache,
+                                     @Named("data") List<Interceptor> interceptors,
+                                     @Named("network") List<Interceptor> networkInterceptors) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cache(cache);
 
         builder.interceptors()
                 .addAll(interceptors);
+
+        builder.networkInterceptors()
+                .addAll(networkInterceptors);
 
         return builder.build();
     }
