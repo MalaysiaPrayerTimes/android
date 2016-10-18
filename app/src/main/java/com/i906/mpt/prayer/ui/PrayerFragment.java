@@ -18,6 +18,7 @@ import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
+import com.i906.mpt.location.LocationRepository;
 import com.i906.mpt.prayer.PrayerContext;
 import com.i906.mpt.settings.SettingsActivity;
 
@@ -181,5 +182,13 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     public void onDetach() {
         super.onDetach();
         mPresenter.setView(null);
+    }
+
+    @Override
+    protected int getErrorMessage(Throwable e, int defaultResId) {
+        if (LocationRepository.isThrowableLocationSettingsRelated(e)) {
+            return R.string.error_no_location;
+        }
+        return super.getErrorMessage(e, defaultResId);
     }
 }
