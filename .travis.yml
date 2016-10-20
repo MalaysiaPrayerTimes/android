@@ -17,7 +17,7 @@ cache:
     - $HOME/.gradle
 
 before_install:
-- export TZ=Asia/Kuala_Lumpur
+  - export TZ=Asia/Kuala_Lumpur
 
 script:
   - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex
@@ -32,14 +32,7 @@ before_deploy:
 
 deploy:
   provider: script
+  script: config/scripts/deploy.sh
   skip_cleanup: true
   on:
     condition: $TRAVIS_BRANCH == "develop" || ($TRAVIS_TAG && $TRAVIS_BRANCH == "master")
-  script:
-    - if [ $TRAVIS_TAG && $TRAVIS_BRANCH == "master" ]; then
-        ./gradlew generateProdReleasePlayResources
-        # ./gradlew publishListingProdRelease -PPLAY_STORE_TRACK=rollout
-      elif [ $TRAVIS_BRANCH == "develop" ]; then
-        ./gradlew generateBetaReleasePlayResources
-        # ./gradlew publishListingBetaRelease
-      fi
