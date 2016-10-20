@@ -24,18 +24,17 @@ android {
         def versionMajor = 2
         def versionMinor = 0
         def versionPatch = 0
-        def versionBuild = TRAVIS_BUILD_NUMBER as Integer
+        def versionBuild = System.getenv('TRAVIS_BUILD_NUMBER') ?: 0 as Integer
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
-        buildConfigField 'String', 'FOURSQUARE_ID', "\"$MPT_FOURSQUARE_ID\""
-        buildConfigField 'String', 'FOURSQUARE_SECRET', "\"$MPT_FOURSQUARE_SECRET\""
-
-        resValue 'string', 'gcm_defaultSenderId', MPT_GCM_SENDER_ID
-        resValue 'string', 'google_app_id', MPT_GOOGLE_APP_ID
-        resValue 'string', 'google_api_key', MPT_GOOGLE_API_KEY
-        resValue 'string', 'google_crash_reporting_api_key', MPT_GOOGLE_CRASH_API_KEY
+        resValue 'string', 'foursquare_id', System.getenv('MPT_FOURSQUARE_ID') ?: MPT_FOURSQUARE_ID
+        resValue 'string', 'foursquare_secret', System.getenv('MPT_FOURSQUARE_SECRET') ?: MPT_FOURSQUARE_SECRET
+        resValue 'string', 'gcm_defaultSenderId', System.getenv('MPT_GCM_SENDER_ID') ?: MPT_GCM_SENDER_ID
+        resValue 'string', 'google_app_id', System.getenv('MPT_GOOGLE_APP_ID') ?: MPT_GOOGLE_APP_ID
+        resValue 'string', 'google_api_key', System.getenv('MPT_GOOGLE_API_KEY') ?: MPT_GOOGLE_API_KEY
+        resValue 'string', 'google_crash_reporting_api_key', System.getenv('MPT_GOOGLE_CRASH_API_KEY') ?: MPT_GOOGLE_CRASH_API_KEY
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
