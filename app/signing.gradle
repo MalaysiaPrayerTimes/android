@@ -1,0 +1,20 @@
+if (project.hasProperty('MPT_KEY_ALIAS') && project.hasProperty('MPT_KEY_PASSWORD')
+        && project.hasProperty('MPT_STORE_PASSWORD') && file('i906-mptjks').exists()) {
+
+    android {
+        signingConfigs {
+            release {
+                keyAlias MPT_KEY_ALIAS
+                keyPassword MPT_KEY_PASSWORD
+                storeFile file('i906-mpt.jks')
+                storePassword MPT_STORE_PASSWORD
+            }
+        }
+
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}
