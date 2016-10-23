@@ -1,0 +1,8 @@
+Problems with new version? Get the older one here: http://mpt.i906.my/apk/MalaysiaPrayerTimes.1741.apk
+
+Version 1.1.2523
+- Fixed force close problems for Gingerbread devices
+- Fixed widget problems for Gingerbread devices
+- Fixed widget showing wrong current prayer time
+- Fixed widget showing wrong hijri date and year
+- Added options to show/hide Masihi/Hijri date on widget

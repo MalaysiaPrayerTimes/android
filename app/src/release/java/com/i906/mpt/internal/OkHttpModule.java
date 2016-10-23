@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Interceptor;
 
 /**
  * @author Noorzaini Ilhami

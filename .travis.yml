@@ -17,9 +17,7 @@ cache:
     - $HOME/.gradle
 
 before_install:
-- export TZ=Asia/Kuala_Lumpur
-- openssl aes-256-cbc -K $encrypted_91c31e58792b_key -iv $encrypted_91c31e58792b_iv -in secure.tar.enc -out secure.tar -d
-- tar xvf secure.tar
+  - export TZ=Asia/Kuala_Lumpur
 
 script:
   - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex
@@ -27,3 +25,14 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_91c31e58792b_key -iv $encrypted_91c31e58792b_iv -in secure.tar.enc -out secure.tar -d
+  - tar xvf secure.tar
+
+deploy:
+  provider: script
+  script: config/scripts/deploy.sh
+  skip_cleanup: true
+  on:
+    condition: $TRAVIS_BRANCH == "develop" || ($TRAVIS_TAG && $TRAVIS_BRANCH == "master")

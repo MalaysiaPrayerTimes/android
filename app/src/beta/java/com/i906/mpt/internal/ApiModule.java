@@ -1,8 +1,6 @@
 package com.i906.mpt.internal;
 
-import android.content.Context;
-
-import com.i906.mpt.R;
+import com.i906.mpt.BuildConfig;
 import com.i906.mpt.api.foursquare.FoursquareClient;
 import com.i906.mpt.api.foursquare.FoursquareHttpInterceptor;
 import com.i906.mpt.api.foursquare.RetrofitFoursquareClient;
@@ -31,11 +29,9 @@ class ApiModule {
 
     @Provides
     @Singleton
-    FoursquareClient provideFoursquareClient(OkHttpClient client, Context context) {
-        String fid = context.getString(R.string.foursquare_id);
-        String fsc = context.getString(R.string.foursquare_secret);
-
-        Interceptor i = new FoursquareHttpInterceptor(fid, fsc);
+    FoursquareClient provideFoursquareClient(OkHttpClient client) {
+        Interceptor i = new FoursquareHttpInterceptor(BuildConfig.FOURSQUARE_ID,
+                BuildConfig.FOURSQUARE_SECRET);
 
         OkHttpClient.Builder foursquareClient = client.newBuilder();
         foursquareClient.interceptors().add(0, i);
