@@ -48,6 +48,7 @@ class LocationPickerPresenter {
                         return list;
                     }
                 })
+                .filter(mCodeFilter)
                 .toSortedList(mCodeSorter)
                 .doOnNext(new Action1<List<PrayerCode>>() {
                     @Override
