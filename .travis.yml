@@ -31,8 +31,14 @@ before_deploy:
   - tar xvf secure.tar
 
 deploy:
-  provider: script
-  script: config/scripts/deploy.sh
-  skip_cleanup: true
-  on:
-    condition: $TRAVIS_BRANCH == "develop" || ($TRAVIS_TAG && $TRAVIS_BRANCH == "master")
+  - provider: script
+    script: ./gradlew generateBetaReleasePlayResources
+    skip_cleanup: true
+    on:
+      branch: dev
+  - provider: script
+    script: ./gradlew generateProdReleasePlayResources
+    skip_cleanup: true
+    on:
+      branch: master
+      tags: true
