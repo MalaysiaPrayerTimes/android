@@ -24,7 +24,7 @@ android {
         def versionMajor = 2
         def versionMinor = 0
         def versionPatch = 0
-        def versionBuild = System.getenv('TRAVIS_BUILD_NUMBER') ?: 0 as Integer
+        def versionBuild = (System.getenv('TRAVIS_BUILD_NUMBER') ?: 0) as Integer
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
