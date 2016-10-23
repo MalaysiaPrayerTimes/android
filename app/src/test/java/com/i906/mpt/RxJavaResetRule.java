@@ -5,6 +5,8 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.plugins.RxJavaPlugins;
 import rx.plugins.RxJavaSchedulersHook;
 import rx.schedulers.Schedulers;
@@ -23,10 +25,14 @@ public class RxJavaResetRule implements TestRule {
                 RxJavaPlugins.getInstance().reset();
                 RxJavaPlugins.getInstance().registerSchedulersHook(new SchedulerHook());
 
+                RxAndroidPlugins.getInstance().reset();
+                RxAndroidPlugins.getInstance().registerSchedulersHook(new AndroidSchedulersHook());
+
                 base.evaluate();
 
                 //after: clean up
                 RxJavaPlugins.getInstance().reset();
+                RxAndroidPlugins.getInstance().reset();
             }
         };
     }
@@ -44,6 +50,13 @@ public class RxJavaResetRule implements TestRule {
 
         @Override
         public Scheduler getComputationScheduler() {
+            return Schedulers.immediate();
+        }
+    }
+
+    private class AndroidSchedulersHook extends RxAndroidSchedulersHook {
+        @Override
+        public Scheduler getMainThreadScheduler() {
             return Schedulers.immediate();
         }
     }
