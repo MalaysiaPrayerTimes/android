@@ -12,8 +12,8 @@ import javax.inject.Singleton;
 public class NotificationPreferences {
 
     private static final String ALARM_OFFSET_KEY = "alarm_offset";
-    private static final String APPEAR_KEY = "appear_before_duration";
-    private static final String CLEAR_KEY = "clear_after_duration";
+    private static final String APPEAR_KEY = "notification_appear_before_duration";
+    private static final String CLEAR_KEY = "notification_clear_after_duration";
     private static final String NOTIFICATION_KEY = "notification_";
     private static final String NOTIFICATION_TONE_KEY = "tone_notification";
     private static final String PRAYER_KEY = "prayer_";
