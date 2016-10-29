@@ -1,15 +1,11 @@
 package com.i906.mpt.internal;
 
-import android.util.Log;
-
 import com.google.firebase.crash.FirebaseCrash;
-
-import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
  */
-public class FirebaseTree extends Timber.Tree {
+public class FirebaseTree extends BaseMptTree {
 
     @Override
     protected void log(int priority, String tag, String message, Throwable t) {
@@ -19,13 +15,5 @@ public class FirebaseTree extends Timber.Tree {
         } else {
             FirebaseCrash.log(message);
         }
-    }
-
-    private boolean shouldReport(Throwable t) {
-        return true;
-    }
-
-    protected boolean isLoggable(int priority) {
-        return priority != Log.VERBOSE;
     }
 }

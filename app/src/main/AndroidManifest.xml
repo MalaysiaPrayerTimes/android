@@ -169,6 +169,10 @@
 
         <service android:name=".widget.WidgetService" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="${MPT_FABRIC_API_KEY}" />
+
     </application>
 
 </manifest>
