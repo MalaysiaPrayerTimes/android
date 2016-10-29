@@ -32,12 +32,12 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: ./gradlew publishListingBetaRelease
+    script: ./gradlew publishBetaRelease
     skip_cleanup: true
     on:
       branch: dev
   - provider: script
-    script: ./gradlew generateProdReleasePlayResources
+    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=rollout
     skip_cleanup: true
     on:
       branch: master
