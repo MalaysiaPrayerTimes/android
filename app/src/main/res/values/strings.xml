@@ -5,8 +5,8 @@
     <string name="donate_contribute">Contribute</string>
     <string name="donate_digitalocean">Referral Link</string>
     <string name="donate_extra_support">Extra Support</string>
-    <string name="donate_github">Github Page</string>
-    <string name="donate_mbb">MBB-152068940752</string>
+    <string name="donate_github">GitHub Page</string>
+    <string name="donate_mbb" translatable="false">MBB-152068940752</string>
     <string name="donate_share">Share</string>
     <string name="donate_share_subject">Take a look at "Malaysia Prayer Times"</string>
     <string name="donate_share_via">Share "Malaysia Prayer Times" via</string>
@@ -15,7 +15,7 @@
     <string name="donate_text_2">You can help MPT by spreading the word! Share your experience in using MPT with your friends!</string>
     <string name="donate_text_3">MPT is now open sourced on GitHub and hosted on DigitalOcean.
         \n\nIf you are a developer you can improve MPT codes.
-        You can create a DigitalOcean account with the referral link if you do not have one yet.</string>
+        You can create a DigitalOcean account with the referral link and get $10 credit.</string>
     <string name="donate_text_4">If you would like to further support MPT\'s development, you can donate to Noorzaini Ilhami.
         \n\nMPT will always remain as a free app with no advertisements.</string>
 

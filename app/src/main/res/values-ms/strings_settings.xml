@@ -1,0 +1,105 @@
+<resources>
+
+    <string name="label_about">Maklumat</string>
+    <string name="label_alarm">Penggera</string>
+    <string name="label_alarm_offset">Laras penggera</string>
+    <string name="label_build">Nombor binaan</string>
+    <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
+    <string name="label_copyright">Hak Cipta © 2013–2016</string>
+
+    <string name="label_donate">Beri Sumbangan</string>
+    <string name="label_feedback">Maklum Balas</string>
+    <string name="label_hide_notification">Buang perberitahuan solat</string>
+    <string name="label_hijri_offset">Laras tarikh hijrah</string>
+    <string name="label_interface">Antara Muka</string>
+    <string name="label_location">Lokasi</string>
+    <string name="label_miscellaneous">Lain-Lain</string>
+    <string name="label_mpt_copyright">Hak Cipta © 2013–2016 Noorzaini Ilhami (i906)</string>
+    <string name="label_mpt_facebook">Laman Facebook MPT</string>
+    <string name="label_mpt_github">Laman GitHub MPT</string>
+    <string name="label_mpt_malaysia">Buatan Malaysia</string>
+    <string name="label_mpt_provider_mosque">Maklumat masjid disedia oleh Foursquare</string>
+    <string name="label_mpt_provider_prayer">Maklumat waktu solat disedia oleh JAKIM</string>
+    <string name="label_none">Tiada</string>
+    <string name="label_notification">Pemberitahuan</string>
+    <string name="label_notifications">Pemberitahuan</string>
+    <string name="label_open_source_licenses">Lesen sumber terbuka</string>
+    <string name="label_prayer_headsup">Benarkan perberitahuan heads-up</string>
+    <string name="label_prayer_highlight">Penekanan waktu solat</string>
+    <string name="label_prayer_screen">Skrin waktu solat</string>
+    <string name="label_prayer_widget">Widget</string>
+    <string name="label_preferred_location">Lokasi terpilih</string>
+    <string name="label_preferred_location_summary">Gunakan lokasi terpilih untuk menentukan waktu solat</string>
+    <string name="label_refresh">Refresh</string>
+    <string name="label_set_notification_tone">Tetapkan nada pemberitahuan…</string>
+    <string name="label_set_reminder_tone">Tetapkan nada peringatan…</string>
+    <string name="label_settings">Tetapan</string>
+    <string name="label_show_dhuha">Tunjuk Dhuha</string>
+    <string name="label_show_hijri_date">Tunjuk tarikh Hijrah</string>
+    <string name="label_show_imsak">Tunjuk Imsak</string>
+    <string name="label_show_masihi_date">Tunjuk tarikh Masihi</string>
+    <string name="label_show_reminder">Tunjuk peringatan waktu solat</string>
+    <string name="label_review">Ulas MPT</string>
+    <string name="label_review_summary">Ulas MPT di Play Store</string>
+    <string name="label_theme">Tema</string>
+    <string name="label_theme_dark">Gelap</string>
+    <string name="label_use_location">Guna lokasi semasa</string>
+    <string name="label_use_location_summary">Gunakan lokasi semasa untuk menentukan waktu solat</string>
+    <string name="label_version">Versi</string>
+    <string name="label_version_value">Versi %s</string>
+    <string name="label_vibrate">Getaran</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="summary_location_automatic">Lokasi semasa digunakan</string>
+    <string name="summary_location_forced">Tiada lokasi ditetapkan, menggunakan lokasi semasa</string>
+    <string name="summary_location_manual">Guna lokasi di %s</string>
+    <string name="summary_notification_all">Semua pemberitahuan digunakan</string>
+    <string name="summary_notification_none">Semua pemberitahuan ditutup</string>
+    <string name="summary_notification_some">%d pemberitahuan digunakan</string>
+
+    <string-array name="pref_alarm_offset">
+        <item>15 minit awal</item>
+        <item>10 minit awal</item>
+        <item>5 minit awal</item>
+        <item>Tiada larasan</item>
+        <item>5 minit lewat</item>
+        <item>10 minit lewat</item>
+        <item>15 minit lewat</item>
+    </string-array>
+
+    <string-array name="pref_highlight_settings">
+        <item>Waktu solat semasa</item>
+        <item>Waktu solat kemudian</item>
+    </string-array>
+
+    <string-array name="pref_hijri_offset">
+        <item>-2 hari</item>
+        <item>-1 hari</item>
+        <item>Tiada larasan</item>
+        <item>+1 hari</item>
+        <item>+2 hari</item>
+    </string-array>
+
+    <string-array name="pref_notification_clear">
+        <item>Pemberitahuan tidak dibuang</item>
+        <item>5 minit</item>
+        <item>10 minit</item>
+        <item>15 minit</item>
+        <item>20 minit</item>
+        <item>30 minit</item>
+        <item>45 minit</item>
+        <item>1 jam</item>
+    </string-array>
+
+    <string-array name="pref_reminder_appear">
+        <item>Tiada peringatan ditunjuk</item>
+        <item>5 minit</item>
+        <item>10 minit</item>
+        <item>15 minit</item>
+        <item>20 minit</item>
+        <item>30 minit</item>
+        <item>45 minit</item>
+        <item>1 jam</item>
+    </string-array>
+
+</resources>
