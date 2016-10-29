@@ -56,6 +56,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             return R.string.error_no_network;
         } else if (e instanceof ConnectionException) {
             return R.string.error_play_service;
+        } else if (e instanceof SecurityException) {
+            return R.string.error_no_location_permission;
         } else {
             Timber.w(e);
             return defaultResId;

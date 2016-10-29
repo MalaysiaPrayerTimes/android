@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import butterknife.OnClick;
 public class PrayerFragment extends BaseFragment implements PrayerView {
 
     private Snackbar mSnackbar;
+    private boolean mPermissionError = false;
 
     @Inject
     PrayerPresenter mPresenter;
@@ -44,6 +46,9 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @BindView(R.id.tv_error)
     TextView mErrorMessageView;
+
+    @BindView(R.id.btn_retry)
+    Button mRetryButton;
 
     @BindView(R.id.prayerlist)
     PrayerListView mPrayerListView;
@@ -123,6 +128,16 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         mPrayerListView.showError(error);
         if (mSnackbar != null) mSnackbar.dismiss();
 
+        if (error instanceof SecurityException) {
+            mRetryButton.setText(R.string.label_grant_permission);
+            mPermissionError = true;
+            mLocationError = false;
+        } else {
+            mRetryButton.setText(R.string.label_retry);
+            mPermissionError = false;
+            mLocationError = false;
+        }
+
         int errorMessage = getErrorMessage(error, R.string.error_unexpected);
 
         if (mViewFlipper.getDisplayedChild() != 1) {
@@ -133,11 +148,19 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
                     .setAction(R.string.label_retry, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mPresenter.getPrayerContext(true);
+                            onRetryButtonClicked();
                         }
                     });
 
             mSnackbar.show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == DEFAULT_PERMISSIONS_REQUEST_CODE) {
+            mPermissionError = false;
+            onRetryButtonClicked();
         }
     }
 
@@ -154,7 +177,11 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @OnClick(R.id.btn_retry)
     void onRetryButtonClicked() {
-        mPresenter.getPrayerContext(true);
+        if (mPermissionError) {
+            requestLocationPermissions();
+        } else {
+            mPresenter.getPrayerContext(true);
+        }
     }
 
     @OnClick(R.id.btn_settings)

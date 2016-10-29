@@ -20,12 +20,14 @@
         \n\nMPT akan sentiasa kekal sebagai aplikasi percuma tanpa iklan.</string>
 
     <string name="error_no_location">Adakah anda telah membenarkan tetapan lokasi?</string>
+    <string name="error_no_location_permission">Benarkan MPT untuk mengesan lokasi semasa anda.</string>
     <string name="error_no_network">Sila periksa sambungan internet anda.</string>
     <string name="error_play_service">Terdapat masalah dengan Play Services!</string>
     <string name="error_server">Terdapat masalah dengan pelayan MPT!</string>
     <string name="error_undetectable_location">Tidak dapat mengesan lokasi anda!</string>
     <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
 
+    <string name="label_grant_permisison">Beri kebenaran</string>
     <string name="label_mosque">Masjid</string>
     <string name="label_prayer">Waktu Solat</string>
     <string name="label_retry">Cuba Lagi</string>
@@ -34,4 +36,9 @@
     <string name="label_widget_bar">Prayer Times Bar</string>
     <string name="label_widget_mini">Prayer Times Mini</string>
     <string name="label_widget_text">Prayer Times Text</string>
+
+    <plurals name="mi_label_grant_permission">
+        <item quantity="other">Beri kebenaran</item>
+    </plurals>
+
 </resources>
