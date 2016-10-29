@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public interface Extension {
 
-    String AUTHORITY = "com.i906.mpt.staging.provider.prayer";
+    String AUTHORITY = App.PACKAGE + ".provider.prayer";
     Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
     String PRAYER_CONTEXT = "prayer-context";

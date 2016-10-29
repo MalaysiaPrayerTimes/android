@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'hu.supercluster.paperwork'
 apply plugin: 'com.github.triplet.play'
 apply from: 'signing.gradle'
@@ -35,6 +36,10 @@ android {
         resValue 'string', 'google_app_id', System.getenv('MPT_GOOGLE_APP_ID') ?: MPT_GOOGLE_APP_ID
         resValue 'string', 'google_api_key', System.getenv('MPT_GOOGLE_API_KEY') ?: MPT_GOOGLE_API_KEY
         resValue 'string', 'google_crash_reporting_api_key', System.getenv('MPT_GOOGLE_CRASH_API_KEY') ?: MPT_GOOGLE_CRASH_API_KEY
+
+        manifestPlaceholders = [
+                MPT_FABRIC_API_KEY: System.getenv('MPT_FABRIC_API_KEY') ?: MPT_FABRIC_API_KEY
+        ]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -96,7 +101,7 @@ android {
 paperwork {
     set = [
             buildTime: buildTime("yyyy-MM-dd HH:mm:ss", "GMT+0800"),
-            gitInfo: gitInfo()
+            gitInfo  : gitInfo()
     ]
 }
 
@@ -119,7 +124,9 @@ dependencies {
     def TIMBER_VERSION = rootProject.ext.TIMBER_VERSION
 
     compile project(':api-client')
-    compile project(':mpt-extension')
+
+    debugCompile project(path: ':mpt-extension', configuration: 'debug')
+    releaseCompile project(path: ':mpt-extension', configuration: 'release')
 
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
@@ -172,4 +179,8 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile "com.android.support:support-annotations:$SUPPORT_VERSION"
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
 }
