@@ -32,7 +32,7 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: ./gradlew generateBetaReleasePlayResources
+    script: ./gradlew publishListingBetaRelease
     skip_cleanup: true
     on:
       branch: dev
