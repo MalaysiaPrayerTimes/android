@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
@@ -35,6 +36,8 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * @author Noorzaini Ilhami
@@ -207,7 +210,12 @@ public class AlarmService extends Service {
         Intent i = createIntent(action, index, time, location);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
+        if (SDK_INT < Build.VERSION_CODES.M) {
+            mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
+        } else {
+            mAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
+        }
+
         Timber.i("Created alarm %s: %s %s %s", index, action, new Date(time + triggerOffset), location);
     }
 
