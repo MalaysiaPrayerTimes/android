@@ -1,0 +1,10 @@
+<resources>
+    <string name="notification_prayer_normal">Prayer time is now %s.</string>
+    <string name="notification_prayer_others">Telah masuk waktu %s.</string>
+    <string name="notification_reminder_soon">Akan masuk waktu %1$s sebentar lagi.</string>
+    <string name="notification_reminder_time">Akan masuk waktu %1$s pada pukul %2$s.</string>
+
+    <plurals name="notification_reminder">
+        <item quantity="other">Akan masuk waktu %1$s dalam %2$s minit.</item>
+    </plurals>
+</resources>

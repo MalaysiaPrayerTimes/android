@@ -6,7 +6,7 @@
     <string name="label_build">Build number</string>
     <string name="label_configure_notifications">Configure notifications</string>
     <string name="label_copyright">Copyright © 2013–2016</string>
-    <string name="label_copyright_summary">Noorzaini Ilhami (i906)</string>
+    <string name="label_copyright_summary" translatable="false">Noorzaini Ilhami (i906)</string>
     <string name="label_donate">Donate</string>
     <string name="label_feedback">Feedback</string>
     <string name="label_hide_notification">Hide prayer notification</string>
@@ -16,7 +16,7 @@
     <string name="label_miscellaneous">Miscellaneous</string>
     <string name="label_mpt_copyright">Copyright © 2013–2016 Noorzaini Ilhami (i906)</string>
     <string name="label_mpt_facebook">MPT Facebook Page</string>
-    <string name="label_mpt_github">MPT Github Page</string>
+    <string name="label_mpt_github">MPT GitHub Page</string>
     <string name="label_mpt_malaysia">Made in Malaysia</string>
     <string name="label_mpt_provider_mosque">Mosque data provided by Foursquare</string>
     <string name="label_mpt_provider_prayer">Prayer times data provided by JAKIM</string>
@@ -40,7 +40,7 @@
     <string name="label_show_masihi_date">Show Masihi date</string>
     <string name="label_show_reminder">Show prayer reminder</string>
     <string name="label_review">Rate and review MPT</string>
-    <string name="label_review_summary">Rate and review MPT on Google Play</string>
+    <string name="label_review_summary">Rate and review MPT on Play Store</string>
     <string name="label_theme">Theme</string>
     <string name="label_theme_dark">Dark</string>
     <string name="label_use_location">Use my location</string>
@@ -82,7 +82,7 @@
         <item>Next prayer time</item>
     </string-array>
 
-    <string-array name="pref_highlight_settings_values">
+    <string-array name="pref_highlight_settings_values" translatable="false">
         <item>current</item>
         <item>next</item>
     </string-array>
