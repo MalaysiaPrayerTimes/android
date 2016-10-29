@@ -30,6 +30,7 @@ public class AboutFragment extends BasePreferenceFragment {
         Preference about = findPreference("general_pref_about");
         Preference licenses = findPreference("general_pref_licenses");
         Preference donate = findPreference("general_pref_donate");
+        Preference feedback = findPreference("general_pref_feedback");
 
         version.setSummary(BuildConfig.VERSION_NAME);
         build.setSummary(String.format("%s %s %s", BuildConfig.VERSION_CODE, gitInfo, buildTime));
@@ -65,6 +66,18 @@ public class AboutFragment extends BasePreferenceFragment {
                 return true;
             }
         });
+
+        feedback.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                openFacebook();
+                return true;
+            }
+        });
+    }
+
+    private void openFacebook() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.me/MalaysiaPrayerTimes")));
     }
 
     private void openPlayStore() {
