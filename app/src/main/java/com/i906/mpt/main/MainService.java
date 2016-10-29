@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
+import com.i906.mpt.location.LocationDisabledException;
 import com.i906.mpt.prayer.PrayerContext;
 
 import javax.inject.Inject;
@@ -62,7 +63,7 @@ public class MainService extends Service implements MainHandler {
 
     @Override
     public void handleError(Throwable t) {
-        if (t instanceof SecurityException) {
+        if (t instanceof SecurityException || t instanceof LocationDisabledException) {
             stopSelf();
         } else {
             Timber.w(t);

@@ -11,6 +11,8 @@ import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.Graph;
 import com.i906.mpt.location.ConnectionException;
+import com.i906.mpt.location.LocationDisabledException;
+import com.i906.mpt.location.LocationTimeoutException;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -56,6 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             return R.string.error_no_network;
         } else if (e instanceof ConnectionException) {
             return R.string.error_play_service;
+        } else if (e instanceof SecurityException) {
+            return R.string.error_no_location_permission;
+        } else if (e instanceof LocationDisabledException || e instanceof LocationTimeoutException) {
+            return R.string.error_no_location;
         } else {
             Timber.w(e);
             return defaultResId;

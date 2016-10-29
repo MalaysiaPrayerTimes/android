@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -40,6 +41,7 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
 
     private MosqueAdapter mAdapter;
     private Snackbar mSnackbar;
+    private boolean mPermissionError = false;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mRefreshLayout;
@@ -49,6 +51,9 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
 
     @BindView(R.id.tv_error)
     TextView mErrorMessageView;
+
+    @BindView(R.id.btn_retry)
+    Button mRetryButton;
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
@@ -116,6 +121,15 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
     @Override
     public void showError(Throwable error) {
         showSwipeRefreshLoading(false);
+        if (mSnackbar != null) mSnackbar.dismiss();
+
+        if (error instanceof SecurityException) {
+            mRetryButton.setText(R.string.label_grant_permission);
+            mPermissionError = true;
+        } else {
+            mRetryButton.setText(R.string.label_retry);
+            mPermissionError = false;
+        }
 
         int errorMessage = getErrorMessage(error, R.string.error_unexpected);
 
@@ -127,7 +141,7 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
                     .setAction(R.string.label_retry, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mPresenter.getMosqueList(true);
+                            onRetryButtonClicked();
                         }
                     });
 
@@ -135,9 +149,21 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == DEFAULT_PERMISSIONS_REQUEST_CODE) {
+            mPermissionError = false;
+            onRetryButtonClicked();
+        }
+    }
+
     @OnClick(R.id.btn_retry)
     void onRetryButtonClicked() {
-        mPresenter.getMosqueList(true);
+        if (mPermissionError) {
+            requestLocationPermissions();
+        } else {
+            mPresenter.getMosqueList(true);
+        }
     }
 
     @Override

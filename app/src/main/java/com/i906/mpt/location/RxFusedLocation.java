@@ -8,9 +8,15 @@ import android.support.annotation.Nullable;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -18,6 +24,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import rx.AsyncEmitter;
 import rx.Observable;
 import rx.functions.Action1;
+
+import static com.google.android.gms.location.LocationServices.FusedLocationApi;
 
 /**
  * @author Noorzaini Ilhami
@@ -77,10 +85,35 @@ class RxFusedLocation {
 
         private void requestLocationUpdates() {
             try {
-                LocationServices.FusedLocationApi.requestLocationUpdates(mClient, request, this);
+                checkLocationSettings();
+                FusedLocationApi.requestLocationUpdates(mClient, request, this);
             } catch (SecurityException e) {
                 this.emitter.onError(e);
+            } catch (IllegalStateException e) {
+                this.emitter.onError(new LocationDisabledException());
+            } catch (Exception e) {
+                this.emitter.onError(e);
             }
+        }
+
+        private void checkLocationSettings() {
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(request);
+
+            PendingResult<LocationSettingsResult> result =
+                    LocationServices.SettingsApi.checkLocationSettings(mClient, builder.build());
+
+            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+                @Override
+                public void onResult(LocationSettingsResult result) {
+                    Status status = result.getStatus();
+                    switch (status.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            emitter.onError(new LocationDisabledException(status));
+                            break;
+                    }
+                }
+            });
         }
 
         @Override
@@ -103,7 +136,7 @@ class RxFusedLocation {
         @Override
         public void cancel() throws Exception {
             if (mClient.isConnected()) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(mClient, this);
+                FusedLocationApi.removeLocationUpdates(mClient, this);
             }
             mCallbacks.removeCallback(this);
         }

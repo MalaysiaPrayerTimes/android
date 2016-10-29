@@ -1,5 +1,8 @@
 package com.i906.mpt.prayer.ui;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,13 +14,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.google.android.gms.common.api.Status;
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseFragment;
+import com.i906.mpt.location.LocationDisabledException;
+import com.i906.mpt.location.LocationTimeoutException;
 import com.i906.mpt.prayer.PrayerContext;
 import com.i906.mpt.settings.SettingsActivity;
 
@@ -32,6 +39,8 @@ import butterknife.OnClick;
 public class PrayerFragment extends BaseFragment implements PrayerView {
 
     private Snackbar mSnackbar;
+    private boolean mPermissionError = false;
+    private boolean mLocationError = false;
 
     @Inject
     PrayerPresenter mPresenter;
@@ -44,6 +53,9 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @BindView(R.id.tv_error)
     TextView mErrorMessageView;
+
+    @BindView(R.id.btn_retry)
+    Button mRetryButton;
 
     @BindView(R.id.prayerlist)
     PrayerListView mPrayerListView;
@@ -123,6 +135,24 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         mPrayerListView.showError(error);
         if (mSnackbar != null) mSnackbar.dismiss();
 
+        if (error instanceof SecurityException) {
+            mRetryButton.setText(R.string.label_grant_permission);
+            mPermissionError = true;
+            mLocationError = false;
+        } else if (error instanceof LocationDisabledException || error instanceof LocationTimeoutException) {
+            if (error instanceof LocationDisabledException) {
+                tryResolveLocationError((LocationDisabledException) error);
+            }
+
+            mRetryButton.setText(R.string.label_open_location_settings);
+            mPermissionError = false;
+            mLocationError = true;
+        } else {
+            mRetryButton.setText(R.string.label_retry);
+            mPermissionError = false;
+            mLocationError = false;
+        }
+
         int errorMessage = getErrorMessage(error, R.string.error_unexpected);
 
         if (mViewFlipper.getDisplayedChild() != 1) {
@@ -133,11 +163,38 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
                     .setAction(R.string.label_retry, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mPresenter.getPrayerContext(true);
+                            onRetryButtonClicked();
                         }
                     });
 
             mSnackbar.show();
+        }
+    }
+
+    private void tryResolveLocationError(LocationDisabledException error) {
+        if (!error.hasStatus()) return;
+
+        try {
+            Status status = error.getStatus();
+            PendingIntent pi = status.getResolution();
+            startIntentSenderForResult(pi.getIntentSender(), DEFAULT_RESOLUTION_REQUEST_CODE, null, 0, 0, 0, null);
+        } catch (IntentSender.SendIntentException e) {
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == DEFAULT_PERMISSIONS_REQUEST_CODE) {
+            mPermissionError = false;
+            onRetryButtonClicked();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DEFAULT_LOCATION_REQUEST_CODE || requestCode == DEFAULT_RESOLUTION_REQUEST_CODE) {
+            mLocationError = false;
+            onRetryButtonClicked();
         }
     }
 
@@ -154,7 +211,13 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @OnClick(R.id.btn_retry)
     void onRetryButtonClicked() {
-        mPresenter.getPrayerContext(true);
+        if (mPermissionError) {
+            requestLocationPermissions();
+        } else if (mLocationError) {
+            openLocationSettings();
+        } else {
+            mPresenter.getPrayerContext(true);
+        }
     }
 
     @OnClick(R.id.btn_settings)
