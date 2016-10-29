@@ -29,6 +29,7 @@
 
     <string name="label_grant_permission">Grant permission</string>
     <string name="label_mosque">Mosques</string>
+    <string name="label_open_location_settings">Location Settings</string>
     <string name="label_prayer">Prayer Times</string>
     <string name="label_retry">Retry</string>
     <string name="label_qibla">Qibla</string>
