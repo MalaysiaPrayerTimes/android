@@ -22,6 +22,7 @@ import com.i906.mpt.R;
 import com.i906.mpt.api.foursquare.Mosque;
 import com.i906.mpt.common.BaseFragment;
 import com.i906.mpt.common.DividerItemDecoration;
+import com.i906.mpt.location.LocationRepository;
 
 import java.util.List;
 
@@ -176,5 +177,13 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
     public void onDetach() {
         super.onDetach();
         mPresenter.setView(null);
+    }
+
+    @Override
+    protected int getErrorMessage(Throwable e, int defaultResId) {
+        if (LocationRepository.isThrowableLocationSettingsRelated(e)) {
+            return R.string.error_no_location;
+        }
+        return super.getErrorMessage(e, defaultResId);
     }
 }

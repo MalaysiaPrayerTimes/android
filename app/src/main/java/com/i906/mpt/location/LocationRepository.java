@@ -7,6 +7,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.i906.mpt.prefs.HiddenPreferences;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -87,5 +88,9 @@ public class LocationRepository {
     public static float getDistance(Location a, Location b) {
         if (a == null || b == null) return Float.MAX_VALUE;
         return a.distanceTo(b);
+    }
+
+    public static boolean isThrowableLocationSettingsRelated(Throwable throwable) {
+        return throwable instanceof SecurityException || throwable instanceof TimeoutException;
     }
 }
