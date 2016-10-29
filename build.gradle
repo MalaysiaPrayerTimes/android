@@ -29,10 +29,10 @@ task clean(type: Delete) {
 
 ext {
     // Android
-    buildToolsVersion = '24.0.2'
+    buildToolsVersion = '25.0.0'
     minSdkVersion = 21
-    targetSdkVersion = 24
-    compileSdkVersion = 24
+    targetSdkVersion = 25
+    compileSdkVersion = 25
 
     // Libraries
     BUTTERKNIFE_VERSION = '8.4.0'
@@ -45,9 +45,9 @@ ext {
     RETROFIT_VERSION = '2.1.0'
     RXANDROID_VERSION = '1.2.1'
     RXJAVA_VERSION = '1.1.10'
-    SUPPORT_VERSION = '24.2.1'
-    TIMBER_VERSION = '4.3.0'
-    STORIO_VERSION = '1.10.0'
+    SUPPORT_VERSION = '25.0.0'
+    TIMBER_VERSION = '4.3.1'
+    STORIO_VERSION = '1.11.0'
 }
 
 ext.preDexLibs = !project.hasProperty('disablePreDex')
