@@ -119,7 +119,9 @@ dependencies {
     def TIMBER_VERSION = rootProject.ext.TIMBER_VERSION
 
     compile project(':api-client')
-    compile project(':mpt-extension')
+
+    debugCompile project(path: ':mpt-extension', configuration: 'debug')
+    releaseCompile project(path: ':mpt-extension', configuration: 'release')
 
     // Android Support Libraries
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
