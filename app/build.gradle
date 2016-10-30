@@ -49,6 +49,9 @@ android {
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
             testCoverageEnabled IS_CI
+
+            def key = System.getenv('MPT_FABRIC_API_KEY') ?: MPT_FABRIC_API_KEY
+            if (!key) ext.enableCrashlytics = false
         }
 
         release {
