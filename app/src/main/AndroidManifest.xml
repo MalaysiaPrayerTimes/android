@@ -159,7 +159,7 @@
 
         <receiver android:name=".alarm.AlarmReceiver">
             <intent-filter>
-                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+                <action android:name="com.i906.mpt.action.PRAYER_CONTEXT_UPDATED" />
             </intent-filter>
         </receiver>
 
@@ -167,7 +167,11 @@
 
         <service android:name=".main.MainService" />
 
-        <service android:name=".widget.WidgetService" />
+        <service android:name=".widget.WidgetService">
+            <intent-filter>
+                <action android:name="com.i906.mpt.action.PRAYER_CONTEXT_UPDATED" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="io.fabric.ApiKey"

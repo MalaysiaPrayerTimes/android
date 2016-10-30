@@ -22,7 +22,7 @@ public class PrayerBroadcaster {
     }
 
     public void sendPrayerUpdatedBroadcast() {
-        mContext.sendBroadcast(new Intent(Extension.ACTION_PRAYER_TIME_UPDATED));
+        mContext.sendBroadcast(new Intent(Extension.ACTION_PRAYER_CONTEXT_UPDATED));
         mContext.getContentResolver().update(Extension.PRAYER_CONTEXT_URI, null, null, null);
     }
 }

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.i906.mpt.internal.Dagger;
@@ -12,10 +13,14 @@ import com.i906.mpt.prayer.PrayerContext;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * @author Noorzaini Ilhami
  */
 public class WidgetService extends Service implements WidgetHandler {
+
+    public static final String ACTION_PRAYER_TIME_UPDATED = "com.i906.mpt.action.PRAYER_TIME_UPDATED";
 
     @Inject
     WidgetDelegate mPresenter;
@@ -39,12 +44,15 @@ public class WidgetService extends Service implements WidgetHandler {
 
     @Override
     public void handlePrayerContext(PrayerContext prayerContext) {
-
+        Intent intent = new Intent(ACTION_PRAYER_TIME_UPDATED);
+        intent.putExtra("prayer_context", (Parcelable) prayerContext);
+        sendBroadcast(intent);
         stopSelf();
     }
 
     @Override
     public void handleError(Throwable throwable) {
+        Timber.w(throwable);
         stopSelf();
     }
 

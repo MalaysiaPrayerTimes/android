@@ -14,5 +14,5 @@ public interface Extension {
     Uri PRAYER_CONTEXT_URI = Uri.withAppendedPath(AUTHORITY_URI, PRAYER_CONTEXT);
 
     String ACTION_MAIN_SCREEN = "com.i906.mpt.action.MAIN_SCREEN";
-    String ACTION_PRAYER_TIME_UPDATED = "com.i906.mpt.action.PRAYER_TIME_UPDATED";
+    String ACTION_PRAYER_CONTEXT_UPDATED = "com.i906.mpt.action.PRAYER_CONTEXT_UPDATED";
 }
