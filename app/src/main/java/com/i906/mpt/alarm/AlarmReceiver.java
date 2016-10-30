@@ -48,6 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (AlarmService.ACTION_NOTIFICATION_PRAYER.equals(action)) {
             mNotificationHelper.showPrayerNotification(prayer, time, location);
             mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
+            mNotificationHelper.cancel(getPreviousPrayerIndex(prayer));
         }
 
         if (AlarmService.ACTION_NOTIFICATION_CANCEL.equals(action)) {
@@ -59,5 +60,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent alarm = new Intent(context, AlarmService.class);
         alarm.setAction(action);
         context.startService(alarm);
+    }
+
+    private int getPreviousPrayerIndex(int prayer) {
+        if (prayer == -1) return -1;
+        return (prayer - 1 == -1) ? 7 : prayer - 1;
     }
 }
