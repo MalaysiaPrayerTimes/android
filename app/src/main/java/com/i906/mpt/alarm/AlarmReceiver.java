@@ -31,8 +31,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         long time = intent.getLongExtra(AlarmService.EXTRA_PRAYER_TIME, -1);
         String location = intent.getStringExtra(AlarmService.EXTRA_PRAYER_LOCATION);
 
-        if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
-            startAlarmService(context, Extension.ACTION_PRAYER_TIME_UPDATED);
+        if (Extension.ACTION_PRAYER_CONTEXT_UPDATED.equals(action)) {
+            startAlarmService(context, Extension.ACTION_PRAYER_CONTEXT_UPDATED);
         }
 
         if (prayer == -1 || time == -1) return;

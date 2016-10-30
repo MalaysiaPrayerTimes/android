@@ -5,12 +5,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.RemoteViews;
 
-import com.i906.mpt.extension.Extension;
 import com.i906.mpt.prayer.PrayerContext;
 
 import java.util.Date;
@@ -28,8 +26,9 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, widgetIntent);
         final String action = widgetIntent.getAction();
 
-        if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
-            updateWithPrayerContext(context);
+        if (WidgetService.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
+            PrayerContext prayerContext = widgetIntent.getParcelableExtra("prayer_context");
+            updateWithPrayerContext(context, prayerContext);
         }
     }
 
@@ -57,22 +56,16 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, layout);
     }
 
-    protected void updateWithPrayerContext(Context context) {
+    protected void updateWithPrayerContext(Context context, PrayerContext prayerContext) {
         AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         ComponentName cn = new ComponentName(context, getWidgetClass());
         int[] appWidgetIds = mgr.getAppWidgetIds(cn);
 
-        Cursor c = context.getContentResolver()
-                .query(Extension.PRAYER_CONTEXT_URI, null, null, null, null);
+        if (appWidgetIds.length == 0) return;
 
-        if (c != null && c.moveToFirst()) {
-            PrayerContext prayerContext = PrayerContext.Mapper.fromCursor(c);
-            c.close();
-
-            for (int appWidgetId : appWidgetIds) {
-                RemoteViews layout = buildLayout(mgr, context, appWidgetId, prayerContext);
-                mgr.updateAppWidget(appWidgetId, layout);
-            }
+        for (int appWidgetId : appWidgetIds) {
+            RemoteViews layout = buildLayout(mgr, context, appWidgetId, prayerContext);
+            mgr.updateAppWidget(appWidgetId, layout);
         }
     }
 

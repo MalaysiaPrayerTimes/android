@@ -132,7 +132,7 @@ public class AlarmService extends Service {
     }
 
     private void handleAction(String action, PrayerContext prayerContext, int startId) {
-        if (Extension.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
+        if (Extension.ACTION_PRAYER_CONTEXT_UPDATED.equals(action)) {
             setupInitialAlarm(prayerContext);
             stopSelf(startId);
         } else if (ACTION_UPDATE_REMINDER.equals(action)) {
