@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 
+import com.i906.mpt.BuildConfig;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.extension.Extension;
 import com.i906.mpt.internal.Dagger;
@@ -44,11 +45,11 @@ import static android.os.Build.VERSION.SDK_INT;
  */
 public class AlarmService extends Service {
 
-    public static final String ACTION_UPDATE_REMINDER = "com.i906.mpt.action.ACTION_UPDATE_REMINDER";
+    public static final String ACTION_UPDATE_REMINDER = BuildConfig.APPLICATION_ID + ".action.ACTION_UPDATE_REMINDER";
 
-    public static final String ACTION_NOTIFICATION_PRAYER = "com.i906.mpt.action.NOTIFICATION_PRAYER";
-    public static final String ACTION_NOTIFICATION_REMINDER = "com.i906.mpt.action.NOTIFICATION_REMINDER";
-    public static final String ACTION_NOTIFICATION_CANCEL = "com.i906.mpt.action.NOTIFICATION_CANCEL";
+    public static final String ACTION_NOTIFICATION_PRAYER = BuildConfig.APPLICATION_ID + ".action.NOTIFICATION_PRAYER";
+    public static final String ACTION_NOTIFICATION_REMINDER = BuildConfig.APPLICATION_ID + ".action.NOTIFICATION_REMINDER";
+    public static final String ACTION_NOTIFICATION_CANCEL = BuildConfig.APPLICATION_ID + ".action.NOTIFICATION_CANCEL";
 
     public static final String EXTRA_PRAYER_INDEX = "prayer_index";
     public static final String EXTRA_PRAYER_TIME = "prayer_time";

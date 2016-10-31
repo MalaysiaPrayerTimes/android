@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.i906.mpt.BuildConfig;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
 import com.i906.mpt.prayer.PrayerContext;
@@ -20,7 +21,7 @@ import timber.log.Timber;
  */
 public class WidgetService extends Service implements WidgetHandler {
 
-    public static final String ACTION_PRAYER_TIME_UPDATED = "com.i906.mpt.action.PRAYER_TIME_UPDATED";
+    public static final String ACTION_PRAYER_TIME_UPDATED = BuildConfig.APPLICATION_ID + ".action.PRAYER_TIME_UPDATED";
 
     @Inject
     WidgetDelegate mPresenter;
