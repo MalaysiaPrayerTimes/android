@@ -27,6 +27,7 @@
     <string name="error_undetectable_location">Tidak dapat mengesan lokasi anda!</string>
     <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
 
+    <string name="label_enable_location">Dapatkan Lokasi</string>
     <string name="label_grant_permission">Beri kebenaran</string>
     <string name="label_mosque">Masjid</string>
     <string name="label_open_location_settings">Tetapan Lokasi</string>

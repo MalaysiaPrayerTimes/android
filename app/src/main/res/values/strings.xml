@@ -27,6 +27,7 @@
     <string name="error_undetectable_location">Uhoh! We are unable to recognize your location!</string>
     <string name="error_unexpected">Uhoh! We are not expecting this error!</string>
 
+    <string name="label_enable_location">Enable location</string>
     <string name="label_grant_permission">Grant permission</string>
     <string name="label_mosque">Mosques</string>
     <string name="label_open_location_settings">Location Settings</string>

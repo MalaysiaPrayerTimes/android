@@ -1,6 +1,8 @@
 package com.i906.mpt.mosque.ui;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,10 +21,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.google.android.gms.common.api.Status;
 import com.i906.mpt.R;
 import com.i906.mpt.api.foursquare.Mosque;
 import com.i906.mpt.common.BaseFragment;
 import com.i906.mpt.common.DividerItemDecoration;
+import com.i906.mpt.location.LocationDisabledException;
+import com.i906.mpt.location.LocationTimeoutException;
 
 import java.util.List;
 
@@ -36,12 +41,15 @@ import butterknife.OnClick;
  */
 public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAdapter.MosqueListener {
 
-    @Inject
-    MosquePresenter mPresenter;
-
     private MosqueAdapter mAdapter;
     private Snackbar mSnackbar;
+
     private boolean mPermissionError = false;
+    private boolean mLocationError = false;
+    private LocationDisabledException mLocationDisabledException;
+
+    @Inject
+    MosquePresenter mPresenter;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mRefreshLayout;
@@ -126,9 +134,24 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         if (error instanceof SecurityException) {
             mRetryButton.setText(R.string.label_grant_permission);
             mPermissionError = true;
+            mLocationError = false;
+        } else if (error instanceof LocationDisabledException || error instanceof LocationTimeoutException) {
+            if (error instanceof LocationDisabledException) {
+                mLocationDisabledException = (LocationDisabledException) error;
+            }
+
+            if (hasLocationResolution()) {
+                mRetryButton.setText(R.string.label_enable_location);
+            } else {
+                mRetryButton.setText(R.string.label_open_location_settings);
+            }
+
+            mPermissionError = false;
+            mLocationError = true;
         } else {
             mRetryButton.setText(R.string.label_retry);
             mPermissionError = false;
+            mLocationError = false;
         }
 
         int errorMessage = getErrorMessage(error, R.string.error_unexpected);
@@ -161,6 +184,20 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
     void onRetryButtonClicked() {
         if (mPermissionError) {
             requestLocationPermissions();
+        } else if (mLocationError) {
+            if (hasLocationResolution()) {
+                try {
+                    Status status = mLocationDisabledException.getStatus();
+                    PendingIntent pi = status.getResolution();
+
+                    startIntentSenderForResult(pi.getIntentSender(),
+                            DEFAULT_RESOLUTION_REQUEST_CODE, null, 0, 0, 0, null);
+                } catch (IntentSender.SendIntentException e) {
+                    openLocationSettings();
+                }
+            } else {
+                openLocationSettings();
+            }
         } else {
             mPresenter.getMosqueList(true);
         }
@@ -175,6 +212,10 @@ public class MosqueFragment extends BaseFragment implements MosqueView, MosqueAd
         String uri = "geo:0,0?q=" + Uri.encode(String.format("%s@%f,%f", name, lat, lng), "UTF-8");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
+    }
+
+    private boolean hasLocationResolution() {
+        return mLocationDisabledException != null && mLocationDisabledException.hasStatus();
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {

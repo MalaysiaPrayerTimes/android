@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <permission
-        android:name="com.i906.mpt.permission.WRITE_PRAYER_DATA"
+        android:name="${applicationId}.permission.WRITE_PRAYER_DATA"
         android:protectionLevel="signature" />
 
     <application
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.i906.mpt.action.MAIN_SCREEN" />
+                <action android:name="${applicationId}.action.MAIN_SCREEN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -74,7 +74,7 @@
             android:launchMode="singleTask"
             android:parentActivityName=".settings.SettingsActivity">
             <intent-filter>
-                <action android:name="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
+                <action android:name="${applicationId}.action.NOTIFICATION_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -98,7 +98,7 @@
             android:authorities="${applicationId}.provider.prayer"
             android:enabled="true"
             android:exported="true"
-            android:writePermission="com.i906.mpt.permission.WRITE_PRAYER_DATA" />
+            android:writePermission="${applicationId}.permission.WRITE_PRAYER_DATA" />
 
         <receiver android:name=".alarm.StartupReceiver">
             <intent-filter>
@@ -117,7 +117,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
             </intent-filter>
 
             <meta-data
@@ -133,7 +133,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
             </intent-filter>
 
             <meta-data
@@ -149,7 +149,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.i906.mpt.action.PRAYER_TIME_UPDATED" />
+                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
             </intent-filter>
 
             <meta-data
@@ -159,7 +159,7 @@
 
         <receiver android:name=".alarm.AlarmReceiver">
             <intent-filter>
-                <action android:name="com.i906.mpt.action.PRAYER_CONTEXT_UPDATED" />
+                <action android:name="${applicationId}.action.PRAYER_CONTEXT_UPDATED" />
             </intent-filter>
         </receiver>
 
@@ -169,7 +169,7 @@
 
         <service android:name=".widget.WidgetService">
             <intent-filter>
-                <action android:name="com.i906.mpt.action.PRAYER_CONTEXT_UPDATED" />
+                <action android:name="${applicationId}.action.PRAYER_CONTEXT_UPDATED" />
             </intent-filter>
         </service>
 

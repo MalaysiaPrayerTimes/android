@@ -3,12 +3,13 @@ package com.i906.mpt;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
 import com.i906.mpt.alarm.StartupReceiver;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.FabricTree;
-import com.i906.mpt.internal.FirebaseTree;
 import com.i906.mpt.internal.Graph;
 
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class BaseMptApplication extends Application {
@@ -24,7 +25,7 @@ public class BaseMptApplication extends Application {
     }
 
     public void onPreCreate() {
-        Timber.plant(new FirebaseTree());
+        Fabric.with(this, new Crashlytics());
         Timber.plant(new FabricTree());
     }
 

@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.i906.mpt.BuildConfig;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
 import com.i906.mpt.location.LocationDisabledException;
@@ -20,7 +21,7 @@ import timber.log.Timber;
  */
 public class MainService extends Service implements MainHandler {
 
-    public static final String ACTION_STARTUP = "com.i906.mpt.action.ACTION_STARTUP";
+    public static final String ACTION_STARTUP = BuildConfig.APPLICATION_ID + ".action.ACTION_STARTUP";
 
     @Inject
     MainDelegate mDelegate;

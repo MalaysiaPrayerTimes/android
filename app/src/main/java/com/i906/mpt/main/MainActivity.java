@@ -7,7 +7,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
-import com.crashlytics.android.Crashlytics;
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.intro.MainIntroActivity;
@@ -18,7 +17,6 @@ import com.i906.mpt.prefs.NotificationPreferences;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * @author Noorzaini Ilhami
@@ -60,7 +58,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         activityGraph().inject(this);
 
