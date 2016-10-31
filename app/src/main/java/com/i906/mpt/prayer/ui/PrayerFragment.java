@@ -39,8 +39,10 @@ import butterknife.OnClick;
 public class PrayerFragment extends BaseFragment implements PrayerView {
 
     private Snackbar mSnackbar;
+
     private boolean mPermissionError = false;
     private boolean mLocationError = false;
+    private LocationDisabledException mLocationDisabledException;
 
     @Inject
     PrayerPresenter mPresenter;
@@ -141,10 +143,15 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
             mLocationError = false;
         } else if (error instanceof LocationDisabledException || error instanceof LocationTimeoutException) {
             if (error instanceof LocationDisabledException) {
-                tryResolveLocationError((LocationDisabledException) error);
+                mLocationDisabledException = (LocationDisabledException) error;
             }
 
-            mRetryButton.setText(R.string.label_open_location_settings);
+            if (hasLocationResolution()) {
+                mRetryButton.setText(R.string.label_enable_location);
+            } else {
+                mRetryButton.setText(R.string.label_open_location_settings);
+            }
+
             mPermissionError = false;
             mLocationError = true;
         } else {
@@ -168,17 +175,6 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
                     });
 
             mSnackbar.show();
-        }
-    }
-
-    private void tryResolveLocationError(LocationDisabledException error) {
-        if (!error.hasStatus()) return;
-
-        try {
-            Status status = error.getStatus();
-            PendingIntent pi = status.getResolution();
-            startIntentSenderForResult(pi.getIntentSender(), DEFAULT_RESOLUTION_REQUEST_CODE, null, 0, 0, 0, null);
-        } catch (IntentSender.SendIntentException e) {
         }
     }
 
@@ -214,7 +210,19 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         if (mPermissionError) {
             requestLocationPermissions();
         } else if (mLocationError) {
-            openLocationSettings();
+            if (hasLocationResolution()) {
+                try {
+                    Status status = mLocationDisabledException.getStatus();
+                    PendingIntent pi = status.getResolution();
+
+                    startIntentSenderForResult(pi.getIntentSender(),
+                            DEFAULT_RESOLUTION_REQUEST_CODE, null, 0, 0, 0, null);
+                } catch (IntentSender.SendIntentException e) {
+                    openLocationSettings();
+                }
+            } else {
+                openLocationSettings();
+            }
         } else {
             mPresenter.getPrayerContext(true);
         }
@@ -234,6 +242,10 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         });
 
         menu.show();
+    }
+
+    private boolean hasLocationResolution() {
+        return mLocationDisabledException != null && mLocationDisabledException.hasStatus();
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {
