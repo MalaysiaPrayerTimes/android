@@ -8,8 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -34,6 +32,7 @@ public class CompassView extends View implements SensorEventListener {
     private static final float THICKNESS_SCALE = 0.02f;
 
     private int mDeviceOrientation = 0;
+    private int mAccentColor;
 
     private boolean mUseRotation = false;
     private boolean mUseAccelerometer = false;
@@ -63,10 +62,9 @@ public class CompassView extends View implements SensorEventListener {
 
     private Paint mOuterCirclePaint;
     private Paint mCirclePaint;
+    private Paint mWhiteArrowPaint;
     private Paint mArcPaint;
-    private Paint mEraserPaint;
 
-    private RectF mCircleOuterBounds;
     private RectF mCircleInnerBounds;
 
     private RectF mArcInnerBounds;
@@ -92,6 +90,8 @@ public class CompassView extends View implements SensorEventListener {
         super(context, attrs, defStyleAttr);
         initSensors();
 
+        mAccentColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
+
         mOrientationEventListener = new OrientationEventListener(getContext()) {
             @Override
             public void onOrientationChanged(int i) {
@@ -104,22 +104,28 @@ public class CompassView extends View implements SensorEventListener {
         mOuterCirclePaint = new Paint();
         mOuterCirclePaint.setAntiAlias(true);
         mOuterCirclePaint.setColor(Color.WHITE);
+        mOuterCirclePaint.setStrokeWidth(w * THICKNESS_SCALE);
+        mOuterCirclePaint.setStyle(Paint.Style.STROKE);
+
+        mWhiteArrowPaint = new Paint();
+        mWhiteArrowPaint.setAntiAlias(true);
+        mWhiteArrowPaint.setColor(Color.WHITE);
 
         mCirclePaint = new Paint();
         mCirclePaint.setAntiAlias(true);
-        mCirclePaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        mCirclePaint.setColor(mAccentColor);
 
         float thickness = w * THICKNESS_SCALE * 2;
         mArcPaint = new Paint();
         mArcPaint.setAntiAlias(true);
-        mArcPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        mArcPaint.setColor(mAccentColor);
         mArcPaint.setStrokeWidth(thickness);
         mArcPaint.setStyle(Paint.Style.STROKE);
+    }
 
-        mEraserPaint = new Paint();
-        mEraserPaint.setAntiAlias(true);
-        mEraserPaint.setColor(Color.TRANSPARENT);
-        mEraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+    private void updateOuterCirclePaint(float p) {
+        int color = swapColor(mAccentColor, Color.WHITE, p);
+        mOuterCirclePaint.setColor(color);
     }
 
     private void initSensors() {
@@ -163,10 +169,8 @@ public class CompassView extends View implements SensorEventListener {
         path2.lineTo(g.x, g.y);
         path2.close();
 
-        arrowCanvas.drawOval(mCircleOuterBounds, mOuterCirclePaint);
-        arrowCanvas.drawOval(mCircleInnerBounds, mEraserPaint);
         arrowCanvas.drawPath(path, mCirclePaint);
-        arrowCanvas.drawPath(path2, mOuterCirclePaint);
+        arrowCanvas.drawPath(path2, mWhiteArrowPaint);
         arrowCanvas.save();
     }
 
@@ -275,6 +279,14 @@ public class CompassView extends View implements SensorEventListener {
         mAzimuth = azimuth;
     }
 
+    private static int swapColor(int c1, int c2, float p) {
+        float i = 1 - p;
+        int r = (int) (Color.red(c1) * i + Color.red(c2) * p);
+        int g = (int) (Color.green(c1) * i + Color.green(c2) * p);
+        int b = (int) (Color.blue(c1) * i + Color.blue(c2) * p);
+        return Color.argb(0xFF, r, g, b);
+    }
+
     private static float calculateAngleDifference(float angle1, float angle2) {
         float diff = (angle2 - angle1 + 180) % 360 - 180;
         return diff < -180 ? diff + 360 : diff;
@@ -291,6 +303,9 @@ public class CompassView extends View implements SensorEventListener {
         }
 
         canvas.drawArc(mArcCenterBounds, 270, smoothSweep, false, mArcPaint);
+
+        updateOuterCirclePaint(getQiblaHintColorPercentage());
+        canvas.drawArc(mCircleInnerBounds, 0, 360, false, mOuterCirclePaint);
 
         mDirectionDelta = calculateAngleDifference(mLastDirection, mDirection);
         mArrowRotator.postRotate(smoothDelta, getWidth() / 2, getHeight() / 2);
@@ -339,6 +354,18 @@ public class CompassView extends View implements SensorEventListener {
         stopUpdating();
     }
 
+    private float getQiblaHintColorPercentage() {
+        float d = Math.abs(calculateAngleDifference(0, mDirection));
+
+        if (d < 2) {
+            return 0;
+        } else if (d < 7) {
+            return d / 5 - 0.4f;
+        } else {
+            return 1;
+        }
+    }
+
     private void updateAzimuthArc(int w, int h) {
         final float thickness = w * THICKNESS_SCALE * 2;
 
@@ -362,7 +389,7 @@ public class CompassView extends View implements SensorEventListener {
     private void updateOuterCircle(int w, int h) {
         final float thickness = w * THICKNESS_SCALE;
 
-        mCircleOuterBounds = new RectF(
+        RectF circleOuterBounds = new RectF(
                 mArcInnerBounds.left + thickness,
                 mArcInnerBounds.top + thickness,
                 mArcInnerBounds.right - thickness,
@@ -370,10 +397,10 @@ public class CompassView extends View implements SensorEventListener {
         );
 
         mCircleInnerBounds = new RectF(
-                mCircleOuterBounds.left + thickness,
-                mCircleOuterBounds.top + thickness,
-                mCircleOuterBounds.right - thickness,
-                mCircleOuterBounds.bottom - thickness
+                circleOuterBounds.left + thickness,
+                circleOuterBounds.top + thickness,
+                circleOuterBounds.right - thickness,
+                circleOuterBounds.bottom - thickness
         );
     }
 
