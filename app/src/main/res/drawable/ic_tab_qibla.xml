@@ -1,6 +1,15 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/state_on"
+        android:drawable="@drawable/ic_tab_qibla_active"
+        android:state_selected="true"/>
+    <item
+        android:id="@+id/state_off"
+        android:drawable="@drawable/ic_tab_qibla_normal"/>
 
-    <item android:drawable="@drawable/ic_tab_qibla_active" android:state_selected="true" />
-    <item android:drawable="@drawable/ic_tab_qibla_normal" />
-
-</selector>
+    <transition
+        android:drawable="@drawable/ic_tab_qibla_active_animated"
+        android:fromId="@id/state_off"
+        android:toId="@id/state_on"/>
+</animated-selector>

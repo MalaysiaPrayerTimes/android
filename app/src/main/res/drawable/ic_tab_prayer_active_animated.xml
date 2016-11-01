@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_tab_prayer_active">
+    <target
+        android:name="clock_hour"
+        android:animation="@animator/animator_ic_tab_prayer"/>
+
+    <target
+        android:name="clock_minute"
+        android:animation="@animator/animator_ic_tab_prayer"/>
+</animated-vector>
