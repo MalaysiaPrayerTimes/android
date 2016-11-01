@@ -167,11 +167,7 @@
 
         <service android:name=".main.MainService" />
 
-        <service android:name=".widget.WidgetService">
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_CONTEXT_UPDATED" />
-            </intent-filter>
-        </service>
+        <service android:name=".widget.WidgetService" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

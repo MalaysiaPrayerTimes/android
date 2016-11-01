@@ -13,6 +13,6 @@ public interface Extension {
     String PRAYER_CONTEXT = "prayer-context";
     Uri PRAYER_CONTEXT_URI = Uri.withAppendedPath(AUTHORITY_URI, PRAYER_CONTEXT);
 
-    String ACTION_MAIN_SCREEN = "com.i906.mpt.action.MAIN_SCREEN";
-    String ACTION_PRAYER_CONTEXT_UPDATED = "com.i906.mpt.action.PRAYER_CONTEXT_UPDATED";
+    String ACTION_MAIN_SCREEN = App.PACKAGE + ".action.MAIN_SCREEN";
+    String ACTION_PRAYER_CONTEXT_UPDATED = App.PACKAGE + ".action.PRAYER_CONTEXT_UPDATED";
 }
