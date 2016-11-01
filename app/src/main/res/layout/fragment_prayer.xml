@@ -9,8 +9,7 @@
         android:id="@+id/viewflipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inAnimation="@anim/fade_in"
-        android:outAnimation="@anim/fade_out">
+        android:inAnimation="@anim/fade_in">
 
         <FrameLayout
             android:id="@+id/progress_container"
