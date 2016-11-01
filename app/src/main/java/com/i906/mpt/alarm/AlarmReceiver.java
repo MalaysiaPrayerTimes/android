@@ -8,6 +8,7 @@ import android.os.Build;
 import com.i906.mpt.MptApplication;
 import com.i906.mpt.extension.Extension;
 import com.i906.mpt.prayer.PrayerBroadcaster;
+import com.i906.mpt.widget.WidgetService;
 
 import javax.inject.Inject;
 
@@ -49,6 +50,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             mNotificationHelper.showPrayerNotification(prayer, time, location);
             mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
             mNotificationHelper.cancel(getPreviousPrayerIndex(prayer));
+            WidgetService.start(context);
         }
 
         if (AlarmService.ACTION_NOTIFICATION_CANCEL.equals(action)) {
