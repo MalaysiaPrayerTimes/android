@@ -102,14 +102,15 @@ public class PrayerManager {
                     public Observable<PrayerContext> call(Location location) {
                         mLastLocation = location;
 
-                        if (shouldUpdatePrayerContext(location)) {
+                        if (shouldUpdatePrayerContext(location) && !isLoading()) {
                             return updatePrayerContext(location);
                         }
 
                         if (mLastPrayerContext != null) {
                             return Observable.just(mLastPrayerContext);
                         } else {
-                            return Observable.empty();
+                            return mPrayerStream.asObservable()
+                                    .first();
                         }
                     }
                 });
@@ -132,7 +133,7 @@ public class PrayerManager {
                 .flatMap(new Func1<String, Observable<PrayerContext>>() {
                     @Override
                     public Observable<PrayerContext> call(String code) {
-                        if (shouldUpdatePrayerContext(code)) {
+                        if (shouldUpdatePrayerContext(code) && !isLoading()) {
                             mLastPreferredLocation = location;
                             return updatePrayerContext(code);
                         }
@@ -140,7 +141,8 @@ public class PrayerManager {
                         if (mLastPrayerContext != null) {
                             return Observable.just(mLastPrayerContext);
                         } else {
-                            return Observable.empty();
+                            return mPrayerStream.asObservable()
+                                    .first();
                         }
                     }
                 });
@@ -194,7 +196,8 @@ public class PrayerManager {
     public Observable<PrayerContext> refreshPrayerContext(Location location) {
         checkPrayerStream();
 
-        if (shouldUpdateLocation(location)) {
+        if (shouldUpdateLocation(location) && !isLoading()) {
+            mLastLocation = location;
             updatePrayerContext(location)
                     .subscribe(new Action1<PrayerContext>() {
                         @Override
