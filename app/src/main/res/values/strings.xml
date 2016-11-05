@@ -28,13 +28,15 @@
     <string name="error_unexpected">Uhoh! We are not expecting this error!</string>
 
     <string name="label_enable_location">Enable location</string>
+    <string name="label_error">Error</string>
     <string name="label_grant_permission">Grant permission</string>
     <string name="label_mosque">Mosques</string>
     <string name="label_open_location_settings">Location Settings</string>
     <string name="label_prayer">Prayer Times</string>
-    <string name="label_retry">Retry</string>
     <string name="label_qibla">Qibla</string>
+    <string name="label_retry">Retry</string>
     <string name="label_search">Search</string>
+    <string name="label_set_location">Set Location</string>
     <string name="label_widget_bar">Prayer Times Bar</string>
     <string name="label_widget_mini">Prayer Times Mini</string>
     <string name="label_widget_text">Prayer Times Text</string>

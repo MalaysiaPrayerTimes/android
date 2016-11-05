@@ -28,13 +28,15 @@
     <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
 
     <string name="label_enable_location">Dapatkan Lokasi</string>
+    <string name="label_error">Masalah</string>
     <string name="label_grant_permission">Beri kebenaran</string>
     <string name="label_mosque">Masjid</string>
     <string name="label_open_location_settings">Tetapan Lokasi</string>
     <string name="label_prayer">Waktu Solat</string>
-    <string name="label_retry">Cuba Lagi</string>
     <string name="label_qibla">Kiblat</string>
+    <string name="label_retry">Cuba Lagi</string>
     <string name="label_search">Cari</string>
+    <string name="label_set_location">Tetapkan Lokasi</string>
     <string name="label_widget_bar">Prayer Times Bar</string>
     <string name="label_widget_mini">Prayer Times Mini</string>
     <string name="label_widget_text">Prayer Times Text</string>
