@@ -12,7 +12,7 @@ import com.i906.mpt.internal.Graph;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
-public class BaseMptApplication extends Application {
+public abstract class BaseMptApplication extends Application {
 
     private Graph mComponent;
 

@@ -118,6 +118,9 @@ public class LocationPickerActivity extends BaseActivity implements CodeView, Co
     @Override
     public void onCodeSelected(PrayerCode code) {
         mLocationPreferences.setPreferredLocation(code);
+        mLocationPreferences.setUsingAutomaticLocation(false);
+
+        setResult(RESULT_OK);
         finish();
     }
 
