@@ -30,7 +30,7 @@ public class LocationPreferences {
     public void setUsingAutomaticLocation(boolean enabled) {
         mPrefs.edit()
                 .putBoolean("location_automatic", enabled)
-                .apply();;
+                .apply();
     }
 
     public boolean hasPreferredLocation() {
