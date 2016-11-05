@@ -21,6 +21,8 @@
 
     <string name="error_no_location">Adakah anda telah membenarkan tetapan lokasi?</string>
     <string name="error_no_location_permission">Benarkan MPT untuk mengesan lokasi semasa anda.</string>
+    <string name="error_no_location_permission_mosque">Lokasi semasa anda diperlukan untuk mendapatkan senarai masjid!</string>
+    <string name="error_no_location_permission_prayer">Lokasi semasa anda diperlukan untuk mendapatkan waktu solat!</string>
     <string name="error_no_network">Sila periksa sambungan internet anda.</string>
     <string name="error_play_service">Terdapat masalah dengan Play Services!</string>
     <string name="error_server">Terdapat masalah dengan pelayan MPT!</string>

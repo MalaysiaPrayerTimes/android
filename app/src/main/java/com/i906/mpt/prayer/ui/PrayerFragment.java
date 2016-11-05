@@ -1,6 +1,5 @@
 package com.i906.mpt.prayer.ui;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.drawable.Animatable;
@@ -20,13 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.google.android.gms.common.api.Status;
 import com.i906.mpt.R;
-import com.i906.mpt.common.BaseFragment;
+import com.i906.mpt.common.LocationFragment;
 import com.i906.mpt.location.LocationDisabledException;
 import com.i906.mpt.location.LocationTimeoutException;
 import com.i906.mpt.prayer.PrayerContext;
 import com.i906.mpt.settings.SettingsActivity;
+import com.i906.mpt.settings.locationpicker.LocationPickerActivity;
 
 import javax.inject.Inject;
 
@@ -36,13 +35,9 @@ import butterknife.OnClick;
 /**
  * @author Noorzaini Ilhami
  */
-public class PrayerFragment extends BaseFragment implements PrayerView {
+public class PrayerFragment extends LocationFragment implements PrayerView {
 
     private Snackbar mSnackbar;
-
-    private boolean mPermissionError = false;
-    private boolean mLocationError = false;
-    private LocationDisabledException mLocationDisabledException;
 
     @Inject
     PrayerPresenter mPresenter;
@@ -58,6 +53,9 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @BindView(R.id.btn_retry)
     Button mRetryButton;
+
+    @BindView(R.id.btn_secondary_action)
+    Button mSecondaryAction;
 
     @BindView(R.id.prayerlist)
     PrayerListView mPrayerListView;
@@ -134,39 +132,39 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     @Override
     public void showError(Throwable error) {
         showSwipeRefreshLoading(false);
+        setErrorFlags(error);
+
         mPrayerListView.showError(error);
         if (mSnackbar != null) mSnackbar.dismiss();
 
-        if (error instanceof SecurityException) {
-            mRetryButton.setText(R.string.label_grant_permission);
-            mPermissionError = true;
-            mLocationError = false;
-        } else if (error instanceof LocationDisabledException || error instanceof LocationTimeoutException) {
-            if (error instanceof LocationDisabledException) {
-                mLocationDisabledException = (LocationDisabledException) error;
-            }
+        int errorMessage = 0;
+        mSecondaryAction.setVisibility(View.GONE);
 
+        if (error instanceof SecurityException) {
+            errorMessage = R.string.error_no_location_permission_prayer;
+
+            mRetryButton.setText(R.string.label_grant_permission);
+            mSecondaryAction.setVisibility(View.VISIBLE);
+            mSecondaryAction.setText(R.string.label_set_location);
+        } else if (error instanceof LocationDisabledException || error instanceof LocationTimeoutException) {
             if (hasLocationResolution()) {
                 mRetryButton.setText(R.string.label_enable_location);
             } else {
                 mRetryButton.setText(R.string.label_open_location_settings);
             }
-
-            mPermissionError = false;
-            mLocationError = true;
         } else {
             mRetryButton.setText(R.string.label_retry);
-            mPermissionError = false;
-            mLocationError = false;
         }
 
-        int errorMessage = getErrorMessage(error, R.string.error_unexpected);
+        if (errorMessage == 0) {
+            errorMessage = getErrorMessage(error, R.string.error_unexpected);
+        }
 
         if (mViewFlipper.getDisplayedChild() != 1) {
             mViewFlipper.setDisplayedChild(2);
-            mErrorMessageView.setText(getErrorMessage(error, R.string.error_unexpected));
+            mErrorMessageView.setText(errorMessage);
         } else {
-            mSnackbar = Snackbar.make(getView(), errorMessage, Snackbar.LENGTH_INDEFINITE)
+            mSnackbar = Snackbar.make(mRefreshLayout, errorMessage, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.label_retry, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -179,19 +177,8 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == DEFAULT_PERMISSIONS_REQUEST_CODE) {
-            mPermissionError = false;
-            onRetryButtonClicked();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DEFAULT_LOCATION_REQUEST_CODE || requestCode == DEFAULT_RESOLUTION_REQUEST_CODE) {
-            mLocationError = false;
-            onRetryButtonClicked();
-        }
+    protected void recheckLocation() {
+        onRetryButtonClicked();
     }
 
     @Override
@@ -207,15 +194,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
 
     @OnClick(R.id.btn_retry)
     void onRetryButtonClicked() {
-        if (mPermissionError) {
+        if (hasPermissionError()) {
             requestLocationPermissions();
-        } else if (mLocationError) {
+        } else if (hasLocationError()) {
             if (hasLocationResolution()) {
                 try {
-                    Status status = mLocationDisabledException.getStatus();
-                    PendingIntent pi = status.getResolution();
-
-                    startIntentSenderForResult(pi.getIntentSender(),
+                    startIntentSenderForResult(getLocationResolution(),
                             DEFAULT_RESOLUTION_REQUEST_CODE, null, 0, 0, 0, null);
                 } catch (IntentSender.SendIntentException e) {
                     openLocationSettings();
@@ -226,6 +210,12 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         } else {
             mPresenter.getPrayerContext(true);
         }
+    }
+
+    @OnClick(R.id.btn_secondary_action)
+    void onSecondaryActionButtonClicked() {
+        Intent intent = new Intent(getActivity(), LocationPickerActivity.class);
+        startActivityForResult(intent, DEFAULT_LOCATION_REQUEST_CODE);
     }
 
     @OnClick(R.id.btn_settings)
@@ -242,10 +232,6 @@ public class PrayerFragment extends BaseFragment implements PrayerView {
         });
 
         menu.show();
-    }
-
-    private boolean hasLocationResolution() {
-        return mLocationDisabledException != null && mLocationDisabledException.hasStatus();
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {
