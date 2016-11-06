@@ -27,6 +27,12 @@ public class LocationPreferences {
         return mPrefs.getBoolean("location_automatic", true);
     }
 
+    public void setUsingAutomaticLocation(boolean enabled) {
+        mPrefs.edit()
+                .putBoolean("location_automatic", enabled)
+                .apply();
+    }
+
     public boolean hasPreferredLocation() {
         return getPreferredLocation() != null;
     }

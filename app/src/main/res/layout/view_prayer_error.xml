@@ -1,31 +1,48 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout style="@style/PrayerList.ErrorContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    style="@style/PrayerList.ErrorContainer">
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:contentDescription="@string/label_error"
         android:src="@drawable/ic_error"
         android:tint="#666666" />
 
     <TextView
         android:id="@+id/tv_error"
+        style="@style/PrayerList.ErrorText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="@string/error_no_location"
-        style="@style/PrayerList.ErrorText" />
+        tools:text="@string/error_no_location" />
 
-    <Button
-        android:id="@+id/btn_retry"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center_horizontal"
-        android:textAllCaps="true"
-        android:text="@string/label_retry"
-        style="?android:attr/borderlessButtonStyle" />
+        android:layout_marginTop="@dimen/margin_action_button"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_secondary_action"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorSecondary"
+            android:visibility="gone"
+            tools:text="@string/label_set_location"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/btn_retry"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_retry" />
+
+    </LinearLayout>
 
 </LinearLayout>

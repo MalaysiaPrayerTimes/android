@@ -8,6 +8,7 @@
 
     <!-- Error Container -->
 
+    <dimen name="margin_action_button">16dp</dimen>
     <dimen name="padding_error_container">64dp</dimen>
 
     <!-- List Container -->
