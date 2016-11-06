@@ -19,7 +19,7 @@ public class BaseMptApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        setGraph(Dagger.getGraph(this));
+        setGraph(prepareGraph());
         onPreCreate();
         StartupReceiver.startup(this);
     }
@@ -35,6 +35,10 @@ public class BaseMptApplication extends Application {
 
     public void setGraph(Graph graph) {
         mComponent = graph;
+    }
+
+    public Graph prepareGraph() {
+        return Dagger.getGraph(this);
     }
 
     public static Graph graph(Context context) {

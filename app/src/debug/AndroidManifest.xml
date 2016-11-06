@@ -1,0 +1,6 @@
+<manifest package="com.i906.mpt"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.SET_ANIMATION_SCALE" />
+
+</manifest>

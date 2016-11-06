@@ -116,6 +116,7 @@ play {
 dependencies {
     def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
+    def ESPRESSO_VERSION = '2.2.2'
     def FIREBASE_VERSION = rootProject.ext.FIREBASE_VERSION
     def MOCKITO_VERSION = rootProject.ext.MOCKITO_VERSION
     def OKHTTP_VERSION = rootProject.ext.OKHTTP_VERSION
@@ -176,11 +177,30 @@ dependencies {
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     testCompile 'org.assertj:assertj-core:1.7.1'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'org.assertj:assertj-core:1.7.1'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile "com.android.support:support-annotations:$SUPPORT_VERSION"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$ESPRESSO_VERSION"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
+        exclude module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'appcompat-v4'
+        exclude module: 'design'
+    }
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
+    }
+}
+
+task grantAnimationPermission(type: Exec, dependsOn: 'installMockDebug') {
+    commandLine "adb shell pm grant com.i906.mpt.staging android.permission.SET_ANIMATION_SCALE".split(' ')
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('connected')) {
+        task.dependsOn grantAnimationPermission
     }
 }
