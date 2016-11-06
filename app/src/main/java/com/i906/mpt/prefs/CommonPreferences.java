@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 @Singleton
 public class CommonPreferences {
 
-    private final static String KEY_IS_FIRST_START = "is_first_start";
+    private final static String KEY_IS_FIRST_START = "is_first_start_2";
 
     private final SharedPreferences mPrefs;
 
