@@ -27,9 +27,9 @@ before_install:
   - export TZ=Asia/Kuala_Lumpur
 
 script:
-  - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex
-  - ./gradlew checkstyle -PdisablePreDex
-  - ./gradlew connectedMockDebugAndroidTest -PdisablePreDex
+  - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex --continue
+  - ./gradlew checkstyle -PdisablePreDex --continue
+  - ./gradlew createMockDebugCoverageReport -PdisablePreDex --continue
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -22,7 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.i906.mpt.TestUtils.withRecyclerView;
 import static com.i906.mpt.espresso.ViewAssertions.haveItemCount;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Noorzaini Ilhami
@@ -70,24 +70,18 @@ public class NotificationActivityTest {
 
         NotificationPreferences prefs = mActivityRule.getActivity().mNotificationPrefs;
 
-        assertThat(prefs.isPrayerEnabled(0))
-                .as("Prayer settings")
-                .isFalse();
+        assertFalse("Prayer settings", prefs.isPrayerEnabled(0));
 
         onView(withRecyclerView(R.id.fragment_prayer_notification)
                 .atPositionOnView(1, R.id.cb_notification))
                 .perform(click());
 
-        assertThat(prefs.isNotificationEnabled(1))
-                .as("Notification settings")
-                .isFalse();
+        assertFalse("Notification settings", prefs.isNotificationEnabled(1));
 
         onView(withRecyclerView(R.id.fragment_prayer_notification)
                 .atPositionOnView(2, R.id.cb_vibrate))
                 .perform(click());
 
-        assertThat(prefs.isVibrationEnabled(2))
-                .as("Vibration settings")
-                .isFalse();
+        assertFalse("Vibration settings", prefs.isVibrationEnabled(2));
     }
 }
