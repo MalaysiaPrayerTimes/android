@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.i906.mpt.main.MainService;
+import com.i906.mpt.widget.WidgetService;
 
 public class StartupReceiver extends BroadcastReceiver {
 
@@ -15,6 +16,7 @@ public class StartupReceiver extends BroadcastReceiver {
 
     public static void startup(Context context) {
         startPrayerService(context);
+        WidgetService.start(context);
     }
 
     public static void startPrayerService(Context context) {

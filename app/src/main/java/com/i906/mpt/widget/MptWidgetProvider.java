@@ -29,6 +29,8 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         if (WidgetService.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
             PrayerContext prayerContext = widgetIntent.getParcelableExtra("prayer_context");
             updateWithPrayerContext(context, prayerContext);
+        } else {
+            WidgetService.start(context);
         }
     }
 
