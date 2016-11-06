@@ -37,7 +37,7 @@ public class MainIntroActivity extends IntroActivity implements IntroView {
                 .layout(R.layout.slide_onboarding)
                 .title(R.string.intro_title_prayer)
                 .description(R.string.intro_description_prayer)
-                .image(R.drawable.drawing)
+                .image(R.drawable.intro_prayer)
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
                 .build());
@@ -46,7 +46,7 @@ public class MainIntroActivity extends IntroActivity implements IntroView {
                 .layout(R.layout.slide_onboarding)
                 .title(R.string.intro_title_mosque)
                 .description(R.string.intro_description_mosque)
-                .image(R.drawable.drawing)
+                .image(R.drawable.intro_mosque)
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
                 .permissions(new String[] {
@@ -60,7 +60,7 @@ public class MainIntroActivity extends IntroActivity implements IntroView {
                 .layout(R.layout.slide_onboarding)
                 .title(R.string.intro_title_qibla)
                 .description(R.string.intro_description_qibla)
-                .image(R.drawable.drawing)
+                .image(R.drawable.intro_qibla)
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
                 .build());
