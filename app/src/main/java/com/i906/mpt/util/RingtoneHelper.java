@@ -102,6 +102,10 @@ public class RingtoneHelper {
 
     @Nullable
     public String getToneName(String uri) {
+        if (uri == null || uri.isEmpty()) {
+            return null;
+        }
+
         Observable<String> i = findTone(uri, MediaStore.Audio.Media.INTERNAL_CONTENT_URI);
         Observable<String> e;
 
@@ -117,6 +121,10 @@ public class RingtoneHelper {
     }
 
     private Observable<String> findTone(String toneUri, Uri contentUri) {
+        if (toneUri == null || toneUri.isEmpty()) {
+            return Observable.empty();
+        }
+
         Query q = Query.builder()
                 .uri(contentUri)
                 .where(MediaStore.Audio.AudioColumns.DATA + " = ?")
