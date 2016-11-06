@@ -10,6 +10,13 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-21
+
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82
 
 cache:
   directories:
@@ -21,7 +28,8 @@ before_install:
 
 script:
   - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex
-  - ./gradlew checkstyle
+  - ./gradlew checkstyle -PdisablePreDex
+  - ./gradlew connectedMockDebugAndroidTest -PdisablePreDex
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
