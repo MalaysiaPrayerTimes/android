@@ -1,8 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceScreen android:title="@string/label_configure_notifications">
-        <intent android:action="com.i906.mpt.action.NOTIFICATION_SETTINGS" />
-    </PreferenceScreen>
+    <Preference
+        android:key="notification_configure"
+        android:title="@string/label_configure_notifications" />
 
     <CheckBoxPreference
         android:defaultValue="false"
