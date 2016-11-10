@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.api.foursquare.Mosque;
 import com.i906.mpt.common.DividerItemDecoration;
 import com.i906.mpt.common.LocationFragment;
@@ -44,6 +45,9 @@ public class MosqueFragment extends LocationFragment implements MosqueView, Mosq
 
     @Inject
     MosquePresenter mPresenter;
+
+    @Inject
+    AnalyticsProvider mAnalytics;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mRefreshLayout;
@@ -207,6 +211,15 @@ public class MosqueFragment extends LocationFragment implements MosqueView, Mosq
                 mRefreshLayout.setRefreshing(loading);
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isAdded() && isVisibleToUser) {
+            mAnalytics.trackViewedMosqueList();
+        }
     }
 
     @Override

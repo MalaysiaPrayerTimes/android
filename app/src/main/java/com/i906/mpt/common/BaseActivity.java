@@ -75,4 +75,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Graph graph() {
         return Dagger.getGraph(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Dagger.getGraph(this)
+                .getAnalyticsProvider()
+                .startActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Dagger.getGraph(this)
+                .getAnalyticsProvider()
+                .stopActivity(this);
+    }
 }
