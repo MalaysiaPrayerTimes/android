@@ -1,6 +1,7 @@
 package com.i906.mpt.analytics;
 
 import android.app.Activity;
+import android.app.Application;
 
 import javax.inject.Singleton;
 
@@ -18,6 +19,10 @@ public class AnalyticsModule {
     @Singleton
     AnalyticsProvider provideAnalyticsProvider() {
         return new AnalyticsProvider() {
+            @Override
+            public void initialize(Application application) {
+            }
+
             @Override
             public void trackViewedPrayerTimes() {
                 Timber.v("Viewing prayer times");

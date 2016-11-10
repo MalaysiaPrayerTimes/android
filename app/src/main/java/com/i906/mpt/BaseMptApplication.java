@@ -27,6 +27,10 @@ public abstract class BaseMptApplication extends Application {
     public void onPreCreate() {
         Fabric.with(this, new Crashlytics());
         Timber.plant(new FabricTree());
+
+        getGraph()
+                .getAnalyticsProvider()
+                .initialize(this);
     }
 
     public Graph getGraph() {

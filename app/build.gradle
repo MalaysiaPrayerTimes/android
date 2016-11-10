@@ -33,9 +33,11 @@ android {
         resValue 'string', 'foursquare_id', System.getenv('MPT_FOURSQUARE_ID') ?: MPT_FOURSQUARE_ID
         resValue 'string', 'foursquare_secret', System.getenv('MPT_FOURSQUARE_SECRET') ?: MPT_FOURSQUARE_SECRET
         resValue 'string', 'gcm_defaultSenderId', System.getenv('MPT_GCM_SENDER_ID') ?: MPT_GCM_SENDER_ID
+        resValue 'string', 'google_analytics_id', System.getenv('MPT_GOOGLE_ANALYTICS_ID') ?: MPT_GOOGLE_ANALYTICS_ID
         resValue 'string', 'google_app_id', System.getenv('MPT_GOOGLE_APP_ID') ?: MPT_GOOGLE_APP_ID
         resValue 'string', 'google_api_key', System.getenv('MPT_GOOGLE_API_KEY') ?: MPT_GOOGLE_API_KEY
         resValue 'string', 'google_crash_reporting_api_key', System.getenv('MPT_GOOGLE_CRASH_API_KEY') ?: MPT_GOOGLE_CRASH_API_KEY
+        resValue 'string', 'facebook_app_id', System.getenv('MPT_FACEBOOK_APP_ID') ?: MPT_FACEBOOK_APP_ID
 
         manifestPlaceholders = [
                 MPT_FABRIC_API_KEY: System.getenv('MPT_FABRIC_API_KEY') ?: MPT_FABRIC_API_KEY
@@ -139,6 +141,7 @@ dependencies {
 
     // Play Service
     compile "com.google.android.gms:play-services-location:$PLAYSERVICES_VERSION"
+    compile "com.google.android.gms:play-services-analytics:$PLAYSERVICES_VERSION"
 
     // Butterknife
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
@@ -171,6 +174,7 @@ dependencies {
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
     compile 'hu.supercluster:paperwork:1.2.7'
     compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"

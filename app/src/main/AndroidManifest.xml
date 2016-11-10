@@ -173,6 +173,10 @@
             android:name="io.fabric.ApiKey"
             android:value="${MPT_FABRIC_API_KEY}" />
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
     </application>
 
 </manifest>
