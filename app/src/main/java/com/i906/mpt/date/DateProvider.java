@@ -12,15 +12,14 @@ import javax.inject.Singleton;
 @Singleton
 class DateProvider {
 
-    private final Calendar mCalendar;
+    private Calendar mCalendar;
 
     @Inject
     DateProvider() {
-        mCalendar = getCalendarInstance();
     }
 
     private void refresh() {
-        mCalendar.setTimeInMillis(getCurrentTime());
+        mCalendar = getCalendarInstance();
     }
 
     public long getCurrentTime() {
