@@ -149,7 +149,7 @@ public class MosqueFragment extends LocationFragment implements MosqueView, Mosq
         }
 
         if (errorMessage == 0) {
-            getErrorMessage(error, R.string.error_unexpected);
+            errorMessage = getErrorMessage(error, R.string.error_unexpected);
         }
 
         if (mAdapter.isEmpty() || mViewFlipper.getDisplayedChild() != 1) {
