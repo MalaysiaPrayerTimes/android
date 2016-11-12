@@ -40,7 +40,7 @@ ext {
     // Libraries
     BUTTERKNIFE_VERSION = '8.4.0'
     DAGGER_VERSION = '2.7'
-    FIREBASE_VERSION = '9.6.1'
+    FIREBASE_VERSION = '9.8.0'
     GSON_VERSION = '2.7'
     MOCKITO_VERSION = '1.10.19'
     OKHTTP_VERSION = '3.4.2'

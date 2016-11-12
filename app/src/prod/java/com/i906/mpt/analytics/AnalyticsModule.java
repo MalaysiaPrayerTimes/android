@@ -13,7 +13,10 @@ public class AnalyticsModule {
 
     @Provides
     @Singleton
-    AnalyticsProvider provideAnalyticsProvider(FabricProvider fa, FacebookProvider fb, GoogleProvider g) {
-        return new CombinedAnalyticsProvider(fa, fb, g);
+    AnalyticsProvider provideAnalyticsProvider(FabricProvider fa,
+                                               FacebookProvider fb,
+                                               FirebaseProvider fi,
+                                               GoogleProvider g) {
+        return new CombinedAnalyticsProvider(fa, fb, fi, g);
     }
 }

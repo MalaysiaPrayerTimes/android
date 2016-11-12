@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.i906.mpt.BuildConfig;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -20,6 +22,10 @@ public class CommonPreferences {
     @Inject
     public CommonPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        if (isBetaUser()) {
+            setAsBetaUser();
+        }
     }
 
     public boolean isFirstStart() {
@@ -64,6 +70,20 @@ public class CommonPreferences {
         mPrefs.edit()
                 .putBoolean("mpt_generous_user", true)
                 .apply();
+    }
+
+    public boolean isBetaUser() {
+        return BuildConfig.FLAVOR.equals("beta");
+    }
+
+    public void setAsBetaUser() {
+        mPrefs.edit()
+                .putBoolean("mpt_beta_user", true)
+                .apply();
+    }
+
+    public boolean usedBetaVersion() {
+        return mPrefs.getBoolean("mpt_beta_user", false);
     }
 
     public void convertLegacyPreferences() {

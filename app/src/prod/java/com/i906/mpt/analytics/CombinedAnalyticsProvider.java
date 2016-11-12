@@ -13,8 +13,11 @@ class CombinedAnalyticsProvider implements AnalyticsProvider {
 
     private final List<AnalyticsProvider> mProviders;
 
-    CombinedAnalyticsProvider(FabricProvider fa, FacebookProvider fb, GoogleProvider g) {
-        mProviders = Arrays.asList(fa, fb, g);
+    CombinedAnalyticsProvider(FabricProvider fa,
+                              FacebookProvider fb,
+                              FirebaseProvider fi,
+                              GoogleProvider g) {
+        mProviders = Arrays.asList(fa, fb, fi, g);
     }
 
     @Override

@@ -143,6 +143,9 @@ dependencies {
     compile "com.google.android.gms:play-services-location:$PLAYSERVICES_VERSION"
     compile "com.google.android.gms:play-services-analytics:$PLAYSERVICES_VERSION"
 
+    // Firebase
+    compile "com.google.firebase:firebase-analytics:$FIREBASE_VERSION"
+
     // Butterknife
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
