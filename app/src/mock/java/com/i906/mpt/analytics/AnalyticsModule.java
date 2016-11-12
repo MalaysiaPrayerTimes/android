@@ -18,35 +18,45 @@ public class AnalyticsModule {
     @Provides
     @Singleton
     AnalyticsProvider provideAnalyticsProvider() {
-        return new AnalyticsProvider() {
-            @Override
-            public void initialize(Application application) {
-            }
+        return new MockAnalytics();
+    }
 
-            @Override
-            public void trackViewedPrayerTimes() {
-                Timber.v("Viewing prayer times");
-            }
+    public static class MockAnalytics implements AnalyticsProvider {
 
-            @Override
-            public void trackViewedQibla() {
-                Timber.v("Viewing prayer qibla");
-            }
+        public int trackPrayerTimesCount = 0;
+        public int trackQiblaCount = 0;
+        public int trackMosqueListCount = 0;
 
-            @Override
-            public void trackViewedMosqueList() {
-                Timber.v("Viewing mosque list");
-            }
+        @Override
+        public void initialize(Application application) {
+        }
 
-            @Override
-            public void startActivity(Activity activity) {
-                Timber.v("Start activity %s", activity);
-            }
+        @Override
+        public void trackViewedPrayerTimes() {
+            trackPrayerTimesCount = trackPrayerTimesCount + 1;
+            Timber.v("Viewing prayer times, count %s", trackPrayerTimesCount);
+        }
 
-            @Override
-            public void stopActivity(Activity activity) {
-                Timber.v("Stop activity %s", activity);
-            }
-        };
+        @Override
+        public void trackViewedQibla() {
+            trackQiblaCount++;
+            Timber.v("Viewing prayer qibla, count %s", trackQiblaCount);
+        }
+
+        @Override
+        public void trackViewedMosqueList() {
+            trackMosqueListCount++;
+            Timber.v("Viewing mosque list, count %s", trackMosqueListCount);
+        }
+
+        @Override
+        public void startActivity(Activity activity) {
+            Timber.v("Start activity %s", activity);
+        }
+
+        @Override
+        public void stopActivity(Activity activity) {
+            Timber.v("Stop activity %s", activity);
+        }
     }
 }

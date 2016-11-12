@@ -7,19 +7,23 @@ import android.content.Context;
  */
 public final class Dagger {
 
-    static Graph graph;
+    private static Graph graph;
 
     private Dagger() {
     }
 
     public static Graph getGraph(Context context) {
         if (graph == null) {
-            graph = DaggerGraph.builder()
+            setGraph(DaggerGraph.builder()
                     .apiModule(new ApiModule())
                     .appModule(new AppModule(context))
-                    .build();
+                    .build());
         }
 
         return graph;
+    }
+
+    public static void setGraph(Graph newgraph) {
+        graph = newgraph;
     }
 }

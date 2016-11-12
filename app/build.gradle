@@ -118,6 +118,7 @@ play {
 dependencies {
     def BUTTERKNIFE_VERSION = rootProject.ext.BUTTERKNIFE_VERSION
     def DAGGER_VERSION = rootProject.ext.DAGGER_VERSION
+    def DEXMAKER_VERSION = '1.4'
     def ESPRESSO_VERSION = '2.2.2'
     def FIREBASE_VERSION = rootProject.ext.FIREBASE_VERSION
     def MOCKITO_VERSION = rootProject.ext.MOCKITO_VERSION
@@ -183,6 +184,13 @@ dependencies {
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     testCompile 'org.assertj:assertj-core:1.7.1'
+
+    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.6.2'
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+
+    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile "com.android.support:support-annotations:$SUPPORT_VERSION"
