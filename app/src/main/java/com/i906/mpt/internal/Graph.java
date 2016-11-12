@@ -5,6 +5,7 @@ import com.i906.mpt.analytics.AnalyticsModule;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.db.DbModule;
 import com.i906.mpt.prayer.PrayerProvider;
+import com.i906.mpt.prefs.PreferenceModule;
 
 import javax.inject.Singleton;
 
@@ -21,6 +22,7 @@ import dagger.Component;
         BaseOkHttpModule.class,
         DbModule.class,
         OkHttpModule.class,
+        PreferenceModule.class,
 })
 public interface Graph {
     ActivityGraph activityGraph(ActivityModule module);

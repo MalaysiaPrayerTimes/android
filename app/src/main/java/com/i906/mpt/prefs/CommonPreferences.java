@@ -6,20 +6,15 @@ import android.preference.PreferenceManager;
 
 import com.i906.mpt.BuildConfig;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * @author Noorzaini Ilhami
  */
-@Singleton
 public class CommonPreferences {
 
     private final static String KEY_IS_FIRST_START = "is_first_start_2";
 
     private final SharedPreferences mPrefs;
 
-    @Inject
     public CommonPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 

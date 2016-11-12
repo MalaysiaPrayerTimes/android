@@ -5,10 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-@Singleton
 public class NotificationPreferences {
 
     private static final String ALARM_OFFSET_KEY = "alarm_offset";
@@ -22,7 +18,6 @@ public class NotificationPreferences {
 
     private final SharedPreferences mPrefs;
 
-    @Inject
     public NotificationPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }

@@ -1,7 +1,6 @@
 package com.i906.mpt;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.i906.mpt.alarm.StartupReceiver;
@@ -14,12 +13,9 @@ import timber.log.Timber;
 
 public abstract class BaseMptApplication extends Application {
 
-    private Graph mComponent;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        setGraph(prepareGraph());
         onPreCreate();
         StartupReceiver.startup(this);
     }
@@ -34,18 +30,10 @@ public abstract class BaseMptApplication extends Application {
     }
 
     public Graph getGraph() {
-        return mComponent;
-    }
-
-    public void setGraph(Graph graph) {
-        mComponent = graph;
-    }
-
-    public Graph prepareGraph() {
         return Dagger.getGraph(this);
     }
 
-    public static Graph graph(Context context) {
-        return ((BaseMptApplication) context.getApplicationContext()).getGraph();
+    public void setGraph(Graph graph) {
+        Dagger.setGraph(graph);
     }
 }
