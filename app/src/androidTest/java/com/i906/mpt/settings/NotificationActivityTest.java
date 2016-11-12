@@ -3,16 +3,13 @@ package com.i906.mpt.settings;
 import android.app.Activity;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.WindowManager;
 
+import com.i906.mpt.ActivityTest;
 import com.i906.mpt.R;
 import com.i906.mpt.prefs.NotificationPreferences;
-import com.i906.mpt.rules.DisableAnimationsRule;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -28,29 +25,15 @@ import static org.junit.Assert.assertFalse;
  * @author Noorzaini Ilhami
  */
 @RunWith(AndroidJUnit4.class)
-public class NotificationActivityTest {
-
-    private static DisableAnimationsRule disableAnimationsRule = new DisableAnimationsRule();
-
-    private final IntentsTestRule<NotificationActivity> mActivityRule =
-            new IntentsTestRule<>(NotificationActivity.class);
+public class NotificationActivityTest extends ActivityTest {
 
     @Rule
-    public RuleChain rules = RuleChain.emptyRuleChain()
-            .around(disableAnimationsRule)
-            .around(mActivityRule);
+    public final IntentsTestRule<NotificationActivity> mActivityRule =
+            new IntentsTestRule<>(NotificationActivity.class);
 
-    @Before
-    public void unlockScreen() {
-        final Activity activity = mActivityRule.getActivity();
-        Runnable wakeUpDevice = new Runnable() {
-            public void run() {
-                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            }
-        };
-        activity.runOnUiThread(wakeUpDevice);
+    @Override
+    protected Activity getActivity() {
+        return mActivityRule.getActivity();
     }
 
     @Test

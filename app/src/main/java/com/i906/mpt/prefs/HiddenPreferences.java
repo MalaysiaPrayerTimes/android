@@ -4,18 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * @author Noorzaini Ilhami
  */
-@Singleton
 public class HiddenPreferences {
 
     private final SharedPreferences mPrefs;
 
-    @Inject
     public HiddenPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -38,5 +33,9 @@ public class HiddenPreferences {
 
     public long getLocationDistanceLimit() {
         return Long.valueOf(mPrefs.getString("location_distance_limit", "5000"));
+    }
+
+    public boolean isCompassEnabled() {
+        return true;
     }
 }

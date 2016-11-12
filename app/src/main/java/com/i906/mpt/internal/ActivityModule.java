@@ -19,7 +19,7 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    Activity provideContext() {
+    protected Activity provideContext() {
         return mContext;
     }
 }

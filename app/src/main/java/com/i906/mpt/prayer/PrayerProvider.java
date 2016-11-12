@@ -11,6 +11,8 @@ import android.support.annotation.Nullable;
 import com.i906.mpt.extension.Columns;
 import com.i906.mpt.extension.Extension;
 import com.i906.mpt.internal.Dagger;
+import com.i906.mpt.location.LocationDisabledException;
+import com.i906.mpt.location.LocationTimeoutException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,25 +120,33 @@ public class PrayerProvider extends ContentProvider {
     private List<Object> getPrayerContext() {
         List<Object> r = new ArrayList<>();
 
-        PrayerContext prayerContext = mPrayerManager.getPrayerContext(false)
-                .observeOn(Schedulers.immediate())
-                .toBlocking()
-                .first();
+        try {
+            PrayerContext prayerContext = mPrayerManager.getPrayerContext(false)
+                    .observeOn(Schedulers.immediate())
+                    .toBlocking()
+                    .first();
 
-        r.add(prayerContext.getLocationName());
-        r.add(prayerContext.getCurrentPrayer().getDate().getTime());
-        r.add(prayerContext.getCurrentPrayer().getIndex());
-        r.add(prayerContext.getNextPrayer().getDate().getTime());
-        r.add(prayerContext.getNextPrayer().getIndex());
+            r.add(prayerContext.getLocationName());
+            r.add(prayerContext.getCurrentPrayer().getDate().getTime());
+            r.add(prayerContext.getCurrentPrayer().getIndex());
+            r.add(prayerContext.getNextPrayer().getDate().getTime());
+            r.add(prayerContext.getNextPrayer().getIndex());
 
-        for (Prayer p : prayerContext.getCurrentPrayerList()) {
-            r.add(p.getDate().getTime());
+            for (Prayer p : prayerContext.getCurrentPrayerList()) {
+                r.add(p.getDate().getTime());
+            }
+
+            for (Integer i : prayerContext.getHijriDate()) {
+                r.add(i);
+            }
+
+            return r;
+        } catch (LocationDisabledException e) {
+            throw new IllegalStateException("Location disabled.");
+        } catch (LocationTimeoutException e) {
+            throw new IllegalStateException("Location timed out.");
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage());
         }
-
-        for (Integer i : prayerContext.getHijriDate()) {
-            r.add(i);
-        }
-
-        return r;
     }
 }

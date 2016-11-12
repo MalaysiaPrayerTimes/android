@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.common.BaseFragment;
+import com.i906.mpt.prefs.HiddenPreferences;
 
 import javax.inject.Inject;
 
@@ -20,6 +22,12 @@ public class QiblaFragment extends BaseFragment implements QiblaView {
 
     @Inject
     QiblaPresenter mPresenter;
+
+    @Inject
+    AnalyticsProvider mAnalytics;
+
+    @Inject
+    HiddenPreferences mHiddenPreferences;
 
     @BindView(R.id.compass)
     CompassView mCompassView;
@@ -38,6 +46,11 @@ public class QiblaFragment extends BaseFragment implements QiblaView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (!mHiddenPreferences.isCompassEnabled()) {
+            mCompassView.setEnabled(false);
+        }
+
         mPresenter.setView(this);
         mPresenter.getAzimuth();
     }
@@ -53,5 +66,14 @@ public class QiblaFragment extends BaseFragment implements QiblaView {
 
     @Override
     public void showLoading() {
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isAdded() && isVisibleToUser) {
+            mAnalytics.trackViewedQibla();
+        }
     }
 }

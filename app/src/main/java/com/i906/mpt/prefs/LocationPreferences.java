@@ -7,18 +7,13 @@ import android.support.annotation.Nullable;
 
 import com.i906.mpt.api.prayer.PrayerCode;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * @author Noorzaini Ilhami
  */
-@Singleton
 public class LocationPreferences {
 
     private final SharedPreferences mPrefs;
 
-    @Inject
     public LocationPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }

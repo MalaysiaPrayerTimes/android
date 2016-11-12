@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.common.LocationFragment;
 import com.i906.mpt.location.LocationDisabledException;
 import com.i906.mpt.location.LocationTimeoutException;
@@ -41,6 +42,9 @@ public class PrayerFragment extends LocationFragment implements PrayerView {
 
     @Inject
     PrayerPresenter mPresenter;
+
+    @Inject
+    AnalyticsProvider mAnalytics;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mRefreshLayout;
@@ -97,6 +101,8 @@ public class PrayerFragment extends LocationFragment implements PrayerView {
         if (drawable instanceof Animatable) {
             ((Animatable) drawable).start();
         }
+
+        mAnalytics.trackViewedPrayerTimes();
     }
 
     private void refresh(boolean force) {
@@ -236,6 +242,15 @@ public class PrayerFragment extends LocationFragment implements PrayerView {
 
     private void showSwipeRefreshLoading(final boolean loading) {
         mRefreshLayout.setRefreshing(loading);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isAdded() && isVisibleToUser) {
+            mAnalytics.trackViewedPrayerTimes();
+        }
     }
 
     @Override

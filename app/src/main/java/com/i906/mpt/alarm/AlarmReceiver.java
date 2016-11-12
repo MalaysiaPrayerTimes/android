@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.i906.mpt.MptApplication;
 import com.i906.mpt.extension.Extension;
+import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.prayer.PrayerBroadcaster;
 import com.i906.mpt.widget.WidgetService;
 
@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        MptApplication.graph(context).inject(this);
+        Dagger.getGraph(context).inject(this);
         Timber.d("Received alarm action: %s", intent);
 
         String action = intent.getAction();
