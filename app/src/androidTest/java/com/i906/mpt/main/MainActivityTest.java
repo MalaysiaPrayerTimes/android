@@ -10,6 +10,7 @@ import com.i906.mpt.analytics.AnalyticsModule;
 import com.i906.mpt.internal.AppModule;
 import com.i906.mpt.internal.Graph;
 import com.i906.mpt.prefs.CommonPreferences;
+import com.i906.mpt.prefs.HiddenPreferences;
 import com.i906.mpt.prefs.PreferenceModule;
 
 import org.junit.Rule;
@@ -54,6 +55,9 @@ public class MainActivityTest extends ActivityTest {
     @Mock
     CommonPreferences mCommonPreferences;
 
+    @Mock
+    HiddenPreferences mHiddenPreferences;
+
     @Override
     protected Activity getActivity() {
         return mActivityRule.getActivity();
@@ -62,6 +66,9 @@ public class MainActivityTest extends ActivityTest {
     @Test
     public void trackScreens() {
         when(mCommonPreferences.isFirstStart())
+                .thenReturn(false);
+
+        when(mHiddenPreferences.isCompassEnabled())
                 .thenReturn(false);
 
         mActivityRule.launchActivity(null);
@@ -98,5 +105,17 @@ public class MainActivityTest extends ActivityTest {
         assertThat("Track qibla after pressing qibla", analytics.trackQiblaCount, equalTo(1));
         assertThat("Track prayer after pressing qibla", analytics.trackPrayerTimesCount, equalTo(1));
         assertThat("Track mosque after pressing qibla", analytics.trackMosqueListCount, equalTo(1));
+
+        onView(
+                allOf(
+                        withContentDescription(R.string.label_prayer),
+                        isDescendantOfA(withId(R.id.tabs))
+                )
+        ).perform(click())
+                .check(matches(isDisplayed()));
+
+        assertThat("Track qibla after pressing prayer", analytics.trackQiblaCount, equalTo(1));
+        assertThat("Track prayer after pressing prayer", analytics.trackPrayerTimesCount, equalTo(2));
+        assertThat("Track mosque after pressing prayer", analytics.trackMosqueListCount, equalTo(1));
     }
 }

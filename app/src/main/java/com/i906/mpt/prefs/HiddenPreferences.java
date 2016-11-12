@@ -34,4 +34,8 @@ public class HiddenPreferences {
     public long getLocationDistanceLimit() {
         return Long.valueOf(mPrefs.getString("location_distance_limit", "5000"));
     }
+
+    public boolean isCompassEnabled() {
+        return true;
+    }
 }

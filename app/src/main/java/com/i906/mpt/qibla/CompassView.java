@@ -252,6 +252,19 @@ public class CompassView extends View implements SensorEventListener {
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+
+        if (enabled) {
+            startSensors();
+            startUpdating();
+        } else {
+            stopSensors();
+            stopUpdating();
+        }
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent e) {
         loadSensorData(e);
 
