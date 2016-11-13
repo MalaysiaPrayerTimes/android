@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -61,21 +60,21 @@ public class RetrofitPrayerClient implements PrayerClient {
     @Override
     public Observable<List<PrayerCode>> getSupportedCodes() {
         return mApi.getSupportedCodes()
-                .flatMap(new Func1<Map<String, List<PrayerCode>>, Observable<List<PrayerCode>>>() {
+                .flatMapIterable(new Func1<List<PrayerProvider>, Iterable<PrayerProvider>>() {
                     @Override
-                    public Observable<List<PrayerCode>> call(Map<String, List<PrayerCode>> m) {
-                        return Observable.from(m.entrySet())
-                                .flatMap(new Func1<Map.Entry<String, List<PrayerCode>>, Observable<PrayerCode>>() {
+                    public Iterable<PrayerProvider> call(List<PrayerProvider> providers) {
+                        return providers;
+                    }
+                })
+                .flatMap(new Func1<PrayerProvider, Observable<List<PrayerCode>>>() {
+                    @Override
+                    public Observable<List<PrayerCode>> call(final PrayerProvider provider) {
+                        return Observable.from(provider.codes)
+                                .map(new Func1<PrayerCode, PrayerCode>() {
                                     @Override
-                                    public Observable<PrayerCode> call(final Map.Entry<String, List<PrayerCode>> e) {
-                                        return Observable.from(e.getValue())
-                                                .map(new Func1<PrayerCode, PrayerCode>() {
-                                                    @Override
-                                                    public PrayerCode call(PrayerCode c) {
-                                                        c.provider = e.getKey();
-                                                        return c;
-                                                    }
-                                                });
+                                    public PrayerCode call(PrayerCode c) {
+                                        c.provider = provider.provider;
+                                        return c;
                                     }
                                 })
                                 .toList();
