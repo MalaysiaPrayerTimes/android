@@ -25,9 +25,11 @@
     <string name="error_no_location_permission_prayer">Uhoh! We need to know your current location to show the prayer times!</string>
     <string name="error_no_network">Oops! Have you checked your internet connection?</string>
     <string name="error_play_service">Uhoh! There is something wrong with Play Services!</string>
+    <string name="error_prayer_provider">Uhoh! There is something wrong with the prayer data provider!</string>
     <string name="error_server">Oops! There might be something wrong with the server!</string>
     <string name="error_undetectable_location">Uhoh! We are unable to recognize your location!</string>
     <string name="error_unexpected">Uhoh! We are not expecting this error!</string>
+    <string name="error_unsupported_coordinates">Uhoh! We do not support your current location yet!</string>
 
     <string name="label_apply">Apply</string>
     <string name="label_apply_to_all">Apply to all</string>

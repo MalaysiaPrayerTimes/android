@@ -20,24 +20,29 @@ public class RetrofitPrayerClient implements PrayerClient {
     private static final String MPT_URL = "https://mpt.i906.my/api/";
 
     private final PrayerApi mApi;
+    private final ErrorWrapper mErrorWrapper;
 
     public RetrofitPrayerClient(OkHttpClient client) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(PrayerData.class, new PrayerDataTypeAdapter())
                 .create();
 
-        mApi = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MPT_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build()
-                .create(PrayerApi.class);
+                .build();
+
+        mApi = retrofit.create(PrayerApi.class);
+
+        mErrorWrapper = new ErrorWrapper(retrofit);
     }
 
     @Override
     public Observable<PrayerData> getPrayerTimesByCode(String code, int year, int month) {
         return mApi.getPrayerTimesByCode(code, year, month)
+                .onErrorResumeNext(mErrorWrapper)
                 .map(new Func1<PrayerResponse, PrayerData>() {
                     @Override
                     public PrayerData call(PrayerResponse r) {
@@ -49,6 +54,7 @@ public class RetrofitPrayerClient implements PrayerClient {
     @Override
     public Observable<PrayerData> getPrayerTimesByCoordinates(double lat, double lng, int year, int month) {
         return mApi.getPrayerTimesByCoordinates(lat, lng, year, month)
+                .onErrorResumeNext(mErrorWrapper)
                 .map(new Func1<PrayerResponse, PrayerData>() {
                     @Override
                     public PrayerData call(PrayerResponse r) {
