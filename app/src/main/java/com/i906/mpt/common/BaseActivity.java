@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import com.i906.mpt.R;
+import com.i906.mpt.api.prayer.PrayerProviderException;
+import com.i906.mpt.api.prayer.UnsupportedCoordinatesException;
 import com.i906.mpt.internal.ActivityGraph;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
@@ -62,6 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             return R.string.error_no_location_permission;
         } else if (e instanceof LocationDisabledException || e instanceof LocationTimeoutException) {
             return R.string.error_no_location;
+        } else if (e instanceof UnsupportedCoordinatesException) {
+            Timber.w(e);
+            return R.string.error_unsupported_coordinates;
+        } else if (e instanceof PrayerProviderException) {
+            return R.string.error_prayer_provider;
         } else {
             Timber.w(e);
             return defaultResId;

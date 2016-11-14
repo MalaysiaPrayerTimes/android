@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.i906.mpt.R;
-import com.i906.mpt.internal.ActivityModule;
-import com.i906.mpt.internal.Dagger;
+import com.i906.mpt.common.BaseDialogFragment;
 import com.i906.mpt.util.RingtoneHelper;
 
 import java.util.List;
@@ -35,7 +33,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Noorzaini Ilhami on 18/10/2015.
  */
-public class AzanPickerFragment extends DialogFragment implements AzanPickerAdapter.AzanListener {
+public class AzanPickerFragment extends BaseDialogFragment implements AzanPickerAdapter.AzanListener {
 
     public static final String IS_NOTIFICATION = "IS_NOTIFICATION";
     public static final String PRAYER_ID = "PRAYER_ID";
@@ -48,6 +46,7 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
     private Subscription mSubscription;
     private AzanPickerAdapter mAdapter;
     private MediaPlayer mMediaPlayer;
+    private AzanListener mAzanListener;
 
     @Inject
     RingtoneHelper mRingtoneHelper;
@@ -73,10 +72,7 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Dagger.getGraph(getActivity())
-                .activityGraph(new ActivityModule(getActivity()))
-                .inject(this);
+        activityGraph().inject(this);
 
         mAdapter = new AzanPickerAdapter(getActivity());
         mAdapter.setListener(this);
@@ -105,7 +101,7 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String t = mAdapter.getSelectedToneUri();
-                        ((AzanListener) getActivity()).onToneSelected(mPrayerId, t, isNotification);
+                        mAzanListener.onToneSelected(mPrayerId, t, isNotification);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -233,6 +229,11 @@ public class AzanPickerFragment extends DialogFragment implements AzanPickerAdap
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
         }
+    }
+
+    public AzanPickerFragment setListener(AzanListener listener) {
+        mAzanListener = listener;
+        return this;
     }
 
     @Override

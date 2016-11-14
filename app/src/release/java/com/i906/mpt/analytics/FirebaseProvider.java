@@ -47,6 +47,8 @@ class FirebaseProvider implements AnalyticsProvider {
     }
 
     private void setCurrentScreen(String screen) {
+        if (mActivity == null) return;
+
         Activity activity = mActivity.get();
         if (activity == null) return;
 

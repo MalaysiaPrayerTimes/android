@@ -25,10 +25,14 @@
     <string name="error_no_location_permission_prayer">Lokasi semasa anda diperlukan untuk mendapatkan waktu solat!</string>
     <string name="error_no_network">Sila periksa sambungan internet anda.</string>
     <string name="error_play_service">Terdapat masalah dengan Play Services!</string>
+    <string name="error_prayer_provider">Terdapat masalah dengan penyedia data waktu solat!</string>
     <string name="error_server">Terdapat masalah dengan pelayan MPT!</string>
     <string name="error_undetectable_location">Tidak dapat mengesan lokasi anda!</string>
     <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
+    <string name="error_unsupported_coordinates">Kami masih belum menyokong lokasi semasa anda!</string>
 
+    <string name="label_apply">Ubah</string>
+    <string name="label_apply_to_all">Ubah semua</string>
     <string name="label_enable_location">Dapatkan Lokasi</string>
     <string name="label_error">Masalah</string>
     <string name="label_grant_permission">Beri kebenaran</string>

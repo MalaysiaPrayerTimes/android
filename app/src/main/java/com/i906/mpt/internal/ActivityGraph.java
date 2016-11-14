@@ -11,6 +11,7 @@ import com.i906.mpt.settings.NotificationActivity;
 import com.i906.mpt.settings.SettingsActivity;
 import com.i906.mpt.settings.azanpicker.AzanPickerFragment;
 import com.i906.mpt.settings.locationpicker.LocationPickerActivity;
+import com.i906.mpt.settings.prayer.ApplyAllDialogFragment;
 import com.i906.mpt.settings.prayer.PrayerNotificationFragment;
 
 import dagger.Subcomponent;
@@ -23,6 +24,7 @@ import dagger.Subcomponent;
         ActivityModule.class,
 })
 public interface ActivityGraph {
+    void inject(ApplyAllDialogFragment fragment);
     void inject(AzanPickerFragment fragment);
     void inject(DonateActivity activity);
     void inject(LocationFragment fragment);
