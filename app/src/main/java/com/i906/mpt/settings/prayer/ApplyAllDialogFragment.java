@@ -34,9 +34,9 @@ public class ApplyAllDialogFragment extends BaseDialogFragment implements AzanPi
 
     private Unbinder unbinder;
 
-    private boolean mPrayerEnabled;
-    private boolean mNotificationEnabled;
-    private boolean mVibrationEnabled;
+    private boolean mPrayerEnabled = true;
+    private boolean mNotificationEnabled = true;
+    private boolean mVibrationEnabled = true;
     private String mNotificationTone;
     private String mReminderTone;
 
