@@ -190,7 +190,7 @@ public class AlarmService extends Service {
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        mNotificationHelper.showPrayerReminder(npi, npt, location, true);
+                        mNotificationHelper.showPrayerReminder(npi, npt, location, integer == 0);
                     }
                 }, new Action1<Throwable>() {
                     @Override
