@@ -29,6 +29,8 @@
     <string name="error_undetectable_location">Tidak dapat mengesan lokasi anda!</string>
     <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
 
+    <string name="label_apply">Ubah</string>
+    <string name="label_apply_to_all">Ubah semua</string>
     <string name="label_enable_location">Dapatkan Lokasi</string>
     <string name="label_error">Masalah</string>
     <string name="label_grant_permission">Beri kebenaran</string>

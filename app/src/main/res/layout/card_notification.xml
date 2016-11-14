@@ -30,63 +30,7 @@
 
         </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/v_notification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:showDividers="middle"
-            android:divider="@drawable/ic_divider_notification_checkbox"
-            android:padding="16dp"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/cb_notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/cb_vibrate"
-                    android:text="@string/label_notification" />
-
-                <CheckBox
-                    android:id="@+id/cb_vibrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/label_vibrate" />
-
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/btn_reminder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="0dp"
-                android:drawableLeft="@drawable/ic_btn_audio"
-                android:text="@string/label_set_reminder_tone"
-                android:background="?selectableItemBackground"
-                android:drawablePadding="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                style="?checkboxStyle" />
-
-            <Button
-                android:id="@+id/btn_notification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="0dp"
-                android:drawableLeft="@drawable/ic_btn_audio"
-                android:text="@string/label_set_notification_tone"
-                android:background="?selectableItemBackground"
-                android:drawablePadding="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                style="?checkboxStyle" />
-
-        </LinearLayout>
+        <include layout="@layout/view_notification_contents" />
 
     </LinearLayout>
 
