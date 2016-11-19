@@ -12,6 +12,9 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.i906.mpt.R;
+import com.i906.mpt.internal.Dagger;
+
 /**
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
  * to be used with AppCompat.
@@ -22,6 +25,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        applyTheme();
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
@@ -99,6 +103,12 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     @Override
     public void invalidateOptionsMenu() {
         getDelegate().invalidateOptionsMenu();
+    }
+
+    private void applyTheme() {
+        if (Dagger.getGraph(this).getInterfacePreferences().isLightTheme()) {
+            setTheme(R.style.MptTheme_Light_Settings);
+        }
     }
 
     private AppCompatDelegate getDelegate() {
