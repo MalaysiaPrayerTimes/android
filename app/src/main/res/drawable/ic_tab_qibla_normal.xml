@@ -4,9 +4,9 @@
     android:viewportHeight="32.0"
     android:viewportWidth="32.0">
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="?tabIconNormalColor"
         android:pathData="M15.99,24.84c-4.88,0 -8.84,-3.96 -8.84,-8.84c0,-4.88 3.96,-8.84 8.84,-8.84c4.89,0 8.85,3.96 8.85,8.84C24.85,20.88 20.89,24.84 15.99,24.84zM15.99,5.47c-5.81,0 -10.53,4.71 -10.53,10.53c0,5.82 4.72,10.53 10.53,10.53c5.82,0 10.54,-4.71 10.54,-10.53C26.53,10.18 21.82,5.47 15.99,5.47z" />
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="?tabIconNormalColor"
         android:pathData="M20.67,11.3l-5.78,3.58l-3.59,5.79l5.83,-3.55z" />
 </vector>

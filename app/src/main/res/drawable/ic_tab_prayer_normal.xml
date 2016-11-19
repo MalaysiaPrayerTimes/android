@@ -4,7 +4,7 @@
     android:viewportHeight="32.0"
     android:viewportWidth="32.0">
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="?tabIconNormalColor"
         android:pathData="M15.99,24.84c-4.88,0 -8.84,-3.96 -8.84,-8.84c0,-4.88 3.96,-8.84 8.84,-8.84c4.89,0 8.85,3.96 8.85,8.84C24.85,20.88 20.89,24.84 15.99,24.84zM15.99,5.47c-5.81,0 -10.53,4.71 -10.53,10.53c0,5.82 4.72,10.53 10.53,10.53c5.82,0 10.54,-4.71 10.54,-10.53C26.53,10.18 21.82,5.47 15.99,5.47z" />
     <group
         android:name="clock_hour"
@@ -12,7 +12,7 @@
         android:pivotY="16"
         android:rotation="0">
         <path
-            android:fillColor="#FFFFFF"
+            android:fillColor="?tabIconNormalColor"
             android:pathData="m11.55,15.15 l0,1.7 4.12,0 0.7,0 0.48,-0.53 0,-1.17 -1.24,0 -4.06,0z" />
     </group>
     <group
@@ -21,7 +21,7 @@
         android:pivotY="16"
         android:rotation="0">
         <path
-            android:fillColor="#FFFFFF"
+            android:fillColor="?tabIconNormalColor"
             android:pathData="m19.48,10.86 l-3.87,4.29 -0.82,0.91 0.88,0.79 0.7,0 0.48,-0.53 3.89,-4.32 -1.26,-1.14z" />
     </group>
 </vector>

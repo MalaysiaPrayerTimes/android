@@ -1,5 +1,6 @@
 package com.i906.mpt.common;
 
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,6 +25,12 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        applyTheme();
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -81,6 +88,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Graph graph() {
         return Dagger.getGraph(this);
+    }
+
+    protected void applyTheme() {
+        if (graph().getInterfacePreferences().isLightTheme()) {
+            setTheme(R.style.MptTheme_Light);
+        }
     }
 
     @Override

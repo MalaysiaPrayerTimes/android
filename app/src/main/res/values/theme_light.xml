@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="MptTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="appBarLayoutStyle">@style/MptTheme.Light.AppBarLayout</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="compassStyle">@style/Compass.Light</item>
+        <item name="mosqueDividerDrawable">?android:attr/listDivider</item>
+        <item name="prayerOverflowTint">@android:color/black</item>
+        <item name="tabLayoutStyle">@style/MptTheme.Light.TabLayout</item>
+        <item name="tabIconActiveColor">@android:color/white</item>
+        <item name="tabIconNormalColor">#AFFF</item>
+    </style>
+
+    <style name="MptTheme.Light.AppBarLayout" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="elevation">0dp</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <style name="MptTheme.Light.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@android:color/white</item>
+    </style>
+
+    <style name="MptTheme.Light.Settings" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>

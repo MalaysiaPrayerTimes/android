@@ -41,4 +41,8 @@ public class InterfacePreferences implements PrayerContext.ViewSettings {
     public boolean isMasihiDateEnabled() {
         return mPrefs.getBoolean("show_masihi", false);
     }
+
+    public boolean isLightTheme() {
+        return mPrefs.getString("ui_theme", "dark").equals("light");
+    }
 }
