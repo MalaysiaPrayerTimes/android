@@ -125,6 +125,16 @@
         <item>1 hour</item>
     </string-array>
 
+    <string-array name="pref_theme_entries">
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+
+    <string-array name="pref_theme_values" translatable="false">
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
+
     <string-array name="pref_duration_values" translatable="false">
         <item>0</item>
         <item>300000</item>
