@@ -1,0 +1,168 @@
+<changelog bulletedList="true">
+
+    <changelogversion
+        changeDate="20 November 2016"
+        versionName="2.0.0-beta8">
+        <changelogtext>Added light theme</changelogtext>
+        <changelogtext>Added refresh button in widgets</changelogtext>
+        <changelogtext>Added changelog screen</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="14 November 2016"
+        versionName="2.0.0-beta7">
+        <changelogtext>Added server error messages</changelogtext>
+        <changelogtext>Added apply to all in configure notification settings</changelogtext>
+        <changelogtext>Fixed reminder notification sound (thanks [b]Ariffin Amir[/b], [b]Kerol ke Kerol[/b])</changelogtext>
+        <changelogtext>Fixed crashes</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="13 November 2016"
+        versionName="2.0.0-beta6">
+        <changelogtext>Fixed more widget issues</changelogtext>
+        <changelogtext>Fixed bug in mosque list</changelogtext>
+        <changelogtext>Fixed random wrong prayer times</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="6 November 2016"
+        versionName="2.0.0-beta5">
+        <changelogtext>Added enable location button in main screen</changelogtext>
+        <changelogtext>Added error messages for location permissions</changelogtext>
+        <changelogtext>Fixed location permission dialog always appearing when using preferred location (thanks [b]Said Jafarli[/b])</changelogtext>
+        <changelogtext>Added onboarding images</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="1 November 2016"
+        versionName="2.0.0-beta4">
+        <changelogtext>Added main tab icon animation ([a href="https://github.com/AhmadMuzakkir"][b]@AhmadMuzakkir[/b][/a])</changelogtext>
+        <changelogtext>Tweaked main screen animation</changelogtext>
+        <changelogtext>Fixed widget not updating issue</changelogtext>
+        <changelogtext>Changed widget progress circle color</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="31 October 2016"
+        versionName="2.0.0-beta3">
+        <changelogtext>Added open location settings button in main screen</changelogtext>
+        <changelogtext>Added correct qibla hint</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="30 October 2016"
+        versionName="2.0.0-beta2">
+        <changelogtext>Fixed widget not updating issue (thanks [b]Akmal Zaini[/b]</changelogtext>
+        <changelogtext>Fixed prayer notifications not disappearing</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="29 October 2016"
+        versionName="2.0.0-beta">
+        <changelogtext>Full revamp of Malaysia Prayer Times!</changelogtext>
+        <changelogtext>Dropped support for pre-Lollipop devices</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="21 January 2014"
+        versionName="1.1.2523">
+        <changelogtext>Fixed force close problems for Gingerbread devices</changelogtext>
+        <changelogtext>Fixed widget problems for Gingerbread devices</changelogtext>
+        <changelogtext>Fixed widget showing wrong current prayer time</changelogtext>
+        <changelogtext>Fixed widget showing wrong hijri date and year</changelogtext>
+        <changelogtext>Added options to show/hide Masihi/Hijri date on widget</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="20 January 2014"
+        versionName="1.1.2517">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="5 January 2014"
+        versionName="1.1.2504">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="4 January 2014"
+        versionName="1.1.2475">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="2 January 2014"
+        versionName="1.1.2404">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="11 July 2013"
+        versionName="1.0.1741">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="2 June 2013"
+        versionName="1.0.1616">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="2 June 2013"
+        versionName="1.0.1615">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="4 April 2013"
+        versionName="1.0.1172">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="3 April 2013"
+        versionName="1.0.1164">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="3 April 2013"
+        versionName="1.0.1162">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="5 March 2013"
+        versionName="1.0.1053">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="5 March 2013"
+        versionName="1.0.1051">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="4 March 2013"
+        versionName="1.0.1037">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="3 March 2013"
+        versionName="1.0.1029">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="28 February 2013"
+        versionName="1.0.1002">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="27 February 2013"
+        versionName="1.0.980">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="27 February 2013"
+        versionName="1.0.976">
+    </changelogversion>
+
+    <changelogversion
+        changeDate="26 February 2013"
+        versionName="1.0.958">
+        <changelogtext>Initial release!</changelogtext>
+    </changelogversion>
+
+</changelog>

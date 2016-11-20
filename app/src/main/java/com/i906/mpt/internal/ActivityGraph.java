@@ -5,6 +5,7 @@ import com.i906.mpt.main.MainActivity;
 import com.i906.mpt.mosque.ui.MosqueFragment;
 import com.i906.mpt.prayer.ui.PrayerFragment;
 import com.i906.mpt.qibla.QiblaFragment;
+import com.i906.mpt.settings.ChangeLogActivity;
 import com.i906.mpt.settings.DonateActivity;
 import com.i906.mpt.settings.LocationFragment;
 import com.i906.mpt.settings.NotificationActivity;
@@ -26,6 +27,7 @@ import dagger.Subcomponent;
 public interface ActivityGraph {
     void inject(ApplyAllDialogFragment fragment);
     void inject(AzanPickerFragment fragment);
+    void inject(ChangeLogActivity activity);
     void inject(DonateActivity activity);
     void inject(LocationFragment fragment);
     void inject(LocationPickerActivity fragment);

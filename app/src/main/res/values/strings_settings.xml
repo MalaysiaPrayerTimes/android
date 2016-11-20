@@ -4,6 +4,7 @@
     <string name="label_alarm">Alarm</string>
     <string name="label_alarm_offset">Alarm offset</string>
     <string name="label_build">Build number</string>
+    <string name="label_change_log">Change Log</string>
     <string name="label_configure_notifications">Configure notifications</string>
     <string name="label_copyright">Copyright © 2013–2016</string>
     <string name="label_copyright_summary" translatable="false">Noorzaini Ilhami (i906)</string>
