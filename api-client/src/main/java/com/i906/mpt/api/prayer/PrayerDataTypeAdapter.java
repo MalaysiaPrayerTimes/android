@@ -39,14 +39,18 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                     break;
                 case "attributes":
                     in.beginObject();
-                    switch (in.nextName()) {
-                        case "jakim_code":
-                            in.nextString();
-                            break;
-                        case "jakim_source":
-                            in.nextString();
-                            break;
+
+                    while (in.hasNext()) {
+                        switch (in.nextName()) {
+                            case "jakim_code":
+                                in.nextString();
+                                break;
+                            case "jakim_source":
+                                in.nextString();
+                                break;
+                        }
                     }
+
                     in.endObject();
                     break;
                 case "times":
