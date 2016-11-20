@@ -113,7 +113,19 @@
             android:indeterminateTint="@color/colorAccent"
             tools:visibility="gone" />
 
+        <TextView
+            android:id="@+id/btn_retry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/label_refresh"
+            android:textAppearance="@style/WidgetPrayerTable"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
         <LinearLayout
+            android:id="@+id/prayertable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:baselineAligned="false"

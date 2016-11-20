@@ -92,6 +92,8 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), getWidgetLayout());
         rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
+        rv.setViewVisibility(R.id.progress_bar, View.VISIBLE);
+        rv.setViewVisibility(R.id.btn_retry, View.GONE);
 
         if (prayerContext == null) {
             return rv;
@@ -131,6 +133,7 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         rv.setTextViewText(R.id.tv_hijri_date, getHijriDate(awm, context, appWidgetId, hd, hm, hy));
         rv.setTextViewText(R.id.tv_masihi_date, getMasihiDate(awm, context, appWidgetId, md, mm, my));
         rv.setViewVisibility(R.id.progress_bar, View.GONE);
+        rv.setViewVisibility(R.id.prayerlist, View.VISIBLE);
         rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_IMSAK], showImsak ? View.VISIBLE : View.GONE);
         rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_DHUHA], showDhuha ? View.VISIBLE : View.GONE);
 
@@ -147,6 +150,24 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
                 rv.setTextColor(PRAYER_TIME[i], normal);
             }
         }
+
+        return rv;
+    }
+
+    @Override
+    protected RemoteViews buildErrorLayout(AppWidgetManager awm, Context context, int appWidgetId, String error) {
+        Intent intent = new Intent(Extension.ACTION_MAIN_SCREEN);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        Intent retryIntent = new Intent(context, getWidgetClass());
+        PendingIntent retryPendingIntent = PendingIntent.getBroadcast(context,0, retryIntent, 0);
+
+        RemoteViews rv = new RemoteViews(context.getPackageName(), getWidgetLayout());
+        rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
+        rv.setOnClickPendingIntent(R.id.btn_retry, retryPendingIntent);
+        rv.setViewVisibility(R.id.progress_bar, View.GONE);
+        rv.setViewVisibility(R.id.btn_retry, View.VISIBLE);
+        rv.setViewVisibility(R.id.prayerlist, View.GONE);
 
         return rv;
     }
