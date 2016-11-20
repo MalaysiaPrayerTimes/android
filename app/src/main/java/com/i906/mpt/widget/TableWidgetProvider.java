@@ -160,7 +160,7 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         Intent retryIntent = new Intent(context, getWidgetClass());
-        PendingIntent retryPendingIntent = PendingIntent.getBroadcast(context,0, retryIntent, 0);
+        PendingIntent retryPendingIntent = PendingIntent.getBroadcast(context, 0, retryIntent, 0);
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), getWidgetLayout());
         rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);

@@ -34,7 +34,7 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         } else if (WidgetService.ACTION_PRAYER_TIME_ERROR.equals(action)) {
             String error = widgetIntent.getStringExtra("type");
             updateWithError(context, error);
-        } else if (!ACTION_APPWIDGET_DELETED.equals(action)){
+        } else if (!ACTION_APPWIDGET_DELETED.equals(action)) {
             updateWithPrayerContext(context, null);
             WidgetService.start(context);
         }
