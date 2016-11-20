@@ -5,7 +5,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.common.BaseActivity;
+import com.i906.mpt.internal.Dagger;
 
 import net.yslibrary.licenseadapter.LicenseAdapter;
 import net.yslibrary.licenseadapter.LicenseEntry;
@@ -36,6 +38,10 @@ public class OpenSourceActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(adapter);
         Licenses.load(mDataset);
+
+        Dagger.getGraph(this)
+                .getAnalyticsProvider()
+                .trackViewedScreen(AnalyticsProvider.SCREEN_OPEN_SOURCE);
     }
 
     private void initDataset() {

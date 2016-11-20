@@ -28,6 +28,13 @@ class CombinedAnalyticsProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void trackViewedScreen(String screen) {
+        for (AnalyticsProvider p : mProviders) {
+            p.trackViewedScreen(screen);
+        }
+    }
+
+    @Override
     public void trackViewedPrayerTimes() {
         for (AnalyticsProvider p : mProviders) {
             p.trackViewedPrayerTimes();

@@ -7,7 +7,9 @@ import android.widget.TextView;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.common.BaseActivity;
+import com.i906.mpt.internal.Dagger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,6 +28,10 @@ public class LogoActivity extends BaseActivity {
         setContentView(R.layout.activity_logo);
 
         mVersionView.setText(getString(R.string.label_version_value, BuildConfig.VERSION_NAME));
+
+        Dagger.getGraph(this)
+                .getAnalyticsProvider()
+                .trackViewedScreen(AnalyticsProvider.SCREEN_COPYRIGHT);
     }
 
     @OnClick(R.id.tv_facebook)

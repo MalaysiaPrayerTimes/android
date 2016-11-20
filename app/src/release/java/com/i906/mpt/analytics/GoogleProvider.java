@@ -39,6 +39,11 @@ class GoogleProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void trackViewedScreen(String screen) {
+        sendScreenName(screen);
+    }
+
+    @Override
     public void trackViewedPrayerTimes() {
         sendScreenName(SCREEN_PRAYER_TIMES);
     }

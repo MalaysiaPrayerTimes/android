@@ -24,6 +24,11 @@ class FabricProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void trackViewedScreen(String screen) {
+        logContentView(screen);
+    }
+
+    @Override
     public void trackViewedPrayerTimes() {
         logContentView(SCREEN_PRAYER_TIMES);
     }

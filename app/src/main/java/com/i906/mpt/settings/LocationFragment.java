@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.PermissionChecker;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.prayer.PrayerManager;
@@ -23,6 +24,9 @@ import javax.inject.Inject;
 public class LocationFragment extends BasePreferenceFragment {
 
     private final static int DEFAULT_PERMISSIONS_REQUEST_CODE = 1349;
+
+    @Inject
+    AnalyticsProvider mAnalyticsProvider;
 
     @Inject
     PrayerManager mPrayerManager;
@@ -66,6 +70,8 @@ public class LocationFragment extends BasePreferenceFragment {
                 return change;
             }
         });
+
+        mAnalyticsProvider.trackViewedScreen(AnalyticsProvider.SCREEN_SETTINGS_LOCATION);
     }
 
     @Override

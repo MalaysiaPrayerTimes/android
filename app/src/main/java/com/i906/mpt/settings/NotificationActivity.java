@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.common.BaseActivity;
 import com.i906.mpt.prefs.NotificationPreferences;
 import com.i906.mpt.settings.azanpicker.AzanPickerFragment;
@@ -22,6 +23,9 @@ import butterknife.BindView;
  * Created by Noorzaini Ilhami on 17/10/2015.
  */
 public class NotificationActivity extends BaseActivity implements AzanPickerFragment.AzanListener {
+
+    @Inject
+    AnalyticsProvider mAnalyticsProvider;
 
     @Inject
     NotificationPreferences mNotificationPrefs;
@@ -40,6 +44,8 @@ public class NotificationActivity extends BaseActivity implements AzanPickerFrag
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        mAnalyticsProvider.trackViewedScreen(AnalyticsProvider.SCREEN_SETTINGS_CONFIGURE_NOTIFICATIONS);
     }
 
     public void showAzanPicker(int prayer, String toneUri, boolean notifcation) {

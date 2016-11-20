@@ -7,6 +7,8 @@ import android.preference.Preference;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
+import com.i906.mpt.internal.Dagger;
 
 import hu.supercluster.paperwork.Paperwork;
 
@@ -74,6 +76,10 @@ public class AboutFragment extends BasePreferenceFragment {
                 return true;
             }
         });
+
+        Dagger.getGraph(getActivity())
+                .getAnalyticsProvider()
+                .trackViewedScreen(AnalyticsProvider.SCREEN_ABOUT);
     }
 
     private void openFacebook() {
