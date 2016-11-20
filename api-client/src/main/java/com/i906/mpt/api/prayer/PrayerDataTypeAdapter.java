@@ -24,6 +24,7 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                     break;
                 case "provider_code":
                     pd.setProviderCode(in.nextString());
+                    break;
                 case "code":
                     pd.setCode(in.nextString());
                     break;
@@ -35,6 +36,18 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                     break;
                 case "place":
                     pd.setLocation(in.nextString());
+                    break;
+                case "attributes":
+                    in.beginObject();
+                    switch (in.nextName()) {
+                        case "jakim_code":
+                            in.nextString();
+                            break;
+                        case "jakim_source":
+                            in.nextString();
+                            break;
+                    }
+                    in.endObject();
                     break;
                 case "times":
                     final List<List<Date>> lld = new ArrayList<>();
