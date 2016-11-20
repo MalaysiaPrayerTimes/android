@@ -13,11 +13,11 @@ public class FabricTree extends BaseMptTree {
     protected void log(int priority, String tag, String message, Throwable t) {
         if (!Fabric.isInitialized()) return;
 
+        Crashlytics.log(message);
+
         if (t != null) {
             if (!shouldReport(t)) return;
             Crashlytics.logException(t);
         }
-
-        Crashlytics.log(message);
     }
 }
