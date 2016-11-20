@@ -13,6 +13,8 @@ import com.i906.mpt.prayer.PrayerContext;
 
 import java.util.Date;
 
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
+
 /**
  * @author Noorzaini Ilhami
  */
@@ -29,15 +31,13 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         if (WidgetService.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
             PrayerContext prayerContext = widgetIntent.getParcelableExtra("prayer_context");
             updateWithPrayerContext(context, prayerContext);
-        } else {
+        } else if (WidgetService.ACTION_PRAYER_TIME_ERROR.equals(action)) {
+            String error = widgetIntent.getStringExtra("type");
+            updateWithError(context, error);
+        } else if (!ACTION_APPWIDGET_DELETED.equals(action)) {
+            updateWithPrayerContext(context, null);
             WidgetService.start(context);
         }
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-        WidgetService.start(context);
     }
 
     @Override
@@ -71,6 +71,19 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    protected void updateWithError(Context context, String error) {
+        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        ComponentName cn = new ComponentName(context, getWidgetClass());
+        int[] appWidgetIds = mgr.getAppWidgetIds(cn);
+
+        if (appWidgetIds.length == 0) return;
+
+        for (int appWidgetId : appWidgetIds) {
+            RemoteViews layout = buildErrorLayout(mgr, context, appWidgetId, error);
+            mgr.updateAppWidget(appWidgetId, layout);
+        }
+    }
+
     protected String getFormattedDate(Context context, Date date) {
         String f = DateFormat.is24HourFormat(context) ? FORMAT_24 : FORMAT_12;
         return DateFormat.format(f, date).toString();
@@ -79,4 +92,6 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
     protected abstract Class getWidgetClass();
 
     protected abstract RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId, PrayerContext prayerContext);
+
+    protected abstract RemoteViews buildErrorLayout(AppWidgetManager awm, Context context, int appWidgetId, String error);
 }

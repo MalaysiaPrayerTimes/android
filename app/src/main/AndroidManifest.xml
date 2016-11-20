@@ -140,6 +140,9 @@
             <intent-filter>
                 <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
@@ -156,6 +159,9 @@
             <intent-filter>
                 <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
@@ -171,6 +177,9 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
             </intent-filter>
 
             <meta-data
