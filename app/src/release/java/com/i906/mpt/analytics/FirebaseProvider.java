@@ -32,6 +32,11 @@ class FirebaseProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void trackViewedScreen(String screen) {
+        setCurrentScreen(screen);
+    }
+
+    @Override
     public void trackViewedPrayerTimes() {
         setCurrentScreen(SCREEN_PRAYER_TIMES);
     }

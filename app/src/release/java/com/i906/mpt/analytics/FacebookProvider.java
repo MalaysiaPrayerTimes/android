@@ -30,6 +30,11 @@ class FacebookProvider implements AnalyticsProvider {
     }
 
     @Override
+    public void trackViewedScreen(String screen) {
+        logEvent(screen);
+    }
+
+    @Override
     public void trackViewedPrayerTimes() {
         logEvent(SCREEN_PRAYER_TIMES);
     }

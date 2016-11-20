@@ -32,6 +32,11 @@ public class AnalyticsModule {
         }
 
         @Override
+        public void trackViewedScreen(String screen) {
+            Timber.v("Viewing %s", screen);
+        }
+
+        @Override
         public void trackViewedPrayerTimes() {
             trackPrayerTimesCount = trackPrayerTimesCount + 1;
             Timber.v("Viewing prayer times, count %s", trackPrayerTimesCount);
