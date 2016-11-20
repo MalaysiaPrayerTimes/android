@@ -179,6 +179,7 @@ dependencies {
     compile 'hu.supercluster:paperwork:1.2.7'
     compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
