@@ -20,6 +20,10 @@
     <PreferenceCategory android:title="@string/label_about">
 
         <Preference
+            android:key="general_pref_change_log"
+            android:title="@string/label_change_log" />
+
+        <Preference
             android:key="general_pref_licenses"
             android:title="@string/label_open_source_licenses" />
 

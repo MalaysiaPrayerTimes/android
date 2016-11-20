@@ -28,6 +28,7 @@ public class AboutFragment extends BasePreferenceFragment {
         Preference version = findPreference("general_pref_version");
         Preference playStore = findPreference("general_pref_review");
         Preference about = findPreference("general_pref_about");
+        Preference changelog = findPreference("general_pref_change_log");
         Preference licenses = findPreference("general_pref_licenses");
         Preference donate = findPreference("general_pref_donate");
         Preference feedback = findPreference("general_pref_feedback");
@@ -47,6 +48,14 @@ public class AboutFragment extends BasePreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 startActivity(new Intent(getActivity(), LogoActivity.class));
+                return true;
+            }
+        });
+
+        changelog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getActivity(), ChangeLogActivity.class));
                 return true;
             }
         });
