@@ -9,6 +9,7 @@ import android.app.Application;
 public interface AnalyticsProvider {
 
     String SCREEN_ABOUT = "About";
+    String SCREEN_CHANGELOG = "Copyright";
     String SCREEN_COPYRIGHT = "Copyright";
     String SCREEN_DONATION = "Donation";
     String SCREEN_MOSQUE_LIST = "Mosque List";

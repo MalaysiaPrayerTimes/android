@@ -21,5 +21,14 @@ public class ChangeLogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_log);
         activityGraph().inject(this);
+
+        mAnalyticsProvider.trackViewedScreen(AnalyticsProvider.SCREEN_CHANGELOG);
+    }
+
+    @Override
+    protected void applyTheme() {
+        if (graph().getInterfacePreferences().isLightTheme()) {
+            setTheme(R.style.MptTheme_Light_Settings);
+        }
     }
 }
