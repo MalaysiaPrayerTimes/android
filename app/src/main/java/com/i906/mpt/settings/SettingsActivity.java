@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.api.prayer.PrayerCode;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
@@ -43,6 +44,9 @@ import butterknife.ButterKnife;
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Inject
+    AnalyticsProvider mAnalyticsProvider;
+
+    @Inject
     LocationPreferences mLocationPreferences;
 
     @Inject
@@ -60,6 +64,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        mAnalyticsProvider.trackViewedScreen(AnalyticsProvider.SCREEN_SETTINGS);
     }
 
     @Override
