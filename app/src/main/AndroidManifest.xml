@@ -48,6 +48,13 @@
             android:theme="@style/Theme.Intro" />
 
         <activity
+            android:name=".settings.ChangeLogActivity"
+            android:label="@string/label_change_log"
+            android:launchMode="singleTask"
+            android:parentActivityName=".settings.SettingsActivity"
+            android:theme="@style/MptTheme.Settings" />
+
+        <activity
             android:name=".settings.DonateActivity"
             android:label="@string/label_donate"
             android:launchMode="singleTask"

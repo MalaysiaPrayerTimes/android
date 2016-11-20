@@ -4,9 +4,9 @@
     <string name="label_alarm">Penggera</string>
     <string name="label_alarm_offset">Laras penggera</string>
     <string name="label_build">Nombor binaan</string>
+    <string name="label_change_log">Log Perubahan</string>
     <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
     <string name="label_copyright">Hak Cipta © 2013–2016</string>
-
     <string name="label_donate">Beri Sumbangan</string>
     <string name="label_feedback">Maklum Balas</string>
     <string name="label_hide_notification">Buang perberitahuan solat</string>
