@@ -11,12 +11,14 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/MptTheme.AppBarOverlay">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        style="?appBarLayoutStyle">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize" />
+            android:layout_height="?actionBarSize"
+            style="?tabLayoutStyle" />
 
     </android.support.design.widget.AppBarLayout>
 

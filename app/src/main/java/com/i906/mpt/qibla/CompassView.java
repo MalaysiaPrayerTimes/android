@@ -1,6 +1,7 @@
 package com.i906.mpt.qibla;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -32,7 +33,8 @@ public class CompassView extends View implements SensorEventListener {
     private static final float THICKNESS_SCALE = 0.02f;
 
     private int mDeviceOrientation = 0;
-    private int mAccentColor;
+    private int mPrimaryColor;
+    private int mSecondaryColor;
 
     private boolean mUseRotation = false;
     private boolean mUseAccelerometer = false;
@@ -83,14 +85,21 @@ public class CompassView extends View implements SensorEventListener {
     }
 
     public CompassView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.compassStyle);
     }
 
     public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initSensors();
 
-        mAccentColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        int colorAccent = ContextCompat.getColor(getContext(), R.color.colorAccent);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CompassView);
+
+        mPrimaryColor = a.getColor(R.styleable.CompassView_primaryColor, colorAccent);
+        mSecondaryColor = a.getColor(R.styleable.CompassView_secondaryColor, Color.WHITE);
+
+        a.recycle();
 
         mOrientationEventListener = new OrientationEventListener(getContext()) {
             @Override
@@ -103,28 +112,28 @@ public class CompassView extends View implements SensorEventListener {
     private void initPaints(int w, int h) {
         mOuterCirclePaint = new Paint();
         mOuterCirclePaint.setAntiAlias(true);
-        mOuterCirclePaint.setColor(Color.WHITE);
+        mOuterCirclePaint.setColor(mSecondaryColor);
         mOuterCirclePaint.setStrokeWidth(w * THICKNESS_SCALE);
         mOuterCirclePaint.setStyle(Paint.Style.STROKE);
 
         mWhiteArrowPaint = new Paint();
         mWhiteArrowPaint.setAntiAlias(true);
-        mWhiteArrowPaint.setColor(Color.WHITE);
+        mWhiteArrowPaint.setColor(mSecondaryColor);
 
         mCirclePaint = new Paint();
         mCirclePaint.setAntiAlias(true);
-        mCirclePaint.setColor(mAccentColor);
+        mCirclePaint.setColor(mPrimaryColor);
 
         float thickness = w * THICKNESS_SCALE * 2;
         mArcPaint = new Paint();
         mArcPaint.setAntiAlias(true);
-        mArcPaint.setColor(mAccentColor);
+        mArcPaint.setColor(mPrimaryColor);
         mArcPaint.setStrokeWidth(thickness);
         mArcPaint.setStyle(Paint.Style.STROKE);
     }
 
     private void updateOuterCirclePaint(float p) {
-        int color = swapColor(mAccentColor, Color.WHITE, p);
+        int color = swapColor(mPrimaryColor, mSecondaryColor, p);
         mOuterCirclePaint.setColor(color);
     }
 

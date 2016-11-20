@@ -56,4 +56,11 @@ public class LogoActivity extends BaseActivity {
                     Uri.parse("https://www.facebook.com/MalaysiaPrayerTimes"));
         }
     }
+
+    @Override
+    protected void applyTheme() {
+        if (graph().getInterfacePreferences().isLightTheme()) {
+            setTheme(R.style.MptTheme_Light_Settings);
+        }
+    }
 }

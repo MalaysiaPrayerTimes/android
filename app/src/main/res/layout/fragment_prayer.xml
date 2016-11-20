@@ -57,8 +57,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="bottom|right"
-        android:src="@drawable/ic_settings"
+        android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/label_settings"
-        android:background="?selectableItemBackgroundBorderless" />
+        android:src="@drawable/ic_settings"
+        android:tint="?prayerOverflowTint" />
 
 </FrameLayout>

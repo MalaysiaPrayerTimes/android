@@ -57,4 +57,11 @@ public class OpenSourceActivity extends BaseActivity {
         mDataset.add(Licenses.fromGitHub("JakeWharton/timber"));
         mDataset.add(Licenses.fromGitHub("msarhan/ummalqura-calendar", Licenses.NAME_MIT, Licenses.FILE_NO_EXTENSION));
     }
+
+    @Override
+    protected void applyTheme() {
+        if (graph().getInterfacePreferences().isLightTheme()) {
+            setTheme(R.style.MptTheme_Light_Settings);
+        }
+    }
 }

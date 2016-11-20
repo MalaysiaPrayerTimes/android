@@ -14,5 +14,6 @@ public class InterfaceFragment extends BasePreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_interface);
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("prayer_highlight"));
+        SettingsActivity.bindPreferenceSummaryToValue(findPreference("ui_theme"));
     }
 }

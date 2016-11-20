@@ -2,14 +2,15 @@ package com.i906.mpt.mosque.ui;
 
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +24,6 @@ import android.widget.ViewFlipper;
 import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.api.foursquare.Mosque;
-import com.i906.mpt.common.DividerItemDecoration;
 import com.i906.mpt.common.LocationFragment;
 import com.i906.mpt.location.LocationDisabledException;
 import com.i906.mpt.location.LocationTimeoutException;
@@ -94,9 +94,16 @@ public class MosqueFragment extends LocationFragment implements MosqueView, Mosq
         });
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+
+        TypedArray ta = getActivity().obtainStyledAttributes(new int[] {R.attr.mosqueDividerDrawable});
+        Drawable divider = ta.getDrawable(0);
+        ta.recycle();
+
+        DividerItemDecoration decor = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        decor.setDrawable(divider);
+
         mRecyclerView.setLayoutManager(llm);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(
-                ContextCompat.getDrawable(getActivity(), R.drawable.divider)));
+        mRecyclerView.addItemDecoration(decor);
 
         if (mRecyclerView.getAdapter() == null) mRecyclerView.setAdapter(mAdapter);
 

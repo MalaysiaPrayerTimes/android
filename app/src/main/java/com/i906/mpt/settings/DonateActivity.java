@@ -68,6 +68,13 @@ public class DonateActivity extends BaseActivity {
         mCodeView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    protected void applyTheme() {
+        if (graph().getInterfacePreferences().isLightTheme()) {
+            setTheme(R.style.MptTheme_Light_Settings);
+        }
+    }
+
     private Intent createLinkIntent(String link) {
         return new Intent(Intent.ACTION_VIEW, Uri.parse(link));
     }

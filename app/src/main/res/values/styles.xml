@@ -1,5 +1,17 @@
 <resources>
 
+    <!-- Compass -->
+
+    <style name="Compass">
+        <item name="primaryColor">@color/colorAccent</item>
+        <item name="secondaryColor">@android:color/white</item>
+    </style>
+
+    <style name="Compass.Light">
+        <item name="primaryColor">@color/colorAccent</item>
+        <item name="secondaryColor">@color/light_grey</item>
+    </style>
+
     <!-- Logo -->
 
     <style name="Logo" />
