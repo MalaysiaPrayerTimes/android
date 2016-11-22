@@ -113,6 +113,8 @@ paperwork {
 play {
     jsonFile = file('0c3c7fc227f6.json')
     track = PLAY_STORE_TRACK
+    userFraction = 0.2
+    untrackOld = true
 }
 
 dependencies {
