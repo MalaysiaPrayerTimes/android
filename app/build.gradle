@@ -112,9 +112,11 @@ paperwork {
 
 play {
     jsonFile = file('0c3c7fc227f6.json')
-    track = PLAY_STORE_TRACK
+    track = System.getProperty("PLAY_STORE_TRACK", PLAY_STORE_TRACK)
     userFraction = 0.2
-    untrackOld = true
+
+    // https://github.com/Triple-T/gradle-play-publisher/issues/162
+    // untrackOld = true
 }
 
 dependencies {
