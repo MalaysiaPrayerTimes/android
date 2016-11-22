@@ -11,7 +11,7 @@ buildscript {
         classpath 'org.jacoco:org.jacoco.core:jacoco-0.7.7.201606060606'
         classpath 'hu.supercluster:paperwork-plugin:1.2.7'
         classpath 'com.google.gms:google-services:3.0.0'
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0-beta1'
         classpath 'io.fabric.tools:gradle:1.22.0'
     }
 }
