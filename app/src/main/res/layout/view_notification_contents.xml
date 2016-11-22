@@ -1,0 +1,59 @@
+<LinearLayout android:id="@+id/v_notification"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/ic_divider_notification_checkbox"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:showDividers="middle">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cb_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/cb_vibrate"
+            android:checked="true"
+            android:text="@string/label_notification" />
+
+        <CheckBox
+            android:id="@+id/cb_vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            android:text="@string/label_vibrate" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_reminder"
+        style="?checkboxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:drawableLeft="@drawable/ic_btn_audio"
+        android:drawablePadding="8dp"
+        android:minHeight="0dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/label_set_reminder_tone" />
+
+    <Button
+        android:id="@+id/btn_notification"
+        style="?checkboxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:drawableLeft="@drawable/ic_btn_audio"
+        android:drawablePadding="8dp"
+        android:minHeight="0dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/label_set_notification_tone" />
+
+</LinearLayout>

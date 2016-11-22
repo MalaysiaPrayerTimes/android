@@ -1,8 +1,87 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!-- Compass -->
+
+    <style name="Compass">
+        <item name="primaryColor">@color/colorAccent</item>
+        <item name="secondaryColor">@android:color/white</item>
+    </style>
+
+    <style name="Compass.Light">
+        <item name="primaryColor">@color/colorAccent</item>
+        <item name="secondaryColor">@color/light_grey</item>
+    </style>
+
+    <!-- Logo -->
+
+    <style name="Logo" />
+
+    <style name="Logo.Link">
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#33b5e5</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Logo.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="Logo.SmallAbout" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">roboto-condensed</item>
+    </style>
+
+    <!-- Mosque List -->
+
+    <style name="MosqueList" />
+
+    <style name="MosqueList.Address" parent="TextAppearance.AppCompat.Small">
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="MosqueList.Distance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="MosqueList.Item">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="MosqueList.Name" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- Notifications -->
+
+    <style name="Notification" />
+
+    <style name="Notification.Title">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="Ringtone">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <!-- Widgets -->
+
+    <style name="WidgetPrayerTable" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/size_widget_bar_prayer_table</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>

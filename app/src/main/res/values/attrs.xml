@@ -1,0 +1,19 @@
+<resources>
+
+    <declare-styleable name="MptTheme">
+        <attr name="appBarLayoutStyle" format="reference" />
+        <attr name="compassStyle" format="reference" />
+        <attr name="mosqueDividerDrawable" format="reference" />
+        <attr name="notificationSettingsStyle" format="reference" />
+        <attr name="prayerOverflowTint" format="reference|color" />
+        <attr name="tabLayoutStyle" format="reference" />
+        <attr name="tabIconActiveColor" format="reference|color" />
+        <attr name="tabIconNormalColor" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="CompassView">
+        <attr name="primaryColor" format="reference|color" />
+        <attr name="secondaryColor" format="reference|color" />
+    </declare-styleable>
+
+</resources>

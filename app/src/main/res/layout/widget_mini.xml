@@ -1,0 +1,357 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:ignore="SmallSp">
+
+    <LinearLayout
+        android:id="@+id/widget_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_widget_header"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp">
+
+            <TextView
+                android:id="@+id/tv_prayer_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-5dp"
+                android:layout_marginTop="-5dp"
+                android:ellipsize="marquee"
+                android:fontFamily="sans-serif-light"
+                android:gravity="left"
+                android:maxLines="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                tools:text="20:10" />
+
+            <TextView
+                android:id="@+id/tv_prayer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="left"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="@string/prayer_maghrib" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp">
+
+            <TextView
+                android:id="@+id/tv_masihi_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="right"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="12 Muharram 1437" />
+
+            <TextView
+                android:id="@+id/tv_hijri_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="right"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="24 October 2015" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="right"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="Kajang" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/colorAccent"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btn_retry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/label_refresh"
+            android:textAppearance="@style/WidgetPrayerTable"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/prayertable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:orientation="vertical"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp">
+
+            <LinearLayout
+                android:id="@+id/row_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_imsak" />
+
+                <TextView
+                    android:id="@+id/row_time_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_subuh" />
+
+                <TextView
+                    android:id="@+id/row_time_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_syuruk" />
+
+                <TextView
+                    android:id="@+id/row_time_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_zohor" />
+
+                <TextView
+                    android:id="@+id/row_time_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_dhuha" />
+
+                <TextView
+                    android:id="@+id/row_time_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_asar" />
+
+                <TextView
+                    android:id="@+id/row_time_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_maghrib" />
+
+                <TextView
+                    android:id="@+id/row_time_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/row_name_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="@string/prayer_isyak" />
+
+                <TextView
+                    android:id="@+id/row_time_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAppearance="@style/WidgetPrayerTable"
+                    tools:text="05:31" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,23 @@
+def alias = System.getenv('MPT_KEY_ALIAS') ?: MPT_KEY_ALIAS
+def key_password = System.getenv('MPT_KEY_PASSWORD') ?: MPT_KEY_PASSWORD
+def store_password = System.getenv('MPT_STORE_PASSWORD') ?: MPT_STORE_PASSWORD
+def store_file = System.getenv('MPT_STORE_FILE') ?: MPT_STORE_FILE
+
+if (alias && key_password && store_password && file(store_file).exists()) {
+    android {
+        signingConfigs {
+            release {
+                keyAlias alias
+                keyPassword key_password
+                storeFile file(store_file)
+                storePassword store_password
+            }
+        }
+
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}

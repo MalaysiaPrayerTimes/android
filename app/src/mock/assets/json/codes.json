@@ -1,0 +1,39 @@
+{
+  "supported_codes": [
+    {
+      "code": "wlp-0",
+      "city": "Kuala Lumpur",
+      "state": "Wilayah Persekutuan",
+      "country": "Malaysia",
+      "provider": "jakim"
+    },
+    {
+      "code": "wlp-2",
+      "city": "Putrajaya",
+      "state": "Wilayah Persekutuan",
+      "country": "Malaysia",
+      "provider": "jakim"
+    },
+    {
+      "code": "ext-153",
+      "city": "Jitra",
+      "state": "Kedah",
+      "country": "Malaysia",
+      "provider": "jakim"
+    },
+    {
+      "code": "ext-306",
+      "city": "Bandar Baru Bangi",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "provider": "jakim"
+    },
+    {
+      "code": "ext-308",
+      "city": "Kajang",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "provider": "jakim"
+    }
+  ]
+}

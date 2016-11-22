@@ -1,0 +1,6 @@
+<resources>
+
+    <bool name="is_tablet">false</bool>
+    <bool name="is_landscape">false</bool>
+
+</resources>

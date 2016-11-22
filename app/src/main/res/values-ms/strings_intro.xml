@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="intro_title_prayer">Waktu solat dengan sekilas mata</string>
+    <string name="intro_description_prayer">Dapatkan waktu solat dan peringatan dengan segera untuk tempat semasa anda.</string>
+
+    <string name="intro_title_mosque">Cari masjid berdekatan</string>
+    <string name="intro_description_mosque">Temui masjid dan bilik solat dengan mudah di kawasan sekitar anda.</string>
+
+    <string name="intro_title_qibla">Tentukan kiblat</string>
+    <string name="intro_description_qibla">Tentukan arah kiblat dengan tepat melalui peranti anda.</string>
+
+</resources>

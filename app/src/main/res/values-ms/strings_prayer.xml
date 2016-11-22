@@ -1,0 +1,86 @@
+<resources>
+
+    <string name="label_date">%1$d %2$s %3$d</string>
+    <string name="label_date_short">%1$d %2$s</string>
+    <string name="label_date_combined">%1$s  •  %2$s</string>
+
+    <string name="prayer_imsak">Imsak</string>
+    <string name="prayer_subuh">Subuh</string>
+    <string name="prayer_syuruk">Syuruk</string>
+    <string name="prayer_dhuha">Dhuha</string>
+    <string name="prayer_zohor">Zohor</string>
+    <string name="prayer_asar">Asar</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isyak">Isyak</string>
+
+    <string-array name="prayer_names">
+        <item>@string/prayer_imsak</item>
+        <item>@string/prayer_subuh</item>
+        <item>@string/prayer_syuruk</item>
+        <item>@string/prayer_dhuha</item>
+        <item>@string/prayer_zohor</item>
+        <item>@string/prayer_asar</item>
+        <item>@string/prayer_maghrib</item>
+        <item>@string/prayer_isyak</item>
+    </string-array>
+
+    <string-array name="hijri_months">
+        <item>Muharram</item>
+        <item>Safar</item>
+        <item>Rabiulawal</item>
+        <item>Rabiulakhir</item>
+        <item>Jamadilawal</item>
+        <item>Jamadilakhir</item>
+        <item>Rejab</item>
+        <item>Syaaban</item>
+        <item>Ramadhan</item>
+        <item>Syawal</item>
+        <item>Zulkaedah</item>
+        <item>Zulhijjah</item>
+    </string-array>
+
+    <string-array name="hijri_months_short">
+        <item>Muh</item>
+        <item>Saf</item>
+        <item>Raw</item>
+        <item>Rak</item>
+        <item>Jaw</item>
+        <item>Jak</item>
+        <item>Rej</item>
+        <item>Syb</item>
+        <item>Ram</item>
+        <item>Syw</item>
+        <item>Zkh</item>
+        <item>Zhj</item>
+    </string-array>
+
+    <string-array name="masihi_months">
+        <item>Januari</item>
+        <item>Februari</item>
+        <item>Mac</item>
+        <item>April</item>
+        <item>Mei</item>
+        <item>Jun</item>
+        <item>Julai</item>
+        <item>Ogos</item>
+        <item>September</item>
+        <item>Oktober</item>
+        <item>November</item>
+        <item>Disember</item>
+    </string-array>
+
+    <string-array name="masihi_months_short">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mac</item>
+        <item>Apr</item>
+        <item>Mei</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Ogos</item>
+        <item>Sep</item>
+        <item>Okt</item>
+        <item>Nov</item>
+        <item>Dis</item>
+    </string-array>
+</resources>

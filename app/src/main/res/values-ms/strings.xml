@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Waktu Solat Malaysia</string>
+    <string name="app_name_short">Waktu Solat</string>
+
+    <string name="donate_contribute">Sumbang</string>
+    <string name="donate_digitalocean">Referral Link</string>
+    <string name="donate_extra_support">Sokongan</string>
+    <string name="donate_github">Laman GitHub</string>
+
+    <string name="donate_share">Kongsi</string>
+    <string name="donate_share_subject">Lihat "Malaysia Prayer Times"</string>
+    <string name="donate_share_via">Kongsi "Malaysia Prayer Times" melalui</string>
+    <string name="donate_spread_the_word">Sebarkan</string>
+    <string name="donate_text_1">Alhamdullilah. Terima kasih atas kesudian anda dalam menyumbang untuk Waktu Solat Malaysia.</string>
+    <string name="donate_text_2">Anda boleh membantu MPT dengan berkongsi! Kongsi pengalaman anda dalam menggunakan MPT dengan rakan-rakan anda!</string>
+    <string name="donate_text_3">Sumber kod MPT telah di muat naik di GitHub dan dihoskan di DigitalOcean.
+        \n\nJika anda seorang pembangun perisian anda boleh menambahbaik kod MPT.
+        Ada boleh membuka akaun DigitalOcean dengan referral link dan dapatkan kredit $10.</string>
+    <string name="donate_text_4">Jika ada ingin memberi lebih bantuan untuk menyokong pembangunan MPT, anda boleh mmeberi sumbangan kepada Noorzaini Ilhami.
+        \n\nMPT akan sentiasa kekal sebagai aplikasi percuma tanpa iklan.</string>
+
+    <string name="error_no_location">Adakah anda telah membenarkan tetapan lokasi?</string>
+    <string name="error_no_location_permission">Benarkan MPT untuk mengesan lokasi semasa anda.</string>
+    <string name="error_no_location_permission_mosque">Lokasi semasa anda diperlukan untuk mendapatkan senarai masjid!</string>
+    <string name="error_no_location_permission_prayer">Lokasi semasa anda diperlukan untuk mendapatkan waktu solat!</string>
+    <string name="error_no_network">Sila periksa sambungan internet anda.</string>
+    <string name="error_play_service">Terdapat masalah dengan Play Services!</string>
+    <string name="error_prayer_provider">Terdapat masalah dengan penyedia data waktu solat!</string>
+    <string name="error_server">Terdapat masalah dengan pelayan MPT!</string>
+    <string name="error_undetectable_location">Tidak dapat mengesan lokasi anda!</string>
+    <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
+    <string name="error_unsupported_coordinates">Kami masih belum menyokong lokasi semasa anda!</string>
+
+    <string name="label_apply">Ubah</string>
+    <string name="label_apply_to_all">Ubah semua</string>
+    <string name="label_enable_location">Dapatkan Lokasi</string>
+    <string name="label_error">Masalah</string>
+    <string name="label_grant_permission">Beri kebenaran</string>
+    <string name="label_mosque">Masjid</string>
+    <string name="label_open_location_settings">Tetapan Lokasi</string>
+    <string name="label_prayer">Waktu Solat</string>
+    <string name="label_qibla">Kiblat</string>
+    <string name="label_retry">Cuba Lagi</string>
+    <string name="label_search">Cari</string>
+    <string name="label_set_location">Tetapkan Lokasi</string>
+    <string name="label_widget_bar">Prayer Times Bar</string>
+    <string name="label_widget_mini">Prayer Times Mini</string>
+    <string name="label_widget_text">Prayer Times Text</string>
+
+    <plurals name="mi_label_grant_permission">
+        <item quantity="other">Beri kebenaran</item>
+    </plurals>
+
+</resources>

@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/ic_divider_notification"
+    android:dividerPadding="16dp"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_prayer_name"
+            style="@style/Notification.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:text="@string/label_apply_to_all" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sw_prayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:checked="true" />
+
+    </FrameLayout>
+
+    <include layout="@layout/view_notification_contents" />
+
+</LinearLayout>
