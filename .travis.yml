@@ -26,6 +26,7 @@ branches:
   only:
     - master
     - dev
+    - /^(\d+\.)?(\d+\.)?(\*|\d+)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/
 
 before_script:
   - echo no | android create avd --force -n test -t android-$ANDROID_EMULATOR_API_LEVEL --abi $ANDROID_ABI
