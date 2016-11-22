@@ -63,7 +63,7 @@ deploy:
     on:
       branch: dev
   - provider: script
-    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=rollout
+    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=production
     skip_cleanup: true
     on:
       branch: master
