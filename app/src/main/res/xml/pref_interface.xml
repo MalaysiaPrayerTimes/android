@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         android:defaultValue="dark"
@@ -34,6 +35,38 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_hijri"
+            android:title="@string/label_show_hijri_date" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/label_prayer_widget_screen">
+
+        <com.kizitonwose.colorpreference.ColorPreference
+            android:defaultValue="@color/widget_background"
+            android:key="widget_background_color"
+            android:title="@string/label_background_color"
+            app:colorChoices="@array/pref_widget_colors"
+            app:numColumns="5"
+            app:viewSize="large" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="widget_show_imsak"
+            android:title="@string/label_show_imsak" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="widget_show_dhuha"
+            android:title="@string/label_show_dhuha" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="widget_show_masihi"
+            android:title="@string/label_show_masihi_date" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="widget_show_hijri"
             android:title="@string/label_show_hijri_date" />
 
     </PreferenceCategory>

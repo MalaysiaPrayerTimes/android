@@ -1,6 +1,13 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="28 November 2016"
+        versionName="2.0.1-beta">
+        <changelogtext>Fixed error with MUIS data</changelogtext>
+        <changelogtext>Added missing widget settings (thanks [b]Ainor Abd Aziz[/b], [b]Nawfal Mustaqeem[/b], [b]Izanudin Zakaria[/b])</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="22 November 2016"
         versionName="2.0.0">
         <changelogtext>Released to production!</changelogtext>

@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.RemoteViews;
 
+import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.prayer.PrayerContext;
+import com.i906.mpt.prefs.WidgetPreferences;
 
 import java.util.Date;
 
@@ -23,9 +25,13 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
     private final static String FORMAT_24 = "kk:mm";
     private final static String FORMAT_12 = "hh:mm";
 
+    protected WidgetPreferences mWidgetPreferences;
+
     @Override
     public void onReceive(final Context context, Intent widgetIntent) {
+        mWidgetPreferences = Dagger.getGraph(context).getWidgetPreferences();
         super.onReceive(context, widgetIntent);
+
         final String action = widgetIntent.getAction();
 
         if (WidgetService.ACTION_PRAYER_TIME_UPDATED.equals(action)) {

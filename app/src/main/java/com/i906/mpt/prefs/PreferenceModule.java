@@ -42,4 +42,10 @@ public class PreferenceModule {
     protected NotificationPreferences provideNotificationPreferences(Context context) {
         return new NotificationPreferences(context);
     }
+
+    @Provides
+    @Singleton
+    protected WidgetPreferences provideWidgetPreferences(Context context) {
+        return new WidgetPreferences(context);
+    }
 }

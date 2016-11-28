@@ -6,4 +6,6 @@
     <color name="light_grey">#999</color>
     <color name="divider_dark">#101010</color>
     <color name="divider_light">#484848</color>
+
+    <color name="widget_background">#AAFF8800</color>
 </resources>
