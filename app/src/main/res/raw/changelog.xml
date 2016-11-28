@@ -5,6 +5,7 @@
         versionName="2.0.1-beta">
         <changelogtext>Fixed error with MUIS data</changelogtext>
         <changelogtext>Added missing widget settings (thanks [b]Ainor Abd Aziz[/b], [b]Nawfal Mustaqeem[/b], [b]Izanudin Zakaria[/b])</changelogtext>
+        <changelogtext>Added missing hijri offset settings (thanks [b]Ahmad Fadly[/b], [b]Mohd Afiq[/b], [b]Syed Azaruddin[/b], [b]Wark Haznizam[/b])</changelogtext>
     </changelogversion>
 
     <changelogversion

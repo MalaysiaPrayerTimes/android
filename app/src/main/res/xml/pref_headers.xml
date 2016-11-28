@@ -19,6 +19,12 @@
         android:title="@string/label_interface" />
 
     <header
+        android:id="@+id/header_more"
+        android:fragment="com.i906.mpt.settings.MoreFragment"
+        android:icon="@drawable/ic_more"
+        android:title="@string/label_more" />
+
+    <header
         android:id="@+id/header_about"
         android:fragment="com.i906.mpt.settings.AboutFragment"
         android:icon="@drawable/ic_info"

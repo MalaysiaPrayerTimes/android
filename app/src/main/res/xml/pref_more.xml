@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/pref_hijri_offset"
+        android:entryValues="@array/pref_hijri_offset_values"
+        android:key="hijri_offset"
+        android:title="@string/label_hijri_offset" />
+
+</PreferenceScreen>
