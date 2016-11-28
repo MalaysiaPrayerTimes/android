@@ -157,8 +157,6 @@ public class NotificationHelper {
 
         if (mNotificationPrefs.hasNotificationTone(prayer)) {
             toneUri = Uri.parse(mNotificationPrefs.getNotificationTone(prayer));
-        } else {
-            defaults = defaults | NotificationCompat.DEFAULT_SOUND;
         }
 
         if (mNotificationPrefs.isNotificationEnabled(prayer)) {
