@@ -45,16 +45,6 @@ public class BarWidgetProvider extends TableWidgetProvider {
     }
 
     @Override
-    protected boolean isImsakEnabled(AppWidgetManager awm, Context context, int appWidgetId) {
-        return useLongDates(awm, appWidgetId);
-    }
-
-    @Override
-    protected boolean isDhuhaEnabled(AppWidgetManager awm, Context context, int appWidgetId) {
-        return useLongDates(awm, appWidgetId);
-    }
-
-    @Override
     protected String getHijriDate(AppWidgetManager awm, Context context, int appWidgetId, int d, int m, int y) {
         int s = useLongDates(awm, appWidgetId) ? R.string.label_date : R.string.label_date_short;
         String[] hijriNames = getHijriNames(awm, context, appWidgetId);

@@ -7,6 +7,7 @@ import com.i906.mpt.db.DbModule;
 import com.i906.mpt.prayer.PrayerProvider;
 import com.i906.mpt.prefs.InterfacePreferences;
 import com.i906.mpt.prefs.PreferenceModule;
+import com.i906.mpt.prefs.WidgetPreferences;
 
 import javax.inject.Singleton;
 
@@ -32,4 +33,5 @@ public interface Graph {
     void inject(PrayerProvider provider);
     AnalyticsProvider getAnalyticsProvider();
     InterfacePreferences getInterfacePreferences();
+    WidgetPreferences getWidgetPreferences();
 }

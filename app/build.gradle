@@ -7,14 +7,19 @@ apply from: '../jacoco.gradle'
 apply from: '../checkstyle.gradle'
 
 def IS_CI = "true".equals(System.getenv("CI"))
-def PRE_DEX = "true".equals(System.getProperty("pre-dex", "true"))
+
+def versionMajor = 2
+def versionMinor = 0
+def versionPatch = 1
+def versionBuild = (System.getenv('TRAVIS_BUILD_NUMBER') ?: 0) as Integer
+def sumVersionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     dexOptions {
-        preDexLibraries = PRE_DEX && !IS_CI
+        preDexLibraries = !IS_CI
     }
 
     defaultConfig {
@@ -22,12 +27,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 
-        def versionMajor = 2
-        def versionMinor = 0
-        def versionPatch = 0
-        def versionBuild = (System.getenv('TRAVIS_BUILD_NUMBER') ?: 0) as Integer
-
-        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionCode sumVersionCode
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
         resValue 'string', 'foursquare_id', System.getenv('MPT_FOURSQUARE_ID') ?: MPT_FOURSQUARE_ID
@@ -69,6 +69,7 @@ android {
 
         beta {
             versionNameSuffix '-beta'
+            versionCode (sumVersionCode + 2)
         }
 
         prod {
@@ -184,6 +185,7 @@ dependencies {
     compile 'net.yslibrary.licenseadapter:licenseadapter:1.2.4'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
+    compile 'com.github.kizitonwose.colorpreference:core:1.0.2'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
