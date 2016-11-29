@@ -47,6 +47,7 @@
     <string name="label_retry">Retry</string>
     <string name="label_search">Search</string>
     <string name="label_set_location">Set Location</string>
+    <string name="label_updated">MPT has updated!</string>
     <string name="label_widget_bar">Prayer Times Bar</string>
     <string name="label_widget_mini">Prayer Times Mini</string>
     <string name="label_widget_text">Prayer Times Text</string>
