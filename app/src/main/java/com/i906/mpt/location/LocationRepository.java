@@ -26,6 +26,7 @@ public class LocationRepository {
     private final long mRequestTimeout;
 
     private final RxFusedLocation mFusedLocation;
+    private final HiddenPreferences mHiddenPreferences;
     private Location mLastLocation;
 
     @Inject
@@ -34,6 +35,7 @@ public class LocationRepository {
 
         mCacheDuration = prefs.getLocationCacheDuration();
         mRequestTimeout = prefs.getLocationRequestTimeout();
+        mHiddenPreferences = prefs;
     }
 
     public Observable<Location> getLocation() {
@@ -70,14 +72,20 @@ public class LocationRepository {
                 .doOnNext(new Action1<Location>() {
                     @Override
                     public void call(Location location) {
-                        mLastLocation = location;
+                        cacheLocation(location);
                     }
                 });
     }
 
     private boolean shouldRequestNewLocation() {
-        if (mLastLocation == null) {
+        Location cache = mHiddenPreferences.getLocationCache();
+
+        if (mLastLocation == null && cache == null) {
             return true;
+        }
+
+        if (mLastLocation == null) {
+            mLastLocation = cache;
         }
 
         if (System.currentTimeMillis() - mLastLocation.getTime() > mCacheDuration) {
@@ -85,6 +93,11 @@ public class LocationRepository {
         }
 
         return false;
+    }
+
+    private void cacheLocation(Location location) {
+        mLastLocation = location;
+        mHiddenPreferences.setLocationCache(location);
     }
 
     public static float getDistance(Location a, Location b) {
