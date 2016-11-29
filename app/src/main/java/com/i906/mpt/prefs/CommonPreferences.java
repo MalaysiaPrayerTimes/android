@@ -89,4 +89,27 @@ public class CommonPreferences {
                 .putBoolean("location_automatic", al)
                 .apply();
     }
+
+    private void updateLastVersion() {
+        mPrefs.edit()
+                .putInt("last_version", BuildConfig.VERSION_CODE)
+                .apply();
+    }
+
+    public boolean isRecentlyUpdated() {
+        int lastVersion = mPrefs.getInt("last_version", -1);
+
+        if (lastVersion == -1) {
+            updateLastVersion();
+            return false;
+        }
+
+        boolean updated = lastVersion < BuildConfig.VERSION_CODE;
+
+        if (updated) {
+            updateLastVersion();
+        }
+
+        return updated;
+    }
 }

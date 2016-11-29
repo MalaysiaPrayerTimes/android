@@ -2,6 +2,9 @@
     <string name="app_name">Waktu Solat Malaysia</string>
     <string name="app_name_short">Waktu Solat</string>
 
+    <string name="dashclock_title">Waktu solat seterusnya</string>
+    <string name="dashclock_extension">Memapar waktu solat seterusnya.</string>
+
     <string name="donate_contribute">Sumbang</string>
     <string name="donate_digitalocean">Referral Link</string>
     <string name="donate_extra_support">Sokongan</string>
@@ -33,6 +36,7 @@
 
     <string name="label_apply">Ubah</string>
     <string name="label_apply_to_all">Ubah semua</string>
+    <string name="label_dashclock">Pemalam DashClock</string>
     <string name="label_enable_location">Dapatkan Lokasi</string>
     <string name="label_error">Masalah</string>
     <string name="label_grant_permission">Beri kebenaran</string>
@@ -43,6 +47,7 @@
     <string name="label_retry">Cuba Lagi</string>
     <string name="label_search">Cari</string>
     <string name="label_set_location">Tetapkan Lokasi</string>
+    <string name="label_updated">MPT sudah dikemaskini!</string>
     <string name="label_widget_bar">Prayer Times Bar</string>
     <string name="label_widget_mini">Prayer Times Mini</string>
     <string name="label_widget_text">Prayer Times Text</string>
