@@ -2,6 +2,9 @@
     <string name="app_name">Malaysia Prayer Times</string>
     <string name="app_name_short">Prayer Times</string>
 
+    <string name="dashclock_title">Next prayer time</string>
+    <string name="dashclock_extension">Displays the next prayer time.</string>
+
     <string name="donate_contribute">Contribute</string>
     <string name="donate_digitalocean">Referral Link</string>
     <string name="donate_extra_support">Extra Support</string>
@@ -33,6 +36,7 @@
 
     <string name="label_apply">Apply</string>
     <string name="label_apply_to_all">Apply to all</string>
+    <string name="label_dashclock">DashClock Extension</string>
     <string name="label_enable_location">Enable location</string>
     <string name="label_error">Error</string>
     <string name="label_grant_permission">Grant permission</string>
