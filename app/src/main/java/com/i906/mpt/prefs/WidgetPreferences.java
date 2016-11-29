@@ -3,6 +3,7 @@ package com.i906.mpt.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 
 import com.i906.mpt.R;
 
@@ -16,7 +17,8 @@ public class WidgetPreferences {
 
     public WidgetPreferences(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mDefaultBackgroundColor = context.getColor(R.color.widget_background);
+        mDefaultBackgroundColor = ContextCompat.getColor(context, R.color.widget_background);
+
     }
 
     public int getBackgroundColor() {
