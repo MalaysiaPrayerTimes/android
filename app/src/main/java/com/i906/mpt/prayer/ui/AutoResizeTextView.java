@@ -71,7 +71,10 @@ public class AutoResizeTextView extends TextView {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public int onTestSize(final int suggestedSize, final RectF availableSPace) {
+                if (paint == null)
+                    paint = new TextPaint(getPaint());
                 paint.setTextSize(suggestedSize);
+
                 final String text = getText().toString();
                 final boolean singleline = getMaxLines() == 1;
                 if (singleline) {

@@ -212,12 +212,9 @@ public class MosqueFragment extends LocationFragment implements MosqueView, Mosq
     }
 
     private void showSwipeRefreshLoading(final boolean loading) {
-        mRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(loading);
-            }
-        });
+        if (mRefreshLayout != null) {
+            mRefreshLayout.setRefreshing(loading);
+        }
     }
 
     @Override
