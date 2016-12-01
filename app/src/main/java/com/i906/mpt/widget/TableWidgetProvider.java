@@ -68,11 +68,11 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
     }
 
     protected boolean isImsakEnabled(AppWidgetManager awm, Context context, int appWidgetId) {
-        return true;
+        return mWidgetPreferences.isImsakEnabled();
     }
 
     protected boolean isDhuhaEnabled(AppWidgetManager awm, Context context, int appWidgetId) {
-        return true;
+        return mWidgetPreferences.isDhuhaEnabled();
     }
 
     protected String getHijriDate(AppWidgetManager awm, Context context, int appWidgetId, int d, int m, int y) {
@@ -89,9 +89,11 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
     protected RemoteViews buildLayout(AppWidgetManager awm, Context context, int appWidgetId, PrayerContext prayerContext) {
         Intent intent = new Intent(Extension.ACTION_MAIN_SCREEN);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        int backgroundColor = mWidgetPreferences.getBackgroundColor();
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), getWidgetLayout());
         rv.setOnClickPendingIntent(R.id.widget_header, pendingIntent);
+        rv.setInt(R.id.widget_header, "setBackgroundColor", backgroundColor);
         rv.setViewVisibility(R.id.progress_bar, View.VISIBLE);
         rv.setViewVisibility(R.id.btn_retry, View.GONE);
 
@@ -105,8 +107,10 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
 
         boolean showImsak = isImsakEnabled(awm, context, appWidgetId);
         boolean showDhuha = isDhuhaEnabled(awm, context, appWidgetId);
+        boolean showMasihi = mWidgetPreferences.isMasihiDateEnabled();
+        boolean showHijri = mWidgetPreferences.isHijriDateEnabled();
 
-        int highlight = ContextCompat.getColor(context, R.color.colorAccent);
+        int highlight = backgroundColor | 0xFF000000;
         int normal = ContextCompat.getColor(context, android.R.color.white);
 
         List<Prayer> cdpt = prayerContext.getCurrentPrayerList();
@@ -132,6 +136,8 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         rv.setTextViewText(R.id.tv_location, prayerContext.getLocationName());
         rv.setTextViewText(R.id.tv_hijri_date, getHijriDate(awm, context, appWidgetId, hd, hm, hy));
         rv.setTextViewText(R.id.tv_masihi_date, getMasihiDate(awm, context, appWidgetId, md, mm, my));
+        rv.setViewVisibility(R.id.tv_hijri_date, showHijri ? View.VISIBLE : View.GONE);
+        rv.setViewVisibility(R.id.tv_masihi_date, showMasihi ? View.VISIBLE : View.GONE);
         rv.setViewVisibility(R.id.progress_bar, View.GONE);
         rv.setViewVisibility(R.id.prayerlist, View.VISIBLE);
         rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_IMSAK], showImsak ? View.VISIBLE : View.GONE);

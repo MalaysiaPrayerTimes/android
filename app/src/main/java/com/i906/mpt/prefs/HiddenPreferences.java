@@ -2,6 +2,7 @@ package com.i906.mpt.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.preference.PreferenceManager;
 
 /**
@@ -20,7 +21,7 @@ public class HiddenPreferences {
     }
 
     public long getLocationCacheDuration() {
-        return Long.valueOf(mPrefs.getString("location_cache_duration", "900000"));
+        return Long.valueOf(mPrefs.getString("location_cache_duration", "604800000"));
     }
 
     public long getLocationFastestInterval() {
@@ -37,5 +38,30 @@ public class HiddenPreferences {
 
     public boolean isCompassEnabled() {
         return true;
+    }
+
+    public Location getLocationCache() {
+        long rawLat = mPrefs.getLong("location_cache_lat", -1);
+        long rawLng = mPrefs.getLong("location_cache_lng", -1);
+        long time = mPrefs.getLong("location_cache_time", -1);
+
+        if (rawLat == -1 || rawLng == -1 || time == -1) {
+            return null;
+        }
+
+        Location l = new Location("cache");
+        l.setLatitude(Double.longBitsToDouble(rawLat));
+        l.setLongitude(Double.longBitsToDouble(rawLng));
+        l.setTime(time);
+
+        return l;
+    }
+
+    public void setLocationCache(Location location) {
+        mPrefs.edit()
+                .putLong("location_cache_lat", Double.doubleToRawLongBits(location.getLatitude()))
+                .putLong("location_cache_lng", Double.doubleToRawLongBits(location.getLongitude()))
+                .putLong("location_cache_time", location.getTime())
+                .apply();
     }
 }

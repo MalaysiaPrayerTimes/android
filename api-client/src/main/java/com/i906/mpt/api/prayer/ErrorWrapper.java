@@ -31,19 +31,29 @@ class ErrorWrapper implements Func1<Throwable, Observable<? extends PrayerRespon
 
             if (r != null && r.message != null) {
                 if (r.message.contains("No provider support found for coordinate")) {
-                    return Observable.error(new UnsupportedCoordinatesException(r.message));
+                    UnsupportedCoordinatesException uce = new UnsupportedCoordinatesException(r.message, e);
+                    uce.setProviderName(r.provider);
+
+                    return Observable.error(uce);
                 }
 
                 if (r.message.contains("Unknown place code")) {
-                    return Observable.error(new UnknownPlaceCodeException(r.message));
+                    UnknownPlaceCodeException upce = new UnknownPlaceCodeException(r.message, e);
+                    upce.setProviderName(r.provider);
+
+                    return Observable.error(upce);
                 }
 
-                if (r.message.contains("Data format at e-solat")) {
-                    return Observable.error(new PrayerProviderException(r.message));
-                }
+                if (r.message.contains("Data format at e-solat") || r.message.contains("Error connecting to")) {
+                    PrayerProviderException ppe = new PrayerProviderException(r.message, e);
 
-                if (r.message.contains("Error connecting to")) {
-                    return Observable.error(new PrayerProviderException(r.message));
+                    if (!r.hasProviderName()) {
+                        ppe.setProviderName("JAKIM");
+                    } else {
+                        ppe.setProviderName(r.provider);
+                    }
+
+                    return Observable.error(ppe);
                 }
             }
         }

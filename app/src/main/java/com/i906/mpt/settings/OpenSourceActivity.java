@@ -50,7 +50,9 @@ public class OpenSourceActivity extends BaseActivity {
         mDataset.add(Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"));
         mDataset.add(Licenses.fromGitHub("JakeWharton/butterknife"));
         mDataset.add(Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2));
+        mDataset.add(Licenses.fromGitHub("kizitonwose/colorpreference", Licenses.FILE_NO_EXTENSION));
         mDataset.add(Licenses.fromGitHub("google/dagger"));
+        mDataset.add(Licenses.fromGitHub("romannurik/dashclock", Licenses.LICENSE_APACHE_V2));
         mDataset.add(Licenses.fromGitHub("google/gson", Licenses.FILE_NO_EXTENSION));
         mDataset.add(Licenses.fromGitHub("yshrsmz/LicenseAdapter", Licenses.FILE_NO_EXTENSION));
         mDataset.add(Licenses.fromGitHub("frankiesardo/LinearListView", Licenses.LICENSE_APACHE_V2));

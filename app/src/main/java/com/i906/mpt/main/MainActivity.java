@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.i906.mpt.R;
 import com.i906.mpt.common.BaseActivity;
@@ -13,6 +15,7 @@ import com.i906.mpt.intro.MainIntroActivity;
 import com.i906.mpt.prefs.CommonPreferences;
 import com.i906.mpt.prefs.LocationPreferences;
 import com.i906.mpt.prefs.NotificationPreferences;
+import com.i906.mpt.settings.ChangeLogActivity;
 
 import javax.inject.Inject;
 
@@ -68,6 +71,17 @@ public class MainActivity extends BaseActivity {
             mLocationPreferences.convertLegacyPreferences();
         } else {
             setup();
+        }
+
+        if (mCommonPreferences.isRecentlyUpdated()) {
+            Snackbar.make(mCoordinatorLayout, R.string.label_updated, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.label_change_log, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(MainActivity.this, ChangeLogActivity.class));
+                        }
+                    })
+                    .show();
         }
     }
 

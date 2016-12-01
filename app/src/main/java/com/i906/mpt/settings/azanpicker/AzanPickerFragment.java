@@ -100,6 +100,7 @@ public class AzanPickerFragment extends BaseDialogFragment implements AzanPicker
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (mAzanListener == null) return;
                         String t = mAdapter.getSelectedToneUri();
                         mAzanListener.onToneSelected(mPrayerId, t, isNotification);
                     }

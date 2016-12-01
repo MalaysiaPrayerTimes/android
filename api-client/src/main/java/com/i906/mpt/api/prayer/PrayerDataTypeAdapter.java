@@ -48,6 +48,8 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                             case "jakim_source":
                                 in.nextString();
                                 break;
+                            default:
+                                in.nextString();
                         }
                     }
 

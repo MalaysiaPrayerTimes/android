@@ -1,6 +1,28 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="2 December 2016"
+        versionName="2.0.1">
+        <changelogtext>Allow showing prayer times when next month data not available</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="29 November 2016"
+        versionName="2.0.1-beta2">
+        <changelogtext>Fixed various crashes</changelogtext>
+        <changelogtext>Fixed location error when offline</changelogtext>
+        <changelogtext>Added DashClock extension</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="28 November 2016"
+        versionName="2.0.1-beta">
+        <changelogtext>Fixed error with MUIS data</changelogtext>
+        <changelogtext>Added missing widget settings (thanks [b]Ainor Abd Aziz[/b], [b]Nawfal Mustaqeem[/b], [b]Izanudin Zakaria[/b])</changelogtext>
+        <changelogtext>Added missing hijri offset settings (thanks [b]Ahmad Fadly[/b], [b]Mohd Afiq[/b], [b]Syed Azaruddin[/b], [b]Wark Haznizam[/b])</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="22 November 2016"
         versionName="2.0.0">
         <changelogtext>Released to production!</changelogtext>

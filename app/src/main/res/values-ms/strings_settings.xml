@@ -3,6 +3,7 @@
     <string name="label_about">Maklumat</string>
     <string name="label_alarm">Penggera</string>
     <string name="label_alarm_offset">Laras penggera</string>
+    <string name="label_background_color">Warna latar belakang</string>
     <string name="label_build">Nombor binaan</string>
     <string name="label_change_log">Log Perubahan</string>
     <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
@@ -13,6 +14,7 @@
     <string name="label_hijri_offset">Laras tarikh hijrah</string>
     <string name="label_interface">Antara Muka</string>
     <string name="label_location">Lokasi</string>
+    <string name="label_more">Lagi</string>
     <string name="label_miscellaneous">Lain-Lain</string>
     <string name="label_mpt_copyright">Hak Cipta © 2013–2016 Noorzaini Ilhami (i906)</string>
     <string name="label_mpt_facebook">Laman Facebook MPT</string>
@@ -28,6 +30,7 @@
     <string name="label_prayer_highlight">Penekanan waktu solat</string>
     <string name="label_prayer_screen">Skrin waktu solat</string>
     <string name="label_prayer_widget">Widget</string>
+    <string name="label_prayer_widget_screen">Skrin widget</string>
     <string name="label_preferred_location">Lokasi terpilih</string>
     <string name="label_preferred_location_summary">Gunakan lokasi terpilih untuk menentukan waktu solat</string>
     <string name="label_refresh">Refresh</string>
