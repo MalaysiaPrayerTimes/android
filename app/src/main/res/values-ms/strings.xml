@@ -29,6 +29,7 @@
     <string name="error_no_network">Sila periksa sambungan internet anda.</string>
     <string name="error_play_service">Terdapat masalah dengan Play Services!</string>
     <string name="error_prayer_provider">Terdapat masalah dengan penyedia data waktu solat!</string>
+    <string name="error_prayer_provider_named">Terdapat masalah dengan data waktu solat %s!</string>
     <string name="error_server">Terdapat masalah dengan pelayan MPT!</string>
     <string name="error_undetectable_location">Tidak dapat mengesan lokasi anda!</string>
     <string name="error_unexpected">Terdapat masalah yang tidak dijangka!</string>
