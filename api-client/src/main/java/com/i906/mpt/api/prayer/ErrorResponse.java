@@ -7,4 +7,9 @@ class ErrorResponse {
 
     String message;
     int status_code;
+    String provider;
+
+    boolean hasProviderName() {
+        return provider != null;
+    }
 }
