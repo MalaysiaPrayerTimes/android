@@ -1,3 +1,4 @@
-- Added light theme
-- Added refresh button in widgets
-- Added changelog screen
+- Fixed various crashes
+- Fixed location error when offline
+- Added DashClock extension
+- Allow showing prayer times when next month data not available
