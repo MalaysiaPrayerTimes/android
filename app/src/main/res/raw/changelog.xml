@@ -1,6 +1,12 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="2 December 2016"
+        versionName="2.0.1">
+        <changelogtext>Allow showing prayer times when next month data not available</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="29 November 2016"
         versionName="2.0.1-beta2">
         <changelogtext>Fixed various crashes</changelogtext>

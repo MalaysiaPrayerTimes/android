@@ -21,6 +21,7 @@ import android.widget.ViewFlipper;
 
 import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
+import com.i906.mpt.api.prayer.PrayerProviderException;
 import com.i906.mpt.common.LocationFragment;
 import com.i906.mpt.location.LocationDisabledException;
 import com.i906.mpt.location.LocationTimeoutException;
@@ -143,11 +144,11 @@ public class PrayerFragment extends LocationFragment implements PrayerView {
         mPrayerListView.showError(error);
         if (mSnackbar != null) mSnackbar.dismiss();
 
-        int errorMessage = 0;
+        String errorMessage = null;
         mSecondaryAction.setVisibility(View.GONE);
 
         if (error instanceof SecurityException) {
-            errorMessage = R.string.error_no_location_permission_prayer;
+            errorMessage = getString(R.string.error_no_location_permission_prayer);
 
             mRetryButton.setText(R.string.label_grant_permission);
             mSecondaryAction.setVisibility(View.VISIBLE);
@@ -158,12 +159,18 @@ public class PrayerFragment extends LocationFragment implements PrayerView {
             } else {
                 mRetryButton.setText(R.string.label_open_location_settings);
             }
+        } else if (error instanceof PrayerProviderException) {
+            PrayerProviderException ppe = (PrayerProviderException) error;
+
+            if (ppe.hasProviderName()) {
+                errorMessage = getString(R.string.error_prayer_provider_named, ppe.getProviderName());
+            }
         } else {
             mRetryButton.setText(R.string.label_retry);
         }
 
-        if (errorMessage == 0) {
-            errorMessage = getErrorMessage(error, R.string.error_unexpected);
+        if (errorMessage == null) {
+            errorMessage = getString(getErrorMessage(error, R.string.error_unexpected));
         }
 
         if (mViewFlipper.getDisplayedChild() != 1) {

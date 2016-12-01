@@ -8,4 +8,8 @@ public class UnsupportedCoordinatesException extends PrayerException {
     public UnsupportedCoordinatesException(String s) {
         super(s);
     }
+
+    public UnsupportedCoordinatesException(String s, Throwable throwable) {
+        super(s, throwable);
+    }
 }

@@ -2,8 +2,10 @@ package com.i906.mpt.prayer;
 
 import android.location.Location;
 
+import com.i906.mpt.api.prayer.EmptyPrayerData;
 import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
+import com.i906.mpt.api.prayer.PrayerException;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.prefs.InterfacePreferences;
 
@@ -12,6 +14,7 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.functions.Func2;
 
 /**
@@ -85,7 +88,8 @@ class PrayerDownloader {
                     public void call(PrayerData data) {
                         mPrayerCache.save(data, location);
                     }
-                });
+                })
+                .onErrorResumeNext(mPrayerProviderErrorResume);
 
         return cache.switchIfEmpty(api);
     }
@@ -123,10 +127,24 @@ class PrayerDownloader {
                     public void call(PrayerData data) {
                         mPrayerCache.save(data);
                     }
-                });
+                })
+                .onErrorResumeNext(mPrayerProviderErrorResume);
 
         return cache.switchIfEmpty(api);
     }
+
+    private final Func1<Throwable, Observable<? extends PrayerData>> mPrayerProviderErrorResume =
+            new Func1<Throwable, Observable<? extends PrayerData>>() {
+                @Override
+                public Observable<? extends PrayerData> call(Throwable throwable) {
+                    if (throwable instanceof PrayerException) {
+                        PrayerException e = (PrayerException) throwable;
+                        return Observable.just(new EmptyPrayerData(e.getProviderName()));
+                    }
+
+                    return Observable.error(throwable);
+                }
+            };
 
     private final Func2<PrayerData, PrayerData, PrayerContext> mPrayerContextCreator =
             new Func2<PrayerData, PrayerData, PrayerContext>() {

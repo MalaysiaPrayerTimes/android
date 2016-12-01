@@ -1,6 +1,8 @@
 package com.i906.mpt.prayer;
 
+import com.i906.mpt.api.prayer.EmptyPrayerData;
 import com.i906.mpt.api.prayer.PrayerData;
+import com.i906.mpt.api.prayer.PrayerProviderException;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.prefs.InterfacePreferences;
 
@@ -129,7 +131,13 @@ class PrayerContextImpl implements PrayerContext {
         if (!mDateHelper.isTommorowNewMonth()) {
             return mCurrentPrayer.getPrayerTimes().get(mDateHelper.getNextDate() - 1);
         } else {
-            return mNextPrayer.getPrayerTimes().get(0);
+            if (!(mNextPrayer instanceof EmptyPrayerData)) {
+                return mNextPrayer.getPrayerTimes().get(0);
+            }
+
+            PrayerProviderException ppe = new PrayerProviderException("No next prayer data available");
+            ppe.setProviderName(mNextPrayer.getProvider());
+            throw ppe;
         }
     }
 
