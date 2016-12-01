@@ -5,6 +5,7 @@ import android.location.Location;
 import com.i906.mpt.RxJavaResetRule;
 import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.PrayerData;
+import com.i906.mpt.api.prayer.PrayerProviderException;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.prefs.InterfacePreferences;
 
@@ -388,5 +389,182 @@ public class PrayerDownloaderTest {
         PrayerContextImpl pc = (PrayerContextImpl) prayers.get(0);
         assertThat(pc.getCurrentPrayerData()).isEqualTo(mPrayerData1);
         assertThat(pc.getNextPrayerData()).isEqualTo(mPrayerData2);
+    }
+
+    @Test
+    public void throwsErrorWhenCurrentPrayerNotAvailable() {
+        String code = "ext-153";
+
+        PrayerDownloader d = new PrayerDownloader(
+                mDateHelper,
+                mPrayerClient,
+                mPrayerCache,
+                mInterfacePreferences
+        );
+
+        when(mLocation.getLatitude())
+                .thenReturn(3.28011);
+
+        when(mLocation.getLongitude())
+                .thenReturn(101.556);
+
+        when(mLocation.distanceTo(any(Location.class)))
+                .thenReturn(0f);
+
+        when(mDateHelper.getCurrentMonth())
+                .thenReturn(3);
+
+        when(mDateHelper.getCurrentYear())
+                .thenReturn(2016);
+
+        when(mDateHelper.getNextMonth())
+                .thenReturn(4);
+
+        when(mDateHelper.isNextMonthNewYear())
+                .thenReturn(false);
+
+        when(mPrayerCache.get(anyInt(), anyInt(), eq(mLocation)))
+                .thenReturn(Observable.<PrayerData>empty());
+
+        when(mPrayerCache.get(anyInt(), anyInt(), eq(code)))
+                .thenReturn(Observable.<PrayerData>empty());
+
+        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), eq(4)))
+                .thenReturn(Observable.<PrayerData>error(new PrayerProviderException("JAKIM")));
+
+        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), eq(5)))
+                .thenReturn(Observable.just(mPrayerData2));
+
+        when(mPrayerClient.getPrayerTimesByCode(eq(code), anyInt(), eq(4)))
+                .thenReturn(Observable.<PrayerData>error(new PrayerProviderException("JAKIM")));
+
+        when(mPrayerClient.getPrayerTimesByCode(eq(code), anyInt(), eq(5)))
+                .thenReturn(Observable.just(mPrayerData2));
+
+        TestSubscriber<PrayerContext> testSubscriber1 = new TestSubscriber<>();
+        d.getPrayerTimes(mLocation).subscribe(testSubscriber1);
+        testSubscriber1.assertError(PrayerProviderException.class);
+
+        TestSubscriber<PrayerContext> testSubscriber2 = new TestSubscriber<>();
+        d.getPrayerTimes(code).subscribe(testSubscriber2);
+        testSubscriber2.assertError(PrayerProviderException.class);
+    }
+
+    @Test
+    public void swallowPrayerErrorWhenNextPrayerNotAvailable() {
+        String code = "ext-153";
+
+        PrayerDownloader d = new PrayerDownloader(
+                mDateHelper,
+                mPrayerClient,
+                mPrayerCache,
+                mInterfacePreferences
+        );
+
+        when(mLocation.getLatitude())
+                .thenReturn(3.28011);
+
+        when(mLocation.getLongitude())
+                .thenReturn(101.556);
+
+        when(mLocation.distanceTo(any(Location.class)))
+                .thenReturn(0f);
+
+        when(mDateHelper.getCurrentMonth())
+                .thenReturn(3);
+
+        when(mDateHelper.getCurrentYear())
+                .thenReturn(2016);
+
+        when(mDateHelper.getNextMonth())
+                .thenReturn(4);
+
+        when(mDateHelper.isNextMonthNewYear())
+                .thenReturn(false);
+
+        when(mPrayerCache.get(anyInt(), anyInt(), eq(mLocation)))
+                .thenReturn(Observable.<PrayerData>empty());
+
+        when(mPrayerCache.get(anyInt(), anyInt(), eq(code)))
+                .thenReturn(Observable.<PrayerData>empty());
+
+        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), eq(4)))
+                .thenReturn(Observable.just(mPrayerData1));
+
+        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), eq(5)))
+                .thenReturn(Observable.<PrayerData>error(new PrayerProviderException("JAKIM")));
+
+        when(mPrayerClient.getPrayerTimesByCode(eq(code), anyInt(), eq(4)))
+                .thenReturn(Observable.just(mPrayerData1));
+
+        when(mPrayerClient.getPrayerTimesByCode(eq(code), anyInt(), eq(5)))
+                .thenReturn(Observable.<PrayerData>error(new PrayerProviderException("JAKIM")));
+
+        TestSubscriber<PrayerContext> testSubscriber1 = new TestSubscriber<>();
+        d.getPrayerTimes(mLocation).subscribe(testSubscriber1);
+        testSubscriber1.assertNoErrors();
+
+        TestSubscriber<PrayerContext> testSubscriber2 = new TestSubscriber<>();
+        d.getPrayerTimes(code).subscribe(testSubscriber2);
+        testSubscriber2.assertNoErrors();
+    }
+
+    @Test
+    public void throwOtherErrorWhenNextPrayerNotAvailable() {
+        String code = "ext-153";
+
+        PrayerDownloader d = new PrayerDownloader(
+                mDateHelper,
+                mPrayerClient,
+                mPrayerCache,
+                mInterfacePreferences
+        );
+
+        when(mLocation.getLatitude())
+                .thenReturn(3.28011);
+
+        when(mLocation.getLongitude())
+                .thenReturn(101.556);
+
+        when(mLocation.distanceTo(any(Location.class)))
+                .thenReturn(0f);
+
+        when(mDateHelper.getCurrentMonth())
+                .thenReturn(3);
+
+        when(mDateHelper.getCurrentYear())
+                .thenReturn(2016);
+
+        when(mDateHelper.getNextMonth())
+                .thenReturn(4);
+
+        when(mDateHelper.isNextMonthNewYear())
+                .thenReturn(false);
+
+        when(mPrayerCache.get(anyInt(), anyInt(), eq(mLocation)))
+                .thenReturn(Observable.<PrayerData>empty());
+
+        when(mPrayerCache.get(anyInt(), anyInt(), eq(code)))
+                .thenReturn(Observable.<PrayerData>empty());
+
+        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), eq(4)))
+                .thenReturn(Observable.just(mPrayerData1));
+
+        when(mPrayerClient.getPrayerTimesByCoordinates(anyDouble(), anyDouble(), anyInt(), eq(5)))
+                .thenReturn(Observable.<PrayerData>error(new RuntimeException("JAKIM")));
+
+        when(mPrayerClient.getPrayerTimesByCode(eq(code), anyInt(), eq(4)))
+                .thenReturn(Observable.just(mPrayerData1));
+
+        when(mPrayerClient.getPrayerTimesByCode(eq(code), anyInt(), eq(5)))
+                .thenReturn(Observable.<PrayerData>error(new RuntimeException("JAKIM")));
+
+        TestSubscriber<PrayerContext> testSubscriber1 = new TestSubscriber<>();
+        d.getPrayerTimes(mLocation).subscribe(testSubscriber1);
+        testSubscriber1.assertError(RuntimeException.class);
+
+        TestSubscriber<PrayerContext> testSubscriber2 = new TestSubscriber<>();
+        d.getPrayerTimes(code).subscribe(testSubscriber2);
+        testSubscriber1.assertError(RuntimeException.class);
     }
 }

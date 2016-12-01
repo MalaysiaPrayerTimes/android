@@ -2,13 +2,17 @@ package com.i906.mpt.prayer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.i906.mpt.api.prayer.EmptyPrayerData;
 import com.i906.mpt.api.prayer.PrayerData;
 import com.i906.mpt.api.prayer.PrayerDataTypeAdapter;
+import com.i906.mpt.api.prayer.PrayerProviderException;
 import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.prefs.InterfacePreferences;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -25,6 +29,9 @@ import static org.mockito.Mockito.when;
  */
 public class PrayerContextTest {
 
+    @Rule
+    public final ExpectedException mExpectedException = ExpectedException.none();
+
     @Mock
     private DateTimeHelper mDateHelper;
 
@@ -32,6 +39,7 @@ public class PrayerContextTest {
     private InterfacePreferences mPreferences;
 
     private PrayerContext mPrayerContext;
+    private PrayerContext mPrayerContextWithoutNextData;
 
     @Before
     public void setup() {
@@ -47,6 +55,7 @@ public class PrayerContextTest {
         PrayerData p7 = gson.fromJson(new InputStreamReader(in7), PrayerData.class);
 
         mPrayerContext = new PrayerContextImpl(mDateHelper, mPreferences, p6, p7);
+        mPrayerContextWithoutNextData = new PrayerContextImpl(mDateHelper, mPreferences, p6, new EmptyPrayerData("JAKIM"));
     }
 
     @Test
@@ -68,6 +77,10 @@ public class PrayerContextTest {
         Prayer prayer = mPrayerContext.getCurrentPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_ZOHOR);
         assertThat(prayer.getDate()).hasTime(1464930840000L);
+
+        Prayer prayer2 = mPrayerContextWithoutNextData.getCurrentPrayer();
+        assertThat(prayer2.getIndex()).isEqualTo(Prayer.PRAYER_ZOHOR);
+        assertThat(prayer2.getDate()).hasTime(1464930840000L);
     }
 
     @Test
@@ -95,6 +108,10 @@ public class PrayerContextTest {
         Prayer prayer = mPrayerContext.getNextPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_ASAR);
         assertThat(prayer.getDate()).hasTime(1464943140000L);
+
+        Prayer prayer2 = mPrayerContextWithoutNextData.getNextPrayer();
+        assertThat(prayer2.getIndex()).isEqualTo(Prayer.PRAYER_ASAR);
+        assertThat(prayer2.getDate()).hasTime(1464943140000L);
     }
 
     @Test
@@ -122,6 +139,10 @@ public class PrayerContextTest {
         Prayer prayer = mPrayerContext.getNextPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_IMSAK);
         assertThat(prayer.getDate()).hasTime(1464989400000L);
+
+        Prayer prayer2 = mPrayerContextWithoutNextData.getNextPrayer();
+        assertThat(prayer2.getIndex()).isEqualTo(Prayer.PRAYER_IMSAK);
+        assertThat(prayer2.getDate()).hasTime(1464989400000L);
     }
 
     @Test
@@ -149,6 +170,9 @@ public class PrayerContextTest {
         Prayer prayer = mPrayerContext.getNextPrayer();
         assertThat(prayer.getIndex()).isEqualTo(Prayer.PRAYER_IMSAK);
         assertThat(prayer.getDate()).hasTime(1467322440000L);
+
+        mExpectedException.expect(PrayerProviderException.class);
+        mPrayerContextWithoutNextData.getNextPrayer();
     }
 
     @Test
