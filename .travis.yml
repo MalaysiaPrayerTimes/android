@@ -8,7 +8,7 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=25.0.0
     - ANDROID_ABI=armeabi-v7a
     - ADB_INSTALL_TIMEOUT=20
-#    - ANDROID_EMULATOR_API_LEVEL=21
+    - ANDROID_EMULATOR_API_LEVEL=21
 
 android:
   components:
@@ -16,11 +16,11 @@ android:
     - tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
     - android-$ANDROID_API_LEVEL
-#    - addon-google_apis-google-$ANDROID_EMULATOR_API_LEVEL
+    - addon-google_apis-google-$ANDROID_EMULATOR_API_LEVEL
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-#    - sys-img-armeabi-v7a-google_apis-$ANDROID_EMULATOR_API_LEVEL
+    - sys-img-armeabi-v7a-google_apis-$ANDROID_EMULATOR_API_LEVEL
 
 branches:
   only:
@@ -28,9 +28,9 @@ branches:
     - dev
     - /^(\d+\.)?(\d+\.)?(\*|\d+)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/
 
-#before_script:
-#  - echo no | android create avd --force -n test -t android-$ANDROID_EMULATOR_API_LEVEL --abi $ANDROID_ABI
-#  - emulator -avd test -no-audio -no-window &
+before_script:
+  - echo no | android create avd --force -n test -t android-$ANDROID_EMULATOR_API_LEVEL --abi $ANDROID_ABI
+  - emulator -avd test -no-audio -no-window &
 
 cache:
   directories:
@@ -43,11 +43,11 @@ before_install:
   - export TZ=Asia/Kuala_Lumpur
 
 script:
-  - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex --continue --no-daemon --info
-  - ./gradlew checkstyle -PdisablePreDex --continue --no-daemon --info
-#  - android-wait-for-emulator
-#  - adb shell input keyevent 82
-#  - ./gradlew createMockDebugCoverageReport -PdisablePreDex --continue
+  - ./gradlew clean jacocoTestMockDebugUnitTestCoverage -PdisablePreDex --continue --no-daemon
+  - ./gradlew checkstyle -PdisablePreDex --continue --no-daemon
+  - android-wait-for-emulator
+  - adb shell input keyevent 82
+  - ./gradlew createMockDebugCoverageReport -PdisablePreDex --continue
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
