@@ -1,9 +1,19 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="4 December 2016"
+        versionName="2.0.2-beta">
+        <changelogtext>Added DashClock visibility settings</changelogtext>
+        <changelogtext>Added Syuruk visibility settings</changelogtext>
+        <changelogtext>Fixed app not launching from DashClock</changelogtext>
+        <changelogtext>Improved offline mode</changelogtext>
+        <changelogtext>Removed reminder countdown notification for pre-Marshmallow devices</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="2 December 2016"
         versionName="2.0.1">
-        <changelogtext>Allow showing prayer times when next month data not available</changelogtext>
+        <changelogtext>Allowed showing prayer times when next month data not available</changelogtext>
     </changelogversion>
 
     <changelogversion

@@ -10,7 +10,7 @@ def IS_CI = "true".equals(System.getenv("CI"))
 
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 2
 def versionBuild = (System.getenv('TRAVIS_BUILD_NUMBER') ?: 0) as Integer
 def sumVersionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
 
