@@ -69,7 +69,7 @@ android {
 
         beta {
             versionNameSuffix '-beta'
-            versionCode (sumVersionCode + 2)
+            versionCode (sumVersionCode + 5)
         }
 
         prod {
