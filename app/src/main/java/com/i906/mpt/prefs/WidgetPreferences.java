@@ -33,6 +33,10 @@ public class WidgetPreferences {
         return mPrefs.getBoolean("widget_show_imsak", true);
     }
 
+    public boolean isSyurukEnabled() {
+        return mPrefs.getBoolean("widget_show_syuruk", true);
+    }
+
     public boolean isHijriDateEnabled() {
         return mPrefs.getBoolean("widget_show_hijri", true);
     }

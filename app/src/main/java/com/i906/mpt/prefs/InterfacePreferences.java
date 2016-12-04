@@ -33,6 +33,11 @@ public class InterfacePreferences implements PrayerContext.ViewSettings {
     }
 
     @Override
+    public boolean isSyurukEnabled() {
+        return mPrefs.getBoolean("show_syuruk", true);
+    }
+
+    @Override
     public boolean isHijriDateEnabled() {
         return mPrefs.getBoolean("show_hijri", true);
     }
