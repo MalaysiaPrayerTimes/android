@@ -7,4 +7,11 @@
         android:key="hijri_offset"
         android:title="@string/label_hijri_offset" />
 
+    <ListPreference
+        android:key="dashclock_visibility"
+        android:defaultValue="600000"
+        android:entries="@array/pref_dashclock"
+        android:entryValues="@array/pref_dashclock_values"
+        android:title="@string/label_dashclock_visibility" />
+
 </PreferenceScreen>

@@ -8,6 +8,7 @@
     <string name="label_change_log">Log Perubahan</string>
     <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
     <string name="label_copyright">Hak Cipta © 2013–2016</string>
+    <string name="label_dashclock_visibility">Tunjuk di DashClock</string>
     <string name="label_donate">Beri Sumbangan</string>
     <string name="label_feedback">Maklum Balas</string>
     <string name="label_hide_notification">Buang perberitahuan solat</string>
@@ -68,6 +69,15 @@
         <item>5 minit lewat</item>
         <item>10 minit lewat</item>
         <item>15 minit lewat</item>
+    </string-array>
+
+    <string-array name="pref_dashclock">
+        <item>15 minit</item>
+        <item>30 minit</item>
+        <item>1 jam</item>
+        <item>2 jam</item>
+        <item>3 jam</item>
+        <item>Sentiasa ditunjuk</item>
     </string-array>
 
     <string-array name="pref_highlight_settings">
