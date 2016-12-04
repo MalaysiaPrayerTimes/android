@@ -74,6 +74,7 @@ class PrayerListAdapter extends BaseAdapter {
         mPrayerList = prayerList;
         Prayer imsak = null;
         Prayer dhuha = null;
+        Prayer syuruk = null;
 
         for (Prayer p : mPrayerList) {
             if (p.getIndex() == Prayer.PRAYER_DHUHA) {
@@ -83,6 +84,10 @@ class PrayerListAdapter extends BaseAdapter {
             if (p.getIndex() == Prayer.PRAYER_IMSAK) {
                 imsak = p;
             }
+
+            if (p.getIndex() == Prayer.PRAYER_SYURUK) {
+                syuruk = p;
+            }
         }
 
         if (!mViewSettings.isImsakEnabled()) {
@@ -91,6 +96,10 @@ class PrayerListAdapter extends BaseAdapter {
 
         if (!mViewSettings.isDhuhaEnabled()) {
             mPrayerList.remove(dhuha);
+        }
+
+        if (!mViewSettings.isSyurukEnabled()) {
+            mPrayerList.remove(syuruk);
         }
     }
 

@@ -9,6 +9,7 @@
     <string name="label_configure_notifications">Configure notifications</string>
     <string name="label_copyright">Copyright © 2013–2016</string>
     <string name="label_copyright_summary" translatable="false">Noorzaini Ilhami (i906)</string>
+    <string name="label_dashclock_visibility">Show in DashClock</string>
     <string name="label_donate">Donate</string>
     <string name="label_feedback">Feedback</string>
     <string name="label_hide_notification">Hide prayer notification</string>
@@ -43,6 +44,7 @@
     <string name="label_show_imsak">Show Imsak</string>
     <string name="label_show_masihi_date">Show Masihi date</string>
     <string name="label_show_reminder">Show prayer reminder</string>
+    <string name="label_show_syuruk">Show Syuruk</string>
     <string name="label_review">Rate and review MPT</string>
     <string name="label_review_summary">Rate and review MPT on Play Store</string>
     <string name="label_theme">Theme</string>
@@ -79,6 +81,24 @@
         <item>300000</item>
         <item>600000</item>
         <item>900000</item>
+    </string-array>
+
+    <string-array name="pref_dashclock">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
+        <item>Always visible</item>
+    </string-array>
+
+    <string-array name="pref_dashclock_values" translatable="false">
+        <item>300000</item>
+        <item>600000</item>
+        <item>1200000</item>
+        <item>2400000</item>
+        <item>3600000</item>
+        <item>14400000</item>
     </string-array>
 
     <string-array name="pref_highlight_settings">

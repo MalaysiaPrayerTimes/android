@@ -30,6 +30,8 @@ public interface PrayerContext {
 
         boolean isImsakEnabled();
 
+        boolean isSyurukEnabled();
+
         boolean isHijriDateEnabled();
 
         boolean isMasihiDateEnabled();

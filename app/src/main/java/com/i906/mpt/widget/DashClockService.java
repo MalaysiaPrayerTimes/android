@@ -72,7 +72,7 @@ public class DashClockService extends DashClockExtension implements WidgetHandle
         String body = prayerContext.getLocationName();
 
         boolean visible = prayer.getDate().getTime() <= System.currentTimeMillis()
-                + mNotificationPreferences.getAppearBeforeDuration();
+                + mNotificationPreferences.getDashClockVisibilityDuration();
 
         publishUpdate(new ExtensionData()
                 .visible(visible)

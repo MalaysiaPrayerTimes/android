@@ -75,6 +75,10 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         return mWidgetPreferences.isDhuhaEnabled();
     }
 
+    protected boolean isSyurukEnabled(AppWidgetManager awm, Context context, int appWidgetId) {
+        return mWidgetPreferences.isSyurukEnabled();
+    }
+
     protected String getHijriDate(AppWidgetManager awm, Context context, int appWidgetId, int d, int m, int y) {
         String[] hijriNames = getHijriNames(awm, context, appWidgetId);
         return context.getString(R.string.label_date, d, hijriNames[m], y);
@@ -107,6 +111,7 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
 
         boolean showImsak = isImsakEnabled(awm, context, appWidgetId);
         boolean showDhuha = isDhuhaEnabled(awm, context, appWidgetId);
+        boolean showSyuruk = isSyurukEnabled(awm, context, appWidgetId);
         boolean showMasihi = mWidgetPreferences.isMasihiDateEnabled();
         boolean showHijri = mWidgetPreferences.isHijriDateEnabled();
 
@@ -142,13 +147,15 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         rv.setViewVisibility(R.id.prayerlist, View.VISIBLE);
         rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_IMSAK], showImsak ? View.VISIBLE : View.GONE);
         rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_DHUHA], showDhuha ? View.VISIBLE : View.GONE);
+        rv.setViewVisibility(PRAYER_ROW[Prayer.PRAYER_SYURUK], showSyuruk ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < prayerNames.length; i++) {
             rv.setTextViewText(PRAYER_NAME[i], prayerNames[i]);
             rv.setTextViewText(PRAYER_TIME[i], getFormattedDate(context, cdpt.get(i).getDate()));
 
             if (i == cpi || (!showImsak && i == Prayer.PRAYER_ISYAK && cpi == Prayer.PRAYER_IMSAK) ||
-                    (!showDhuha && i == Prayer.PRAYER_SYURUK && cpi == Prayer.PRAYER_DHUHA)) {
+                    (!showDhuha && i == Prayer.PRAYER_SYURUK && cpi == Prayer.PRAYER_DHUHA) ||
+                    (!showSyuruk && i == Prayer.PRAYER_ZOHOR && cpi == Prayer.PRAYER_SYURUK)) {
                 rv.setTextColor(PRAYER_NAME[i], highlight);
                 rv.setTextColor(PRAYER_TIME[i], highlight);
             } else {
