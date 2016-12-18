@@ -7,4 +7,8 @@ import rx.Observable;
 public interface FoursquareClient {
 
     Observable<List<Mosque>> getMosqueList(double lat, double lng, int radius);
+
+    String getQuery();
+
+    String getIntent();
 }

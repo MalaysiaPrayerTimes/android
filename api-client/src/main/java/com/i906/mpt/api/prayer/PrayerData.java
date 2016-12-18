@@ -3,6 +3,7 @@ package com.i906.mpt.api.prayer;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("checkstyle:membername")
 public class PrayerData {
 
     private String provider;

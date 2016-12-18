@@ -1,20 +1,27 @@
 <resources>
 
     <string name="label_about">Maklumat</string>
+    <string name="label_advanced_settings">Tetapan maju</string>
     <string name="label_alarm">Penggera</string>
     <string name="label_alarm_offset">Laras penggera</string>
     <string name="label_background_color">Warna latar belakang</string>
     <string name="label_build">Nombor binaan</string>
-    <string name="label_change_log">Log Perubahan</string>
+    <string name="label_change_log">Log perubahan</string>
     <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
     <string name="label_copyright">Hak Cipta © 2013–2016</string>
     <string name="label_dashclock_visibility">Tunjuk di DashClock</string>
     <string name="label_donate">Beri Sumbangan</string>
     <string name="label_feedback">Maklum Balas</string>
+    <string name="label_hidden_preferences_enabled">Tetapan maju dibolehkan</string>
     <string name="label_hide_notification">Buang perberitahuan solat</string>
     <string name="label_hijri_offset">Laras tarikh hijrah</string>
     <string name="label_interface">Antara Muka</string>
     <string name="label_location">Lokasi</string>
+    <string name="label_location_cache_duration">Tempoh simpan</string>
+    <string name="label_location_distance_limit">Had jarak</string>
+    <string name="label_location_fastest_interval">Selang cepat</string>
+    <string name="label_location_interval">Selang</string>
+    <string name="label_location_request_timeout">Tempoh permintaan</string>
     <string name="label_more">Lagi</string>
     <string name="label_miscellaneous">Lain-Lain</string>
     <string name="label_mpt_copyright">Hak Cipta © 2013–2016 Noorzaini Ilhami (i906)</string>

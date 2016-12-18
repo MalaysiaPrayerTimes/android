@@ -18,6 +18,20 @@ public class MoreFragment extends BasePreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_more);
 
+        Preference advanced = findPreference("advanced_settings");
+
+        if (!Dagger.getGraph(getActivity()).getHiddenPreferences().isVisible()) {
+            getPreferenceScreen().removePreference(advanced);
+        } else {
+            advanced.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    HiddenSettingsActivity.start(getActivity());
+                    return true;
+                }
+            });
+        }
+
         Preference dashclock = findPreference("dashclock_visibility");
         dashclock.setEnabled(isAppInstalled("net.nurik.roman.dashclock"));
 

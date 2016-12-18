@@ -1,0 +1,48 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/label_location">
+
+        <EditTextPreference
+            android:defaultValue="15000"
+            android:key="location_request_timeout"
+            android:title="@string/label_location_request_timeout" />
+
+        <EditTextPreference
+            android:defaultValue="604800000"
+            android:key="location_cache_duration"
+            android:title="@string/label_location_cache_duration" />
+
+        <EditTextPreference
+            android:defaultValue="60000"
+            android:key="location_fastest_interval"
+            android:title="@string/label_location_fastest_interval" />
+
+        <EditTextPreference
+            android:defaultValue="900000"
+            android:key="location_interval"
+            android:title="@string/label_location_interval" />
+
+        <EditTextPreference
+            android:defaultValue="5000"
+            android:key="location_distance_limit"
+            android:title="@string/label_location_distance_limit" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/label_foursquare">
+
+        <ListPreference
+            android:defaultValue="browse"
+            android:entries="@array/pref_foursquare_intent"
+            android:entryValues="@array/pref_foursquare_intent"
+            android:key="foursquare_intent"
+            android:title="@string/label_foursquare_intent" />
+
+        <EditTextPreference
+            android:defaultValue="surau,masjid"
+            android:key="foursquare_query"
+            android:title="@string/label_foursquare_query" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

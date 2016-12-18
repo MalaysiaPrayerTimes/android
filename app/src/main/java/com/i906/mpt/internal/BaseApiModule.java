@@ -8,6 +8,7 @@ import com.i906.mpt.api.foursquare.FoursquareHttpInterceptor;
 import com.i906.mpt.api.foursquare.RetrofitFoursquareClient;
 import com.i906.mpt.api.prayer.PrayerClient;
 import com.i906.mpt.api.prayer.RetrofitPrayerClient;
+import com.i906.mpt.prefs.HiddenPreferences;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -25,7 +26,7 @@ class BaseApiModule {
         return new RetrofitPrayerClient(mptClient.build());
     }
 
-    static FoursquareClient getFoursquareClient(OkHttpClient client, Context context) {
+    static FoursquareClient getFoursquareClient(OkHttpClient client, Context context, final HiddenPreferences prefs) {
         String fid = context.getString(R.string.foursquare_id);
         String fsc = context.getString(R.string.foursquare_secret);
 
@@ -34,6 +35,16 @@ class BaseApiModule {
         OkHttpClient.Builder foursquareClient = client.newBuilder();
         foursquareClient.interceptors().add(0, i);
 
-        return new RetrofitFoursquareClient(foursquareClient.build());
+        return new RetrofitFoursquareClient(foursquareClient.build()) {
+            @Override
+            public String getQuery() {
+                return prefs.getFoursquareQuery();
+            }
+
+            @Override
+            public String getIntent() {
+                return prefs.getFoursquareIntent();
+            }
+        };
     }
 }

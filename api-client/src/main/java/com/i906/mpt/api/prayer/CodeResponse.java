@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @author Noorzaini Ilhami
  */
+@SuppressWarnings("checkstyle:membername")
 class CodeResponse {
 
     private Wrapper data;

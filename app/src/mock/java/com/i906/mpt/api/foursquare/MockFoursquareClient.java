@@ -39,4 +39,14 @@ public class MockFoursquareClient implements FoursquareClient {
                     }
                 });
     }
+
+    @Override
+    public String getQuery() {
+        return null;
+    }
+
+    @Override
+    public String getIntent() {
+        return "browse";
+    }
 }

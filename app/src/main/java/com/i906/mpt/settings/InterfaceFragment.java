@@ -22,6 +22,7 @@ public class InterfaceFragment extends BasePreferenceFragment {
 
         Preference widgetBackground = findPreference("widget_background_color");
         Preference widgetImsak = findPreference("widget_show_imsak");
+        Preference widgetSyuruk = findPreference("widget_show_syuruk");
         Preference widgetDhuha = findPreference("widget_show_dhuha");
         Preference widgetMasihi = findPreference("widget_show_masihi");
         Preference widgetHijri = findPreference("widget_show_hijri");
@@ -36,6 +37,7 @@ public class InterfaceFragment extends BasePreferenceFragment {
 
         widgetBackground.setOnPreferenceChangeListener(widgetChange);
         widgetImsak.setOnPreferenceChangeListener(widgetChange);
+        widgetSyuruk.setOnPreferenceChangeListener(widgetChange);
         widgetDhuha.setOnPreferenceChangeListener(widgetChange);
         widgetMasihi.setOnPreferenceChangeListener(widgetChange);
         widgetHijri.setOnPreferenceChangeListener(widgetChange);

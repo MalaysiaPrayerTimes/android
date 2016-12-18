@@ -19,6 +19,7 @@ public class RetrofitPrayerClient implements PrayerClient {
 
     private static final String MPT_URL = "https://mpt.i906.my/api/";
 
+    private final Retrofit mRetrofit;
     private final PrayerApi mApi;
     private final ErrorWrapper mErrorWrapper;
 
@@ -34,8 +35,8 @@ public class RetrofitPrayerClient implements PrayerClient {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
+        mRetrofit = retrofit;
         mApi = retrofit.create(PrayerApi.class);
-
         mErrorWrapper = new ErrorWrapper(retrofit);
     }
 
@@ -66,6 +67,12 @@ public class RetrofitPrayerClient implements PrayerClient {
     @Override
     public Observable<List<PrayerCode>> getSupportedCodes() {
         return mApi.getSupportedCodes()
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<PrayerProvider>>>() {
+                    @Override
+                    public Observable<? extends List<PrayerProvider>> call(Throwable e) {
+                        return Observable.error(ErrorWrapper.wrapError(mRetrofit, e));
+                    }
+                })
                 .flatMapIterable(new Func1<List<PrayerProvider>, Iterable<PrayerProvider>>() {
                     @Override
                     public Iterable<PrayerProvider> call(List<PrayerProvider> providers) {

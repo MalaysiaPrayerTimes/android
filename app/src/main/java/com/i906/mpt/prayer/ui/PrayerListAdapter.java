@@ -17,6 +17,7 @@ import com.i906.mpt.prayer.PrayerContext;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ class PrayerListAdapter extends BaseAdapter {
 
     PrayerListAdapter(String[] prayerNames, String dateFormat) {
         mPrayerNames = prayerNames;
-        mDateFormatter = new SimpleDateFormat(dateFormat);
+        mDateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
     }
 
     @Override

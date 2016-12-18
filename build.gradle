@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'org.jacoco:org.jacoco.core:jacoco-0.7.7.201606060606'
         classpath 'hu.supercluster:paperwork-plugin:1.2.7'
         classpath 'com.github.triplet.gradle:play-publisher:1.2.0-beta1'
@@ -47,9 +47,9 @@ ext {
     RETROFIT_VERSION = '2.1.0'
     RXANDROID_VERSION = '1.2.1'
     RXJAVA_VERSION = '1.1.10'
-    SUPPORT_VERSION = '25.0.1'
-    TIMBER_VERSION = '4.3.1'
-    STORIO_VERSION = '1.11.0'
+    SUPPORT_VERSION = '25.1.0'
+    TIMBER_VERSION = '4.4.0'
+    STORIO_VERSION = '1.12.0'
 }
 
 ext.preDexLibs = !project.hasProperty('disablePreDex')

@@ -1,5 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:key="advanced_settings"
+        android:title="@string/label_advanced_settings"/>
+
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/pref_hijri_offset"
