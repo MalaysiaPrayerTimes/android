@@ -7,7 +7,6 @@ import android.preference.Preference;
 import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.internal.Dagger;
-import com.i906.mpt.internal.DaggerGraph;
 
 /**
  * @author Noorzaini Ilhami
