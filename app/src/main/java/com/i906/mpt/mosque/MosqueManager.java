@@ -44,7 +44,7 @@ public class MosqueManager {
             mMosqueStream = BehaviorSubject.create();
         }
 
-        mLocationRepository.getLocation()
+        mLocationRepository.getLocation(refresh)
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {

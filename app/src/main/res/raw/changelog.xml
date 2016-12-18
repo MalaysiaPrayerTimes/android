@@ -4,6 +4,9 @@
         changeDate="18 December 2016"
         versionName="2.0.2-beta2">
         <changelogtext>Fixed Syuruk visibility settings (thanks [b]Zubir Jamal[/b])</changelogtext>
+        <changelogtext>Fixed location refresh when refreshing mosque list</changelogtext>
+        <changelogtext>Added server error message</changelogtext>
+        <changelogtext>Tweaked widget layouts</changelogtext>
     </changelogversion>
 
     <changelogversion
