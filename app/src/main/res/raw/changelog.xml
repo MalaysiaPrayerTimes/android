@@ -1,6 +1,12 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="18 December 2016"
+        versionName="2.0.2-beta2">
+        <changelogtext>Fixed Syuruk visibility settings (thanks [b]Zubir Jamal[/b])</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="4 December 2016"
         versionName="2.0.2-beta">
         <changelogtext>Added DashClock visibility settings</changelogtext>
