@@ -58,12 +58,12 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: ./gradlew publishBetaRelease
+    script: ./gradlew publishBetaRelease --no-daemon
     skip_cleanup: true
     on:
       branch: dev
   - provider: script
-    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=production
+    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=production --no-daemon
     skip_cleanup: true
     on:
       branch: master
