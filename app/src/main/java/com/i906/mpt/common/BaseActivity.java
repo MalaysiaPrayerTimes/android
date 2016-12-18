@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils;
 
 import com.i906.mpt.R;
 import com.i906.mpt.api.prayer.PrayerProviderException;
+import com.i906.mpt.api.prayer.ServerException;
 import com.i906.mpt.api.prayer.UnsupportedCoordinatesException;
 import com.i906.mpt.internal.ActivityGraph;
 import com.i906.mpt.internal.ActivityModule;
@@ -76,6 +77,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             return R.string.error_unsupported_coordinates;
         } else if (e instanceof PrayerProviderException) {
             return R.string.error_prayer_provider;
+        } else if (e instanceof ServerException) {
+            return R.string.error_server;
         } else {
             Timber.w(e);
             return defaultResId;
