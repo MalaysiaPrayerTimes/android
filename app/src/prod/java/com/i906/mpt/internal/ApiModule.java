@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.i906.mpt.api.foursquare.FoursquareClient;
 import com.i906.mpt.api.prayer.PrayerClient;
+import com.i906.mpt.prefs.HiddenPreferences;
 
 import javax.inject.Singleton;
 
@@ -25,7 +26,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    FoursquareClient provideFoursquareClient(OkHttpClient client, Context context) {
-        return BaseApiModule.getFoursquareClient(client, context);
+    FoursquareClient provideFoursquareClient(OkHttpClient client, Context context, HiddenPreferences prefs) {
+        return BaseApiModule.getFoursquareClient(client, context, prefs);
     }
 }

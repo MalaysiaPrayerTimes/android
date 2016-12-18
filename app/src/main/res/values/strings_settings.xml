@@ -13,6 +13,9 @@
     <string name="label_dashclock_visibility">Show in DashClock</string>
     <string name="label_donate">Donate</string>
     <string name="label_feedback">Feedback</string>
+    <string name="label_foursquare" translatable="false">Foursquare</string>
+    <string name="label_foursquare_intent" translatable="false">Intent</string>
+    <string name="label_foursquare_query" translatable="false">Query</string>
     <string name="label_hidden_preferences_enabled">Advanced settings enabled</string>
     <string name="label_hide_notification">Hide prayer notification</string>
     <string name="label_hijri_offset">Hijri date offset</string>
@@ -106,6 +109,11 @@
         <item>2400000</item>
         <item>3600000</item>
         <item>14400000</item>
+    </string-array>
+
+    <string-array name="pref_foursquare_intent" translatable="false">
+        <item>browse</item>
+        <item>checkin</item>
     </string-array>
 
     <string-array name="pref_highlight_settings">

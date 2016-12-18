@@ -31,12 +31,22 @@ public class RetrofitFoursquareClient implements FoursquareClient {
     @Override
     public Observable<List<Mosque>> getMosqueList(double lat, double lng, int radius) {
         String latLng = String.format("%s,%s", lat, lng);
-        return mApi.searchVenue("browse", radius, 25, "4bf58dd8d48988d138941735", latLng)
+        return mApi.searchVenue(getQuery(), getIntent(), radius, 25, "4bf58dd8d48988d138941735", latLng)
                 .map(new Func1<FoursquareResponse, List<Mosque>>() {
                     @Override
                     public List<Mosque> call(FoursquareResponse r) {
                         return r.getMosques();
                     }
                 });
+    }
+
+    @Override
+    public String getQuery() {
+        return null;
+    }
+
+    @Override
+    public String getIntent() {
+        return "browse";
     }
 }

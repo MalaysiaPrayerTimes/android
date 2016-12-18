@@ -21,6 +21,9 @@ public class HiddenSettingsActivity extends AppCompatPreferenceActivity {
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("location_fastest_interval"));
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("location_interval"));
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("location_distance_limit"));
+
+        SettingsActivity.bindPreferenceSummaryToValue(findPreference("foursquare_intent"));
+        SettingsActivity.bindPreferenceSummaryToValue(findPreference("foursquare_query"));
     }
 
     public static void start(Context context) {

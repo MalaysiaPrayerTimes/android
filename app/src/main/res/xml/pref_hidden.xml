@@ -29,4 +29,20 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/label_foursquare">
+
+        <ListPreference
+            android:defaultValue="browse"
+            android:entries="@array/pref_foursquare_intent"
+            android:entryValues="@array/pref_foursquare_intent"
+            android:key="foursquare_intent"
+            android:title="@string/label_foursquare_intent" />
+
+        <EditTextPreference
+            android:defaultValue="surau,masjid"
+            android:key="foursquare_query"
+            android:title="@string/label_foursquare_query" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
