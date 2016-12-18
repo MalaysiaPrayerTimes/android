@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'org.jacoco:org.jacoco.core:jacoco-0.7.7.201606060606'
         classpath 'hu.supercluster:paperwork-plugin:1.2.7'
         classpath 'com.github.triplet.gradle:play-publisher:1.2.0-beta1'

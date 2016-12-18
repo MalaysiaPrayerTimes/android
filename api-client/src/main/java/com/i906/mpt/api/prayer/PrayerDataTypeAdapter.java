@@ -88,6 +88,8 @@ public class PrayerDataTypeAdapter extends TypeAdapter<PrayerData> {
                     in.endArray();
                     pd.setPrayerTimes(lld);
                     break;
+                default:
+                    in.skipValue();
             }
         }
 
