@@ -5,6 +5,7 @@ import com.i906.mpt.analytics.AnalyticsModule;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.db.DbModule;
 import com.i906.mpt.prayer.PrayerProvider;
+import com.i906.mpt.prefs.HiddenPreferences;
 import com.i906.mpt.prefs.InterfacePreferences;
 import com.i906.mpt.prefs.PreferenceModule;
 import com.i906.mpt.prefs.WidgetPreferences;
@@ -34,4 +35,5 @@ public interface Graph {
     AnalyticsProvider getAnalyticsProvider();
     InterfacePreferences getInterfacePreferences();
     WidgetPreferences getWidgetPreferences();
+    HiddenPreferences getHiddenPreferences();
 }

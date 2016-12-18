@@ -64,4 +64,14 @@ public class HiddenPreferences {
                 .putLong("location_cache_time", location.getTime())
                 .apply();
     }
+
+    public boolean isVisible() {
+        return mPrefs.getBoolean("hidden_preferences", false);
+    }
+
+    public void setVisible(boolean visible) {
+        mPrefs.edit()
+                .putBoolean("hidden_preferences", visible)
+                .apply();
+    }
 }

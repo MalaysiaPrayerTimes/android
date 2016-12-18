@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.widget.Toast;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.R;
@@ -16,6 +17,8 @@ import hu.supercluster.paperwork.Paperwork;
  * @author Noorzaini Ilhami
  */
 public class AboutFragment extends BasePreferenceFragment {
+
+    private int mHiddenCounter = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,18 @@ public class AboutFragment extends BasePreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 openFacebook();
+                return true;
+            }
+        });
+
+        build.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if (++mHiddenCounter > 7) {
+                    Dagger.getGraph(getActivity()).getHiddenPreferences().setVisible(true);
+                    Toast.makeText(getActivity(), R.string.label_hidden_preferences_enabled, Toast.LENGTH_LONG)
+                            .show();
+                }
                 return true;
             }
         });
