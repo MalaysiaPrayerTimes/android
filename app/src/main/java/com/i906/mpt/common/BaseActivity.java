@@ -73,7 +73,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else if (e instanceof LocationDisabledException || e instanceof LocationTimeoutException) {
             return R.string.error_no_location;
         } else if (e instanceof UnsupportedCoordinatesException) {
-            Timber.w(e);
             return R.string.error_unsupported_coordinates;
         } else if (e instanceof PrayerProviderException) {
             return R.string.error_prayer_provider;
