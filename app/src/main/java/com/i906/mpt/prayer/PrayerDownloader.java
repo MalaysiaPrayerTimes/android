@@ -16,6 +16,7 @@ import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import timber.log.Timber;
 
 /**
  * @author Noorzaini Ilhami
@@ -56,7 +57,13 @@ class PrayerDownloader {
         int year = mDateHelper.getCurrentYear();
         int month = mDateHelper.getCurrentMonth() + 1;
 
-        Observable<PrayerData> cache = mPrayerCache.get(year, month, location);
+        Observable<PrayerData> cache = mPrayerCache.get(year, month, location)
+                .doOnNext(new Action1<PrayerData>() {
+                    @Override
+                    public void call(PrayerData prayerData) {
+                        Timber.v("Using cache for current prayer times coordinate");
+                    }
+                });
 
         Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month)
                 .doOnNext(new Action1<PrayerData>() {
@@ -80,7 +87,13 @@ class PrayerDownloader {
             year = mDateHelper.getNextYear();
         }
 
-        Observable<PrayerData> cache = mPrayerCache.get(year, month, location);
+        Observable<PrayerData> cache = mPrayerCache.get(year, month, location)
+                .doOnNext(new Action1<PrayerData>() {
+                    @Override
+                    public void call(PrayerData prayerData) {
+                        Timber.v("Using cache for next prayer times coordinate");
+                    }
+                });
 
         Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCoordinates(lat, lng, year, month)
                 .doOnNext(new Action1<PrayerData>() {
@@ -98,7 +111,13 @@ class PrayerDownloader {
         int year = mDateHelper.getCurrentYear();
         int month = mDateHelper.getCurrentMonth() + 1;
 
-        Observable<PrayerData> cache = mPrayerCache.get(year, month, code);
+        Observable<PrayerData> cache = mPrayerCache.get(year, month, code)
+                .doOnNext(new Action1<PrayerData>() {
+                    @Override
+                    public void call(PrayerData prayerData) {
+                        Timber.v("Using cache for current prayer times code");
+                    }
+                });
 
         Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCode(code, year, month)
                 .doOnNext(new Action1<PrayerData>() {
@@ -119,7 +138,13 @@ class PrayerDownloader {
             year = mDateHelper.getNextYear();
         }
 
-        Observable<PrayerData> cache = mPrayerCache.get(year, month, code);
+        Observable<PrayerData> cache = mPrayerCache.get(year, month, code)
+                .doOnNext(new Action1<PrayerData>() {
+                    @Override
+                    public void call(PrayerData prayerData) {
+                        Timber.v("Using cache for next prayer times code");
+                    }
+                });
 
         Observable<PrayerData> api = mPrayerClient.getPrayerTimesByCode(code, year, month)
                 .doOnNext(new Action1<PrayerData>() {
@@ -142,7 +167,7 @@ class PrayerDownloader {
                         return Observable.just(new EmptyPrayerData(e.getProviderName()));
                     }
 
-                    return Observable.error(throwable);
+                    return Observable.just(new EmptyPrayerData(null));
                 }
             };
 

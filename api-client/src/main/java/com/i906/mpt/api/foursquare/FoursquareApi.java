@@ -8,6 +8,7 @@ interface FoursquareApi {
 
     @GET("venues/search")
     Observable<FoursquareResponse> searchVenue(
+            @Query("query") String query,
             @Query("intent") String intent,
             @Query("radius") int radius,
             @Query("limit") int limit,

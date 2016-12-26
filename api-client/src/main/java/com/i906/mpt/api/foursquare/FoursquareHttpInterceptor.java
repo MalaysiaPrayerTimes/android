@@ -10,6 +10,7 @@ import okhttp3.Response;
 /**
  * @author Noorzaini Ilhami
  */
+@SuppressWarnings("checkstyle:membername")
 public class FoursquareHttpInterceptor implements Interceptor {
 
     private final String FOURSQUARE_CLIENT_ID;

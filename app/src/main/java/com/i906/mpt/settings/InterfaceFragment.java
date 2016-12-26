@@ -2,6 +2,7 @@ package com.i906.mpt.settings;
 
 import android.os.Bundle;
 import android.preference.Preference;
+import android.text.format.DateFormat;
 
 import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
@@ -20,8 +21,10 @@ public class InterfaceFragment extends BasePreferenceFragment {
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("prayer_highlight"));
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("ui_theme"));
 
+        Preference showAmPm = findPreference("show_ampm");
         Preference widgetBackground = findPreference("widget_background_color");
         Preference widgetImsak = findPreference("widget_show_imsak");
+        Preference widgetSyuruk = findPreference("widget_show_syuruk");
         Preference widgetDhuha = findPreference("widget_show_dhuha");
         Preference widgetMasihi = findPreference("widget_show_masihi");
         Preference widgetHijri = findPreference("widget_show_hijri");
@@ -34,8 +37,10 @@ public class InterfaceFragment extends BasePreferenceFragment {
             }
         };
 
+        showAmPm.setEnabled(!DateFormat.is24HourFormat(getActivity()));
         widgetBackground.setOnPreferenceChangeListener(widgetChange);
         widgetImsak.setOnPreferenceChangeListener(widgetChange);
+        widgetSyuruk.setOnPreferenceChangeListener(widgetChange);
         widgetDhuha.setOnPreferenceChangeListener(widgetChange);
         widgetMasihi.setOnPreferenceChangeListener(widgetChange);
         widgetHijri.setOnPreferenceChangeListener(widgetChange);

@@ -1,10 +1,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:key="advanced_settings"
+        android:title="@string/label_advanced_settings"/>
+
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/pref_hijri_offset"
         android:entryValues="@array/pref_hijri_offset_values"
         android:key="hijri_offset"
         android:title="@string/label_hijri_offset" />
+
+    <ListPreference
+        android:key="dashclock_visibility"
+        android:defaultValue="3600000"
+        android:entries="@array/pref_dashclock"
+        android:entryValues="@array/pref_dashclock_values"
+        android:title="@string/label_dashclock_visibility" />
 
 </PreferenceScreen>

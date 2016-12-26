@@ -1,5 +1,7 @@
 package com.i906.mpt.api.prayer;
 
+import com.google.gson.stream.MalformedJsonException;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
@@ -24,24 +26,28 @@ class ErrorWrapper implements Func1<Throwable, Observable<? extends PrayerRespon
 
     @Override
     public Observable<? extends PrayerResponse> call(Throwable e) {
+        return Observable.error(wrapError(mRetrofit, e));
+    }
+
+    static Throwable wrapError(Retrofit retrofit, Throwable e) {
         if (e instanceof HttpException) {
             HttpException he = (HttpException) e;
 
-            ErrorResponse r = parseError(he.response());
+            ErrorResponse r = parseError(retrofit, he.response());
 
             if (r != null && r.message != null) {
                 if (r.message.contains("No provider support found for coordinate")) {
                     UnsupportedCoordinatesException uce = new UnsupportedCoordinatesException(r.message, e);
                     uce.setProviderName(r.provider);
 
-                    return Observable.error(uce);
+                    return uce;
                 }
 
                 if (r.message.contains("Unknown place code")) {
                     UnknownPlaceCodeException upce = new UnknownPlaceCodeException(r.message, e);
                     upce.setProviderName(r.provider);
 
-                    return Observable.error(upce);
+                    return upce;
                 }
 
                 if (r.message.contains("Data format at e-solat") || r.message.contains("Error connecting to")) {
@@ -53,18 +59,24 @@ class ErrorWrapper implements Func1<Throwable, Observable<? extends PrayerRespon
                         ppe.setProviderName(r.provider);
                     }
 
-                    return Observable.error(ppe);
+                    return ppe;
                 }
             }
+
+            return new ServerException("Server error " + he.code(), he);
         }
 
-        return Observable.error(e);
+        if (e instanceof MalformedJsonException) {
+            return new ServerException("Malformed JSON", e);
+        }
+
+        return e;
     }
 
-    private ErrorResponse parseError(Response<?> response) {
+    private static ErrorResponse parseError(Retrofit retrofit, Response<?> response) {
         if (response == null) return null;
 
-        Converter<ResponseBody, ErrorResponse> converter = mRetrofit
+        Converter<ResponseBody, ErrorResponse> converter = retrofit
                 .responseBodyConverter(ErrorResponse.class, new Annotation[0]);
 
         ErrorResponse error;

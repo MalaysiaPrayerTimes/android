@@ -17,15 +17,16 @@ import com.i906.mpt.prayer.PrayerContext;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 class PrayerListAdapter extends BaseAdapter {
 
-    private final SimpleDateFormat mDateFormatter;
     private final String[] mPrayerNames;
 
+    private SimpleDateFormat mDateFormatter;
     private PrayerContext.ViewSettings mViewSettings;
     private List<Prayer> mPrayerList;
     private int mHighlightedIndex;
@@ -33,9 +34,8 @@ class PrayerListAdapter extends BaseAdapter {
     private int mDefaultColor = -1;
     private int mHighlightedColor = -1;
 
-    PrayerListAdapter(String[] prayerNames, String dateFormat) {
+    PrayerListAdapter(String[] prayerNames) {
         mPrayerNames = prayerNames;
-        mDateFormatter = new SimpleDateFormat(dateFormat);
     }
 
     @Override
@@ -70,10 +70,15 @@ class PrayerListAdapter extends BaseAdapter {
         return view;
     }
 
+    void setDateFormat(String dateFormat) {
+        mDateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
+    }
+
     void setPrayerList(List<Prayer> prayerList) {
         mPrayerList = prayerList;
         Prayer imsak = null;
         Prayer dhuha = null;
+        Prayer syuruk = null;
 
         for (Prayer p : mPrayerList) {
             if (p.getIndex() == Prayer.PRAYER_DHUHA) {
@@ -83,6 +88,10 @@ class PrayerListAdapter extends BaseAdapter {
             if (p.getIndex() == Prayer.PRAYER_IMSAK) {
                 imsak = p;
             }
+
+            if (p.getIndex() == Prayer.PRAYER_SYURUK) {
+                syuruk = p;
+            }
         }
 
         if (!mViewSettings.isImsakEnabled()) {
@@ -91,6 +100,10 @@ class PrayerListAdapter extends BaseAdapter {
 
         if (!mViewSettings.isDhuhaEnabled()) {
             mPrayerList.remove(dhuha);
+        }
+
+        if (!mViewSettings.isSyurukEnabled()) {
+            mPrayerList.remove(syuruk);
         }
     }
 

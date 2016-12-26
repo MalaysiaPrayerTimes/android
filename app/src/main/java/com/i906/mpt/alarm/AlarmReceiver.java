@@ -42,7 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 mNotificationHelper.showNougatPrayerReminder(prayer, time, location);
             } else {
-                startAlarmService(context, AlarmService.ACTION_UPDATE_REMINDER);
+                mNotificationHelper.showPrayerReminder(prayer, time, location, true);
             }
         }
 

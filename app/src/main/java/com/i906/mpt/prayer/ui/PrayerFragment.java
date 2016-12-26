@@ -120,10 +120,20 @@ public class PrayerFragment extends LocationFragment implements PrayerView {
         }
 
         if (id == R.id.action_settings) {
-            SettingsActivity.start(getActivity());
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            startActivityForResult(intent, 6635);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 6635) {
+            refresh(false);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.i906.mpt.widget;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
 
@@ -72,7 +73,7 @@ public class DashClockService extends DashClockExtension implements WidgetHandle
         String body = prayerContext.getLocationName();
 
         boolean visible = prayer.getDate().getTime() <= System.currentTimeMillis()
-                + mNotificationPreferences.getAppearBeforeDuration();
+                + mNotificationPreferences.getDashClockVisibilityDuration();
 
         publishUpdate(new ExtensionData()
                 .visible(visible)
@@ -97,5 +98,10 @@ public class DashClockService extends DashClockExtension implements WidgetHandle
     public void onDestroy() {
         super.onDestroy();
         mPresenter.setHandler(null);
+    }
+
+    public static void start(Context context) {
+        Intent alarm = new Intent(context, DashClockService.class);
+        context.startService(alarm);
     }
 }

@@ -8,14 +8,19 @@
         android:key="ui_theme"
         android:title="@string/label_theme" />
 
-    <PreferenceCategory android:title="@string/label_prayer_screen">
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="show_ampm"
+        android:title="@string/label_show_ampm" />
 
-        <ListPreference
-            android:defaultValue="current"
-            android:entries="@array/pref_highlight_settings"
-            android:entryValues="@array/pref_highlight_settings_values"
-            android:key="prayer_highlight"
-            android:title="@string/label_prayer_highlight" />
+    <ListPreference
+        android:defaultValue="current"
+        android:entries="@array/pref_highlight_settings"
+        android:entryValues="@array/pref_highlight_settings_values"
+        android:key="prayer_highlight"
+        android:title="@string/label_prayer_highlight" />
+
+    <PreferenceCategory android:title="@string/label_prayer_screen">
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -26,6 +31,11 @@
             android:defaultValue="true"
             android:key="show_dhuha"
             android:title="@string/label_show_dhuha" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_syuruk"
+            android:title="@string/label_show_syuruk" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -58,6 +68,11 @@
             android:defaultValue="true"
             android:key="widget_show_dhuha"
             android:title="@string/label_show_dhuha" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="widget_show_syuruk"
+            android:title="@string/label_show_syuruk" />
 
         <CheckBoxPreference
             android:defaultValue="false"

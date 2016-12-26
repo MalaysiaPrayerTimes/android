@@ -64,4 +64,22 @@ public class HiddenPreferences {
                 .putLong("location_cache_time", location.getTime())
                 .apply();
     }
+
+    public String getFoursquareIntent() {
+        return mPrefs.getString("foursquare_intent", "browse");
+    }
+
+    public String getFoursquareQuery() {
+        return mPrefs.getString("foursquare_query", "surau,masjid");
+    }
+
+    public boolean isVisible() {
+        return mPrefs.getBoolean("hidden_preferences", false);
+    }
+
+    public void setVisible(boolean visible) {
+        mPrefs.edit()
+                .putBoolean("hidden_preferences", visible)
+                .apply();
+    }
 }

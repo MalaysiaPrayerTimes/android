@@ -14,10 +14,10 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp">
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp">
 
         <TextView
             android:id="@+id/tv_prayer_time"
@@ -131,7 +131,7 @@
             android:baselineAligned="false"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <LinearLayout
                 android:id="@+id/row_1"

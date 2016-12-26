@@ -1,9 +1,36 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="26 December 2016"
+        versionName="2.0.2">
+        <changelogtext>Fixed wrong DashClock visibility settings</changelogtext>
+        <changelogtext>Added show AM/PM settings</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="18 December 2016"
+        versionName="2.0.2-beta2">
+        <changelogtext>Fixed Syuruk visibility settings (thanks [b]Zubir Jamal[/b])</changelogtext>
+        <changelogtext>Fixed location refresh when refreshing mosque list</changelogtext>
+        <changelogtext>Added server error message</changelogtext>
+        <changelogtext>Tweaked widget layouts</changelogtext>
+        <changelogtext>Tweaked mosque listing</changelogtext>
+    </changelogversion>
+
+    <changelogversion
+        changeDate="4 December 2016"
+        versionName="2.0.2-beta">
+        <changelogtext>Added DashClock visibility settings</changelogtext>
+        <changelogtext>Added Syuruk visibility settings</changelogtext>
+        <changelogtext>Fixed app not launching from DashClock</changelogtext>
+        <changelogtext>Improved offline mode</changelogtext>
+        <changelogtext>Removed reminder countdown notification for pre-Marshmallow devices</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="2 December 2016"
         versionName="2.0.1">
-        <changelogtext>Allow showing prayer times when next month data not available</changelogtext>
+        <changelogtext>Allowed showing prayer times when next month data not available</changelogtext>
     </changelogversion>
 
     <changelogversion
