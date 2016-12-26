@@ -17,6 +17,7 @@ public interface AnalyticsProvider {
     String SCREEN_PRAYER_TIMES = "Prayer Times";
     String SCREEN_QIBLA = "Qibla";
     String SCREEN_SETTINGS = "Settings";
+    String SCREEN_SETTINGS_ADVANCED = "Settings - Advanced";
     String SCREEN_SETTINGS_CONFIGURE_NOTIFICATIONS = "Settings - Configure Notifications";
     String SCREEN_SETTINGS_INTERFACE = "Settings - Interface";
     String SCREEN_SETTINGS_LOCATION = "Settings - Location";
