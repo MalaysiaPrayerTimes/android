@@ -103,12 +103,12 @@
     </string-array>
 
     <string-array name="pref_dashclock_values" translatable="false">
-        <item>300000</item>
-        <item>600000</item>
-        <item>1200000</item>
-        <item>2400000</item>
+        <item>900000</item>
+        <item>1800000</item>
         <item>3600000</item>
-        <item>14400000</item>
+        <item>7200000</item>
+        <item>10800000</item>
+        <item>21600000</item>
     </string-array>
 
     <string-array name="pref_foursquare_intent" translatable="false">

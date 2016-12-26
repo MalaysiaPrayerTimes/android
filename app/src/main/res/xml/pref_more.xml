@@ -13,7 +13,7 @@
 
     <ListPreference
         android:key="dashclock_visibility"
-        android:defaultValue="600000"
+        android:defaultValue="3600000"
         android:entries="@array/pref_dashclock"
         android:entryValues="@array/pref_dashclock_values"
         android:title="@string/label_dashclock_visibility" />
