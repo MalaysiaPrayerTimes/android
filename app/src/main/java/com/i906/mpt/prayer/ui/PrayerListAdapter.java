@@ -24,9 +24,9 @@ import butterknife.ButterKnife;
 
 class PrayerListAdapter extends BaseAdapter {
 
-    private final SimpleDateFormat mDateFormatter;
     private final String[] mPrayerNames;
 
+    private SimpleDateFormat mDateFormatter;
     private PrayerContext.ViewSettings mViewSettings;
     private List<Prayer> mPrayerList;
     private int mHighlightedIndex;
@@ -34,9 +34,8 @@ class PrayerListAdapter extends BaseAdapter {
     private int mDefaultColor = -1;
     private int mHighlightedColor = -1;
 
-    PrayerListAdapter(String[] prayerNames, String dateFormat) {
+    PrayerListAdapter(String[] prayerNames) {
         mPrayerNames = prayerNames;
-        mDateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
     }
 
     @Override
@@ -69,6 +68,10 @@ class PrayerListAdapter extends BaseAdapter {
         }
 
         return view;
+    }
+
+    void setDateFormat(String dateFormat) {
+        mDateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
     }
 
     void setPrayerList(List<Prayer> prayerList) {

@@ -35,6 +35,8 @@ public interface PrayerContext {
         boolean isHijriDateEnabled();
 
         boolean isMasihiDateEnabled();
+
+        boolean isAmPmEnabled();
     }
 
     final class Mapper {

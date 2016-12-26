@@ -49,6 +49,7 @@
     <string name="label_set_notification_tone">Set notification tone…</string>
     <string name="label_set_reminder_tone">Set reminder tone…</string>
     <string name="label_settings">Settings</string>
+    <string name="label_show_ampm">Show AM/PM</string>
     <string name="label_show_dhuha">Show Dhuha</string>
     <string name="label_show_hijri_date">Show Hijri date</string>
     <string name="label_show_imsak">Show Imsak</string>

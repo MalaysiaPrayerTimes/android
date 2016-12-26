@@ -4,6 +4,7 @@
         changeDate="26 December 2016"
         versionName="2.0.2">
         <changelogtext>Fixed wrong DashClock visibility settings</changelogtext>
+        <changelogtext>Added show AM/PM settings</changelogtext>
     </changelogversion>
 
     <changelogversion

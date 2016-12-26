@@ -4,43 +4,72 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!--
     <com.i906.mpt.prayer.ui.AutoResizeTextView
         android:id="@+id/tv_prayer_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/PrayerList.MainTime"
         tools:text="19:26" />
+    -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingEnd="@dimen/padding_main_time"
+        android:paddingStart="@dimen/padding_main_time">
+
+        <com.lb.auto_fit_textview.AutoResizeTextView
+            android:id="@+id/tv_prayer_time"
+            style="@style/PrayerList.MainTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="19:26" />
+
+        <com.lb.auto_fit_textview.AutoResizeTextView
+            android:id="@+id/tv_prayer_ampm"
+            style="@style/PrayerList.MainPrayerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_prayer_time"
+            android:layout_toEndOf="@+id/tv_prayer_time"
+            tools:text="PM"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+    <LinearLayout
         style="@style/PrayerList.FirstLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_prayer_name"
+            style="@style/PrayerList.MainPrayerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/PrayerList.MainPrayerName"
             tools:text="Maghrib" />
 
         <ImageView
-            style="@style/PrayerList.LocationIcon" />
+            style="@style/PrayerList.LocationIcon"
+            android:contentDescription="@string/label_location" />
 
         <TextView
             android:id="@+id/tv_location"
+            style="@style/PrayerList.MainLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/PrayerList.MainLocation"
             tools:text="Kuala Lumpur" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_date"
+        style="@style/PrayerList.MainDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/PrayerList.MainDate"
         tools:text="29 Jamadilawal 1436" />
 
 </LinearLayout>
