@@ -191,6 +191,7 @@ dependencies {
     compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     compile 'com.github.kizitonwose.colorpreference:core:1.0.2'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
+    compile 'com.github.AndroidDeveloperLB:AutoFitTextView:4'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"

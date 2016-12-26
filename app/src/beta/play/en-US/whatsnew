@@ -1,5 +1,2 @@
-- Fixed Syuruk visibility settings
-- Fixed location refresh when refreshing mosque list
-- Added server error message
-- Tweaked widget layouts
-- Tweaked mosque listing
+- Fixed wrong DashClock visibility settings
+- Added show AM/PM settings

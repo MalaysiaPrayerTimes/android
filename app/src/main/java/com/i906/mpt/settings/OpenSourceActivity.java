@@ -48,6 +48,7 @@ public class OpenSourceActivity extends BaseActivity {
         mDataset = new ArrayList<>();
 
         mDataset.add(Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"));
+        mDataset.add(Licenses.fromGitHub("AndroidDeveloperLB/AutoFitTextView", Licenses.FILE_NO_EXTENSION));
         mDataset.add(Licenses.fromGitHub("JakeWharton/butterknife"));
         mDataset.add(Licenses.fromGitHub("gabrielemariotti/changeloglib", Licenses.LICENSE_APACHE_V2));
         mDataset.add(Licenses.fromGitHub("kizitonwose/colorpreference", Licenses.FILE_NO_EXTENSION));

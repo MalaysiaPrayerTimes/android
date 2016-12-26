@@ -31,6 +31,7 @@ import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.prefs.LocationPreferences;
 import com.i906.mpt.prefs.NotificationPreferences;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,6 +43,14 @@ import butterknife.ButterKnife;
  * @author Noorzaini Ilhami
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+
+    private final List<String> mValidFragments = Arrays.asList(
+            AboutFragment.class.getName(),
+            InterfaceFragment.class.getName(),
+            LocationFragment.class.getName(),
+            MoreFragment.class.getName(),
+            NotificationFragment.class.getName()
+    );
 
     @Inject
     AnalyticsProvider mAnalyticsProvider;
@@ -135,7 +144,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     protected boolean isValidFragment(String fragmentName) {
-        return true;
+        return mValidFragments.contains(fragmentName);
     }
 
     public static void start(Context context) {

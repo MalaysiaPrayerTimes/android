@@ -47,6 +47,11 @@ public class InterfacePreferences implements PrayerContext.ViewSettings {
         return mPrefs.getBoolean("show_masihi", false);
     }
 
+    @Override
+    public boolean isAmPmEnabled() {
+        return mPrefs.getBoolean("show_ampm", false);
+    }
+
     public boolean isLightTheme() {
         return mPrefs.getString("ui_theme", "dark").equals("light");
     }

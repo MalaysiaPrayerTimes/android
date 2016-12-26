@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.i906.mpt.R;
+import com.i906.mpt.analytics.AnalyticsProvider;
+import com.i906.mpt.internal.Dagger;
 
 /**
  * @author Noorzaini Ilhami
@@ -24,6 +26,10 @@ public class HiddenSettingsActivity extends AppCompatPreferenceActivity {
 
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("foursquare_intent"));
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("foursquare_query"));
+
+        Dagger.getGraph(this)
+                .getAnalyticsProvider()
+                .trackViewedScreen(AnalyticsProvider.SCREEN_SETTINGS_ADVANCED);
     }
 
     public static void start(Context context) {

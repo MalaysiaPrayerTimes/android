@@ -97,7 +97,7 @@ public class NotificationPreferences {
     }
 
     public long getDashClockVisibilityDuration() {
-        return Long.valueOf(mPrefs.getString("dashclock_visibility", "900000"));
+        return Long.valueOf(mPrefs.getString("dashclock_visibility", "3600000"));
     }
 
     public boolean isHeadsUpEnabled() {

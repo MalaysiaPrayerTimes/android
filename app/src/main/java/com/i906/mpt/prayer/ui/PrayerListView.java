@@ -25,6 +25,7 @@ public class PrayerListView extends FrameLayout implements PrayerView {
 
     private final static String FORMAT_24 = "kk:mm";
     private final static String FORMAT_12 = "hh:mm";
+    private final static String FORMAT_12_AMPM = "hh:mm a";
 
     private PrayerListAdapter mAdapter;
     private String mDateFormat;
@@ -32,6 +33,9 @@ public class PrayerListView extends FrameLayout implements PrayerView {
 
     @BindView(R.id.tv_prayer_time)
     TextView mMainTimeView;
+
+    @BindView(R.id.tv_prayer_ampm)
+    TextView mMainTimeAmPm;
 
     @BindView(R.id.tv_prayer_name)
     TextView mMainPrayerView;
@@ -90,6 +94,7 @@ public class PrayerListView extends FrameLayout implements PrayerView {
 
         boolean showMasihi = settings.isMasihiDateEnabled();
         boolean showHijri = settings.isHijriDateEnabled();
+        boolean showAMPM = settings.isAmPmEnabled();
 
         Resources r = getResources();
         Calendar c = Calendar.getInstance();
@@ -101,12 +106,14 @@ public class PrayerListView extends FrameLayout implements PrayerView {
                 mHijriNames[hijriDate.get(1)],
                 hijriDate.get(2)
         );
-
         String masihi = r.getString(R.string.label_date,
                 c.get(Calendar.DATE),
                 mMasihiNames[c.get(Calendar.MONTH)],
                 c.get(Calendar.YEAR)
         );
+
+        String format12 = showAMPM ? FORMAT_12_AMPM : FORMAT_12;
+        String dateFormat = DateFormat.is24HourFormat(getContext()) ? FORMAT_24 : format12;
 
         if (showHijri && showMasihi) {
             date = r.getString(R.string.label_date_combined, hijri, masihi);
@@ -117,17 +124,21 @@ public class PrayerListView extends FrameLayout implements PrayerView {
         }
 
         if (mAdapter == null) {
-            mAdapter = new PrayerListAdapter(mPrayerNames, mDateFormat);
+            mAdapter = new PrayerListAdapter(mPrayerNames);
         }
 
         mAdapter.setViewSettings(settings);
         mAdapter.setPrayerList(times);
         mAdapter.setHighlightedIndex(currentIndex);
+        mAdapter.setDateFormat(dateFormat);
 
         mMainTimeView.setText(getFormattedDate(nextTime));
         mMainPrayerView.setText(mPrayerNames[nextIndex]);
         mLocationView.setText(location);
         mPrayerListView.setAdapter(mAdapter);
+
+        mMainTimeAmPm.setText(getAmPm(nextTime));
+        mMainTimeAmPm.setVisibility(showAMPM ? VISIBLE : GONE);
 
         if (date != null) {
             mDateView.setText(date);
@@ -159,5 +170,9 @@ public class PrayerListView extends FrameLayout implements PrayerView {
 
     private String getFormattedDate(Date date) {
         return DateFormat.format(mDateFormat, date).toString();
+    }
+
+    private String getAmPm(Date date) {
+        return DateFormat.format("a", date).toString();
     }
 }

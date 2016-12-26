@@ -1,4 +1,12 @@
-- Fixed various crashes
-- Fixed location error when offline
-- Added DashClock extension
-- Allow showing prayer times when next month data not available
+- Added DashClock visibility settings
+- Added Syuruk visibility settings
+- Fixed app not launching from DashClock
+- Improved offline mode
+- Removed reminder countdown notification for pre-Marshmallow devices
+- Fixed Syuruk visibility settings
+- Fixed location refresh when refreshing mosque list
+- Added server error message
+- Tweaked widget layouts
+- Tweaked mosque listing
+- Fixed wrong DashClock visibility settings
+- Added show AM/PM settings

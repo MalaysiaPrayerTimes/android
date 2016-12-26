@@ -7,6 +7,7 @@ import android.preference.Preference;
 import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.internal.Dagger;
+import com.i906.mpt.widget.DashClockService;
 
 /**
  * @author Noorzaini Ilhami
@@ -34,6 +35,13 @@ public class MoreFragment extends BasePreferenceFragment {
 
         Preference dashclock = findPreference("dashclock_visibility");
         dashclock.setEnabled(isAppInstalled("net.nurik.roman.dashclock"));
+        dashclock.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                DashClockService.start(getActivity());
+                return true;
+            }
+        });
 
         SettingsActivity.bindPreferenceSummaryToValue(dashclock);
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("hijri_offset"));

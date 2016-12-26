@@ -45,6 +45,7 @@
     <string name="label_set_notification_tone">Tetapkan nada pemberitahuan…</string>
     <string name="label_set_reminder_tone">Tetapkan nada peringatan…</string>
     <string name="label_settings">Tetapan</string>
+    <string name="label_show_ampm">Tunjuk AM/PM</string>
     <string name="label_show_dhuha">Tunjuk Dhuha</string>
     <string name="label_show_hijri_date">Tunjuk tarikh Hijrah</string>
     <string name="label_show_imsak">Tunjuk Imsak</string>

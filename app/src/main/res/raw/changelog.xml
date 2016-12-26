@@ -1,6 +1,13 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="26 December 2016"
+        versionName="2.0.2">
+        <changelogtext>Fixed wrong DashClock visibility settings</changelogtext>
+        <changelogtext>Added show AM/PM settings</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="18 December 2016"
         versionName="2.0.2-beta2">
         <changelogtext>Fixed Syuruk visibility settings (thanks [b]Zubir Jamal[/b])</changelogtext>
