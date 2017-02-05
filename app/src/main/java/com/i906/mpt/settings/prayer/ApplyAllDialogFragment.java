@@ -130,7 +130,7 @@ public class ApplyAllDialogFragment extends BaseDialogFragment implements AzanPi
 
     @OnClick(R.id.cb_vibrate)
     void onVibrateChanged(CompoundButton v) {
-        mVibrationEnabled = v.isEnabled();
+        mVibrationEnabled = v.isChecked();
     }
 
     @OnClick(R.id.btn_reminder)
