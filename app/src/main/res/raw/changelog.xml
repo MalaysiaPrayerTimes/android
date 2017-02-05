@@ -1,6 +1,12 @@
 <changelog bulletedList="true">
 
     <changelogversion
+        changeDate="5 February 2017"
+        versionName="2.0.3-beta1">
+        <changelogtext>Fixed apply to all not functioning for vibration (thanks [b]Abu Yasir[/b])</changelogtext>
+    </changelogversion>
+
+    <changelogversion
         changeDate="26 December 2016"
         versionName="2.0.2">
         <changelogtext>Fixed wrong DashClock visibility settings</changelogtext>
