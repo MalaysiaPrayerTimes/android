@@ -1,5 +1,6 @@
 package com.i906.mpt.common;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import java.net.UnknownHostException;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -37,6 +39,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     public void setViewVisibility(View view, boolean visible, boolean animate) {
