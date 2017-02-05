@@ -4,6 +4,7 @@
         changeDate="5 February 2017"
         versionName="2.0.3-beta1">
         <changelogtext>Fixed apply to all not functioning for vibration (thanks [b]Abu Yasir[/b])</changelogtext>
+        <changelogtext>Forced using Roboto fonts for Samsung devices (thanks [b]Juaini Saee[/b])</changelogtext>
     </changelogversion>
 
     <changelogversion
