@@ -1,18 +1,19 @@
 package com.i906.mpt.api.prayer;
 
+import com.i906.mpt.api.BaseClientTest;
+import com.i906.mpt.api.TestInterceptor;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import okhttp3.OkHttpClient;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Noorzaini Ilhami
  */
-public class RetrofitPrayerClientTest {
+public class RetrofitPrayerClientTest extends BaseClientTest {
 
     private RetrofitPrayerClient mPrayerClient;
     private TestInterceptor mInterceptor;
@@ -121,20 +122,5 @@ public class RetrofitPrayerClientTest {
                 .setCode(404);
 
         assertError(mPrayerClient.getPrayerTimesByCoordinates(3.1390006, 101.677240, 2016, 12), UnsupportedCoordinatesException.class);
-    }
-
-    private <O> Throwable assertError(Observable<O> o, Class<? extends Throwable> e) {
-        TestSubscriber<O> ts = TestSubscriber.create();
-        o.subscribe(ts);
-        ts.assertError(e);
-
-        return ts.getOnErrorEvents().get(0);
-    }
-
-    private <O> void assertCompleted(Observable<O> o) {
-        TestSubscriber<O> ts = TestSubscriber.create();
-        o.subscribe(ts);
-        ts.assertNoErrors();
-        ts.assertCompleted();
     }
 }

@@ -4,18 +4,20 @@ import java.util.List;
 
 class FoursquareResponse {
 
-    private Meta meta;
-    private Response response;
+    Meta meta;
+    Response response;
 
     public List<Mosque> getMosques() {
         return response.venues;
     }
 
-    private static class Meta {
+    static class Meta {
         int code;
+        String errorType;
+        String errorMessage;
     }
 
-    private static class Response {
+    static class Response {
         List<Mosque> venues;
     }
 }
