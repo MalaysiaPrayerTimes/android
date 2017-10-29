@@ -7,9 +7,9 @@ import java.lang.annotation.Annotation;
 
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
+import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Func1;
 
