@@ -16,7 +16,7 @@ android:
     - platform-tools
     - tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-    - android-ANDROID_EMULATOR_API_LEVEL
+    - android-$ANDROID_EMULATOR_API_LEVEL
     - android-$ANDROID_API_LEVEL
     - addon-google_apis-google-$ANDROID_EMULATOR_API_LEVEL
     - extra-google-google_play_services
