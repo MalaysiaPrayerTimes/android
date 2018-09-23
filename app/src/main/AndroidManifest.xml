@@ -117,22 +117,6 @@
             android:theme="@style/MptTheme.Settings">
         </activity>
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            tools:node="remove" />
-
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            tools:node="remove" />
-
-        <activity
-            android:name="com.facebook.CustomTabMainActivity"
-            tools:node="remove" />
-
-        <activity
-            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-            tools:node="remove" />
-
         <provider
             android:name=".prayer.PrayerProvider"
             android:authorities="${applicationId}.provider.prayer"
@@ -255,6 +239,10 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 
