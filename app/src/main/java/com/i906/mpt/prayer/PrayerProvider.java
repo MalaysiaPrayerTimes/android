@@ -49,6 +49,14 @@ public class PrayerProvider extends ContentProvider {
             Columns.HIJRI_DAY,
             Columns.HIJRI_MONTH,
             Columns.HIJRI_YEAR,
+
+            Columns.CURRENT_PRAYER_HIGHLIGHT_MODE,
+            Columns.DHUHA_ENABLED,
+            Columns.IMSAK_ENABLED,
+            Columns.SYURUK_ENABLED,
+            Columns.HIJRI_ENABLED,
+            Columns.MASIHI_ENABLED,
+            Columns.AM_PM_ENABLED,
     };
 
     static {
@@ -139,6 +147,16 @@ public class PrayerProvider extends ContentProvider {
             for (Integer i : prayerContext.getHijriDate()) {
                 r.add(i);
             }
+
+            PrayerContext.ViewSettings vs = prayerContext.getViewSettings();
+
+            r.add(vs.isCurrentPrayerHighlightMode() ? 1 : 0);
+            r.add(vs.isDhuhaEnabled() ? 1 : 0);
+            r.add(vs.isImsakEnabled() ? 1 : 0);
+            r.add(vs.isSyurukEnabled() ? 1 : 0);
+            r.add(vs.isHijriDateEnabled() ? 1 : 0);
+            r.add(vs.isMasihiDateEnabled() ? 1 : 0);
+            r.add(vs.isAmPmEnabled() ? 1 : 0);
 
             return r;
         } catch (LocationDisabledException e) {

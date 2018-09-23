@@ -18,9 +18,11 @@ public class InterfaceFragment extends BasePreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_interface);
+
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("prayer_highlight"));
         SettingsActivity.bindPreferenceSummaryToValue(findPreference("ui_theme"));
 
+        Preference prayerHighlight = findPreference("prayer_highlight");
         Preference showAmPm = findPreference("show_ampm");
         Preference widgetBackground = findPreference("widget_background_color");
         Preference widgetImsak = findPreference("widget_show_imsak");
@@ -37,7 +39,18 @@ public class InterfaceFragment extends BasePreferenceFragment {
             }
         };
 
+        Preference.OnPreferenceChangeListener highlightChange = new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference p, Object o) {
+                SettingsActivity.sBindPreferenceSummaryToValueListener.onPreferenceChange(p, o);
+                WidgetService.start(getActivity());
+                return true;
+            }
+        };
+
         showAmPm.setEnabled(!DateFormat.is24HourFormat(getActivity()));
+
+        prayerHighlight.setOnPreferenceChangeListener(highlightChange);
         widgetBackground.setOnPreferenceChangeListener(widgetChange);
         widgetImsak.setOnPreferenceChangeListener(widgetChange);
         widgetSyuruk.setOnPreferenceChangeListener(widgetChange);
