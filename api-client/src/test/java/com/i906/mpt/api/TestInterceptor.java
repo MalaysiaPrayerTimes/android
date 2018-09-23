@@ -1,4 +1,4 @@
-package com.i906.mpt.api.prayer;
+package com.i906.mpt.api;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,23 +14,23 @@ import okhttp3.ResponseBody;
 /**
  * @author Noorzaini Ilhami
  */
-class TestInterceptor implements Interceptor {
+public class TestInterceptor implements Interceptor {
 
     private int mCode = 200;
     private String mResponseBody;
     private String mResponseType = "application/json";
 
-    TestInterceptor setCode(int code) {
+    public TestInterceptor setCode(int code) {
         mCode = code;
         return this;
     }
 
-    TestInterceptor setType(String type) {
+    public TestInterceptor setType(String type) {
         mResponseType = type;
         return this;
     }
 
-    TestInterceptor setFile(String file) {
+    public TestInterceptor setFile(String file) {
         InputStream in = getClass().getClassLoader().getResourceAsStream(file);
         BufferedInputStream bis = new BufferedInputStream(in);
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
