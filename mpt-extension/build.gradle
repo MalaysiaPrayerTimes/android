@@ -4,7 +4,6 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-    publishNonDefault true
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -24,5 +23,5 @@ android {
 dependencies {
     def SUPPORT_VERSION = rootProject.ext.SUPPORT_VERSION
 
-    compile "com.android.support:support-annotations:$SUPPORT_VERSION"
+    api "com.android.support:support-annotations:$SUPPORT_VERSION"
 }
