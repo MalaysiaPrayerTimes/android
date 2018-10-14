@@ -106,6 +106,7 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
         }
 
         Resources r = context.getResources();
+        PrayerContext.ViewSettings vs = prayerContext.getViewSettings();
 
         String[] prayerNames = r.getStringArray(R.array.prayer_names);
 
@@ -128,6 +129,7 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
 
         int cpi = cp.getIndex();
         int npi = np.getIndex();
+        int hpi = vs.isCurrentPrayerHighlightMode() ? cpi : (cpi + 1) % 8;
 
         int hd = hdate.get(Prayer.HIJRI_DATE);
         int hm = hdate.get(Prayer.HIJRI_MONTH);
@@ -153,9 +155,7 @@ public abstract class TableWidgetProvider extends MptWidgetProvider {
             rv.setTextViewText(PRAYER_NAME[i], prayerNames[i]);
             rv.setTextViewText(PRAYER_TIME[i], getFormattedDate(context, cdpt.get(i).getDate()));
 
-            if (i == cpi || (!showImsak && i == Prayer.PRAYER_ISYAK && cpi == Prayer.PRAYER_IMSAK) ||
-                    (!showDhuha && i == Prayer.PRAYER_SYURUK && cpi == Prayer.PRAYER_DHUHA) ||
-                    (!showSyuruk && i == Prayer.PRAYER_ZOHOR && cpi == Prayer.PRAYER_SYURUK)) {
+            if (i == hpi) {
                 rv.setTextColor(PRAYER_NAME[i], highlight);
                 rv.setTextColor(PRAYER_TIME[i], highlight);
             } else {

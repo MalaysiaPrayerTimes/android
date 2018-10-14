@@ -1,23 +1,26 @@
 buildscript {
 
     repositories {
+        google()
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://maven.fabric.io/public' }
+
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'org.jacoco:org.jacoco.core:jacoco-0.7.7.201606060606'
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'org.jacoco:org.jacoco.core:0.8.2'
         classpath 'hu.supercluster:paperwork-plugin:1.2.7'
-        classpath 'com.github.triplet.gradle:play-publisher:1.2.0-beta1'
-        classpath 'io.fabric.tools:gradle:1.22.0'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
+        classpath 'io.fabric.tools:gradle:1.25.4'
     }
 }
 
 allprojects {
 
     repositories {
+        google()
         jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven { url 'https://jitpack.io' }
@@ -31,25 +34,25 @@ task clean(type: Delete) {
 
 ext {
     // Android
-    buildToolsVersion = '25.0.0'
+    buildToolsVersion = '28.0.2'
     minSdkVersion = 21
     targetSdkVersion = 25
-    compileSdkVersion = 25
+    compileSdkVersion = 28
 
     // Libraries
-    BUTTERKNIFE_VERSION = '8.4.0'
-    DAGGER_VERSION = '2.8'
-    FIREBASE_VERSION = '10.0.1'
-    GSON_VERSION = '2.7'
+    BUTTERKNIFE_VERSION = '8.8.1'
+    DAGGER_VERSION = '2.12'
+    FIREBASE_VERSION = '10.2.6'
+    GSON_VERSION = '2.8.2'
     MOCKITO_VERSION = '1.10.19'
-    OKHTTP_VERSION = '3.5.0'
-    PLAYSERVICES_VERSION = '10.0.1'
-    RETROFIT_VERSION = '2.1.0'
+    OKHTTP_VERSION = '3.9.0'
+    PLAYSERVICES_VERSION = '15.0.1'
+    RETROFIT_VERSION = '2.3.0'
     RXANDROID_VERSION = '1.2.1'
-    RXJAVA_VERSION = '1.1.10'
-    SUPPORT_VERSION = '25.1.0'
-    TIMBER_VERSION = '4.4.0'
-    STORIO_VERSION = '1.12.0'
+    RXJAVA_VERSION = '1.3.3'
+    SUPPORT_VERSION = '28.0.0'
+    TIMBER_VERSION = '4.5.1'
+    STORIO_VERSION = '1.13.0'
 }
 
 ext.preDexLibs = !project.hasProperty('disablePreDex')

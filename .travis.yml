@@ -4,17 +4,20 @@ sudo: false
 
 env:
   global:
-    - ANDROID_API_LEVEL=25
-    - ANDROID_BUILD_TOOLS_VERSION=25.0.0
+    - ANDROID_API_LEVEL=26
+    - ANDROID_BUILD_TOOLS_VERSION=26.0.2
     - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TAG=google_apis
     - ADB_INSTALL_TIMEOUT=20
     - ANDROID_EMULATOR_API_LEVEL=21
 
 android:
   components:
+    - tools
     - platform-tools
     - tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_EMULATOR_API_LEVEL
     - android-$ANDROID_API_LEVEL
     - addon-google_apis-google-$ANDROID_EMULATOR_API_LEVEL
     - extra-google-google_play_services
@@ -29,7 +32,7 @@ branches:
     - /^(\d+\.)?(\d+\.)?(\*|\d+)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/
 
 before_script:
-  - echo no | android create avd --force -n test -t android-$ANDROID_EMULATOR_API_LEVEL --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t android-$ANDROID_EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-audio -no-window &
 
 cache:

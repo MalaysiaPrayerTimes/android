@@ -60,6 +60,7 @@ public class TestInterceptor implements Interceptor {
                 .request(chain.request())
                 .protocol(Protocol.HTTP_2)
                 .body(body)
+                .message("")
                 .addHeader("content-type", mResponseType)
                 .build();
     }

@@ -3,6 +3,8 @@ package com.i906.mpt.prayer;
 import android.location.Location;
 
 import com.i906.mpt.api.prayer.PrayerCode;
+import com.i906.mpt.api.prayer.PrayerProviderException;
+import com.i906.mpt.date.DateTimeHelper;
 import com.i906.mpt.location.LocationRepository;
 import com.i906.mpt.prefs.HiddenPreferences;
 import com.i906.mpt.prefs.LocationPreferences;
@@ -33,6 +35,7 @@ public class PrayerManager {
     private final LocationRepository mLocationRepository;
     private final PrayerBroadcaster mPrayerBroadcaster;
     private final PrayerDownloader mPrayerDownloader;
+    private final DateTimeHelper mDateTimeHelper;
 
     private Location mLastLocation;
     private PrayerCode mLastPreferredLocation;
@@ -47,11 +50,13 @@ public class PrayerManager {
                          LocationRepository location,
                          PrayerBroadcaster broadcaster,
                          HiddenPreferences hprefs,
-                         LocationPreferences lprefs) {
+                         LocationPreferences lprefs,
+                         DateTimeHelper date) {
         mLocationPreferences = lprefs;
         mLocationRepository = location;
         mPrayerBroadcaster = broadcaster;
         mPrayerDownloader = downloader;
+        mDateTimeHelper = date;
 
         mLocationDistanceLimit = hprefs.getLocationDistanceLimit();
     }
@@ -166,8 +171,26 @@ public class PrayerManager {
         mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
     }
 
-    private boolean shouldUpdatePrayerContext(String code) {
+    private boolean isLastPrayerContextStale() {
         if (mLastPrayerContext == null) {
+            return true;
+        }
+
+        try {
+            Prayer next = mLastPrayerContext.getNextPrayer();
+
+            if (mDateTimeHelper.isInPast(next.getDate())) {
+                return true;
+            }
+        } catch (PrayerProviderException ppe) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean shouldUpdatePrayerContext(String code) {
+        if (isLastPrayerContextStale()) {
             return true;
         }
 
@@ -181,7 +204,7 @@ public class PrayerManager {
     }
 
     private boolean shouldUpdatePrayerContext(Location location) {
-        if (mLastPrayerContext == null) {
+        if (isLastPrayerContextStale()) {
             return true;
         }
 

@@ -12,21 +12,21 @@ dependencies {
     def RETROFIT_VERSION = rootProject.ext.RETROFIT_VERSION;
     def RXJAVA_VERSION = rootProject.ext.RXJAVA_VERSION;
 
-    compile "io.reactivex:rxjava:$RXJAVA_VERSION"
-    compile "com.google.code.gson:gson:$GSON_VERSION"
+    implementation "io.reactivex:rxjava:$RXJAVA_VERSION"
+    implementation "com.google.code.gson:gson:$GSON_VERSION"
 
     // OkHttp
-    compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
+    implementation "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
 
     // Retrofit
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
 
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-all:$MOCKITO_VERSION"
-    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    testCompile 'org.assertj:assertj-core:1.7.1'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-all:$MOCKITO_VERSION"
+    testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testImplementation 'org.assertj:assertj-core:1.7.1'
 }
 
 checkstyle {

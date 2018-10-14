@@ -15,11 +15,12 @@ import java.util.List;
  */
 class CursorPrayerContext implements PrayerContext, Parcelable {
 
-    private static final int PARCEL_VERSION = 1;
+    private static final int PARCEL_VERSION = 2;
 
     private String location;
     private CursorPrayer currentPrayer;
     private CursorPrayer nextPrayer;
+    private ViewSettings viewSettings;
 
     private List<Prayer> currentPrayerList;
     private List<Integer> hijriDates;
@@ -48,12 +49,14 @@ class CursorPrayerContext implements PrayerContext, Parcelable {
             int t = c.getInt(c.getColumnIndex(Columns.HIJRI_DATE_PREFIX + i));
             hijriDates.add(t);
         }
+
+        viewSettings = new com.i906.mpt.prayer.ViewSettings(c);
     }
 
     CursorPrayerContext(Parcel in) {
         int version = in.readInt();
 
-        if (version == 1) {
+        if (version >= 1) {
             location = in.readString();
             currentPrayer = in.readParcelable(CursorPrayer.class.getClassLoader());
             nextPrayer = in.readParcelable(CursorPrayer.class.getClassLoader());
@@ -67,6 +70,10 @@ class CursorPrayerContext implements PrayerContext, Parcelable {
 
             hijriDates = new ArrayList<>(3);
             in.readList(hijriDates, Integer.class.getClassLoader());
+        }
+
+        if (version >= 2) {
+            viewSettings = in.readParcelable(com.i906.mpt.prayer.ViewSettings.class.getClassLoader());
         }
     }
 
@@ -102,7 +109,7 @@ class CursorPrayerContext implements PrayerContext, Parcelable {
 
     @Override
     public ViewSettings getViewSettings() {
-        return null;
+        return viewSettings;
     }
 
     @Override
@@ -122,6 +129,7 @@ class CursorPrayerContext implements PrayerContext, Parcelable {
         }
 
         parcel.writeList(hijriDates);
+        parcel.writeParcelable((com.i906.mpt.prayer.ViewSettings) viewSettings, i);
     }
 
     public static final Creator<CursorPrayerContext> CREATOR = new Creator<CursorPrayerContext>() {

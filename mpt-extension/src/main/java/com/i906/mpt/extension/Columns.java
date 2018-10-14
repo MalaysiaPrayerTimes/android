@@ -9,6 +9,7 @@ public interface Columns {
 
     String PRAYER_PREFIX = "prayer_";
     String HIJRI_DATE_PREFIX = "hijri_";
+    String VIEW_SETTINGS_PREFIX = "viewsettings_";
 
     String LOCATION = "location";
     String CURRENT_PRAYER_TIME = "current_prayer_time";
@@ -26,4 +27,12 @@ public interface Columns {
     String HIJRI_DAY = HIJRI_DATE_PREFIX + Prayer.HIJRI_DATE;
     String HIJRI_MONTH = HIJRI_DATE_PREFIX + Prayer.HIJRI_MONTH;
     String HIJRI_YEAR = HIJRI_DATE_PREFIX + Prayer.HIJRI_YEAR;
+
+    String CURRENT_PRAYER_HIGHLIGHT_MODE = VIEW_SETTINGS_PREFIX + "current_prayer_highlight";
+    String DHUHA_ENABLED = VIEW_SETTINGS_PREFIX + "show_dhuha";
+    String IMSAK_ENABLED = VIEW_SETTINGS_PREFIX + "show_imsak";
+    String SYURUK_ENABLED = VIEW_SETTINGS_PREFIX + "show_syuruk";
+    String HIJRI_ENABLED = VIEW_SETTINGS_PREFIX + "show_hijri";
+    String MASIHI_ENABLED = VIEW_SETTINGS_PREFIX + "show_masihi";
+    String AM_PM_ENABLED = VIEW_SETTINGS_PREFIX + "show_ampm";
 }

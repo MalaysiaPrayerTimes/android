@@ -21,9 +21,10 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import rx.AsyncEmitter;
+import rx.Emitter;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.functions.Cancellable;
 
 import static com.google.android.gms.location.LocationServices.FusedLocationApi;
 
@@ -51,8 +52,8 @@ class RxFusedLocation {
     }
 
     public Observable<Location> getLocation(LocationRequest request) {
-        return Observable.fromEmitter(new LocationUpdates(request),
-                AsyncEmitter.BackpressureMode.LATEST);
+        return Observable.create(new LocationUpdates(request),
+                Emitter.BackpressureMode.LATEST);
     }
 
     public void disconnect() {
@@ -61,19 +62,19 @@ class RxFusedLocation {
         }
     }
 
-    private class LocationUpdates implements Action1<AsyncEmitter<Location>>,
-            AsyncEmitter.Cancellable,
+    private class LocationUpdates implements Action1<Emitter<Location>>,
+            Cancellable,
             LocationListener {
 
         private final LocationRequest request;
-        private AsyncEmitter<Location> emitter;
+        private Emitter<Location> emitter;
 
         LocationUpdates(LocationRequest request) {
             this.request = request;
         }
 
         @Override
-        public void call(AsyncEmitter<Location> emitter) {
+        public void call(Emitter<Location> emitter) {
             this.emitter = emitter;
             this.emitter.setCancellation(this);
             mCallbacks.addObserver(this);

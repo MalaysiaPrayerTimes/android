@@ -147,12 +147,18 @@ public class PrayerListView extends FrameLayout implements PrayerView {
             mDateView.setVisibility(GONE);
         }
 
+        long ttnp = getTimeToNextPrayer();
+
+        if (ttnp < 0) {
+            return;
+        }
+
         postDelayed(new Runnable() {
             @Override
             public void run() {
                 updatePrayerHeader();
             }
-        }, getTimeToNextPrayer());
+        }, ttnp);
     }
 
     private long getTimeToNextPrayer() {
