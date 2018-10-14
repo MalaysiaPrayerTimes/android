@@ -80,7 +80,7 @@
     <style name="PrayerList.MainTime">
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/size_main_time</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
         <item name="android:includeFontPadding">false</item>
         <!--
         <item name="android:paddingStart">@dimen/padding_main_time</item>

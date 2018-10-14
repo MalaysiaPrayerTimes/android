@@ -53,4 +53,8 @@
     <string name="label_widget_mini">Prayer Times Mini</string>
     <string name="label_widget_text">Prayer Times Text</string>
 
+    <plurals name="mi_label_grant_permission">
+        <item quantity="other">Grant permissions</item>
+    </plurals>
+
 </resources>

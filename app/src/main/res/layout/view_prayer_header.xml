@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,6 +21,7 @@
         android:paddingEnd="@dimen/padding_main_time"
         android:paddingStart="@dimen/padding_main_time">
 
+        <!--
         <com.lb.auto_fit_textview.AutoResizeTextView
             android:id="@+id/tv_prayer_time"
             style="@style/PrayerList.MainTime"
@@ -34,6 +36,31 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_prayer_time"
             android:layout_toEndOf="@+id/tv_prayer_time"
+            tools:text="PM"
+            tools:visibility="visible" />
+        -->
+
+        <TextView
+            android:id="@+id/tv_prayer_time"
+            style="@style/PrayerList.MainTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/tv_prayer_ampm"
+            app:autoSizeMaxTextSize="196sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            tools:text="19:26" />
+
+        <TextView
+            android:id="@+id/tv_prayer_ampm"
+            style="@style/PrayerList.MainPrayerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_prayer_time"
+            android:layout_alignParentEnd="true"
+            android:gravity="end"
+            android:paddingStart="8dp"
             tools:text="PM"
             tools:visibility="visible" />
 
