@@ -211,13 +211,21 @@ public class AlarmService extends Service {
         Intent i = createIntent(action, index, time, location);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (SDK_INT < Build.VERSION_CODES.M) {
-            mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
-        } else {
-            mAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time + triggerOffset, pi);
+        long trigger = time + triggerOffset;
+        Date alarm = new Date(trigger);
+
+        if (mDateHelper.isInPast(alarm)) {
+            // Skip setting alarm if date is already past
+            return;
         }
 
-        Timber.i("Created alarm %s: %s %s %s", index, action, new Date(time + triggerOffset), location);
+        if (SDK_INT < Build.VERSION_CODES.M) {
+            mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, trigger, pi);
+        } else {
+            mAlarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi);
+        }
+
+        Timber.i("Created alarm %s: %s %s %s", index, action, alarm, location);
     }
 
     private Intent createIntent(String action, int index, long time, String location) {

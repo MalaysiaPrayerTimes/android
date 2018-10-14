@@ -5,6 +5,7 @@ import com.i906.mpt.prefs.CommonPreferences;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -102,5 +103,18 @@ public class DateTimeHelper {
 
     public Calendar getCalendarInstance() {
         return mProvider.getCalendarInstance();
+    }
+
+    public boolean isInPast(Date date) {
+        if (date != null) {
+            Calendar now = getNow();
+
+            Calendar cur = getCalendarInstance();
+            cur.setTime(date);
+
+            return now.after(cur);
+        }
+
+        return false;
     }
 }
