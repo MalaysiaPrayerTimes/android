@@ -8,7 +8,7 @@
     <string name="label_build">Nombor binaan</string>
     <string name="label_change_log">Log perubahan</string>
     <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
-    <string name="label_copyright">Hak Cipta © 2013–2016</string>
+    <string name="label_copyright">Hak Cipta © 2013–2018</string>
     <string name="label_dashclock_visibility">Tunjuk di DashClock</string>
     <string name="label_donate">Beri Sumbangan</string>
     <string name="label_feedback">Maklum Balas</string>
@@ -24,7 +24,7 @@
     <string name="label_location_request_timeout">Tempoh permintaan</string>
     <string name="label_more">Lagi</string>
     <string name="label_miscellaneous">Lain-Lain</string>
-    <string name="label_mpt_copyright">Hak Cipta © 2013–2016 Noorzaini Ilhami (i906)</string>
+    <string name="label_mpt_copyright">Hak Cipta © 2013–2018 Noorzaini Ilhami (i906)</string>
     <string name="label_mpt_facebook">Laman Facebook MPT</string>
     <string name="label_mpt_github">Laman GitHub MPT</string>
     <string name="label_mpt_malaysia">Buatan Malaysia</string>

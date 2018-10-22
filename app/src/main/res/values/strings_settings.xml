@@ -8,7 +8,7 @@
     <string name="label_build">Build number</string>
     <string name="label_change_log">Change log</string>
     <string name="label_configure_notifications">Configure notifications</string>
-    <string name="label_copyright">Copyright © 2013–2016</string>
+    <string name="label_copyright">Copyright © 2013–2018</string>
     <string name="label_copyright_summary" translatable="false">Noorzaini Ilhami (i906)</string>
     <string name="label_dashclock_visibility">Show in DashClock</string>
     <string name="label_donate">Donate</string>
@@ -28,7 +28,7 @@
     <string name="label_location_request_timeout">Request timeout</string>
     <string name="label_more">More</string>
     <string name="label_miscellaneous">Miscellaneous</string>
-    <string name="label_mpt_copyright">Copyright © 2013–2016 Noorzaini Ilhami (i906)</string>
+    <string name="label_mpt_copyright">Copyright © 2013–2018 Noorzaini Ilhami (i906)</string>
     <string name="label_mpt_facebook">MPT Facebook Page</string>
     <string name="label_mpt_github">MPT GitHub Page</string>
     <string name="label_mpt_malaysia">Made in Malaysia</string>

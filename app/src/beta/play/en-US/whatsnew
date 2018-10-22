@@ -1,2 +1,6 @@
-- Fixed apply to all not functioning for vibration
-- Forced using Roboto fonts for Samsung devices
+- Updated app libraries
+- Fixed font display issues
+- Fixed widget prayer highlight not working
+- Fixed early-of-month prayer time issues
+- Modified location cache distance
+- Added error message if reached Foursquare quota
