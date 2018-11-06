@@ -8,6 +8,7 @@ import com.i906.mpt.qibla.QiblaFragment;
 import com.i906.mpt.settings.ChangeLogActivity;
 import com.i906.mpt.settings.DonateActivity;
 import com.i906.mpt.settings.LocationFragment;
+import com.i906.mpt.settings.MoreFragment;
 import com.i906.mpt.settings.NotificationActivity;
 import com.i906.mpt.settings.SettingsActivity;
 import com.i906.mpt.settings.azanpicker.AzanPickerFragment;
@@ -33,6 +34,7 @@ public interface ActivityGraph {
     void inject(LocationPickerActivity fragment);
     void inject(MainActivity activity);
     void inject(MainIntroActivity activity);
+    void inject(MoreFragment fragment);
     void inject(MosqueFragment fragment);
     void inject(NotificationActivity activity);
     void inject(PrayerNotificationFragment fragment);

@@ -1,5 +1,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="@string/label_cache_management">
+
+        <Preference
+            android:key="clear_location_cache"
+            android:title="@string/label_cache_clear_location"
+            android:summary="@string/label_cache_clear_location_description" />
+
+        <Preference
+            android:key="clear_prayerdata_cache"
+            android:title="@string/label_cache_clear_prayerdata"
+            android:summary="@string/label_cache_clear_prayerdata_description" />
+
+    </PreferenceCategory>
+
     <Preference
         android:key="advanced_settings"
         android:title="@string/label_advanced_settings"/>
