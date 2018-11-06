@@ -1,21 +1,39 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="advanced_settings"
-        android:title="@string/label_advanced_settings"/>
+    <PreferenceCategory android:title="@string/label_cache_management">
 
-    <ListPreference
-        android:defaultValue="0"
-        android:entries="@array/pref_hijri_offset"
-        android:entryValues="@array/pref_hijri_offset_values"
-        android:key="hijri_offset"
-        android:title="@string/label_hijri_offset" />
+        <Preference
+            android:key="clear_location_cache"
+            android:summary="@string/label_cache_clear_location_description"
+            android:title="@string/label_cache_clear_location" />
 
-    <ListPreference
-        android:key="dashclock_visibility"
-        android:defaultValue="3600000"
-        android:entries="@array/pref_dashclock"
-        android:entryValues="@array/pref_dashclock_values"
-        android:title="@string/label_dashclock_visibility" />
+        <Preference
+            android:key="clear_prayerdata_cache"
+            android:summary="@string/label_cache_clear_prayerdata_description"
+            android:title="@string/label_cache_clear_prayerdata" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/label_others">
+
+        <Preference
+            android:key="advanced_settings"
+            android:title="@string/label_advanced_settings" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/pref_hijri_offset"
+            android:entryValues="@array/pref_hijri_offset_values"
+            android:key="hijri_offset"
+            android:title="@string/label_hijri_offset" />
+
+        <ListPreference
+            android:defaultValue="3600000"
+            android:entries="@array/pref_dashclock"
+            android:entryValues="@array/pref_dashclock_values"
+            android:key="dashclock_visibility"
+            android:title="@string/label_dashclock_visibility" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

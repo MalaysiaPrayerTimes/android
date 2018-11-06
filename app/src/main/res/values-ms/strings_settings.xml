@@ -7,6 +7,15 @@
     <string name="label_background_color">Warna latar belakang</string>
     <string name="label_build">Nombor binaan</string>
     <string name="label_change_log">Log perubahan</string>
+    <string name="label_cache_management">Pengurusan cache</string>
+    <string name="label_cache_clear_location">Buang cache data tempat</string>
+    <string name="label_cache_clear_location_description">Semua data tempat yang disimpan akan dibuang</string>
+    <string name="label_cache_clear_prayerdata">Buang cache data waktu solat</string>
+    <string name="label_cache_clear_prayerdata_description">Semua data waktu solat yang disimpan akan dibuang</string>
+    <string name="label_cache_location_cleared">Data tempat telah berjaya dibuang</string>
+    <string name="label_cache_location_errored">Data tempat tidak berjaya dibuang</string>
+    <string name="label_cache_prayerdata_cleared">Data waktu solat telah berjaya dibuang</string>
+    <string name="label_cache_prayerdata_errored">Data tempat tidak berjaya dibuang</string>
     <string name="label_configure_notifications">Tetapkan pemberitahuan</string>
     <string name="label_copyright">Hak Cipta © 2013–2018</string>
     <string name="label_dashclock_visibility">Tunjuk di DashClock</string>
@@ -34,6 +43,7 @@
     <string name="label_notification">Pemberitahuan</string>
     <string name="label_notifications">Pemberitahuan</string>
     <string name="label_open_source_licenses">Lesen sumber terbuka</string>
+    <string name="label_others">Lain-lain</string>
     <string name="label_prayer_headsup">Benarkan perberitahuan heads-up</string>
     <string name="label_prayer_highlight">Penekanan waktu solat</string>
     <string name="label_prayer_screen">Skrin waktu solat</string>

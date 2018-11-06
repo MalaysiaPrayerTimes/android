@@ -7,6 +7,15 @@
     <string name="label_background_color">Background color</string>
     <string name="label_build">Build number</string>
     <string name="label_change_log">Change log</string>
+    <string name="label_cache_management">Cache management</string>
+    <string name="label_cache_clear_location">Clear location cache</string>
+    <string name="label_cache_clear_location_description">All cached location data will be removed</string>
+    <string name="label_cache_clear_prayerdata">Clear prayer data cache</string>
+    <string name="label_cache_clear_prayerdata_description">All cached prayer data will be removed</string>
+    <string name="label_cache_location_cleared">Location cache cleared</string>
+    <string name="label_cache_location_errored">Error clearing location cache</string>
+    <string name="label_cache_prayerdata_cleared">Prayer data cache cleared</string>
+    <string name="label_cache_prayerdata_errored">Error clearing prayer data cache</string>
     <string name="label_configure_notifications">Configure notifications</string>
     <string name="label_copyright">Copyright © 2013–2018</string>
     <string name="label_copyright_summary" translatable="false">Noorzaini Ilhami (i906)</string>
@@ -38,6 +47,7 @@
     <string name="label_notification">Notification</string>
     <string name="label_notifications">Notifications</string>
     <string name="label_open_source_licenses">Open-source licenses</string>
+    <string name="label_others">Others</string>
     <string name="label_prayer_headsup">Enable heads-up notifications</string>
     <string name="label_prayer_highlight">Prayer highlight</string>
     <string name="label_prayer_screen">Prayer screen</string>

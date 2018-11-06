@@ -9,6 +9,8 @@ import com.i906.mpt.db.PrayerCache;
 import com.i906.mpt.db.PrayerCacheMeta;
 import com.i906.mpt.prefs.HiddenPreferences;
 import com.pushtorefresh.storio.sqlite.StorIOSQLite;
+import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResult;
+import com.pushtorefresh.storio.sqlite.queries.DeleteQuery;
 import com.pushtorefresh.storio.sqlite.queries.Query;
 
 import java.util.List;
@@ -24,14 +26,14 @@ import rx.functions.Func2;
  * @author Noorzaini Ilhami
  */
 @Singleton
-class PrayerCacheManager {
+public class PrayerCacheManager {
 
     private final PrayerDataFactory mPrayerDataFactory;
     private final StorIOSQLite mSqlite;
     private final HiddenPreferences mHiddenPreferences;
 
     @Inject
-    PrayerCacheManager(StorIOSQLite sqlite, HiddenPreferences hpref) {
+    public PrayerCacheManager(StorIOSQLite sqlite, HiddenPreferences hpref) {
         mSqlite = sqlite;
         mHiddenPreferences = hpref;
         mPrayerDataFactory = new PrayerDataFactory();
@@ -145,6 +147,30 @@ class PrayerCacheManager {
                         return location.distanceTo(l) < mHiddenPreferences.getLocationDistanceLimit();
                     }
                 })
+                .take(1);
+    }
+
+    public Observable<DeleteResult> clearLocationCache() {
+        DeleteQuery query = DeleteQuery.builder()
+                .table(LocationCacheMeta.TABLE)
+                .build();
+
+        return mSqlite.delete()
+                .byQuery(query)
+                .prepare()
+                .asRxObservable()
+                .take(1);
+    }
+
+    public Observable<DeleteResult> clearPrayerDataCache() {
+        DeleteQuery query = DeleteQuery.builder()
+                .table(PrayerCacheMeta.TABLE)
+                .build();
+
+        return mSqlite.delete()
+                .byQuery(query)
+                .prepare()
+                .asRxObservable()
                 .take(1);
     }
 
