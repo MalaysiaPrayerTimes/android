@@ -3,6 +3,7 @@ package com.i906.mpt.internal;
 import com.i906.mpt.alarm.AlarmService;
 import com.i906.mpt.main.MainService;
 import com.i906.mpt.widget.DashClockService;
+import com.i906.mpt.widget.KwgtService;
 import com.i906.mpt.widget.WidgetService;
 
 import dagger.Subcomponent;
@@ -17,6 +18,7 @@ import dagger.Subcomponent;
 public interface ServiceGraph {
     void inject(AlarmService service);
     void inject(DashClockService service);
+    void inject(KwgtService service);
     void inject(MainService service);
     void inject(WidgetService service);
 }
