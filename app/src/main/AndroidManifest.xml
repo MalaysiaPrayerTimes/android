@@ -125,6 +125,15 @@
             android:exported="true"
             android:writePermission="${applicationId}.permission.WRITE_PRAYER_DATA" />
 
+        <provider
+            android:name=".widget.KwgtProvider"
+            android:authorities="${applicationId}.provider.kwgt"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="org.kustom.provider.SAMPLES" />
+            </intent-filter>
+        </provider>
+
         <receiver android:name=".settings.CodeReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />
