@@ -228,9 +228,17 @@ public class AlarmService extends Service {
         long trigger = time + triggerOffset;
         Date alarm = new Date(trigger);
 
-        if (mDateHelper.isInPast(alarm)) {
-            // Skip setting alarm if date is already past
-            return;
+        if (action.equals(ACTION_NOTIFICATION_REMINDER)) {
+            if (mDateHelper.isInPast(new Date(time))) {
+                Timber.i("Skipping alarm %s: %s %s", index, action, alarm);
+                return;
+            }
+        } else {
+            if (mDateHelper.isInPast(alarm)) {
+                Timber.i("Skipping alarm %s: %s %s", index, action, alarm);
+                // Skip setting alarm if date is already past
+                return;
+            }
         }
 
         if (SDK_INT < Build.VERSION_CODES.M) {
