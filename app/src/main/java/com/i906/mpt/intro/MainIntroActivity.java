@@ -1,6 +1,7 @@
 package com.i906.mpt.intro;
 
 import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -49,11 +50,7 @@ public class MainIntroActivity extends IntroActivity implements IntroView {
                 .image(R.drawable.intro_mosque)
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
-                .permissions(new String[] {
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                })
+                .permissions(getLocationPermissions())
                 .build());
 
         addSlide(new SimpleSlide.Builder()
@@ -64,6 +61,21 @@ public class MainIntroActivity extends IntroActivity implements IntroView {
                 .background(R.color.colorPrimary)
                 .backgroundDark(R.color.colorPrimaryDark)
                 .build());
+    }
+
+    private String[] getLocationPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return new String[] {
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+            };
+        }
+
+        return new String[] {
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+        };
     }
 
     @Override
