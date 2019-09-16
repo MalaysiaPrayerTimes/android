@@ -104,6 +104,10 @@ public class NotificationPreferences {
         return mPrefs.getBoolean("prayer_headsup", false);
     }
 
+    public boolean isKwgtEnabled() {
+        return mPrefs.getBoolean("kwgt_enabled", true);
+    }
+
     public void convertLegacyPreferences() {
         String nb = mPrefs.getString("notf_before", null);
         String na = mPrefs.getString("notf_after", null);

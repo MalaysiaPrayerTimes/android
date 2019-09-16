@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import com.i906.mpt.extension.Extension;
+import com.i906.mpt.prefs.NotificationPreferences;
 import com.i906.mpt.widget.KwgtService;
 import com.i906.mpt.widget.WidgetService;
 
@@ -18,10 +19,12 @@ import javax.inject.Singleton;
 public class PrayerBroadcaster {
 
     private final Context mContext;
+    private final NotificationPreferences mPreferences;
 
     @Inject
-    public PrayerBroadcaster(Context context) {
+    public PrayerBroadcaster(Context context, NotificationPreferences prefs) {
         mContext = context;
+        mPreferences = prefs;
     }
 
     public void sendPrayerUpdatedBroadcast() {
@@ -29,7 +32,7 @@ public class PrayerBroadcaster {
         mContext.getContentResolver().update(Extension.PRAYER_CONTEXT_URI, null, null, null);
         WidgetService.start(mContext);
 
-        if (isKustomInstalled()) {
+        if (isKustomInstalled() && mPreferences.isKwgtEnabled()) {
             KwgtService.start(mContext);
         }
     }

@@ -3,6 +3,7 @@ package com.i906.mpt.settings;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.widget.DashClockService;
+import com.i906.mpt.widget.KwgtService;
 
 import javax.inject.Inject;
 
@@ -33,17 +35,17 @@ public class MoreFragment extends BasePreferenceFragment implements MoreView {
         activityGraph().inject(this);
 
         Preference advanced = findPreference("advanced_settings");
+        advanced.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                HiddenSettingsActivity.start(getActivity());
+                return true;
+            }
+        });
 
         if (!Dagger.getGraph(getActivity()).getHiddenPreferences().isVisible()) {
-            getPreferenceScreen().removePreference(advanced);
-        } else {
-            advanced.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    HiddenSettingsActivity.start(getActivity());
-                    return true;
-                }
-            });
+            PreferenceCategory cat = (PreferenceCategory) findPreference("pref_others");
+            cat.removePreference(advanced);
         }
 
         Preference dashclock = findPreference("dashclock_visibility");
@@ -52,6 +54,20 @@ public class MoreFragment extends BasePreferenceFragment implements MoreView {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 DashClockService.start(getActivity());
+                return true;
+            }
+        });
+
+        Preference kwgt = findPreference("kwgt_enabled");
+
+        if (!isKustomInstalled()) {
+            kwgt.setEnabled(false);
+        }
+
+        kwgt.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                KwgtService.start(getActivity());
                 return true;
             }
         });
@@ -134,6 +150,28 @@ public class MoreFragment extends BasePreferenceFragment implements MoreView {
             return true;
         } catch (PackageManager.NameNotFoundException e) {
             //
+        }
+
+        return false;
+    }
+
+    private boolean isKustomInstalled() {
+        PackageManager pm = getActivity().getPackageManager();
+
+        String[] kustom = new String[] {
+                "org.kustom.lockscreen",
+                "org.kustom.wallpaper",
+                "org.kustom.watch",
+                "org.kustom.widget"
+        };
+
+        for (String k : kustom) {
+            try {
+                pm.getPackageInfo(k, PackageManager.GET_ACTIVITIES);
+                return true;
+            } catch (PackageManager.NameNotFoundException e) {
+                //
+            }
         }
 
         return false;
