@@ -1,6 +1,7 @@
 package com.i906.mpt.widget;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -13,7 +14,10 @@ import com.i906.mpt.alarm.NotificationHelper;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
 import com.i906.mpt.prayer.PrayerContext;
+import com.i906.mpt.prefs.WidgetPreferences;
 import com.pushtorefresh.storio.StorIOException;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,6 +35,9 @@ public class WidgetService extends Service implements WidgetHandler {
 
     @Inject
     WidgetDelegate mPresenter;
+
+    @Inject
+    WidgetPreferences mWidgetPreferences;
 
     @Inject
     NotificationHelper mNotificationHelper;
@@ -96,6 +103,15 @@ public class WidgetService extends Service implements WidgetHandler {
 
         broadcastWidgetIntent(intent);
         stopSelf();
+    }
+
+    private void broadcastWidgetIntent(Intent intent) {
+        List<Class> widgets = mWidgetPreferences.getEnabledWidgetList();
+
+        for (Class w : widgets) {
+            intent.setComponent(new ComponentName(this, w));
+            sendBroadcast(intent);
+        }
     }
 
     @Override
