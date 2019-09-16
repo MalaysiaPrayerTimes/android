@@ -178,6 +178,17 @@ public class NotificationHelper {
         mNotifier.notify("reminder", prayer, builder.build());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Notification createForegroundNotification(String title) {
+        return new Notification.Builder(mContext)
+                .setSmallIcon(R.drawable.ic_stat_prayer)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
+                .setContentTitle(title)
+                .setChannelId("service")
+                .build();
+    }
+
     private String getReminderText(int prayer, int minutes) {
         Resources r = mContext.getResources();
         String name = mPrayerNames[prayer];
@@ -283,6 +294,7 @@ public class NotificationHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createAlarmChannels();
             createReminderChannels();
+            createServiceChannel();
         }
     }
 
@@ -332,6 +344,19 @@ public class NotificationHelper {
 
             mNotificationManager.createNotificationChannel(channel);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createServiceChannel() {
+        NotificationChannel channel = new NotificationChannel(
+                "service",
+                "Others",
+                NotificationManager.IMPORTANCE_LOW
+        );
+
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+        mNotificationManager.createNotificationChannel(channel);
     }
 
     public int getEnabledNotificationCount() {

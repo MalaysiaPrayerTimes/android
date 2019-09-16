@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -143,12 +144,6 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
@@ -162,12 +157,6 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
@@ -180,12 +169,6 @@
             android:label="@string/label_widget_text">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
             </intent-filter>
 
             <meta-data
