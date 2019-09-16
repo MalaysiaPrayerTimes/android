@@ -39,6 +39,8 @@ public class KwgtProvider extends ContentProvider {
         c.addRow(new String[]{"$br(mpt, npn)$ in $tf(br(mpt, npt), M)$ minutes", "Minutes till next prayer"});
         c.addRow(new String[]{"$df(hh:mm a, br(mpt, pt1))$", "Current Subuh time"});
         c.addRow(new String[]{"$df(hh:mm a, br(mpt, pt4))$", "Current Zohor time"});
+        c.addRow(new String[]{"$br(mpt, slm)$", "Last status message"});
+        c.addRow(new String[]{"$df(hh:mm:ss a, br(mpt, slu))$", "Last status update"});
 
         return c;
     }

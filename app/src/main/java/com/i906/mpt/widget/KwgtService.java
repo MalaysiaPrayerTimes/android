@@ -19,8 +19,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 /**
  * @author Noorzaini Ilhami
  */
@@ -57,7 +55,6 @@ public class KwgtService extends Service implements WidgetHandler {
     @Override
     public void onCreate() {
         super.onCreate();
-        Timber.i("kwgt-oncreate");
 
         Dagger.getGraph(this)
                 .serviceGraph(new ServiceModule(this))
@@ -71,6 +68,8 @@ public class KwgtService extends Service implements WidgetHandler {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        sendStatusUpdate("started");
+
         mPresenter.refreshPrayerContext();
         return START_STICKY;
     }
@@ -109,11 +108,13 @@ public class KwgtService extends Service implements WidgetHandler {
         intent.putExtra(KUSTOM_ACTION_VAR_VALUE_ARRAY, valueArray);
 
         sendBroadcast(intent);
+        sendStatusUpdate("completed");
         stopSelf();
     }
 
     @Override
     public void handleError(Throwable throwable) {
+        sendStatusUpdate("error: " + throwable.getMessage());
         stopSelf();
     }
 
@@ -123,6 +124,23 @@ public class KwgtService extends Service implements WidgetHandler {
         }
 
         return DateFormat.format("yyyy'y'MM'M'dd'd'HH'h'mm'm'ss's'", date).toString();
+    }
+
+    private void sendStatusUpdate(String status) {
+        Intent intent = new Intent(KUSTOM_ACTION);
+        intent.putExtra(KUSTOM_ACTION_EXT_NAME, "mpt");
+
+        intent.putExtra(KUSTOM_ACTION_VAR_NAME_ARRAY, new String[] {
+                "slm",
+                "slu",
+        });
+
+        intent.putExtra(KUSTOM_ACTION_VAR_VALUE_ARRAY, new String[] {
+                status,
+                getFormattedDate(new Date())
+        });
+
+        sendBroadcast(intent);
     }
 
     @Nullable
