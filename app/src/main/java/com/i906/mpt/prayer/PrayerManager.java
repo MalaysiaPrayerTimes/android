@@ -93,7 +93,7 @@ public class PrayerManager {
         return mPrayerStream.asObservable();
     }
 
-    private Observable<PrayerContext> getAutomaticPrayerContext(boolean refresh) {
+    private Observable<PrayerContext> getAutomaticPrayerContext(final boolean refresh) {
         return mLocationRepository.getLocation(refresh)
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -107,21 +107,16 @@ public class PrayerManager {
                     public Observable<PrayerContext> call(Location location) {
                         mLastLocation = location;
 
-                        if (shouldUpdatePrayerContext(location) && !isLoading()) {
+                        if ((shouldUpdatePrayerContext(location) && !isLoading()) || refresh) {
                             return updatePrayerContext(location);
                         }
 
-                        if (mLastPrayerContext != null) {
-                            return Observable.just(mLastPrayerContext);
-                        } else {
-                            return mPrayerStream.asObservable()
-                                    .first();
-                        }
+                        return getLastOrPendingPrayerContext();
                     }
                 });
     }
 
-    private Observable<PrayerContext> getPreferredPrayerContext(boolean refresh) {
+    private Observable<PrayerContext> getPreferredPrayerContext(final boolean refresh) {
         final PrayerCode location = mLocationPreferences.getPreferredLocation();
 
         if (location == null) {
@@ -138,19 +133,25 @@ public class PrayerManager {
                 .flatMap(new Func1<String, Observable<PrayerContext>>() {
                     @Override
                     public Observable<PrayerContext> call(String code) {
-                        if (shouldUpdatePrayerContext(code) && !isLoading()) {
+                        if ((shouldUpdatePrayerContext(code) && !isLoading()) || refresh) {
                             mLastPreferredLocation = location;
                             return updatePrayerContext(code);
                         }
 
-                        if (mLastPrayerContext != null) {
-                            return Observable.just(mLastPrayerContext);
-                        } else {
-                            return mPrayerStream.asObservable()
-                                    .first();
-                        }
+                        return getLastOrPendingPrayerContext();
                     }
                 });
+    }
+
+    private Observable<PrayerContext> getLastOrPendingPrayerContext() {
+        if (mLastPrayerContext != null) {
+            Timber.i("Returning last prayer context");
+            return Observable.just(mLastPrayerContext);
+        } else {
+            Timber.i("Awaiting prayer context");
+            return mPrayerStream.asObservable()
+                    .first();
+        }
     }
 
     private boolean useAutomaticLocation() {
@@ -165,8 +166,6 @@ public class PrayerManager {
     }
 
     private void broadcastPrayerContext(PrayerContext context) {
-        Timber.i("Broadcasting updated prayer context");
-
         mPrayerStream.onNext(context);
         mPrayerBroadcaster.sendPrayerUpdatedBroadcast();
     }
@@ -191,6 +190,7 @@ public class PrayerManager {
 
     private boolean shouldUpdatePrayerContext(String code) {
         if (isLastPrayerContextStale()) {
+            Timber.i("Last prayer context is stale");
             return true;
         }
 
@@ -205,6 +205,7 @@ public class PrayerManager {
 
     private boolean shouldUpdatePrayerContext(Location location) {
         if (isLastPrayerContextStale()) {
+            Timber.i("Last prayer context is stale");
             return true;
         }
 
@@ -213,7 +214,13 @@ public class PrayerManager {
 
     private boolean shouldUpdateLocation(Location location) {
         float distance = LocationRepository.getDistance(mLastLocation, location);
-        return distance >= mLocationDistanceLimit;
+        boolean update = distance >= mLocationDistanceLimit;
+
+        if (update) {
+            Timber.i("Last location is stale");
+        }
+
+        return update;
     }
 
     public Observable<PrayerContext> refreshPrayerContext(Location location) {

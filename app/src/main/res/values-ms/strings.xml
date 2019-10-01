@@ -22,6 +22,7 @@
     <string name="donate_text_4">Jika ada ingin memberi lebih bantuan untuk menyokong pembangunan MPT, anda boleh mmeberi sumbangan kepada Noorzaini Ilhami.
         \n\nMPT akan sentiasa kekal sebagai aplikasi percuma tanpa iklan.</string>
 
+    <string name="error_foursquare_quota">Kuota Foursquare\'s telah habis!</string>
     <string name="error_no_location">Adakah anda telah membenarkan tetapan lokasi?</string>
     <string name="error_no_location_permission">Benarkan MPT untuk mengesan lokasi semasa anda.</string>
     <string name="error_no_location_permission_mosque">Lokasi semasa anda diperlukan untuk mendapatkan senarai masjid!</string>

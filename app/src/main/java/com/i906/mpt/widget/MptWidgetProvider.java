@@ -15,7 +15,11 @@ import com.i906.mpt.prefs.WidgetPreferences;
 
 import java.util.Date;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
+import timber.log.Timber;
+
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DISABLED;
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_ENABLED;
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
 /**
  * @author Noorzaini Ilhami
@@ -32,7 +36,16 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         mWidgetPreferences = Dagger.getGraph(context).getWidgetPreferences();
         super.onReceive(context, widgetIntent);
 
+        Timber.i("Received intent: %s", widgetIntent);
         final String action = widgetIntent.getAction();
+
+        if (ACTION_APPWIDGET_ENABLED.equals(action)) {
+            mWidgetPreferences.enableWidget(getWidgetClass());
+        }
+
+        if (ACTION_APPWIDGET_DISABLED.equals(action)) {
+            mWidgetPreferences.disableWidget(getWidgetClass());
+        }
 
         if (WidgetService.ACTION_PRAYER_TIME_UPDATED.equals(action)) {
             PrayerContext prayerContext = widgetIntent.getParcelableExtra("prayer_context");
@@ -40,7 +53,7 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
         } else if (WidgetService.ACTION_PRAYER_TIME_ERROR.equals(action)) {
             String error = widgetIntent.getStringExtra("type");
             updateWithError(context, error);
-        } else if (!ACTION_APPWIDGET_DELETED.equals(action)) {
+        } else if (ACTION_APPWIDGET_UPDATE.equals(action)) {
             updateWithPrayerContext(context, null);
             WidgetService.start(context);
         }
@@ -49,6 +62,7 @@ public abstract class MptWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+        Timber.i("Received onUpdate");
 
         for (int i = 0; i < appWidgetIds.length; ++i) {
             RemoteViews layout = buildLayout(appWidgetManager, context, appWidgetIds[i], null);

@@ -24,12 +24,12 @@ import android.widget.TextView;
 
 import com.i906.mpt.BuildConfig;
 import com.i906.mpt.R;
+import com.i906.mpt.alarm.NotificationHelper;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.api.prayer.PrayerCode;
 import com.i906.mpt.internal.ActivityModule;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.prefs.LocationPreferences;
-import com.i906.mpt.prefs.NotificationPreferences;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     LocationPreferences mLocationPreferences;
 
     @Inject
-    NotificationPreferences mNotificationPreferences;
+    NotificationHelper mNotificationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,17 +207,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     };
 
     private int getEnabledNotificationCount() {
-        int notification = 0;
-
-        for (int i = 0; i < 8; i++) {
-            if (mNotificationPreferences.isPrayerEnabled(i)) {
-                if (mNotificationPreferences.isNotificationEnabled(i)) {
-                    notification++;
-                }
-            }
-        }
-
-        return notification;
+        return mNotificationHelper.getEnabledNotificationCount();
     }
 
     static class ModifiedHeaderAdapter extends ArrayAdapter<Header> {

@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'org.jacoco:org.jacoco.core:0.8.2'
         classpath 'hu.supercluster:paperwork-plugin:1.2.7'
         classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
@@ -34,9 +34,9 @@ task clean(type: Delete) {
 
 ext {
     // Android
-    buildToolsVersion = '28.0.3'
+    buildToolsVersion = '29.0.2'
     minSdkVersion = 21
-    targetSdkVersion = 25
+    targetSdkVersion = 28
     compileSdkVersion = 28
 
     // Libraries

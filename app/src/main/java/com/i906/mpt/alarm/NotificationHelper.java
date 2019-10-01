@@ -1,12 +1,17 @@
 package com.i906.mpt.alarm;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Vibrator;
@@ -26,12 +31,15 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import timber.log.Timber;
+
 @Singleton
 public class NotificationHelper {
 
     private final static long[] PATTERN_VIBRATE = {0, 100, 100, 100, 100, 100, 100, 100};
 
     private Context mContext;
+    private NotificationManager mNotificationManager;
     private NotificationManagerCompat mNotifier;
     private NotificationPreferences mNotificationPrefs;
     private Vibrator mVibrator;
@@ -43,11 +51,26 @@ public class NotificationHelper {
         mContext = context;
         mNotifier = NotificationManagerCompat.from(mContext);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationPrefs = prefs;
+
         fillStrings();
+        createNotificationChannels();
     }
 
     public void showPrayerReminder(int prayer, long time, String location, boolean ticker) {
+        Timber.i("Creating reminder %s", prayer);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            showOreoPrayerReminder(prayer, time, location);
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N) {
+            showNougatPrayerReminder(prayer, time, location);
+        } else {
+            showLegacyPrayerReminder(prayer, time, location, ticker);
+        }
+    }
+
+    public void showLegacyPrayerReminder(int prayer, long time, String location, boolean ticker) {
         if (!mNotificationPrefs.isPrayerEnabled(prayer)) return;
 
         long pt = time + mNotificationPrefs.getAlarmOffset();
@@ -130,6 +153,42 @@ public class NotificationHelper {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showOreoPrayerReminder(int prayer, long time, String location) {
+        Resources r = mContext.getResources();
+        String formattedTime = DateFormat.getTimeFormat(mContext).format(new Date(time));
+        String prayerName = mPrayerNames[prayer];
+        String reminder = r.getString(R.string.notification_reminder_time, prayerName, formattedTime);
+        long timeout = mNotificationPrefs.getClearAfterDuration();
+
+        Notification.Builder builder = getNougatNotificationTemplate();
+
+        builder.setChannelId("reminder_" + prayer)
+                .setWhen(time)
+                .setTimeoutAfter(timeout)
+                .setContentTitle(prayerName)
+                .setContentText(reminder)
+                .setUsesChronometer(true)
+                .setChronometerCountDown(true)
+                .setStyle(new Notification.BigTextStyle()
+                        .bigText(reminder)
+                        .setSummaryText(location)
+                );
+
+        mNotifier.notify("reminder", prayer, builder.build());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Notification createForegroundNotification(String title) {
+        return new Notification.Builder(mContext)
+                .setSmallIcon(R.drawable.ic_stat_prayer)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setColor(ContextCompat.getColor(mContext, R.color.colorAccent))
+                .setContentTitle(title)
+                .setChannelId("service")
+                .build();
+    }
+
     private String getReminderText(int prayer, int minutes) {
         Resources r = mContext.getResources();
         String name = mPrayerNames[prayer];
@@ -142,11 +201,22 @@ public class NotificationHelper {
     }
 
     public void showPrayerNotification(int prayer, long time, String location) {
+        Timber.i("Creating notification %s", prayer);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            showOreoPrayerNotification(prayer, time, location);
+        } else {
+            showLegacyPrayerNotification(prayer, time, location);
+        }
+    }
+
+    private void showLegacyPrayerNotification(int prayer, long time, String location) {
         if (!mNotificationPrefs.isPrayerEnabled(prayer)) return;
 
         int defaults = NotificationCompat.DEFAULT_LIGHTS;
         String prayerName = mPrayerNames[prayer];
         String notification = getPrayerText(prayer);
+        long timeout = mNotificationPrefs.getClearAfterDuration();
         Uri toneUri = null;
 
         int priority = NotificationCompat.PRIORITY_DEFAULT;
@@ -165,6 +235,7 @@ public class NotificationHelper {
             builder.setTicker(notification)
                     .setDefaults(defaults)
                     .setWhen(time)
+                    .setTimeoutAfter(timeout)
                     .setContentTitle(prayerName)
                     .setContentText(notification)
                     .setPriority(priority)
@@ -193,6 +264,137 @@ public class NotificationHelper {
         }
 
         cancel("reminder", prayer);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showOreoPrayerNotification(int prayer, long time, String location) {
+        String prayerName = mPrayerNames[prayer];
+        String notification = getPrayerText(prayer);
+        long timeout = mNotificationPrefs.getClearAfterDuration();
+
+        Notification.Builder builder = getNougatNotificationTemplate();
+
+        builder.setChannelId("alarm_" + prayer)
+                .setWhen(time)
+                .setShowWhen(true)
+                .setTimeoutAfter(timeout)
+                .setContentTitle(prayerName)
+                .setContentText(notification)
+                .setStyle(new Notification.BigTextStyle()
+                        .bigText(notification)
+                        .setSummaryText(location)
+                );
+
+        mNotifier.notify("prayer", prayer, builder.build());
+
+        cancel("reminder", prayer);
+    }
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createAlarmChannels();
+            createReminderChannels();
+            createServiceChannel();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createReminderChannels() {
+        String groupId = "reminder";
+        CharSequence groupName = mContext.getString(R.string.notification_group_reminder);
+        NotificationChannelGroup group = new NotificationChannelGroup(groupId, groupName);
+        mNotificationManager.createNotificationChannelGroup(group);
+
+        for (int i = 0; i < mPrayerNames.length; i++) {
+            String id = "reminder_" + i;
+            String name = mPrayerNames[i];
+
+            NotificationChannel channel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_MIN);
+            channel.setGroup(groupId);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+            mNotificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createAlarmChannels() {
+        String groupId = "alarm";
+        CharSequence groupName = mContext.getString(R.string.notification_group_notification);
+        NotificationChannelGroup group = new NotificationChannelGroup(groupId, groupName);
+        mNotificationManager.createNotificationChannelGroup(group);
+
+        for (int i = 0; i < mPrayerNames.length; i++) {
+            String id = "alarm_" + i;
+            String name = mPrayerNames[i];
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+
+            NotificationChannel channel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
+            channel.enableVibration(true);
+            channel.setGroup(groupId);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            channel.setVibrationPattern(PATTERN_VIBRATE);
+            channel.setSound(defaultSoundUri, audioAttributes);
+
+            mNotificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createServiceChannel() {
+        NotificationChannel channel = new NotificationChannel(
+                "service",
+                "Others",
+                NotificationManager.IMPORTANCE_LOW
+        );
+
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+        mNotificationManager.createNotificationChannel(channel);
+    }
+
+    public int getEnabledNotificationCount() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return getOreoEnabledNotificationCount();
+        }
+
+        return getLegacyEnabledNotificationCount();
+    }
+
+    private int getLegacyEnabledNotificationCount() {
+        int notification = 0;
+
+        for (int i = 0; i < 8; i++) {
+            if (mNotificationPrefs.isPrayerEnabled(i)) {
+                if (mNotificationPrefs.isNotificationEnabled(i)) {
+                    notification++;
+                }
+            }
+        }
+
+        return notification;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private int getOreoEnabledNotificationCount() {
+        int notification = 0;
+
+        for (int i = 0; i < 8; i++) {
+            String id = "alarm_" + i;
+            NotificationChannel channel = mNotificationManager.getNotificationChannel(id);
+
+            if (channel.getImportance() != NotificationManager.IMPORTANCE_NONE) {
+                notification++;
+            }
+        }
+
+        return notification;
     }
 
     private String getPrayerText(int prayer) {

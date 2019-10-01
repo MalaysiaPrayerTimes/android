@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -94,10 +95,6 @@
                 <action android:name="${applicationId}.action.NOTIFICATION_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -147,12 +144,6 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
@@ -165,12 +156,6 @@
             android:label="@string/label_widget_mini">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
             </intent-filter>
 
             <meta-data
@@ -185,23 +170,13 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_UPDATED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_TIME_ERROR" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_text" />
         </receiver>
 
-        <receiver android:name=".alarm.AlarmReceiver">
-            <intent-filter>
-                <action android:name="${applicationId}.action.PRAYER_CONTEXT_UPDATED" />
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".alarm.AlarmReceiver" />
 
         <service
             android:name=".widget.DashClockService"

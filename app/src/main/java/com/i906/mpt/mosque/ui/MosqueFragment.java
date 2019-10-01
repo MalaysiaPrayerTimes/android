@@ -24,6 +24,7 @@ import android.widget.ViewFlipper;
 import com.i906.mpt.R;
 import com.i906.mpt.analytics.AnalyticsProvider;
 import com.i906.mpt.api.foursquare.Mosque;
+import com.i906.mpt.api.foursquare.QuotaExceededException;
 import com.i906.mpt.common.LocationFragment;
 import com.i906.mpt.location.LocationDisabledException;
 import com.i906.mpt.location.LocationTimeoutException;
@@ -145,6 +146,8 @@ public class MosqueFragment extends LocationFragment implements MosqueView, Mosq
         if (error instanceof SecurityException) {
             errorMessage = R.string.error_no_location_permission_mosque;
             mRetryButton.setText(R.string.label_grant_permission);
+        } else if (error instanceof QuotaExceededException) {
+            errorMessage = R.string.error_foursquare_quota;
         } else if (error instanceof LocationDisabledException || error instanceof LocationTimeoutException) {
             if (hasLocationResolution()) {
                 mRetryButton.setText(R.string.label_enable_location);

@@ -77,12 +77,24 @@ public class AlarmService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        Timber.i("Created service");
+
         Dagger.getGraph(this)
                 .serviceGraph(new ServiceModule(this))
                 .inject(this);
 
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        executeForeground();
         startObservable();
+    }
+
+    private void executeForeground() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return;
+        }
+
+        startForeground(1, mNotificationHelper.createForegroundNotification("Updating prayer times..."));
     }
 
     private void startObservable() {
@@ -107,6 +119,8 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Timber.i("Received start command");
+
         if (intent != null) {
             final String action = intent.getAction();
 
@@ -214,9 +228,17 @@ public class AlarmService extends Service {
         long trigger = time + triggerOffset;
         Date alarm = new Date(trigger);
 
-        if (mDateHelper.isInPast(alarm)) {
-            // Skip setting alarm if date is already past
-            return;
+        if (action.equals(ACTION_NOTIFICATION_REMINDER)) {
+            if (mDateHelper.isInPast(new Date(time))) {
+                Timber.i("Skipping alarm %s: %s %s", index, action, alarm);
+                return;
+            }
+        } else {
+            if (mDateHelper.isInPast(alarm)) {
+                Timber.i("Skipping alarm %s: %s %s", index, action, alarm);
+                // Skip setting alarm if date is already past
+                return;
+            }
         }
 
         if (SDK_INT < Build.VERSION_CODES.M) {
@@ -241,6 +263,7 @@ public class AlarmService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Timber.i("Destroyed service");
         mSubscription.clear();
     }
 
@@ -248,5 +271,17 @@ public class AlarmService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    public static void start(Context context, String action) {
+        Timber.i("Starting service");
+        Intent alarm = new Intent(context, AlarmService.class);
+        alarm.setAction(action);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(alarm);
+        } else {
+            context.startService(alarm);
+        }
     }
 }

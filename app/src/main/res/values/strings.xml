@@ -22,6 +22,7 @@
     <string name="donate_text_4">If you would like to further support MPT\'s development, you can donate to Noorzaini Ilhami.
         \n\nMPT will always remain as a free app with no advertisements.</string>
 
+    <string name="error_foursquare_quota">Uhoh! We have reached Foursquare\'s quota!</string>
     <string name="error_no_location">Oops! Have you enabled your location settings?</string>
     <string name="error_no_location_permission">Allow MPT to retrieve your location.</string>
     <string name="error_no_location_permission_mosque">Uhoh! We need to know your current location to show the mosque list!</string>

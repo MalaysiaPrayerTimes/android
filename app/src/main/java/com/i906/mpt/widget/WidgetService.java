@@ -1,17 +1,23 @@
 package com.i906.mpt.widget;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.i906.mpt.BuildConfig;
+import com.i906.mpt.alarm.NotificationHelper;
 import com.i906.mpt.internal.Dagger;
 import com.i906.mpt.internal.ServiceModule;
 import com.i906.mpt.prayer.PrayerContext;
+import com.i906.mpt.prefs.WidgetPreferences;
 import com.pushtorefresh.storio.StorIOException;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,19 +36,37 @@ public class WidgetService extends Service implements WidgetHandler {
     @Inject
     WidgetDelegate mPresenter;
 
+    @Inject
+    WidgetPreferences mWidgetPreferences;
+
+    @Inject
+    NotificationHelper mNotificationHelper;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Timber.i("Created service");
 
         Dagger.getGraph(this)
                 .serviceGraph(new ServiceModule(this))
                 .inject(this);
 
+        executeForeground();
         mPresenter.setHandler(this);
+    }
+
+    private void executeForeground() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return;
+        }
+
+        startForeground(2, mNotificationHelper.createForegroundNotification("Updating widgets..."));
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Timber.i("Received start command");
         mPresenter.refreshPrayerContext();
         return START_STICKY;
     }
@@ -51,7 +75,10 @@ public class WidgetService extends Service implements WidgetHandler {
     public void handlePrayerContext(PrayerContext prayerContext) {
         Intent intent = new Intent(ACTION_PRAYER_TIME_UPDATED);
         intent.putExtra("prayer_context", (Parcelable) prayerContext);
-        sendBroadcast(intent);
+
+        Timber.i("Broadcasting intent: %s", intent);
+
+        broadcastWidgetIntent(intent);
         stopSelf();
     }
 
@@ -74,13 +101,23 @@ public class WidgetService extends Service implements WidgetHandler {
             Timber.w(throwable, "WidgetService");
         }
 
-        sendBroadcast(intent);
+        broadcastWidgetIntent(intent);
         stopSelf();
+    }
+
+    private void broadcastWidgetIntent(Intent intent) {
+        List<Class> widgets = mWidgetPreferences.getEnabledWidgetList();
+
+        for (Class w : widgets) {
+            intent.setComponent(new ComponentName(this, w));
+            sendBroadcast(intent);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Timber.i("Destroyed service");
         mPresenter.setHandler(null);
     }
 
@@ -91,7 +128,13 @@ public class WidgetService extends Service implements WidgetHandler {
     }
 
     public static void start(Context context) {
+        Timber.i("Starting service");
         Intent alarm = new Intent(context, WidgetService.class);
-        context.startService(alarm);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(alarm);
+        } else {
+            context.startService(alarm);
+        }
     }
 }

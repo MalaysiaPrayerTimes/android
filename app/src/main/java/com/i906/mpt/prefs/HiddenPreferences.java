@@ -21,7 +21,7 @@ public class HiddenPreferences {
     }
 
     public long getLocationCacheDuration() {
-        return Long.valueOf(mPrefs.getString("location_cache_duration", "604800000"));
+        return Long.valueOf(mPrefs.getString("location_cache_duration", "86400000"));
     }
 
     public long getLocationFastestInterval() {
