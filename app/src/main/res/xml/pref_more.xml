@@ -14,7 +14,26 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/label_others">
+    <PreferenceCategory
+        android:title="@string/label_integrations">
+
+        <ListPreference
+            android:defaultValue="3600000"
+            android:entries="@array/pref_dashclock"
+            android:entryValues="@array/pref_dashclock_values"
+            android:key="dashclock_visibility"
+            android:title="@string/label_dashclock_visibility" />
+
+        <CheckBoxPreference
+            android:key="kwgt_enabled"
+            android:title="@string/label_enable_kwgt"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_others"
+        android:title="@string/label_others">
 
         <Preference
             android:key="advanced_settings"
@@ -26,13 +45,6 @@
             android:entryValues="@array/pref_hijri_offset_values"
             android:key="hijri_offset"
             android:title="@string/label_hijri_offset" />
-
-        <ListPreference
-            android:defaultValue="3600000"
-            android:entries="@array/pref_dashclock"
-            android:entryValues="@array/pref_dashclock_values"
-            android:key="dashclock_visibility"
-            android:title="@string/label_dashclock_visibility" />
 
     </PreferenceCategory>
 

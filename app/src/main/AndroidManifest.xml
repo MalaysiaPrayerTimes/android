@@ -22,7 +22,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MptTheme">
+        android:theme="@style/MptTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name=".main.MainActivity"
@@ -123,6 +124,15 @@
             android:enabled="true"
             android:exported="true"
             android:writePermission="${applicationId}.permission.WRITE_PRAYER_DATA" />
+
+        <provider
+            android:name=".widget.KwgtProvider"
+            android:authorities="${applicationId}.provider.kwgt"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="org.kustom.provider.SAMPLES" />
+            </intent-filter>
+        </provider>
 
         <receiver android:name=".settings.CodeReceiver">
             <intent-filter>
@@ -229,6 +239,8 @@
         <service android:name=".alarm.AlarmService" />
 
         <service android:name=".main.MainService" />
+
+        <service android:name=".widget.KwgtService" />
 
         <service android:name=".widget.WidgetService" />
 
