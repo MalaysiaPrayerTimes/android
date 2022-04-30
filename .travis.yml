@@ -43,8 +43,8 @@ before_install:
   - export TZ=Asia/Kuala_Lumpur
 
 script:
-  - ./gradlew clean :api-client:test :api-client:jacocoTestReport jacocoTestMockDebugUnitTestCoverage -PdisablePreDex --continue --no-daemon
-  - ./gradlew checkstyle :api-client:checkstyleMain -PdisablePreDex --continue --no-daemon
+  - ./gradlew clean :api-client:test :api-client:jacocoTestReport jacocoTestMockDebugUnitTestCoverage -PdisablePreDex --continue
+  - ./gradlew checkstyle :api-client:checkstyleMain -PdisablePreDex --continue
   - android-wait-for-emulator
   - adb shell input keyevent 82
   - ./gradlew createMockDebugCoverageReport -PdisablePreDex --continue
@@ -58,12 +58,12 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: ./gradlew publishBetaRelease --no-daemon
+    script: ./gradlew publishBetaRelease
     skip_cleanup: true
     on:
       branch: dev
   - provider: script
-    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=production --no-daemon
+    script: ./gradlew publishProdRelease -PPLAY_STORE_TRACK=production 
     skip_cleanup: true
     on:
       branch: master
